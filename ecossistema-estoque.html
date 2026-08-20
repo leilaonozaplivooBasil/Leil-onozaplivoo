@@ -1,0 +1,717 @@
+<title>Rota da Peça</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#F4F6F8;
+  --surface:#FFFFFF;
+  --surface-2:#EDF1F5;
+  --ink:#0F1620;
+  --ink-soft:#55606E;
+  --ink-faint:#7C8797;
+  --line:#D9DFE6;
+  --line-soft:#E6EAEF;
+  --stamp:#C1440E;
+  --stamp-bg:#FBEDE7;
+  --ok:#0B6E5F;
+  --ok-bg:#E4F1EE;
+  --warn:#9A6700;
+  --warn-bg:#F8F0DC;
+  --rail:#0F1620;
+
+  --display:"Archivo",-apple-system,"Segoe UI",sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+
+  --max:70ch;
+  --wide:1180px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C1118;
+    --surface:#131A23;
+    --surface-2:#18212C;
+    --ink:#E8EDF3;
+    --ink-soft:#94A2B3;
+    --ink-faint:#6E7C8D;
+    --line:#253040;
+    --line-soft:#1D2733;
+    --stamp:#FF6B3D;
+    --stamp-bg:#2A1710;
+    --ok:#35C0A5;
+    --ok-bg:#0E2622;
+    --warn:#E0A21A;
+    --warn-bg:#2A2109;
+    --rail:#E8EDF3;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C1118;
+  --surface:#131A23;
+  --surface-2:#18212C;
+  --ink:#E8EDF3;
+  --ink-soft:#94A2B3;
+  --ink-faint:#6E7C8D;
+  --line:#253040;
+  --line-soft:#1D2733;
+  --stamp:#FF6B3D;
+  --stamp-bg:#2A1710;
+  --ok:#35C0A5;
+  --ok-bg:#0E2622;
+  --warn:#E0A21A;
+  --warn-bg:#2A2109;
+  --rail:#E8EDF3;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.12;letter-spacing:-.02em}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--stamp);outline-offset:3px;border-radius:2px}
+
+/* ---------- shell ---------- */
+.shell{max-width:var(--wide);margin:0 auto;padding:0 24px 96px}
+.doc{display:flex;flex-direction:column;gap:0}
+
+/* ---------- masthead ---------- */
+.mast{
+  border-bottom:2px solid var(--rail);
+  padding:56px 0 22px;
+  margin-bottom:44px;
+}
+.eyebrow{
+  font-family:var(--mono);font-size:11.5px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);
+  display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:26px;
+}
+.mast h1{font-size:clamp(2.6rem,7vw,4.6rem);font-weight:800;letter-spacing:-.035em}
+.mast .lede{
+  font-size:clamp(1.05rem,2.2vw,1.3rem);color:var(--ink-soft);
+  max-width:58ch;margin-top:18px;
+}
+.mast .lede strong{color:var(--ink);font-weight:600}
+
+/* ---------- layout with rail ---------- */
+.layout{display:block}
+@media(min-width:1100px){
+  .layout{display:grid;grid-template-columns:190px minmax(0,1fr);gap:56px;align-items:start}
+  .toc{position:sticky;top:32px}
+}
+.toc{font-family:var(--mono);font-size:12px;line-height:1.5}
+.toc .toc-h{
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);
+  font-size:10.5px;padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:12px;
+}
+.toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.toc a{
+  color:var(--ink-soft);text-decoration:none;display:block;
+  border-left:2px solid var(--line);padding-left:10px;transition:color .15s,border-color .15s;
+}
+.toc a:hover{color:var(--stamp);border-left-color:var(--stamp)}
+@media(max-width:1099px){.toc{margin-bottom:48px}}
+
+/* ---------- sections ---------- */
+section{padding-top:8px;margin-bottom:60px;scroll-margin-top:24px}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.sec-num{
+  font-family:var(--mono);font-size:11px;font-weight:600;color:var(--stamp);
+  letter-spacing:.1em;flex:none;padding-top:4px;
+}
+.sec-head h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:700}
+.prose{max-width:var(--max);display:flex;flex-direction:column;gap:18px}
+.prose h3{font-size:1.12rem;font-weight:700;margin-top:14px}
+.prose h4{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint)}
+.prose strong{font-weight:600}
+code,.mono{font-family:var(--mono);font-size:.855em}
+.prose code{background:var(--surface-2);border:1px solid var(--line-soft);padding:1px 5px;border-radius:3px;color:var(--ink)}
+
+/* ---------- callouts ---------- */
+.note{
+  border-left:3px solid var(--line);background:var(--surface);
+  padding:16px 20px;display:flex;flex-direction:column;gap:9px;max-width:var(--max);
+}
+.note.alarm{border-left-color:var(--stamp);background:var(--stamp-bg)}
+.note.good{border-left-color:var(--ok);background:var(--ok-bg)}
+.note .note-h{
+  font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-faint);
+}
+.note.alarm .note-h{color:var(--stamp)}
+.note.good .note-h{color:var(--ok)}
+.note p{font-size:.95rem}
+
+/* ---------- headline stat band ---------- */
+.band{
+  border:2px solid var(--stamp);background:var(--stamp-bg);
+  padding:30px 32px;display:flex;flex-direction:column;gap:14px;margin-bottom:34px;
+}
+.band .band-h{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--stamp)}
+.band h3{font-family:var(--display);font-size:clamp(1.3rem,3.2vw,1.85rem);font-weight:700;color:var(--ink)}
+.band p{font-size:1rem;color:var(--ink-soft);max-width:62ch}
+.band p strong{color:var(--ink);font-weight:600}
+
+/* ---------- tables ---------- */
+.twrap{overflow-x:auto;border:1px solid var(--line);background:var(--surface);margin:4px 0}
+table{border-collapse:collapse;width:100%;min-width:660px;font-family:var(--mono);font-size:12.5px}
+caption{
+  text-align:left;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-faint);padding:14px 16px 12px;border-bottom:1px solid var(--line);
+}
+th{
+  text-align:left;font-weight:600;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-faint);padding:11px 16px;border-bottom:1px solid var(--line);white-space:nowrap;
+}
+td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-soft)}
+tr:last-child td{border-bottom:none}
+td.k{color:var(--ink);font-weight:500}
+.num{font-variant-numeric:tabular-nums;text-align:right}
+
+/* ---------- status chips ---------- */
+.chip{
+  display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:2px;white-space:nowrap;
+}
+.chip.no{background:var(--stamp-bg);color:var(--stamp);border:1px solid var(--stamp)}
+.chip.yes{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok)}
+.chip.part{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn)}
+
+/* ---------- two stock stores ---------- */
+.stores{display:grid;gap:16px;margin:6px 0}
+@media(min-width:700px){.stores{grid-template-columns:1fr 1fr}}
+.store{border:1px solid var(--line);background:var(--surface);padding:22px}
+.store .st-tag{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--stamp);margin-bottom:8px}
+.store h3{font-family:var(--mono);font-size:1rem;font-weight:600;margin-bottom:6px}
+.store p{font-size:.92rem;color:var(--ink-soft);margin-bottom:14px}
+.store dl{margin:0;display:flex;flex-direction:column;gap:7px;font-family:var(--mono);font-size:11.5px}
+.store dl>div{display:flex;gap:10px;border-top:1px solid var(--line-soft);padding-top:7px}
+.store dt{color:var(--ink-faint);flex:none;width:96px}
+.store dd{margin:0;color:var(--ink-soft)}
+
+/* ---------- priority ladder ---------- */
+.ladder{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);background:var(--surface);margin:6px 0}
+.rung{display:flex;gap:16px;padding:16px 20px;border-bottom:1px solid var(--line-soft);align-items:flex-start}
+.rung:last-child{border-bottom:none}
+.rung .r-n{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--stamp);flex:none;padding-top:3px;width:22px}
+.rung .r-b{display:flex;flex-direction:column;gap:4px}
+.rung .r-t{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink)}
+.rung .r-d{font-size:.9rem;color:var(--ink-soft)}
+
+/* ---------- timeline ---------- */
+.tl{display:flex;flex-direction:column;gap:0;margin:6px 0}
+.tl-step{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px}
+.tl-mark{display:flex;flex-direction:column;align-items:center;gap:0}
+.tl-dot{
+  width:11px;height:11px;border-radius:50%;background:var(--paper);
+  border:2px solid var(--stamp);flex:none;margin-top:7px;
+}
+.tl-line{width:2px;flex:1;background:var(--line);min-height:14px}
+.tl-step:last-child .tl-line{display:none}
+.tl-body{padding-bottom:26px;max-width:var(--max)}
+.tl-when{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--stamp);margin-bottom:5px}
+.tl-body h4{font-family:var(--display);font-size:1.02rem;font-weight:700;color:var(--ink);letter-spacing:-.01em;margin-bottom:6px;text-transform:none}
+.tl-body p{font-size:.94rem;color:var(--ink-soft)}
+.tl-body p+p{margin-top:8px}
+
+/* ---------- hole cards ---------- */
+.holes{display:flex;flex-direction:column;gap:14px;margin:6px 0}
+.hole{border:1px solid var(--line);border-left:3px solid var(--stamp);background:var(--surface);padding:20px 22px}
+.hole-top{display:flex;gap:12px;align-items:baseline;margin-bottom:9px;flex-wrap:wrap}
+.hole-n{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--stamp);flex:none}
+.hole h3{font-family:var(--display);font-size:1.06rem;font-weight:700;letter-spacing:-.01em}
+.hole p{font-size:.94rem;color:var(--ink-soft);max-width:66ch}
+.hole .where{
+  font-family:var(--mono);font-size:11px;color:var(--ink-faint);
+  margin-top:11px;padding-top:10px;border-top:1px solid var(--line-soft);display:block;
+}
+pre{
+  font-family:var(--mono);font-size:12px;line-height:1.6;background:var(--surface-2);
+  border:1px solid var(--line-soft);padding:13px 15px;overflow-x:auto;margin:11px 0 0;color:var(--ink);
+}
+
+/* ---------- footer ---------- */
+.foot{border-top:2px solid var(--rail);padding-top:22px;margin-top:20px;font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);display:flex;flex-direction:column;gap:8px;max-width:var(--max)}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="shell">
+<header class="mast">
+  <div class="eyebrow">
+    <span>Leilão NoZap</span>
+    <span>Leitura de código · 20 ago 2026</span>
+    <span>Repositório Leilonozap</span>
+    <span>Nada foi alterado</span>
+  </div>
+  <h1>Rota da Peça</h1>
+  <p class="lede">Como uma peça entra, anda e sai do estoque — em todos os canais de venda. <strong>Três canais nunca baixam o estoque.</strong> Um deles é o leilão.</p>
+</header>
+
+<div class="layout">
+  <nav class="toc" aria-label="Índice">
+    <div class="toc-h">Índice</div>
+    <ol>
+      <li><a href="#achado">O achado</a></li>
+      <li><a href="#onde">Onde mora</a></li>
+      <li><a href="#entra">Como entra</a></li>
+      <li><a href="#sai">Como sai</a></li>
+      <li><a href="#matriz">Matriz de canais</a></li>
+      <li><a href="#ciclo">Ciclo da venda</a></li>
+      <li><a href="#leilao">O caso do leilão</a></li>
+      <li><a href="#transfere">Transferências</a></li>
+      <li><a href="#rastro">O que tem rastro</a></li>
+      <li><a href="#furos">Os furos</a></li>
+      <li><a href="#arquivos">Arquivos-chave</a></li>
+    </ol>
+  </nav>
+
+  <main class="doc">
+
+  <!-- 01 -->
+  <section id="achado">
+    <div class="sec-head"><span class="sec-num">01</span><h2>O achado</h2></div>
+
+    <div class="band">
+      <div class="band-h">Causa raiz</div>
+      <h3>A venda de leilão nunca baixa o estoque. Nem uma vez.</h3>
+      <p>O martelo bate, o cliente paga, a peça sai do depósito — e o sistema <strong>não desconta nada</strong>. O produto continua no estoque com a quantidade original, para sempre. O mesmo vale para o <strong>Arremate Agora</strong> e para a <strong>venda ao vivo</strong>.</p>
+    </div>
+
+    <div class="prose">
+      <p>O motivo é pequeno e mecânico. Quando o arremate é pago, o sistema cria a venda e chama a função que baixa estoque — a mesma da loja. Só que essa função precisa saber <em>qual</em> produto baixar, e a venda de arremate é gravada <strong>sem o número do produto</strong>. Ela carrega só o título em texto: <code>"Arremate — Geladeira Brastemp"</code>.</p>
+      <p>Sem o número do produto, a função não encontra nada para baixar, não reclama, e devolve sucesso. A venda entra no caixa. A peça sai do galpão. O estoque continua intacto no papel.</p>
+      <p>É isso que produz a peça fantasma: <strong>cada leilão pago cria uma unidade que existe no sistema e não existe na prateleira.</strong> Quanto mais leilão, maior a diferença.</p>
+      <div class="note alarm">
+        <span class="note-h">Onde conferir</span>
+        <p><code>settleAuctionWithBalance.js:161</code> monta a venda sem <code>product_id</code> e sem <code>items_json</code>. Em <code>storeFulfill.js:135</code> a lista de itens fica vazia, e <code>baixarItensDaVenda</code> nunca é chamada.</p>
+      </div>
+      <p>Os outros furos que já tínhamos levantado continuam valendo — e estão na seção <a href="#furos">Os furos</a>. Mas este é o que explica o volume.</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="onde">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Onde o estoque mora</h2></div>
+    <div class="prose">
+      <p>Não existe um estoque só. Existem <strong>dois lugares diferentes</strong>, com regras diferentes, e boa parte da confusão nasce dessa separação.</p>
+    </div>
+
+    <div class="stores">
+      <div class="store">
+        <div class="st-tag">Tabela 1</div>
+        <h3>products</h3>
+        <p>O estoque central da casa — o que está nos depósitos de Bangu, Recreio e Oficina. É o que a Gestão de Estoque mostra.</p>
+        <dl>
+          <div><dt>quantity</dt><dd>peças disponíveis</dd></div>
+          <div><dt>quantity_sold</dt><dd>total já vendido</dd></div>
+          <div><dt>catalog_active</dt><dd>aparece na loja?</dd></div>
+          <div><dt>status</dt><dd>ESTOQUE / VENDIDO…</dd></div>
+          <div><dt>deposit_name</dt><dd>Bangu · Oficina · Recreio</dd></div>
+        </dl>
+      </div>
+      <div class="store">
+        <div class="st-tag">Tabela 2</div>
+        <h3>store_inventory</h3>
+        <p>O estoque próprio de cada lojista da rede. Uma linha por produto, por dono, por origem.</p>
+        <dl>
+          <div><dt>owner_id</dt><dd>de quem é</dd></div>
+          <div><dt>origem</dt><dd>comprado ou consignado</dd></div>
+          <div><dt>custo_unitario</dt><dd>quanto ele pagou</dd></div>
+          <div><dt>divida_aberta</dt><dd>o que ainda deve</dd></div>
+          <div><dt>quantity</dt><dd>peças com ele</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="prose">
+      <h3>A diferença entre comprado e consignado</h3>
+      <p>Toda peça no estoque de um lojista tem uma <strong>origem</strong>, e ela decide para onde vai o dinheiro quando a peça vende:</p>
+      <p><strong>Comprado</strong> — o lojista pagou adiantado (pedido de reposição). A peça é dele. Quando vender, ele recebe o custo de volta mais a margem.</p>
+      <p><strong>Consignado</strong> — a peça está com ele, mas a casa ainda não recebeu. Fica registrada uma <code>divida_aberta</code>. Quando vender, o custo é retido para quitar a dívida.</p>
+      <div class="note">
+        <span class="note-h">Detalhe importante</span>
+        <p>Existe um terceiro caso, herdado: linhas antigas de loja <strong>sem origem preenchida</strong>. Elas baixam normalmente, mas não geram repasse — não têm custo registrado. O código trata isso explicitamente como compatibilidade.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section id="entra">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Como o produto entra</h2></div>
+    <div class="prose">
+      <p>São <strong>seis portas de entrada</strong>. Nenhuma delas gera documento de entrada — em todas, o número novo é simplesmente escrito por cima do que estava lá.</p>
+    </div>
+
+    <div class="twrap">
+      <table>
+        <caption>Portas de entrada de mercadoria</caption>
+        <thead><tr><th>Porta</th><th>Onde acontece</th><th>Entra em</th><th>O que grava</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Planilha Excel/CSV</td><td>Importar Planilha</td><td>products</td><td>coluna “Estoque” vira <code>quantity</code>; vazio entra 1</td></tr>
+          <tr><td class="k">Cadastro manual</td><td>Gestão de Estoque</td><td>products</td><td>o que o operador digitar</td></tr>
+          <tr><td class="k">Criar leilão</td><td>Criar Leilão</td><td>products</td><td>produto novo nasce com <code>quantity: 1</code></td></tr>
+          <tr><td class="k">Lote recebido</td><td>Recepção de lote</td><td>products</td><td>registro do lote que chegou</td></tr>
+          <tr><td class="k">Reposição paga</td><td>Loja pede, paga, recebe</td><td>store_inventory</td><td><code>origem: comprado</code> + custo médio</td></tr>
+          <tr><td class="k">Consignação aprovada</td><td>Gestor aprova pedido</td><td>store_inventory</td><td><code>origem: consignado</code> + dívida + prazo</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <div class="note alarm">
+        <span class="note-h">A tela mente sobre a importação</span>
+        <p>A tela de importar planilha manda o pedido com “publicar”, mostra <strong>“X produtos publicados na loja!”</strong> — e o servidor grava <code>catalog_active: false</code>, ignorando o pedido. O comentário no código é explícito: “NUNCA publica direto”. Ou seja: quem importa acha que publicou e não publicou. Alguém precisa ativar produto por produto depois.</p>
+      </div>
+      <p>Como nenhuma entrada deixa rastro, um erro de digitação é indetectável depois. Se alguém digitar 500 onde era 50, não existe registro do que havia antes — nem de quem mudou.</p>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section id="sai">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Como o produto sai</h2></div>
+    <div class="prose">
+      <p>Em agosto de 2026 vocês centralizaram a baixa numa função só — e isso foi um acerto. Antes cada tela tinha a sua regra, e a mesma peça saía do estoque central numa venda e do estoque da loja em outra.</p>
+      <p>Quando a baixa acontece, ela consome nesta ordem, sempre:</p>
+    </div>
+
+    <div class="ladder">
+      <div class="rung">
+        <span class="r-n">1º</span>
+        <div class="r-b">
+          <span class="r-t">Estoque do vendedor · comprado</span>
+          <span class="r-d">É dele, já pagou. Sai daqui primeiro e o dinheiro volta pra conta dele.</span>
+        </div>
+      </div>
+      <div class="rung">
+        <span class="r-n">2º</span>
+        <div class="r-b">
+          <span class="r-t">Estoque do vendedor · consignado</span>
+          <span class="r-d">Está com ele, com dívida em aberto. Ao vender, o custo é retido e a dívida morre.</span>
+        </div>
+      </div>
+      <div class="rung">
+        <span class="r-n">3º</span>
+        <div class="r-b">
+          <span class="r-t">Estoque central · products</span>
+          <span class="r-d">O que sobrar sai do depósito da casa.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <h3>Mas a “regra única” não é única</h3>
+      <p>Apesar do nome, existem hoje <strong>quatro motores de baixa diferentes</strong> no sistema:</p>
+      <p><strong>1. A regra única</strong> — usada pela loja online, pelo PDV e pelo arremate (que, como vimos, chega nela com a lista vazia).</p>
+      <p><strong>2. O motor do “Seja Vendedor”</strong> — tem código próprio, desconta direto do produto e não passa pela regra única. Não atualiza total vendido nem tira o produto da vitrine.</p>
+      <p><strong>3. A transferência</strong> — reposição e consignação descontam do central por conta própria ao mover mercadoria para a loja.</p>
+      <p><strong>4. A baixa manual</strong> — o “zerar estoque” do administrador.</p>
+      <div class="note alarm">
+        <span class="note-h">A baixa nunca falha</span>
+        <p>Em todos esses motores o desconto usa <code>Math.max(0, quantidade − vendido)</code>. Se tem 1 e vende 3, ele grava <strong>zero e devolve sucesso</strong>. As 2 peças vendidas sem existir somem sem log, sem alerta, sem pendência.</p>
+        <pre>const novaQtd = Math.max(0, (Number(p.quantity) || 0) - qty);
+// tem 1, vende 3 → grava 0, retorna true</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section id="matriz">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Matriz de canais</h2></div>
+    <div class="prose">
+      <p>Este é o quadro que resume tudo: cada canal de venda, se ele confere estoque antes de vender, e se ele desconta depois.</p>
+    </div>
+
+    <div class="twrap">
+      <table>
+        <caption>Todos os canais de venda · confere antes? desconta depois?</caption>
+        <thead><tr><th>Canal</th><th>Confere antes</th><th>Desconta depois</th><th>Quando desconta</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Loja da rede <span class="mono">/loja/:slug</span></td><td><span class="chip yes">Sim</span></td><td><span class="chip yes">Sim</span></td><td>quando o pagamento confirma</td></tr>
+          <tr><td class="k">PDV · dono de loja</td><td><span class="chip yes">Sim</span></td><td><span class="chip yes">Sim</span></td><td>dinheiro na hora · PIX no pagamento</td></tr>
+          <tr><td class="k">PDV · vendedor da rede</td><td><span class="chip no">Não</span></td><td><span class="chip yes">Sim</span></td><td>vende do central sem conferir</td></tr>
+          <tr><td class="k">Catálogo · PIX</td><td><span class="chip no">Não</span></td><td><span class="chip part">Parcial</span></td><td>só o 1º item do carrinho</td></tr>
+          <tr><td class="k">Catálogo · cartão</td><td><span class="chip no">Não</span></td><td><span class="chip part">Parcial</span></td><td>só o 1º item do carrinho</td></tr>
+          <tr><td class="k">Leilão · arremate</td><td><span class="chip no">Não</span></td><td><span class="chip no">Nunca</span></td><td>—</td></tr>
+          <tr><td class="k">Leilão · Arremate Agora</td><td><span class="chip no">Não</span></td><td><span class="chip no">Nunca</span></td><td>—</td></tr>
+          <tr><td class="k">Venda ao vivo (live)</td><td><span class="chip no">Não</span></td><td><span class="chip no">Nunca</span></td><td>—</td></tr>
+          <tr><td class="k">Seja Vendedor</td><td><span class="chip yes">Sim</span></td><td><span class="chip yes">Sim</span></td><td>ao fechar o pedido · motor próprio</td></tr>
+          <tr><td class="k">Reposição (central→loja)</td><td><span class="chip yes">Sim</span></td><td><span class="chip yes">Sim</span></td><td>transferência, no pagamento</td></tr>
+          <tr><td class="k">Consignação (central→loja)</td><td><span class="chip no">Não</span></td><td><span class="chip yes">Sim</span></td><td>transferência, na aprovação</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <div class="note alarm">
+        <span class="note-h">O carrinho de vários itens</span>
+        <p>No catálogo, a venda é gravada com <strong>o número do primeiro produto</strong> e a <strong>quantidade somada do carrinho inteiro</strong>. Se o cliente compra 1 geladeira e 2 fones, o sistema desconta <strong>3 geladeiras</strong> e não toca nos fones.</p>
+      </div>
+      <p>Note também que “confere antes” é sempre <em>no momento do pedido</em> — nunca no momento do pagamento. Entre os dois, ninguém segura a peça.</p>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section id="ciclo">
+    <div class="sec-head"><span class="sec-num">06</span><h2>O ciclo de uma venda</h2></div>
+    <div class="prose">
+      <p>Este é o caminho completo de um pedido da loja — o canal mais bem resolvido do sistema. Vale como régua para comparar os outros.</p>
+    </div>
+
+    <div class="tl">
+      <div class="tl-step">
+        <div class="tl-mark"><span class="tl-dot"></span><span class="tl-line"></span></div>
+        <div class="tl-body">
+          <div class="tl-when">Antes · vitrine</div>
+          <h4>O cliente vê o produto</h4>
+          <p>A vitrine lista tudo que está marcado como ativo no catálogo. Ela <strong>não olha a quantidade</strong> — esgotado continua aparecendo, apenas empurrado para o fim da lista. O filtro “só em estoque” existe, mas é o cliente quem liga.</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-mark"><span class="tl-dot"></span><span class="tl-line"></span></div>
+        <div class="tl-body">
+          <div class="tl-when">Antes · checkout</div>
+          <h4>O pedido é conferido</h4>
+          <p>Aqui o servidor confere o estoque da loja e recusa se faltar. Confere também o frete, recotando no servidor — o CEP não é aceito de olhos fechados.</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-mark"><span class="tl-dot"></span><span class="tl-line"></span></div>
+        <div class="tl-body">
+          <div class="tl-when">Durante · pagamento</div>
+          <h4>O pedido nasce “aguardando pagamento”</h4>
+          <p>Gera o PIX ou o link do cartão. <strong>Nada é reservado.</strong> Enquanto esse PIX estiver aberto, a mesma peça continua à venda para todo mundo — e outro cliente passa na mesma conferência.</p>
+          <p>É aqui que dois compradores pagam pela última unidade. O segundo vira reembolso.</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-mark"><span class="tl-dot"></span><span class="tl-line"></span></div>
+        <div class="tl-body">
+          <div class="tl-when">Durante · confirmação</div>
+          <h4>O pagamento confirma</h4>
+          <p>O webhook marca a venda como paga usando uma trava que só deixa <strong>um</strong> passar — vocês já corrigiram isso depois de uma comissão ter sido paga em dobro numa venda real. Só quem passou na trava segue.</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-mark"><span class="tl-dot"></span><span class="tl-line"></span></div>
+        <div class="tl-body">
+          <div class="tl-when">Depois · acerto</div>
+          <h4>Baixa, comissão, dívida e repasse</h4>
+          <p>Agora sim o estoque desce, na ordem comprado → consignado → central. Em seguida a comissão é distribuída pela árvore oficial, a dívida da peça consignada é quitada, e o que era do lojista volta pra conta dele — custo destravado mais a margem.</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-mark"><span class="tl-dot"></span></div>
+        <div class="tl-body">
+          <div class="tl-when">Depois · entrega</div>
+          <h4>A jornada da entrega, no clique</h4>
+          <p>O pedido entra como “A enviar” e daí em diante é <strong>manual</strong>: a logística clica para avançar por Embalando → Enviado → Saiu para entrega → Entregue. Nenhuma dessas etapas mexe em estoque — a peça já saiu no passo anterior.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="note alarm">
+        <span class="note-h">Não existe volta</span>
+        <p>Em todo o sistema <strong>não há nenhum caminho de cancelamento ou estorno que devolva peça ao estoque</strong>. A venda ao vivo tem estorno, mas ele só marca a venda como estornada — e como aquele canal nunca desceu estoque, não há o que devolver. A única devolução real que existe é a do consignado.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section id="leilao">
+    <div class="sec-head"><span class="sec-num">07</span><h2>O caso do leilão</h2></div>
+    <div class="prose">
+      <p>O leilão merece capítulo próprio porque é onde a peça mais sai fisicamente e menos aparece no sistema. Vamos pelo caminho inteiro.</p>
+
+      <h4>Ao criar</h4>
+      <p>Um leilão pode ser criado a partir de um produto do estoque. Nesse momento o produto <strong>não é reservado nem descontado</strong> — nada indica que ele está comprometido. O produto guarda uma lista de leilões ligados a ele, e essa lista é uma <strong>lista</strong>: o mesmo produto pode alimentar vários leilões ao mesmo tempo.</p>
+      <p>Na prática, a mesma peça única pode estar, no mesmo instante: à venda na vitrine, em dois ou três leilões, e disponível no PDV.</p>
+
+      <h4>Durante</h4>
+      <p>O lance trava <strong>dinheiro</strong>, não mercadoria. O saldo do participante sai do disponível e vai para o reservado; quando alguém cobre, volta na hora. Isso é bem resolvido e tem extrato próprio desde agosto. Estoque, nesse meio-tempo, não é tocado.</p>
+
+      <h4>No martelo</h4>
+      <p>O encerramento apura o vencedor pelo maior lance, marca o leilão como encerrado, devolve a reserva de quem ficou pelo caminho, paga 5% de comissão para quem indicou o arrematante e libera os cupons dos perdedores. <strong>Estoque: nada.</strong> O pedido fica “aguardando pagamento”.</p>
+
+      <h4>No pagamento</h4>
+      <p>Seja pagando com saldo, seja com PIX ou cartão, a venda de arremate é criada e mandada para a mesma função de acerto da loja. Ela roda: bloqueia a comissão de loja (o leilão tem regra própria, de 5%, e vocês corrigiram isso em agosto), e tenta baixar o estoque.</p>
+      <p>Mas a venda foi gravada <strong>sem o número do produto</strong>. A lista de itens fica vazia. A baixa não roda. E a função devolve sucesso.</p>
+
+      <div class="note alarm">
+        <span class="note-h">Resultado líquido</span>
+        <p>O leilão movimenta dinheiro com precisão cirúrgica — reserva, devolve, comissiona, audita — e movimenta mercadoria <strong>zero</strong>. Toda peça arrematada continua contada no estoque depois de ter saído pela porta.</p>
+      </div>
+
+      <p>Vale registrar o contraste: o campo que ligaria a venda ao produto <strong>existe</strong> no leilão (a tabela de leilões guarda o produto de origem). Ele simplesmente não é copiado para a venda na hora de gravar.</p>
+    </div>
+  </section>
+
+  <!-- 08 -->
+  <section id="transfere">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Transferências entre estoques</h2></div>
+    <div class="prose">
+      <p>Nem todo movimento é venda. Duas operações movem mercadoria do central para a loja de um lojista — e uma delas é a única que traz peça de volta.</p>
+
+      <h3>Reposição — compra firme</h3>
+      <p>O lojista escolhe, paga, e só então a mercadoria muda de lugar: sai do central, entra no estoque dele com origem “comprado”. O custo é registrado por <strong>média ponderada</strong> — compras em datas e preços diferentes não sobrescrevem o custo antigo. O valor pago volta como crédito travado, que vai destravando conforme a mercadoria vende. O preço quem define é a casa; o lojista nunca define preço.</p>
+
+      <h3>Consignação — peça emprestada</h3>
+      <p>O lojista pede, um gestor aprova. Na aprovação a peça sai do central e entra no estoque dele como “consignado”, com dívida e prazo. Quando vende pela plataforma, o custo é retido no próprio pagamento e a dívida morre sem tocar no saldo dele.</p>
+
+      <h3>Devolução — o único caminho de volta</h3>
+      <p>O que não vendeu volta para o central: a quantidade é somada de volta ao produto, a linha da loja é zerada e a dívida correspondente é baixada. <strong>É o único ponto do sistema inteiro que devolve peça ao estoque.</strong></p>
+
+      <div class="note">
+        <span class="note-h">Detalhe que passa batido</span>
+        <p>Na devolução o produto volta com status “ESTOQUE”, mas <strong>não volta para a vitrine</strong>. Se ele tinha sido desativado quando zerou, continua invisível — mercadoria real, parada, sem ninguém vendo.</p>
+      </div>
+
+      <div class="note alarm">
+        <span class="note-h">A transferência pode criar peça</span>
+        <p>A consignação <strong>não confere</strong> se o central tem a quantidade antes de aprovar. Se o central tem 2 e a consignação é de 5, o central desce para 0 (perde 2) e a loja ganha 5. O sistema passa a contar <strong>3 peças que nunca existiram</strong>. A reposição confere no pedido — mas aplica no pagamento, então cabe a mesma corrida da loja.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 -->
+  <section id="rastro">
+    <div class="sec-head"><span class="sec-num">09</span><h2>O que tem rastro</h2></div>
+    <div class="prose">
+      <p>Aqui está o contraste mais duro do sistema — e o motivo de toda auditoria de estoque virar chute.</p>
+      <p>O <strong>dinheiro</strong> tem extrato. Em 18 de agosto vocês criaram um livro-caixa append-only para a reserva de saldo, depois de uma auditoria encontrar R$ 159,60 travados em 8 contas, sendo R$ 13,20 irrastreáveis. Toda movimentação de saldo reservado hoje grava linha, com saldo antes e saldo depois.</p>
+      <p>O <strong>estoque</strong> tem uma tabela de rastro — <code>stock_operations</code> — e ela registra exatamente <strong>uma</strong> coisa:</p>
+    </div>
+
+    <div class="twrap">
+      <table>
+        <caption>O que deixa rastro no estoque</caption>
+        <thead><tr><th>Movimento</th><th>Grava linha?</th><th>Dá pra auditar depois?</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Zerar estoque (manual, admin)</td><td><span class="chip yes">Sim</span></td><td>sim — produto, operador, motivo, quantidade</td></tr>
+          <tr><td class="k">Baixa por venda</td><td><span class="chip no">Não</span></td><td>não</td></tr>
+          <tr><td class="k">Entrada por planilha</td><td><span class="chip no">Não</span></td><td>não</td></tr>
+          <tr><td class="k">Entrada manual</td><td><span class="chip no">Não</span></td><td>não</td></tr>
+          <tr><td class="k">Transferência p/ lojista</td><td><span class="chip no">Não</span></td><td>não</td></tr>
+          <tr><td class="k">Devolução de consignado</td><td><span class="chip no">Não</span></td><td>não</td></tr>
+          <tr><td class="k">Ajuste de quantidade</td><td><span class="chip no">Não</span></td><td>não</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <p>Ou seja: o relatório de baixas que existe hoje mostra apenas as baixas <em>manuais</em>. Todo o resto é <code>UPDATE</code> destrutivo — o número novo apaga o antigo e ninguém guarda o que havia.</p>
+      <div class="note alarm">
+        <span class="note-h">A consequência prática</span>
+        <p>Quando a peça fantasma aparece, <strong>não existe como reconstruir</strong> quando ela saiu, por qual venda, por qual canal, nem quem mexeu. A conferência física vira a única fonte de verdade — e ela só acusa a diferença, nunca a causa.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="furos">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Os furos, um a um</h2></div>
+    <div class="prose">
+      <p>Oito mecanismos independentes. Cada um sozinho já produz venda fantasma — por isso tapar um só não resolve.</p>
+    </div>
+
+    <div class="holes">
+      <div class="hole">
+        <div class="hole-top"><span class="hole-n">01</span><h3>O leilão nunca baixa estoque</h3></div>
+        <p>A venda de arremate é gravada sem o número do produto. A função de baixa recebe lista vazia, não faz nada e devolve sucesso. Vale para arremate normal e para Arremate Agora.</p>
+        <span class="where">settleAuctionWithBalance.js:161 · createMPWalletDeposit.js:153 · storeFulfill.js:135</span>
+      </div>
+
+      <div class="hole">
+        <div class="hole-top"><span class="hole-n">02</span><h3>A venda ao vivo nunca baixa estoque</h3></div>
+        <p>A venda vinda da live cria o registro financeiro e paga comissão, mas não chama nenhuma função de estoque — e também não carrega número de produto.</p>
+        <span class="where">livooWebhook.js:44</span>
+      </div>
+
+      <div class="hole">
+        <div class="hole-top"><span class="hole-n">03</span><h3>Ninguém segura a peça até o pagamento</h3></div>
+        <p>Entre gerar o PIX e confirmar, nada é reservado. Vários compradores passam na mesma conferência da última unidade e todos pagam.</p>
+        <span class="where">createStoreOrder.js:4 · createPdvOrder.js:181</span>
+      </div>
+
+      <div class="hole">
+        <div class="hole-top"><span class="hole-n">04</span><h3>A baixa não sabe reclamar</h3></div>
+        <p>O desconto trava em zero e devolve sucesso. O que faltou é descartado silenciosamente — sem log, sem alerta, sem pendência para alguém tratar.</p>
+        <span class="where">baixaEstoque.js · supplySettle.js:53 · manageConsignacao.js:105 · finalizeSellerOrder.js:107</span>
+      </div>
+
+      <div class="hole">
+        <div class="hole-top"><span class="hole-n">05</span><h3>Carrinho com vários itens desconta errado</h3></div>
+        <p>A venda de catálogo guarda só o primeiro produto do carrinho e a quantidade somada de todos. Desconta demais de um e nada dos outros.</p>
+        <span class="where">createMPPix.js:134 · createMPCatalogCardCheckout.js:104</span>
+      </div>
+
+      <div class="hole">
+        <div class="hole-top"><span class="hole-n">06</span><h3>A vitrine vende esgotado de propósito</h3></div>
+        <p>A listagem filtra só “ativo no catálogo”, nunca a quantidade. O comentário no código é explícito: esgotado “não some”. E o produto é publicado sem ninguém conferir se há peça.</p>
+        <span class="where">Catalog.jsx:91 · Catalog.jsx:207 · CreateAuction.jsx:984</span>
+      </div>
+
+      <div class="hole">
+        <div class="hole-top"><span class="hole-n">07</span><h3>O PDV da rede não confere o central</h3></div>
+        <p>Quando quem vende é dono de loja, confere. Quando é vendedor da rede vendendo do estoque central, o código lê a quantidade e nunca a compara.</p>
+        <span class="where">createPdvOrder.js:102</span>
+      </div>
+
+      <div class="hole">
+        <div class="hole-top"><span class="hole-n">08</span><h3>Não existe extrato de estoque</h3></div>
+        <p>Só a baixa manual deixa rastro. Todo o resto é escrita destrutiva, o que torna impossível reconstruir qualquer divergência depois que ela aparece.</p>
+        <span class="where">stock_operations · gravada apenas por productAdminAction.js:119</span>
+      </div>
+    </div>
+
+    <div class="prose">
+      <h3>Um detalhe que atrapalha a conferência</h3>
+      <p>O campo de status do produto não é confiável como fonte de verdade. A lista oficial prevê cinco valores, mas a baixa grava <code>VENDIDO</code> — que não está na lista — e a base já tem <code>VENDIDO CARTÃO CRÉDITO</code> e <code>VENDIDO BOLETO PARCELADO</code>. Quem filtrar por status para saber o que tem em casa vai errar a conta. A quantidade é a única referência.</p>
+      <h3>O remédio que existe hoje</h3>
+      <p>Existe um botão de reconciliação que varre a base e tira da vitrine tudo que está zerado. É <strong>vassoura, não conserto</strong>: roda na mão, depois do estrago, e não impede a próxima venda fantasma. Entre uma passada e outra o buraco continua aberto.</p>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="arquivos">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Arquivos-chave</h2></div>
+    <div class="prose"><p>Para quem for conferir ou mexer depois, é aqui que a lógica mora.</p></div>
+    <div class="twrap">
+      <table>
+        <caption>Onde cada regra vive</caption>
+        <thead><tr><th>Arquivo</th><th>O que faz</th></tr></thead>
+        <tbody>
+          <tr><td class="k">api/_lib/baixaEstoque.js</td><td>a regra de baixa: comprado → consignado → central</td></tr>
+          <tr><td class="k">api/_lib/storeFulfill.js</td><td>acerto pós-pagamento: baixa, comissão, dívida, repasse</td></tr>
+          <tr><td class="k">api/functions/createStoreOrder.js</td><td>pedido da loja da rede</td></tr>
+          <tr><td class="k">api/functions/createPdvOrder.js</td><td>PDV / balcão</td></tr>
+          <tr><td class="k">api/functions/createMPPix.js</td><td>checkout do catálogo (PIX)</td></tr>
+          <tr><td class="k">api/_lib/finalizeAuctionCore.js</td><td>martelo do leilão — não toca estoque</td></tr>
+          <tr><td class="k">api/functions/settleAuctionWithBalance.js</td><td>pagamento do arremate com saldo</td></tr>
+          <tr><td class="k">api/_lib/supplySettle.js</td><td>reposição: central → loja</td></tr>
+          <tr><td class="k">api/functions/manageConsignacao.js</td><td>consignação: aprovar, devolver, liquidar</td></tr>
+          <tr><td class="k">api/functions/productAdminAction.js</td><td>zerar estoque · única baixa com rastro</td></tr>
+          <tr><td class="k">api/functions/reconciliarEstoqueLoja.js</td><td>a vassoura manual</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p>Levantamento feito por leitura do código de produção em 20 de agosto de 2026. Somente leitura — nenhuma linha foi alterada.</p>
+    <p>Os números citados de produtos zerados vêm do retrato de 26/05/2026, único dado de estoque versionado no repositório. O banco de produção não é alcançável a partir deste ambiente.</p>
+  </footer>
+
+  </main>
+</div>
+</div>
