@@ -1,23 +1,49 @@
 PONTO DE RESTAURACAO — Leilao NoZap / estoque
 Capturado em: 2026-08-20
+ATUALIZADO: a main avancou 5 commits durante a analise. Ver secao MUDANCA.
 Origem: leitura do repositorio leilaonozaplivooBasil/Leilonozap
 
-CODIGO
-  commit em producao : 8d4dddc684b4905ee7be12c370f068c95353f58a
-  data do commit     : 2026-08-20 09:16:30 -0300
-  assunto            : fix(auditoria): leilao para de pagar comissao de loja
-                       + fecha rota publica que reescrevia saldos (#44)
+CODIGO — ESTADO ATUAL (usar ESTE como ponto de retorno)
+  commit em producao : de38e4e07843ce21328c91c5dccfe199e031255e
+  assunto            : fix(leilao): os 5% do arremate nunca foram pagos
+                       a ninguem (#49)
   branch             : main
-  tags existentes    : nenhuma
   CI                 : nao existe (.github/workflows ausente)
+
+MUDANCA DETECTADA DURANTE A ANALISE
+  A primeira leitura foi feita em 8d4dddc6. Antes de criar a tag, a main
+  ja estava em de38e4e0 — 5 commits novos, todos de dinheiro:
+
+    de38e4e0  fix(leilao): os 5% do arremate nunca foram pagos a ninguem (#49)
+    54cb48d3  fix(carteira): a devolucao tem que incluir o FRETE (#48)
+    bb05bf5b  feat(carteira): devolver ao comprador dinheiro de venda cancelada (#47)
+    4767223d  fix(dinheiro): saque, chargeback e tres buracos na comissao (#46)
+    21f98a2b  fix(dinheiro): gastar o mesmo saldo 2x + cancelar sem estornar (#45)
+
+  ATENCAO: NAO usar 8d4dddc6 como ponto de retorno. Voltar para la
+  desfaria estas 5 correcoes de dinheiro.
+
+IMPACTO NA ANALISE DE ESTOQUE: NENHUM
+  Nenhum dos 7 arquivos fotografados mudou entre 8d4dddc6 e de38e4e0.
+  A logica de baixa de estoque em storeFulfill.js nao foi tocada
+  (as mudancas ali sao de comissao).
+
+ACHADO NOVO TRAZIDO POR ESSES COMMITS
+  O fluxo de cancelamento criado no PONTO 99 (#47) estorna DINHEIRO
+  (comissao + carteira) mas NAO devolve ESTOQUE. updateOrderStatus.js e
+  a migracao 20260821_cancelamento_estorna.sql nao tem nenhuma referencia
+  a products / quantity / store_inventory.
+  Venda cancelada = dinheiro volta, peca continua baixada.
 
 BANCO
   projeto Supabase   : gezvviyegtxytnwjkrjv (sa-east-1)
   ambiente separado  : NAO EXISTE — banco unico de producao
-  atencao            : src/api/supabaseClient.js:8 tem a URL de producao fixa
-                       como valor padrao. Deploy de preview fala com producao.
+  atencao            : src/api/supabaseClient.js:8 tem a URL de producao
+                       fixa como valor padrao. Deploy de preview fala
+                       com producao.
 
 ARQUIVOS FOTOGRAFADOS (ver codigo-antes/ e SHA256SUMS.txt)
+  conteudo conforme de38e4e0
   api/functions/productAdminAction.js
   api/_lib/baixaEstoque.js
   src/pages/ProductManagement.jsx
@@ -26,5 +52,5 @@ ARQUIVOS FOTOGRAFADOS (ver codigo-antes/ e SHA256SUMS.txt)
   api/functions/createMPPix.js
   api/functions/createMPCatalogCardCheckout.js
 
-COMANDO PARA RECRIAR O ESTADO DE HOJE
-  git checkout -b reverter/estoque 8d4dddc684b4905ee7be12c370f068c95353f58a
+COMANDO PARA RECRIAR O ESTADO ATUAL
+  git checkout -b reverter/estoque de38e4e07843ce21328c91c5dccfe199e031255e
