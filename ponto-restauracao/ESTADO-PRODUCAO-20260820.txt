@@ -1,0 +1,30 @@
+PONTO DE RESTAURACAO — Leilao NoZap / estoque
+Capturado em: 2026-08-20
+Origem: leitura do repositorio leilaonozaplivooBasil/Leilonozap
+
+CODIGO
+  commit em producao : 8d4dddc684b4905ee7be12c370f068c95353f58a
+  data do commit     : 2026-08-20 09:16:30 -0300
+  assunto            : fix(auditoria): leilao para de pagar comissao de loja
+                       + fecha rota publica que reescrevia saldos (#44)
+  branch             : main
+  tags existentes    : nenhuma
+  CI                 : nao existe (.github/workflows ausente)
+
+BANCO
+  projeto Supabase   : gezvviyegtxytnwjkrjv (sa-east-1)
+  ambiente separado  : NAO EXISTE — banco unico de producao
+  atencao            : src/api/supabaseClient.js:8 tem a URL de producao fixa
+                       como valor padrao. Deploy de preview fala com producao.
+
+ARQUIVOS FOTOGRAFADOS (ver codigo-antes/ e SHA256SUMS.txt)
+  api/functions/productAdminAction.js
+  api/_lib/baixaEstoque.js
+  src/pages/ProductManagement.jsx
+  src/pages/Catalog.jsx
+  api/functions/reconciliarEstoqueLoja.js
+  api/functions/createMPPix.js
+  api/functions/createMPCatalogCardCheckout.js
+
+COMANDO PARA RECRIAR O ESTADO DE HOJE
+  git checkout -b reverter/estoque 8d4dddc684b4905ee7be12c370f068c95353f58a
