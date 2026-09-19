@@ -45,6 +45,37 @@ Levantamento feito em 19/09/2026. Somente leitura: nenhum projeto foi alterado.
    abre o "Leilão NoZap" no site base44.com, ou me passar o ID do workspace onde
    ele mora.
 
+## O emoji de cada aplicativo
+
+Definido em 19/09/2026, depois de levantar o costume do Leilão NoZap (100% dos últimos
+50 commits começam com emoji, mas sempre do **assunto**, nunca do aplicativo).
+
+| Aplicativo | Emoji | Repositório |
+|---|---|---|
+| Leilão NoZap | 🔨 | `Leilonozap` (e `Leilaapp-5.0`, mesma marca) |
+| Vale Conecta | 🏞️ | `Super_APP_Vale_Do_Recreio` |
+| AGA Digital | 🌉 | `AGA-Digital` |
+| Dra. Isabela Dias | ✨ | `Isabela-Dias` |
+| VOX GEO | 🎙️ | `f3x-vox` |
+| Estoque Leilão NoZap | 📦 | `Leil-onozaplivoo` (este) |
+
+Como escrever o título da PR, o commit e o nome do chat:
+
+```
+🔨 Leilão NoZap — 🏷️ O selo "NOVO - Com Garantia" sai de trás dos botões
+🏞️ Vale Conecta — 🧱 O app sai do Base44 e roda em Vercel + Supabase
+```
+
+O aplicativo vem na frente porque a Vercel corta o texto na lista de implantações: o
+nome precisa caber no comecinho. O emoji do assunto continua depois, como já era.
+
+**Cuidado:** a DIR-76.1 do Leilão NoZap ("está muito aparecendo emoji") e o "zero emoji
+no super admin" valem para a **tela do aplicativo**, não para commit. São coisas
+diferentes. O texto completo da regra está em `CLAUDE.md` do Vale Conecta.
+
+O 🔨 não foi inventado: é o emoji que o próprio Leilão NoZap já usa para "Leilões" em
+`docs/HANDOFF-SKILLS.md`.
+
 ## Onde os clones ficaram nesta sessão
 
 ```
