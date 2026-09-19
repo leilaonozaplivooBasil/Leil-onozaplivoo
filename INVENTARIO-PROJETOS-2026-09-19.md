@@ -27,14 +27,15 @@ Levantamento feito em 19/09/2026. Somente leitura: nenhum projeto foi alterado.
 | 8 | `f3x-vox` (privado) | Projeto Next.js pequeno com seletor de IAs. | Não | 10/06/2026 | 72 arquivos |
 | 9 | `Isabela-Dias` (privado) | Site institucional da Dra. Isabela Dias (HTML estático) + landing para Google Ads. Painel admin e app Capacitor "em construção". | Não | 06/06/2026 | 72 arquivos |
 | 10 | `Painel-de-Controle-Admin-` (privado) | **Vazio.** Repositório criado, nenhum commit. | — | — | 0 arquivos |
-| 11 | `Super_APP_Vale_Do_Recreio` (privado) | Super app do ecossistema **TTT Corporate / Vale do Recreio**: pilares (X-EOS, Top Tech Digital, Top College), rede social, Human Token, HumanBank, marketplace, metaverso, painel executivo. Nome no Base44: **"Vale Conecta"**. 30 telas, 21 entidades, 2 funções Deno. Ainda roda 100% dentro do Base44 (plugin ativo, dados no banco do Base44). | Sim — export direto do Base44, app ID `69934f1fbcc24e80ad99a2bb` | 17/09/2026 ("Update base44 packages") | 186 arquivos |
+| 11 | `Super_APP_Vale_Do_Recreio` (privado) | Super app do ecossistema **TTT Corporate / Vale do Recreio**: pilares (X-EOS, Top Tech Digital, Top College), rede social, Human Token, HumanBank, marketplace, metaverso, painel executivo. Nome no Base44: **"Vale Conecta"**. 30 telas, 21 entidades, 2 funções. **Desvinculado do Base44 em 19/09/2026**: roda em Vercel (`vale-conecta-beta.vercel.app`) + Supabase (projeto `rmhoaxbkvakqssifyoky`, sa-east-1). Dados antigos ainda no Base44. | Era — export do Base44, app ID `69934f1fbcc24e80ad99a2bb`; hoje independente | 19/09/2026 | 190 arquivos |
 
 ## O que isso significa
 
 1. **Existem dois apps Base44 de verdade.** O "Leilão NoZap" (ID `68d536db3c26ff51f79c4137`),
    que aparece em quatro cópias (repositórios 1, 3, 4 e 5: o 1 é o vivo, o 5 o mais antigo,
    3 e 4 o mesmo código partido ao meio). E o "Vale Conecta" (ID `69934f1fbcc24e80ad99a2bb`),
-   repositório 11, que ainda vive inteiro dentro do Base44.
+   repositório 11, desvinculado do Base44 em 19/09/2026 (código, login, banco e
+   funções próprios). Só os dados e as imagens antigas continuam lá.
 2. **O Base44 não é mais a casa do projeto.** O código do repositório 1 já roda
    direto no Vercel + Supabase. O banco de produção é o Supabase
    `gezvviyegtxytnwjkrjv`. O Base44 ficou como histórico.
