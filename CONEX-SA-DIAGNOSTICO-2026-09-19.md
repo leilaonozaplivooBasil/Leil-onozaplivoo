@@ -204,3 +204,56 @@ leitura e escrita no banco, e a ConnectYou de verdade. Isso é a fase 4.
 Para subir (detalhes no `README.md` da branch): projeto Supabase + rodar a migração;
 projeto Vercel apontando para a branch, com as variáveis de `.env.example`; chave da
 Anthropic; exportar os dados do Base44 e rodar o script de importação.
+
+---
+
+## 9. Atualização (mesmo dia): Vercel no ar; Supabase criado mas travado
+
+### Vercel — feito e no ar
+
+Criei o projeto **`conexao-sexta`** no Vercel, ligado ao repositório `Conex_sa`,
+apontando para a branch `migracao/supabase-vercel` (a mesma da fase 2). Primeira
+build publicada com sucesso:
+
+**https://conexao-sexta.vercel.app**
+
+Configurado:
+- Framework Vite, Node 22.x, funções na região São Paulo (`gru1`)
+- Variáveis já gravadas no Vercel: `ANTHROPIC_MODEL`, `ANTHROPIC_EFFORT`,
+  `SUPER_ADMINS` (com os dois e-mails de admin já identificados no código),
+  `APP_URL`, `VITE_SUPABASE_URL` e `SUPABASE_URL`
+
+O site abre, mas ainda **não funciona de verdade**: falta a chave do Supabase
+(passo abaixo) e os dados. Login, palavra do dia, eventos etc. vão dar erro até lá.
+
+### Supabase — projeto criado, mas esta sessão não consegue mexer nele
+
+Criei o projeto **`conexao-sexta`** no Supabase (região São Paulo, mesma organização
+Leilao Nozap 4.0, US$ 10/mês, custo que você aprovou). Ele aparece como ativo e saudável
+na lista de projetos.
+
+**Mas toda ação dentro dele falha com "sem permissão"**: rodar a migração (criar as
+tabelas), pegar a URL da API, pegar a chave pública. Testei os quatro tipos de operação,
+todas com o mesmo erro. Comparando com os outros projetos Supabase mais antigos da
+mesma organização, essas mesmas operações funcionam neles sem problema.
+
+Isso indica que a conexão do Supabase nesta ferramenta enxerga a lista de projetos da
+organização inteira, mas só tem permissão para operar nos projetos que já existiam
+quando a conexão foi autorizada. Um projeto criado agora, por mim, não entra
+automaticamente nessa lista.
+
+**O que precisa de você:** no painel onde você conectou o Supabase a esta ferramenta
+(Configurações → Conectores, o mesmo menu do print anterior), verifique se há uma lista
+de projetos permitidos e adicione `conexao-sexta` (ou marque "todos os projetos"), ou
+desconecte e reconecte o Supabase para essa lista se atualizar. Depois disso eu:
+
+1. Rodo a migração (as 5 tabelas + permissões, já escrita e testada)
+2. Pego a URL e a chave pública do projeto
+3. Atualizo `VITE_SUPABASE_URL`, `SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` no Vercel
+   com os valores reais
+4. Crio uma chave de serviço e gravo `SUPABASE_SERVICE_ROLE_KEY`
+5. Refaço a build no Vercel
+
+Isso destrava o site. O que ainda ficaria pendente depois disso: a chave da Anthropic
+(`ANTHROPIC_API_KEY`, ainda não configurada) e os dados do Base44 (fase 0, que já
+está descrita nas seções 1 a 5 deste documento).
