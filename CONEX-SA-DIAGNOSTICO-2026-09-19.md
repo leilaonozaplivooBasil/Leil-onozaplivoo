@@ -172,3 +172,35 @@ Enquanto isso, a fase 2 (código) não depende de nada e é onde eu começaria.
 A sessão é temporária; o clone some ao encerrar. Este arquivo é o que fica.
 Complementa o `INVENTARIO-PROJETOS-2026-09-19.md` da branch `claude/eager-pasteur-b3a1yp`,
 que listou os 11 repositórios anteriores (o `Conex_sa` é o 12º).
+
+---
+
+## 8. Atualização (mesmo dia, mais tarde): a fase 2 foi feita
+
+A parte de **código** da migração está pronta na branch `migracao/supabase-vercel` do
+repositório `Conex_sa`. A `main` (a que o Base44 sincroniza) não foi tocada.
+
+O que essa branch contém:
+
+| Peça | Como ficou |
+|---|---|
+| Banco | `supabase/migrations/20260919000000_conexao_sexta_inicial.sql`: 5 tabelas com os mesmos campos, mais perfis, conversas da ConnectYou, bucket de arquivos e permissões (RLS) |
+| Confirmação de presença | função `confirm_attendance` no banco faz a checagem de duplicidade; visitante não lê mais a lista com nome, telefone e e-mail |
+| Login | Supabase Auth; página `/Login` (entrar, criar conta, recuperar senha) |
+| Login admin | real: entra no Supabase e confere o papel no banco. A senha escrita no código **foi removida** |
+| Funções de servidor | 6 rotas em `api/` (Vercel): `closeEvent`, `createAnonymousConversation`, `fixDatesAndMoveConfirmations`, `setSelfAdminIfSuper`, `inviteLanding` (`/convite`), `dailyWordPreview` (`/palavra-do-dia`) |
+| ConnectYou | `api/_lib/connectyou.js` chama a API da Anthropic com as instruções originais do agente (texto idêntico, em `api/_lib/connectyou-instructions.js`); histórico no Supabase |
+| Texto por IA | `api/invokeLLM.js` |
+| Imagem por IA | sem provedor por enquanto; a tela já pede a imagem manualmente |
+| Telas | o objeto `base44` virou `api`, com a mesma forma; as chamadas continuam iguais. 7 importações antigas corrigidas; o build não precisa mais de variável especial |
+| Logo | `public/logo.png` (baixado do Base44) |
+| Importação de dados | `scripts/import-base44.mjs` lê os exports CSV/JSON e preserva os IDs |
+| Legado | export original do Base44 movido para `legado/base44/`, só para consulta |
+
+Conferido aqui: `npm run build` passa sem o plugin do Base44; `npm run lint` sem erros;
+as 10 rotas de `api/` carregam. O que **não** dá para testar sem infraestrutura: login,
+leitura e escrita no banco, e a ConnectYou de verdade. Isso é a fase 4.
+
+Para subir (detalhes no `README.md` da branch): projeto Supabase + rodar a migração;
+projeto Vercel apontando para a branch, com as variáveis de `.env.example`; chave da
+Anthropic; exportar os dados do Base44 e rodar o script de importação.
