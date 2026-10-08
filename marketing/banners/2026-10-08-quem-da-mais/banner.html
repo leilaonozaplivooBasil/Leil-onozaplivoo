@@ -1,0 +1,104 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden;background:#050b1a}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:"Inter Display","Inter",sans-serif;
+    background:
+      radial-gradient(ellipse 900px 700px at 50% 42%, #0f3a5e 0%, rgba(10,32,64,.6) 40%, rgba(5,11,26,0) 75%),
+      radial-gradient(ellipse 1400px 900px at 50% 30%, #0a1d3b 0%, #060f22 60%, #040914 100%);}
+  /* feixes de luz de cima */
+  .beam{position:absolute;top:-120px;width:420px;height:1000px;transform-origin:top center;
+    background:linear-gradient(180deg, rgba(120,180,255,.20), rgba(120,180,255,0) 80%);filter:blur(18px)}
+  .b1{left:420px;transform:rotate(18deg)} .b2{left:750px;transform:rotate(6deg);opacity:.7}
+  .b3{left:1080px;transform:rotate(-8deg);opacity:.7} .b4{left:1350px;transform:rotate(-18deg)}
+  /* pilares com filete de luz quente */
+  .pillar{position:absolute;top:0;bottom:180px;width:90px;background:linear-gradient(90deg,#071226,#0c1c36 50%,#071226)}
+  .pillar::after{content:"";position:absolute;top:0;bottom:0;left:50%;width:6px;margin-left:-3px;
+    background:linear-gradient(180deg,rgba(255,206,110,.0),#ffd27a 20%,#ffcf6e 80%,rgba(255,206,110,0));
+    box-shadow:0 0 18px 4px rgba(255,200,100,.55),0 0 60px 10px rgba(255,190,80,.25)}
+  .p1{left:40px}.p2{right:40px}
+  /* halo verde */
+  .halo{position:absolute;left:50%;top:480px;width:780px;height:780px;margin:-390px 0 0 -390px;border-radius:50%;
+    border:10px solid #3dff8a;
+    box-shadow:0 0 30px 6px rgba(61,255,138,.9),0 0 90px 30px rgba(32,220,110,.45),inset 0 0 40px 8px rgba(61,255,138,.6),inset 0 0 160px 40px rgba(20,180,90,.25)}
+  .halo-glow{position:absolute;left:50%;top:470px;width:1100px;height:1100px;margin:-550px 0 0 -550px;border-radius:50%;
+    background:radial-gradient(circle, rgba(40,230,120,.18) 0%, rgba(40,230,120,0) 60%)}
+  /* chão */
+  .floor{position:absolute;left:0;right:0;bottom:0;height:250px;
+    background:linear-gradient(180deg,#081631 0%,#050c1c 100%)}
+  .floor::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,rgba(61,255,138,.5),transparent)}
+  /* pódio */
+  .podium{position:absolute;z-index:3;left:50%;bottom:70px;width:640px;height:150px;margin-left:-320px}
+  .podium .side{position:absolute;left:0;right:0;top:55px;bottom:0;border-radius:0 0 320px 320px/0 0 55px 55px;
+    background:linear-gradient(180deg,#0d1f38,#071121)}
+  .podium .top{position:absolute;left:0;right:0;top:0;height:110px;z-index:2;border-radius:50%;
+    background:radial-gradient(ellipse at 50% 40%,#16314f,#0a1830 70%);
+    border:5px solid #3dff8a;box-shadow:0 0 22px 4px rgba(61,255,138,.85),0 0 70px 14px rgba(61,255,138,.35)}
+  .podium .ring{position:absolute;left:-6px;right:-6px;bottom:-6px;height:70px;border-radius:50%;
+    border-bottom:5px solid #3dff8a;filter:drop-shadow(0 0 14px rgba(61,255,138,.9))}
+  /* leiloeiro */
+  .auct{position:absolute;z-index:2;left:50%;bottom:118px;height:770px;transform:translateX(-50%);
+    filter:drop-shadow(0 30px 40px rgba(0,0,0,.6)) drop-shadow(0 0 30px rgba(61,255,138,.18))}
+  .reflect{position:absolute;left:50%;bottom:-560px;height:770px;transform:translateX(-50%) scaleY(-1);opacity:.10;filter:blur(3px);
+    -webkit-mask-image:linear-gradient(0deg, transparent 55%, #000 100%)}
+  /* faíscas */
+  .spark{position:absolute;border-radius:50%;background:#7dffb4;box-shadow:0 0 10px 3px rgba(61,255,138,.8)}
+  /* plantas (silhuetas desfocadas) */
+  .leaf{position:absolute;border-radius:0 100% 0 100%;background:linear-gradient(135deg,#0f5a35,#06321f);filter:blur(2px);opacity:.85}
+  /* logo */
+  .logo{position:absolute;left:96px;top:70px;width:400px}
+  /* texto esquerda */
+  .left{position:absolute;left:110px;top:300px;width:540px}
+  .kicker{font-weight:700;font-size:26px;letter-spacing:.32em;color:#7dffb4;text-transform:uppercase;margin-bottom:18px}
+  .h1{font-weight:900;font-size:132px;line-height:.92;letter-spacing:-.02em;color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.5)}
+  .h1 .g{display:block;background:linear-gradient(180deg,#b6ffd3 0%,#3dff8a 45%,#12c964 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 22px rgba(61,255,138,.45))}
+  .rule{width:150px;height:6px;border-radius:3px;margin:34px 0 26px;background:linear-gradient(90deg,#3dff8a,rgba(61,255,138,0))}
+  .sub{font-weight:600;font-size:38px;line-height:1.2;color:#e8f1ff}
+  .sub b{color:#3dff8a;font-weight:800}
+  /* texto direita */
+  .right{position:absolute;right:105px;top:380px;width:500px;text-align:right}
+  .dou{font-weight:800;font-style:italic;font-size:48px;line-height:1.1;color:#fff}
+  .dou span{color:#3dff8a}
+  .small{margin-top:22px;font-weight:500;font-size:30px;line-height:1.3;color:#b9c8e2}
+  .cta{display:inline-flex;align-items:center;gap:16px;margin-top:40px;padding:26px 46px;border-radius:999px;
+    background:linear-gradient(180deg,#4dff95,#16c964);color:#04210f;font-weight:900;font-size:36px;letter-spacing:.04em;
+    box-shadow:0 0 0 4px rgba(61,255,138,.25),0 0 40px 8px rgba(61,255,138,.45),0 14px 30px rgba(0,0,0,.4)}
+  .cta svg{width:38px;height:38px}
+</style></head>
+<body><div class="stage">
+  <div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div><div class="beam b4"></div>
+  <div class="pillar p1"></div><div class="pillar p2"></div>
+  <div class="leaf" style="left:120px;bottom:210px;width:150px;height:60px;transform:rotate(-35deg)"></div>
+  <div class="leaf" style="left:170px;bottom:240px;width:170px;height:56px;transform:rotate(-70deg)"></div>
+  <div class="leaf" style="left:90px;bottom:250px;width:140px;height:50px;transform:rotate(-110deg)"></div>
+  <div class="leaf" style="right:120px;bottom:210px;width:150px;height:60px;transform:rotate(35deg) scaleX(-1)"></div>
+  <div class="leaf" style="right:170px;bottom:240px;width:170px;height:56px;transform:rotate(70deg) scaleX(-1)"></div>
+  <div class="leaf" style="right:90px;bottom:250px;width:140px;height:50px;transform:rotate(110deg) scaleX(-1)"></div>
+  <div class="floor"></div>
+  <div class="halo-glow"></div>
+  <div class="halo"></div>
+  <div class="spark" style="left:640px;top:250px;width:6px;height:6px"></div>
+  <div class="spark" style="left:1290px;top:200px;width:8px;height:8px"></div>
+  <div class="spark" style="left:1240px;top:640px;width:5px;height:5px"></div>
+  <div class="spark" style="left:690px;top:700px;width:7px;height:7px"></div>
+  <div class="spark" style="left:930px;top:90px;width:5px;height:5px"></div>
+  <div class="podium"><div class="side"></div><div class="top"></div><div class="ring"></div></div>
+  <img class="reflect" src="leiloeiro.png">
+  <img class="auct" src="leiloeiro.png">
+  <img class="logo" src="logo.png">
+  <div class="left">
+    <div class="kicker">Leilão aberto</div>
+    <div class="h1">QUEM DÁ<span class="g">MAIS?</span></div>
+    <div class="rule"></div>
+    <div class="sub">Grandes marcas com<br><b>preço de leilão.</b></div>
+  </div>
+  <div class="right">
+    <div class="dou">Dou-lhe uma,<br>dou-lhe duas…<br><span>não fique de fora!</span></div>
+    <div class="small">Acompanhe os leilões ativos<br>e dê seu lance agora.</div>
+    <div class="cta">DAR MEU LANCE
+      <svg viewBox="0 0 24 24" fill="none" stroke="#04210f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </div>
+  </div>
+</div></body></html>
