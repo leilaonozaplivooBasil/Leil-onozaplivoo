@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden;background:transparent}
+  body.preview{background:radial-gradient(ellipse at 30% 50%,#0f3a5e,#060f22 70%)}
+  .stage{position:relative;width:1920px;height:1080px;font-family:"Inter Display","Inter",sans-serif}
+  .logo{position:absolute;left:70px;top:50px;width:300px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.4))}
+  .txt{position:absolute;left:1130px;top:200px;width:740px;text-align:center}
+  /* selo com letras coloridas */
+  .selo{display:inline-block;padding:14px 34px;border-radius:999px;background:#fff;transform:rotate(-3deg);
+    box-shadow:0 0 0 6px rgba(255,255,255,.25),0 12px 26px rgba(0,0,0,.35);font-weight:900;font-size:40px;letter-spacing:.06em}
+  .selo span:nth-child(5n+1){color:#1e88ff}.selo span:nth-child(5n+2){color:#19c766}.selo span:nth-child(5n+3){color:#ffb300}
+  .selo span:nth-child(5n+4){color:#ff5a1f}.selo span:nth-child(5n+5){color:#b44dff}
+  .h1{margin-top:34px;font-weight:800;font-size:96px;line-height:.98;letter-spacing:-.025em;color:#fff;
+    text-shadow:0 6px 0 #0b2f6b,0 14px 30px rgba(0,0,0,.45)}
+  .fogo{display:block;font-size:76px;white-space:nowrap;text-shadow:none;transform:rotate(-2deg);margin-top:10px;
+    background:linear-gradient(180deg,#fff3a6 0%,#ffc83d 35%,#ff7a1a 70%,#ff3d1f 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 5px 0 #7a1e05) drop-shadow(0 0 22px rgba(255,140,40,.55))}
+  .rule{width:200px;height:8px;border-radius:4px;margin:34px auto 26px;
+    background:repeating-linear-gradient(90deg,#1e88ff 0 40px,#19c766 40px 80px,#ffb300 80px 120px,#ff5a1f 120px 160px,#b44dff 160px 200px)}
+  .sub{font-weight:600;font-size:38px;line-height:1.22;color:#eef3ff}
+  .sub b{font-weight:800;color:#ffc83d}
+  .cta{display:inline-flex;align-items:center;gap:16px;margin-top:40px;padding:24px 50px;border-radius:999px;
+    background:linear-gradient(180deg,#4dff95,#16c964);color:#04210f;font-weight:900;font-size:40px;letter-spacing:.03em;
+    box-shadow:0 7px 0 #0b7a3d,0 0 34px 6px rgba(61,255,138,.4),0 18px 30px rgba(0,0,0,.4);transform:rotate(-1.5deg)}
+  .cta svg{width:40px;height:40px}
+  /* detalhes infantis */
+  .star{position:absolute;width:46px;height:46px}
+  .dot{position:absolute;border-radius:50%}
+</style></head>
+<body><div class="stage">
+  <img class="logo" src="logo.png">
+  <div class="txt">
+    <div class="selo"><span>D</span><span>I</span><span>A</span>&nbsp;<span>D</span><span>A</span><span>S</span>&nbsp;<span>C</span><span>R</span><span>I</span><span>A</span><span>N</span><span>Ç</span><span>A</span><span>S</span></div>
+    <div class="h1">UM PRESENTE<span class="fogo">QUE É PURO FOGO!</span></div>
+    <div class="rule"></div>
+    <div class="sub">Hoverboard Skate Elétrico 6.5"<br>com <b>LED e Bluetooth</b></div>
+    <div class="cta">DÊ SEU LANCE
+      <svg viewBox="0 0 24 24" fill="none" stroke="#04210f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+  </div>
+  <!-- estrelinhas e confetes em volta do texto -->
+  <svg class="star" style="left:1140px;top:150px" viewBox="0 0 24 24"><path d="M12 1l3 7.5 8 .6-6.1 5.1 2 7.8L12 17.8 5.1 22l2-7.8L1 9.1l8-.6z" fill="#ffc83d"/></svg>
+  <svg class="star" style="left:1820px;top:250px;width:34px;height:34px" viewBox="0 0 24 24"><path d="M12 1l3 7.5 8 .6-6.1 5.1 2 7.8L12 17.8 5.1 22l2-7.8L1 9.1l8-.6z" fill="#1e88ff"/></svg>
+  <svg class="star" style="left:1135px;top:610px;width:30px;height:30px" viewBox="0 0 24 24"><path d="M12 1l3 7.5 8 .6-6.1 5.1 2 7.8L12 17.8 5.1 22l2-7.8L1 9.1l8-.6z" fill="#19c766"/></svg>
+  <svg class="star" style="left:1830px;top:820px;width:40px;height:40px" viewBox="0 0 24 24"><path d="M12 1l3 7.5 8 .6-6.1 5.1 2 7.8L12 17.8 5.1 22l2-7.8L1 9.1l8-.6z" fill="#ff5a1f"/></svg>
+  <div class="dot" style="left:1790px;top:150px;width:16px;height:16px;background:#ff5a1f"></div>
+  <div class="dot" style="left:1180px;top:420px;width:12px;height:12px;background:#b44dff"></div>
+  <div class="dot" style="left:1860px;top:560px;width:14px;height:14px;background:#ffc83d"></div>
+  <div class="dot" style="left:1200px;top:880px;width:18px;height:18px;background:#1e88ff"></div>
+</div>
+<script>if(location.hash==='#preview')document.body.className='preview'</script>
+</body></html>
