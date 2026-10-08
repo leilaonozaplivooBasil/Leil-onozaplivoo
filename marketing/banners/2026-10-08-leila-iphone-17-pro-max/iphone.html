@@ -1,0 +1,105 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;background:transparent}
+</style></head><body>
+<svg id="s" width="1100" height="1300" viewBox="0 0 1100 1300" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <!-- alumínio laranja -->
+  <linearGradient id="alu" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#b9541a"/><stop offset=".06" stop-color="#ee8a4a"/><stop offset=".18" stop-color="#e2733a"/>
+    <stop offset=".55" stop-color="#d9692f"/><stop offset=".9" stop-color="#e57b3f"/><stop offset=".965" stop-color="#f7a26b"/><stop offset="1" stop-color="#a84a14"/>
+  </linearGradient>
+  <linearGradient id="aluV" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".3" stop-color="#fff" stop-opacity="0"/>
+    <stop offset=".75" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/>
+  </linearGradient>
+  <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#e37a3e"/><stop offset=".5" stop-color="#d8692f"/><stop offset="1" stop-color="#c95d25"/>
+  </linearGradient>
+  <linearGradient id="plateau" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f08d50"/><stop offset=".85" stop-color="#dd6f33"/><stop offset="1" stop-color="#b9561d"/>
+  </linearGradient>
+  <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".42" stop-color="#fff" stop-opacity="0"/>
+    <stop offset=".5" stop-color="#fff" stop-opacity=".16"/><stop offset=".58" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+  </linearGradient>
+  <radialGradient id="lensGlass" cx=".4" cy=".35" r=".7">
+    <stop offset="0" stop-color="#3b4a6b"/><stop offset=".35" stop-color="#121826"/><stop offset=".7" stop-color="#05070c"/><stop offset="1" stop-color="#000"/>
+  </radialGradient>
+  <linearGradient id="ringMetal" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#ffd2b0"/><stop offset=".3" stop-color="#d06a30"/><stop offset=".6" stop-color="#7a3510"/><stop offset="1" stop-color="#f3a575"/>
+  </linearGradient>
+  <radialGradient id="lensRefl" cx=".3" cy=".25" r=".35">
+    <stop offset="0" stop-color="#9fd0ff" stop-opacity=".85"/><stop offset="1" stop-color="#9fd0ff" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="lensPurple" cx=".7" cy=".72" r=".3">
+    <stop offset="0" stop-color="#b47cff" stop-opacity=".55"/><stop offset="1" stop-color="#b47cff" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="screenWall" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#ff9a4d"/><stop offset=".35" stop-color="#e2531b"/><stop offset=".7" stop-color="#5a1a3a"/><stop offset="1" stop-color="#0b0b1a"/>
+  </linearGradient>
+  <radialGradient id="wallGlow" cx=".3" cy=".3" r=".6">
+    <stop offset="0" stop-color="#ffd6a3" stop-opacity=".9"/><stop offset="1" stop-color="#ffd6a3" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="frameDark" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#7a3610"/><stop offset=".05" stop-color="#f19a62"/><stop offset=".95" stop-color="#e08045"/><stop offset="1" stop-color="#6e300c"/>
+  </linearGradient>
+  <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+    <feDropShadow dx="0" dy="40" stdDeviation="40" flood-color="#000" flood-opacity=".55"/>
+  </filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="1.2"/></filter>
+  <g id="lens">
+    <circle r="56" fill="url(#ringMetal)"/>
+    <circle r="49" fill="#1a0f0a"/>
+    <circle r="43" fill="url(#lensGlass)"/>
+    <circle r="27" fill="#020306"/>
+    <circle r="43" fill="url(#lensPurple)"/>
+    <circle r="43" fill="url(#lensRefl)"/>
+    <circle r="12" cx="-12" cy="-14" fill="#fff" fill-opacity=".35" filter="url(#soft)"/>
+  </g>
+</defs>
+
+<!-- FRENTE (atrás) -->
+<g transform="translate(560,110) rotate(9)" filter="url(#shadow)">
+  <rect x="0" y="0" width="440" height="930" rx="78" fill="url(#frameDark)"/>
+  <rect x="9" y="9" width="422" height="912" rx="70" fill="#050505"/>
+  <rect x="22" y="22" width="396" height="886" rx="58" fill="url(#screenWall)"/>
+  <rect x="22" y="22" width="396" height="886" rx="58" fill="url(#wallGlow)"/>
+  <path d="M22 560 C 150 470, 280 640, 418 520 L418 850 Q418 908 360 908 L80 908 Q22 908 22 850 Z" fill="#2a0f2b" opacity=".55"/>
+  <path d="M22 380 C 160 300, 300 420, 418 330" stroke="#ffc38a" stroke-width="3" fill="none" opacity=".35"/>
+  <rect x="160" y="44" width="120" height="36" rx="18" fill="#000"/>
+  <text x="220" y="210" font-family="Inter Display" font-weight="300" font-size="110" fill="#fff" fill-opacity=".92" text-anchor="middle">9:41</text>
+  <text x="220" y="118" font-family="Inter" font-weight="600" font-size="22" fill="#fff" fill-opacity=".85" text-anchor="middle">quarta-feira, 8 de outubro</text>
+  <rect x="9" y="9" width="422" height="912" rx="70" fill="url(#sheen)"/>
+</g>
+
+<!-- VERSO (frente) -->
+<g transform="translate(120,190) rotate(-7)" filter="url(#shadow)">
+  <rect x="0" y="0" width="470" height="990" rx="84" fill="url(#alu)"/>
+  <rect x="0" y="0" width="470" height="990" rx="84" fill="url(#aluV)"/>
+  <!-- painel de vidro inferior -->
+  <path d="M30 330 L440 330 L440 900 Q440 960 380 960 L90 960 Q30 960 30 900 Z" fill="url(#glass)"/>
+  <path d="M30 330 L440 330" stroke="#a9501a" stroke-width="2" opacity=".6"/>
+  <!-- platô da câmera (largura total) -->
+  <path d="M14 96 Q14 14 96 14 L374 14 Q456 14 456 96 L456 300 Q456 318 438 318 L32 318 Q14 318 14 300 Z" fill="url(#plateau)"/>
+  <path d="M14 300 Q14 318 32 318 L438 318 Q456 318 456 300" stroke="#8f3f10" stroke-width="3" fill="none" opacity=".7"/>
+  <path d="M40 40 L430 40" stroke="#fff" stroke-opacity=".25" stroke-width="3" stroke-linecap="round"/>
+  <!-- módulo das lentes -->
+  <rect x="38" y="38" width="262" height="262" rx="70" fill="#c25e25"/>
+  <rect x="38" y="38" width="262" height="262" rx="70" fill="none" stroke="#f5a271" stroke-opacity=".7" stroke-width="3"/>
+  <rect x="44" y="46" width="250" height="250" rx="64" fill="none" stroke="#7d3510" stroke-opacity=".5" stroke-width="2"/>
+  <!-- 3 lentes em triângulo -->
+
+  <use href="#lens" x="108" y="108"/>
+  <use href="#lens" x="108" y="232"/>
+  <use href="#lens" x="228" y="170"/>
+  <!-- flash, LiDAR, microfone -->
+  <circle cx="384" cy="98" r="26" fill="#f6e7c8"/><circle cx="384" cy="98" r="22" fill="#fff6e0"/>
+  <circle cx="384" cy="98" r="22" fill="none" stroke="#d8c39a" stroke-width="2"/>
+  <circle cx="384" cy="232" r="25" fill="#0b0b10"/><circle cx="384" cy="232" r="18" fill="#1b1b28"/><circle cx="378" cy="226" r="5" fill="#5a5a80"/>
+  <circle cx="384" cy="166" r="6" fill="#6b2c08"/>
+  <!-- brilho -->
+  <rect x="0" y="0" width="470" height="990" rx="84" fill="url(#sheen)"/>
+  <rect x="2" y="2" width="466" height="986" rx="82" fill="none" stroke="#ffb98a" stroke-opacity=".5" stroke-width="3"/>
+</g>
+</svg>
+</body></html>

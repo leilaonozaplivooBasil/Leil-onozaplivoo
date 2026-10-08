@@ -1,0 +1,69 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden;background:#06261a}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:"Inter Display","Inter",sans-serif;
+    background:
+      radial-gradient(ellipse 700px 600px at 1500px 520px, rgba(255,150,70,.22), rgba(255,150,70,0) 70%),
+      radial-gradient(ellipse 1100px 900px at 1050px 450px, #12583c 0%, #0b3d29 45%, #062418 100%);}
+  /* ripas de madeira com luz quente (fundo direito) */
+  .slats{position:absolute;right:0;top:0;width:620px;height:760px;opacity:.35;
+    background:repeating-linear-gradient(90deg,#3a2414 0 26px,#5b3a20 26px 30px,#2a190d 30px 34px);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 35%),linear-gradient(0deg,transparent,#000 40%);
+    -webkit-mask-composite:source-in;mask-composite:intersect}
+  .slats::after{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:#ffcf8a;box-shadow:0 0 40px 18px rgba(255,190,110,.55)}
+  .bokeh{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,206,140,.55),rgba(255,206,140,0) 70%);filter:blur(4px)}
+  .leafs{position:absolute;filter:blur(5px);opacity:.75}
+  .leaf{position:absolute;border-radius:0 100% 0 100%;background:linear-gradient(135deg,#1f7a48,#0b3b23)}
+  /* Leila */
+  .leila{position:absolute;left:0;top:0;height:1080px;
+    -webkit-mask-image:linear-gradient(90deg,#000 0,#000 52%,rgba(0,0,0,.6) 72%,transparent 96%);mask-image:linear-gradient(90deg,#000 0,#000 52%,rgba(0,0,0,.6) 72%,transparent 96%)}
+  .leila-shade{position:absolute;left:0;top:0;width:820px;height:1080px;
+    background:linear-gradient(90deg,rgba(6,36,24,0) 40%,rgba(8,46,31,.4) 68%,rgba(11,60,40,.35) 85%,rgba(11,60,40,0) 100%)}
+  /* curvas verdes com filete dourado */
+  .swoosh{position:absolute;bottom:-1px;width:1920px;height:260px}
+  /* texto */
+  .txt{position:absolute;left:790px;top:240px;width:520px}
+  .logo{width:330px;display:block;margin:0 0 46px -6px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}
+  .h1{font-weight:800;font-size:104px;line-height:.98;letter-spacing:-.025em;color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.35)}
+  .h1 .g{display:block;font-size:118px;background:linear-gradient(180deg,#ffe7a6 0%,#f4c55e 45%,#d89a2c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 4px 16px rgba(0,0,0,.35))}
+  .rule{width:190px;height:6px;border-radius:3px;margin:34px 0 28px;background:linear-gradient(90deg,#3dff8a,#19c766)}
+  .sub{font-weight:600;font-size:40px;line-height:1.22;color:#eef6f0}
+  .sub b{color:#f4c55e;font-weight:800}
+  /* produto */
+  .glow{position:absolute;left:1600px;top:560px;width:900px;height:900px;margin:-450px 0 0 -450px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,150,70,.35),rgba(255,150,70,0) 60%)}
+  .iphone{position:absolute;left:1330px;top:190px;height:700px;filter:drop-shadow(0 30px 40px rgba(0,0,0,.45))}
+</style></head>
+<body><div class="stage">
+  <div class="slats"></div>
+  <div class="bokeh" style="left:1180px;top:60px;width:90px;height:90px"></div>
+  <div class="bokeh" style="left:1290px;top:150px;width:50px;height:50px;opacity:.7"></div>
+  <div class="bokeh" style="left:1840px;top:820px;width:110px;height:110px;opacity:.6"></div>
+  <div class="bokeh" style="left:1120px;top:760px;width:70px;height:70px;opacity:.5"></div>
+  <div class="leafs" style="left:1700px;top:600px">
+    <div class="leaf" style="left:0;top:80px;width:200px;height:70px;transform:rotate(-40deg)"></div>
+    <div class="leaf" style="left:60px;top:40px;width:220px;height:66px;transform:rotate(-75deg)"></div>
+    <div class="leaf" style="left:-40px;top:140px;width:180px;height:60px;transform:rotate(-15deg)"></div>
+  </div>
+  <div class="glow"></div>
+  <img class="leila" src="leila_crop.png">
+  <div class="leila-shade"></div>
+  <img class="iphone" src="iphone.png">
+  <svg class="swoosh" viewBox="0 0 1920 260" preserveAspectRatio="none">
+    <defs><linearGradient id="gold" x1="0" x2="1"><stop offset="0" stop-color="#b8862b"/><stop offset=".5" stop-color="#ffe3a0"/><stop offset="1" stop-color="#c8952f"/></linearGradient>
+    <linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14613f"/><stop offset="1" stop-color="#083a25"/></linearGradient></defs>
+    <path d="M0 150 C 180 200, 330 250, 520 262 L0 262 Z" fill="url(#gr)"/>
+    <path d="M0 150 C 180 200, 330 250, 520 262" stroke="url(#gold)" stroke-width="5" fill="none"/>
+    <path d="M1920 70 C 1720 170, 1480 240, 1180 262 L1920 262 Z" fill="url(#gr)"/>
+    <path d="M1920 70 C 1720 170, 1480 240, 1180 262" stroke="url(#gold)" stroke-width="5" fill="none"/>
+  </svg>
+  <div class="txt">
+    <img class="logo" src="logo.png">
+    <div class="h1">iPhone 17<span class="g">Pro Max</span></div>
+    <div class="rule"></div>
+    <div class="sub">Tecnologia de ponta com<br><b>preço de leilão.</b></div>
+  </div>
+</div></body></html>
