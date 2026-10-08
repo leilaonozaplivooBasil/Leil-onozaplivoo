@@ -3,8 +3,8 @@
 Banners 1920×1080 (16:9) com a Leila. Para gerar outro dia da contagem:
 
 ```bash
-python3 tela_celular.py "Termina em 2 dias" leila-faltam-2-dias.png
-node render.js "n=2&falta=FALTAM&unit=DIAS&leila=leila-faltam-2-dias.png" faltam-2-dias-1920x1080.png
+python3 tela_celular.py "Termina 17/10" leila-faltam-2-dias.png
+node render.js "n=2&falta=FALTAM&unit=DIAS&data=17/10&leila=leila-faltam-2-dias.png" faltam-2-dias-1920x1080.png
 ```
 
 - `tela_celular.py`: troca o prazo ("Termina em ...") na tela do celular que a Leila segura.
