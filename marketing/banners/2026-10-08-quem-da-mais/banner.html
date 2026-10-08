@@ -38,7 +38,7 @@
   .podium .ring{position:absolute;left:-6px;right:-6px;bottom:-6px;height:70px;border-radius:50%;
     border-bottom:5px solid #3dff8a;filter:drop-shadow(0 0 14px rgba(61,255,138,.9))}
   /* leiloeiro */
-  .auct{position:absolute;z-index:2;left:calc(50% + 6px);bottom:118px;height:770px;transform:translateX(-50%);
+  .auct{position:absolute;z-index:2;left:calc(50% + 6px);bottom:118px;height:770px;-webkit-mask-image:linear-gradient(0deg,transparent 0,#000 22%);mask-image:linear-gradient(0deg,transparent 0,#000 22%);transform:translateX(-50%);
     filter:drop-shadow(0 30px 40px rgba(0,0,0,.6)) drop-shadow(0 0 30px rgba(61,255,138,.18))}
   .reflect{position:absolute;left:50%;bottom:-560px;height:770px;transform:translateX(-50%) scaleY(-1);opacity:.10;filter:blur(3px);
     -webkit-mask-image:linear-gradient(0deg, transparent 55%, #000 100%)}
@@ -84,8 +84,6 @@
   <div class="spark" style="left:1240px;top:640px;width:5px;height:5px"></div>
   <div class="spark" style="left:690px;top:700px;width:7px;height:7px"></div>
   <div class="spark" style="left:930px;top:90px;width:5px;height:5px"></div>
-  <div class="podium"><div class="side"></div><div class="top"></div><div class="ring"></div></div>
-  <img class="reflect" src="leiloeiro.png">
   <img class="auct" src="leiloeiro.png">
   <img class="logo" src="logo.png">
   <div class="left">
