@@ -1,5 +1,5 @@
 """Gera a foto da Leila com a tela do celular mostrando o iPhone 17 Pro Max.
-Uso: python3 tela_celular.py "Começa em 1 dia" saida.png"""
+Uso: python3 tela_celular.py "Termina em 1 dia" saida.png"""
 import sys, os
 from PIL import Image, ImageDraw, ImageFont
 AQUI = os.path.dirname(os.path.abspath(__file__))
@@ -25,8 +25,9 @@ reg.paste(ip, (int(((61+272.5)/2-X0)*K-ip.width/2), int((415-Y0)*K)), ip)
 d.rectangle(R(62, 606, 273, 629), fill=(3, 31, 52))
 d.text(P(67, 617.5), "iPhone 17 Pro Max", font=f('Inter-SemiBold.otf', 11.5), fill='white', anchor='lm')
 d.rectangle(R(62, 630, 276, 672), fill=(2, 28, 49))
-d.ellipse(R(68, 646.5, 75, 653.5), fill=(255, 196, 70))
-d.text(P(81, 650), status, font=f('Inter-Bold.otf', 12), fill=(255, 196, 70), anchor='lm')
+d.ellipse(R(68, 646.5, 75, 653.5), fill=(61, 255, 138))
+d.text(P(81, 650), "Leilão ativo", font=f('Inter-Bold.otf', 12), fill=(61, 255, 138), anchor='lm')
+d.text(P(268, 650), status, font=f('Inter-Bold.otf', 10), fill=(255, 196, 70), anchor='rm')
 restretch(128, 235, 727, 753, 726.5)
 d.text(P(184, 740), "Comparar Preço", font=f('Inter-SemiBold.otf', 10), fill='white', anchor='mm')
 reg = reg.resize((X1-X0, Y1-Y0), Image.LANCZOS)

@@ -27,8 +27,8 @@
   .txt{position:absolute;left:780px;top:150px;width:560px}
   .logo{width:280px;display:block;margin:0 0 34px -6px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}
   .kicker{display:inline-flex;align-items:center;gap:12px;padding:10px 22px 10px 16px;border-radius:999px;
-    border:2px solid rgba(244,197,94,.7);background:rgba(4,30,20,.45);color:#f4c55e;font-weight:800;font-size:22px;letter-spacing:.2em}
-  .kicker svg{width:26px;height:26px}
+    border:2px solid rgba(61,255,138,.6);background:rgba(4,30,20,.45);color:#7dffb4;font-weight:800;font-size:22px;letter-spacing:.2em}
+  .kicker .dot{width:14px;height:14px;border-radius:50%;background:#3dff8a;box-shadow:0 0 0 5px rgba(61,255,138,.25),0 0 14px 2px rgba(61,255,138,.8)}
   .falta{margin:26px 0 6px;font-weight:800;font-size:64px;letter-spacing:.06em;color:#fff;line-height:1}
   .count{display:flex;align-items:center;gap:26px}
   .tile{position:relative;width:200px;height:240px;border-radius:26px;
@@ -74,10 +74,10 @@
   </svg>
   <div class="txt">
     <img class="logo" src="logo.png">
-    <div class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="#f4c55e" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg>CONTAGEM REGRESSIVA</div>
+    <div class="kicker"><span class="dot"></span>LEILÃO ATIVO · LANCES ABERTOS</div>
     <div class="falta" id="falta">FALTA</div>
     <div class="count"><div class="tile"><span id="n">1</span></div><div class="unit" id="unit">DIA</div></div>
-    <div class="para">para o leilão do</div>
+    <div class="para">para o martelo bater no</div>
     <div class="prod">iPhone 17 Pro Max</div>
   </div>
 </div><script>
