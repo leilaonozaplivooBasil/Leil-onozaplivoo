@@ -1,0 +1,46 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}</style></head><body>
+<svg id="s" width="1300" height="860" viewBox="0 0 1300 860" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="bezel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3d44"/><stop offset=".5" stop-color="#16181c"/><stop offset="1" stop-color="#2b2e34"/></linearGradient>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#1b1446"/><stop offset=".35" stop-color="#6a2c8c"/><stop offset=".62" stop-color="#ff6a3d"/><stop offset=".78" stop-color="#ffc35a"/><stop offset="1" stop-color="#ffe9a8"/></linearGradient>
+  <radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff8d6"/><stop offset=".35" stop-color="#ffe08a"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient>
+  <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b2a7a"/><stop offset="1" stop-color="#2a1747"/></linearGradient>
+  <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f1d5c"/><stop offset="1" stop-color="#150f33"/></linearGradient>
+  <linearGradient id="m3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14325a"/><stop offset="1" stop-color="#0a1a33"/></linearGradient>
+  <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb35c"/><stop offset=".25" stop-color="#b8487a"/><stop offset=".7" stop-color="#2a1d5a"/><stop offset="1" stop-color="#0b1230"/></linearGradient>
+  <linearGradient id="glare" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".35" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <clipPath id="scr"><rect x="22" y="22" width="1256" height="706" rx="6"/></clipPath>
+  <filter id="sh" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="30" stdDeviation="30" flood-color="#000" flood-opacity=".55"/></filter>
+  <filter id="blur"><feGaussianBlur stdDeviation="2"/></filter>
+</defs>
+<g filter="url(#sh)">
+  <!-- pés -->
+  <path d="M190 742 L150 836 L176 840 L226 742 Z" fill="#2a2c31"/><path d="M1110 742 L1150 836 L1124 840 L1074 742 Z" fill="#2a2c31"/>
+  <rect x="140" y="832" width="50" height="10" rx="5" fill="#111"/><rect x="1110" y="832" width="50" height="10" rx="5" fill="#111"/>
+  <!-- moldura -->
+  <rect x="0" y="0" width="1300" height="750" rx="18" fill="url(#bezel)"/>
+  <rect x="14" y="14" width="1272" height="722" rx="10" fill="#050505"/>
+  <g clip-path="url(#scr)">
+    <rect x="22" y="22" width="1256" height="706" fill="url(#sky)"/>
+    <circle cx="650" cy="420" r="210" fill="url(#sun)"/>
+    <circle cx="650" cy="420" r="62" fill="#fffbe6"/>
+    <!-- nuvens -->
+    <g fill="#ffd0b0" opacity=".35" filter="url(#blur)"><ellipse cx="300" cy="200" rx="220" ry="26"/><ellipse cx="980" cy="160" rx="260" ry="22"/><ellipse cx="760" cy="250" rx="180" ry="16"/></g>
+    <!-- montanhas -->
+    <path d="M22 470 L180 330 L290 410 L420 280 L560 430 L650 390 L780 300 L930 420 L1060 320 L1278 460 L1278 520 L22 520Z" fill="url(#m1)"/>
+    <path d="M420 280 L470 320 L440 318 L420 300 L395 322 Z M780 300 L825 338 L795 332 L780 318 L760 336Z M1060 320 L1100 350 L1075 346Z" fill="#f3d9ff" opacity=".7"/>
+    <path d="M22 500 L140 420 L260 480 L380 400 L520 490 L700 430 L860 500 L1000 440 L1150 495 L1278 450 L1278 540 L22 540Z" fill="url(#m2)"/>
+    <path d="M22 530 C 200 500, 350 545, 520 525 C 700 505, 880 548, 1060 520 C 1160 505, 1230 520, 1278 515 L1278 560 L22 560Z" fill="url(#m3)"/>
+    <!-- lago com reflexo -->
+    <rect x="22" y="556" width="1256" height="180" fill="url(#lake)"/>
+    <ellipse cx="650" cy="595" rx="26" ry="70" fill="#fff3c4" opacity=".28" filter="url(#blur)"/>
+    <g stroke="#ffe2a8" stroke-width="3" opacity=".5"><line x1="560" y1="590" x2="740" y2="590"/><line x1="590" y1="615" x2="710" y2="615"/><line x1="610" y1="640" x2="690" y2="640"/></g>
+    <!-- pinheiros em silhueta -->
+    <g fill="#081226"><path d="M60 560 l18-70 18 70z"/><path d="M95 560 l14-52 14 52z"/><path d="M1180 560 l18-74 18 74z"/><path d="M1220 560 l13-50 13 50z"/></g>
+    <rect x="22" y="22" width="1256" height="706" fill="url(#glare)"/>
+  </g>
+  <!-- logo fino na moldura de baixo -->
+  <rect x="610" y="738" width="80" height="4" rx="2" fill="#6b6f78"/>
+</g>
+</svg></body></html>
