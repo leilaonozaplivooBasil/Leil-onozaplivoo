@@ -1,0 +1,124 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden;background:#06261a}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:"Inter Display","Inter",sans-serif;
+    background:
+      radial-gradient(ellipse 620px 760px at 1650px 560px, rgba(160,220,255,.16), rgba(160,220,255,0) 70%),
+      radial-gradient(ellipse 1100px 900px at 1250px 450px, #12583c 0%, #0b3d29 45%, #062418 100%)}
+  .slats{position:absolute;right:0;top:0;width:620px;height:760px;opacity:.30;
+    background:repeating-linear-gradient(90deg,#3a2414 0 26px,#5b3a20 26px 30px,#2a190d 30px 34px);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 35%),linear-gradient(0deg,transparent,#000 40%);
+    -webkit-mask-composite:source-in;mask-composite:intersect}
+  .slats::after{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:#ffcf8a;box-shadow:0 0 40px 18px rgba(255,190,110,.55)}
+  .bokeh{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,206,140,.55),rgba(255,206,140,0) 70%);filter:blur(4px)}
+
+  .leila{position:absolute;left:0;top:0;height:1080px;-webkit-mask-image:linear-gradient(90deg,#000 0,#000 95%,transparent 100%);mask-image:linear-gradient(90deg,#000 0,#000 95%,transparent 100%)}
+  .swoosh{position:absolute;bottom:-1px;left:0;width:1920px;height:260px}
+  .swoosh-top{position:absolute;left:0;top:0;width:2000px;height:360px;transform:rotate(180deg);transform-origin:1000px 180px}
+  .logo{position:absolute;left:30px;top:26px;width:230px;filter:drop-shadow(0 8px 20px rgba(0,0,0,.5))}
+
+  /* produto */
+  .halo{position:absolute;left:1700px;top:545px;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;
+    border:6px solid #3dff8a;box-shadow:0 0 30px 6px rgba(61,255,138,.65),0 0 90px 24px rgba(32,220,110,.3),inset 0 0 40px 8px rgba(61,255,138,.4)}
+  .fridge{position:absolute;left:1500px;top:150px;height:800px;filter:drop-shadow(0 34px 40px rgba(0,0,0,.55))}
+  .floor-glow{position:absolute;left:1480px;top:925px;width:480px;height:60px;border-radius:50%;background:radial-gradient(ellipse,rgba(61,255,138,.45),rgba(61,255,138,0) 70%)}
+
+  /* texto */
+  .col{position:absolute;left:875px;top:165px;width:580px}
+  .kicker{display:inline-flex;align-items:center;gap:12px;padding:10px 22px 10px 16px;border-radius:999px;white-space:nowrap;
+    border:2px solid rgba(61,255,138,.6);background:rgba(4,30,20,.5);color:#7dffb4;font-weight:800;font-size:17px;letter-spacing:.1em}
+  .kicker .dot{width:14px;height:14px;border-radius:50%;background:#3dff8a;box-shadow:0 0 0 5px rgba(61,255,138,.25),0 0 14px 2px rgba(61,255,138,.8)}
+  .gold{background:linear-gradient(180deg,#ffe7a6 0%,#f4c55e 45%,#d89a2c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 5px 0 #5a3a07) drop-shadow(0 0 22px rgba(244,197,94,.4));display:inline-block;padding:0 12px 8px 0}
+  .white{color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.4)}
+  .h{font-weight:900;letter-spacing:-.025em;line-height:.98}
+  .sub{font-weight:600;font-size:30px;line-height:1.3;color:#e6f2ea}
+  .sub b{color:#3dff8a;font-weight:800}
+  .prod{font-weight:900;font-size:36px;line-height:1.06;letter-spacing:-.015em;color:#fff}
+  .prod .v{color:#3dff8a}
+  .chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+  .chip{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:16px;background:rgba(4,30,20,.55);
+    border:2px solid rgba(244,197,94,.55);color:#fff;font-weight:800;font-size:22px;white-space:nowrap}
+  .chip svg{width:26px;height:26px}
+  .date{position:absolute;left:875px;top:930px;font-weight:900;font-size:48px;letter-spacing:-.02em;color:#fff;white-space:nowrap;
+    padding-left:26px;border-left:10px solid #3dff8a;text-shadow:0 6px 30px rgba(0,0,0,.4)}
+  .date .g{color:#3dff8a}
+  .bubble{position:absolute;left:300px;top:850px;z-index:5;filter:drop-shadow(0 16px 30px rgba(0,0,0,.45))}
+  .b-in{position:relative;background:#fff;color:#14261c;border-radius:28px;padding:22px 32px;font-weight:600;font-size:32px;line-height:1.2;white-space:nowrap}
+  .b-in b{color:#0f8a4a;font-weight:800}
+  .b-in::before{content:"";position:absolute;left:110px;top:-24px;border:18px solid transparent;border-bottom:26px solid #fff;border-top:0;transform:skewX(18deg)}
+
+  /* placar */
+  .count{display:flex;align-items:center;gap:16px;margin-top:18px}
+  .tile{position:relative;width:176px;height:200px;border-radius:26px;
+    background:linear-gradient(180deg,#0f4d33 0%,#0b3a27 49.6%,#06261a 50.4%,#0a3423 100%);
+    box-shadow:0 0 0 3px rgba(61,255,138,.55),0 0 40px 8px rgba(61,255,138,.35),0 24px 40px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.12);
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:136px;line-height:1;letter-spacing:-.03em}
+  .tile span{background:linear-gradient(180deg,#ffe7a6 0%,#f4c55e 45%,#d89a2c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;transform:translateY(-4px)}
+  .tile::after{content:"";position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;background:#041a11}
+  .slash{font-weight:800;font-size:120px;line-height:1;color:#f4c55e;opacity:.9}
+  .v{display:none}
+  body.v1 .v1, body.v2 .v2, body.v3 .v3{display:block}
+</style></head>
+<body><div class="stage">
+  <div class="slats"></div>
+  <div class="bokeh" style="left:1260px;top:70px;width:90px;height:90px"></div>
+  <div class="bokeh" style="left:1850px;top:830px;width:110px;height:110px;opacity:.6"></div>
+  <div class="halo"></div>
+  <div class="floor-glow"></div>
+  <img class="fridge" src="geladeira.png">
+  <svg class="swoosh" viewBox="0 0 1920 260" preserveAspectRatio="none">
+    <defs><linearGradient id="gold" x1="0" x2="1"><stop offset="0" stop-color="#b8862b"/><stop offset=".5" stop-color="#ffe3a0"/><stop offset="1" stop-color="#c8952f"/></linearGradient>
+    <linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14613f"/><stop offset="1" stop-color="#083a25"/></linearGradient></defs>
+    <path d="M1920 70 C 1720 170, 1480 240, 1180 262 L1920 262 Z" fill="url(#gr)"/>
+    <path d="M1920 70 C 1720 170, 1480 240, 1180 262" stroke="url(#gold)" stroke-width="5" fill="none"/>
+  </svg>
+  <img class="leila" src="leila-ombro-geladeira.png">
+  <svg class="swoosh-top" viewBox="0 0 1920 260" preserveAspectRatio="none">
+    <path d="M1920 70 C 1720 170, 1480 240, 1180 262 L1920 262 Z" fill="url(#gr)"/>
+    <path d="M1920 70 C 1720 170, 1480 240, 1180 262" stroke="url(#gold)" stroke-width="5" fill="none"/>
+  </svg>
+  <img class="logo" src="logo.png">
+
+  <!-- V1 · A cozinha dos sonhos -->
+  <div class="col v v1">
+    <div class="kicker"><span class="dot"></span>LEILÃO ATIVO · LANCES ABERTOS</div>
+    <div class="h white" style="font-size:62px;margin-top:30px">A COZINHA</div>
+    <div class="h white" style="font-size:62px">DOS SONHOS</div>
+    <div class="h gold" style="font-size:76px;margin-top:4px">VAI A LEILÃO</div>
+    <div class="prod" style="margin-top:26px">Geladeira Brastemp<br><span class="v" style="display:inline">Frost Free 385 L</span> Duplex Inox</div>
+    <div class="chips">
+      <div class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="2.4" stroke-linecap="round"><path d="M12 2v20M4.9 6l14.2 12M19.1 6 4.9 18M9 3.5 12 6l3-2.5M9 20.5 12 18l3 2.5"/></svg>Frost Free</div>
+      <div class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="#f4c55e" stroke-width="2.4" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 9h14M8 5v2M8 12v4"/></svg>385 litros</div>
+      <div class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="#3dff8a" stroke-width="2.4" stroke-linecap="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>Inox</div>
+    </div>
+  </div>
+
+  <!-- V2 · Adeus, degelo -->
+  <div class="col v v2">
+    <div class="kicker"><span class="dot"></span>LEILÃO ATIVO · LANCES ABERTOS</div>
+    <div class="h white" style="font-size:76px;margin-top:30px">ADEUS,</div>
+    <div class="h white" style="font-size:76px">DEGELO.</div>
+    <div class="h gold" style="font-size:62px;margin-top:6px">OLÁ, FROST FREE.</div>
+    <div class="sub" style="margin-top:22px">Sem gelo acumulado, com <b>385 litros</b><br>de espaço e acabamento inox.</div>
+    <div class="prod" style="margin-top:22px;font-size:36px">Geladeira Brastemp Frost Free<br>385 L Duplex Inox</div>
+  </div>
+  <div class="bubble v v2"><div class="b-in">Essa vai ser <b>disputada</b>!<br>Dê seu lance na <b>Leilão No Zap</b></div></div>
+
+  <!-- V3 · O martelo bate quarta -->
+  <div class="col v v3">
+    <div class="kicker"><span class="dot"></span>LEILÃO ATIVO · LANCES ABERTOS</div>
+    <div class="h white" style="font-size:54px;margin-top:30px;letter-spacing:.02em">O MARTELO BATE</div>
+    <div class="h gold" style="font-size:118px;margin-top:2px">QUARTA</div>
+    <div class="count"><div class="tile"><span>14</span></div><div class="slash">/</div><div class="tile"><span>10</span></div></div>
+    <div class="h white" style="font-size:54px;margin-top:18px">ÀS <span style="color:#3dff8a">18H</span></div>
+    <div class="prod" style="margin-top:40px">Geladeira Brastemp<br><span style="color:#3dff8a">Frost Free 385 L</span> Duplex Inox</div>
+  </div>
+
+  <div class="date v v1">QUARTA · <span class="g">14/10</span> ÀS 18H</div>
+  <div class="date v v2">QUARTA · <span class="g">14/10</span> ÀS 18H</div>
+</div>
+<script>document.body.className=(location.hash.slice(1)||'v1');</script>
+</body></html>
