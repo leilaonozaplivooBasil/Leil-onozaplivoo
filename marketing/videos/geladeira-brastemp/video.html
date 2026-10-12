@@ -1,0 +1,152 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:#05200f}
+  #stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"Inter Display","Inter",sans-serif;
+    background:radial-gradient(ellipse 900px 1100px at 540px 1000px,#14603f 0%,#0b3d29 45%,#05200f 100%)}
+  .abs{position:absolute}
+  #streaks{left:-200px;top:0;width:1480px;height:1920px;opacity:.5}
+  .bokeh{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,214,150,.55),rgba(255,214,150,0) 70%)}
+  .flake{position:absolute;color:#cdefff;font-size:34px;text-shadow:0 0 12px #9fdcff}
+  #logo{left:390px;top:225px;width:300px;filter:drop-shadow(0 8px 20px rgba(0,0,0,.5))}
+  #title{left:0;width:1080px;top:380px;text-align:center;font-weight:900;line-height:.95;letter-spacing:-.02em}
+  #title .l1{font-size:104px;color:#fff;text-shadow:0 8px 30px rgba(0,0,0,.45)}
+  #title .l2{font-size:124px;display:inline-block;padding:0 14px 10px;
+    background:linear-gradient(180deg,#ffe7a6 0%,#f4c55e 45%,#d89a2c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 6px 0 #5a3a07) drop-shadow(0 0 26px rgba(244,197,94,.45))}
+  #halo{width:820px;height:820px;border-radius:50%;border:8px solid #3dff8a;
+    box-shadow:0 0 34px 8px rgba(61,255,138,.7),0 0 120px 34px rgba(32,220,110,.3),inset 0 0 50px 10px rgba(61,255,138,.4)}
+  #platform{width:620px;height:120px;border-radius:50%;background:radial-gradient(ellipse at 50% 40%,#1a6b47,#0a3322 70%);
+    border:5px solid #3dff8a;box-shadow:0 0 24px 4px rgba(61,255,138,.85),0 0 80px 18px rgba(61,255,138,.35)}
+  #fridgeWrap{width:470px;height:928px;perspective:1600px}
+  #fridge{width:100%;height:100%;transform-style:preserve-3d}
+  #fridge img{width:100%;height:100%;display:block;filter:drop-shadow(0 40px 40px rgba(0,0,0,.55))}
+  #sheen{position:absolute;inset:0;-webkit-mask-image:url(geladeira.png);-webkit-mask-size:100% 100%;mask-image:url(geladeira.png);mask-size:100% 100%;
+    background:linear-gradient(105deg,transparent 0%,transparent 42%,rgba(255,255,255,.75) 50%,transparent 58%,transparent 100%);background-size:300% 100%}
+  .chip{position:absolute;width:400px;padding:22px 26px;border-radius:26px;background:rgba(5,32,18,.82);border:3px solid rgba(244,197,94,.75);
+    box-shadow:0 20px 40px rgba(0,0,0,.45),0 0 30px rgba(61,255,138,.15);display:flex;gap:18px;align-items:center}
+  .chip .ic{flex:0 0 76px;height:76px;border-radius:20px;background:linear-gradient(180deg,#4dff95,#16c964);display:flex;align-items:center;justify-content:center}
+  .chip .ic svg{width:46px;height:46px}
+  .chip b{display:block;font-weight:900;font-size:44px;color:#fff;line-height:1}
+  .chip span{display:block;margin-top:6px;font-weight:600;font-size:26px;color:#bfe9cf;line-height:1.15}
+  #price{left:140px;width:800px;top:1400px;height:250px;border-radius:40px;background:linear-gradient(180deg,#0f4d33,#06261a);
+    border:4px solid #f4c55e;box-shadow:0 0 0 6px rgba(244,197,94,.18),0 30px 60px rgba(0,0,0,.5);text-align:center;padding-top:30px}
+  #price .lbl{font-weight:800;font-size:40px;letter-spacing:.18em;color:#bfe9cf}
+  #price .val{font-weight:900;font-size:150px;line-height:1;letter-spacing:-.03em;
+    background:linear-gradient(180deg,#ffe7a6 0%,#f4c55e 45%,#d89a2c 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  #gavel{width:300px;height:300px;transform-origin:85% 85%}
+  #flash{inset:0;background:radial-gradient(circle at 880px 1460px,rgba(255,240,190,.8),rgba(255,240,190,0) 30%)}
+  .spark{position:absolute;width:12px;height:12px;border-radius:50%;background:#ffe7a6;box-shadow:0 0 14px 4px #f4c55e}
+  #cta{left:150px;width:780px;top:1400px;height:170px;border-radius:999px;background:linear-gradient(180deg,#4dff95,#16c964);
+    display:flex;align-items:center;justify-content:center;gap:22px;color:#04210f;font-weight:900;font-size:76px;letter-spacing:.02em;
+    box-shadow:0 10px 0 #0b7a3d,0 0 60px 14px rgba(61,255,138,.45),0 30px 50px rgba(0,0,0,.45)}
+  #cta svg{width:74px;height:74px}
+  #date{left:0;width:1080px;top:1605px;text-align:center;font-weight:900;font-size:52px;color:#fff;text-shadow:0 6px 24px rgba(0,0,0,.5)}
+  #date .g{color:#3dff8a}
+  #name{left:0;width:1080px;top:1300px;text-align:center;font-weight:800;font-size:38px;color:#fff;opacity:.95}
+</style></head>
+<body><div id="stage">
+  <svg id="streaks" class="abs" viewBox="0 0 1480 1920"><defs><linearGradient id="gs" x1="0" x2="1"><stop offset="0" stop-color="#f4c55e" stop-opacity="0"/><stop offset=".5" stop-color="#ffe3a0" stop-opacity=".55"/><stop offset="1" stop-color="#f4c55e" stop-opacity="0"/></linearGradient></defs>
+    <g id="streakG"><rect x="-400" y="300" width="2400" height="3" fill="url(#gs)" transform="rotate(-28 740 960)"/><rect x="-400" y="900" width="2400" height="2" fill="url(#gs)" transform="rotate(-28 740 960)"/><rect x="-400" y="1500" width="2400" height="4" fill="url(#gs)" transform="rotate(-28 740 960)"/></g></svg>
+  <div id="bokehs"></div>
+  <div id="halo" class="abs"></div>
+  <div id="platform" class="abs"></div>
+  <div id="flakes"></div>
+  <div id="fridgeWrap" class="abs"><div id="fridge"><img src="geladeira.png"><div id="sheen"></div></div></div>
+  <div class="chip" id="c1"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#04210f" stroke-width="2.6" stroke-linecap="round"><path d="M12 2v20M4.9 6l14.2 12M19.1 6 4.9 18M9 3.5 12 6l3-2.5M9 20.5 12 18l3 2.5"/></svg></div><div><b>Frost Free</b><span>Sem gelo, sem degelo</span></div></div>
+  <div class="chip" id="c2"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#04210f" stroke-width="2.6" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 9h14M8 5v2M8 12v4"/></svg></div><div><b>385 litros</b><span>Espaço para a família toda</span></div></div>
+  <div class="chip" id="c3"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#04210f" stroke-width="2.6" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 8h14M16 4v2M16 10v5"/></svg></div><div><b>Duplex</b><span>Freezer em cima, organização embaixo</span></div></div>
+  <div class="chip" id="c4"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#04210f" stroke-width="2.6" stroke-linecap="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></div><div><b>Inox</b><span>Acabamento premium Brastemp</span></div></div>
+  <div id="name" class="abs">Geladeira Brastemp Frost Free 385 L Duplex Inox</div>
+  <div id="price" class="abs"><div class="lbl">LANCE ATUAL</div><div class="val" id="pval">R$ 0</div></div>
+  <svg id="gavel" class="abs" viewBox="0 0 200 200">
+    <defs><linearGradient id="wd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a0602a"/><stop offset=".5" stop-color="#6b3b14"/><stop offset="1" stop-color="#4a2709"/></linearGradient>
+    <linearGradient id="wh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a4f1f"/><stop offset=".5" stop-color="#c47f3d"/><stop offset="1" stop-color="#6b3b14"/></linearGradient></defs>
+    <rect x="96" y="70" width="16" height="125" rx="7" fill="url(#wh)" transform="rotate(-45 104 132)"/>
+    <g transform="rotate(-45 70 70)"><rect x="20" y="45" width="100" height="50" rx="12" fill="url(#wd)"/><rect x="14" y="40" width="14" height="60" rx="6" fill="#d9a441"/><rect x="112" y="40" width="14" height="60" rx="6" fill="#d9a441"/></g>
+  </svg>
+  <div id="sparks"></div>
+  <div id="flash" class="abs"></div>
+  <div id="cta" class="abs"><svg viewBox="0 0 24 24" fill="none" stroke="#04210f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m14 4 6 6M3 21l8-8M9.5 7.5l7 7M12 5l7 7-3 3-7-7z"/></svg>DÊ SEU LANCE</div>
+  <div id="date" class="abs">QUARTA · <span class="g">14/10</span> ÀS 18H</div>
+  <img id="logo" class="abs" src="logo.png">
+  <div id="title" class="abs"><div class="l1">GELADEIRA</div><div class="l2">EM LEILÃO</div></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const p=(t,a,b)=>clamp((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3);                       // ease out
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;    // ease in-out
+const back=x=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const S=(el,css)=>Object.assign(el.style,css);
+
+// partículas determinísticas
+const rnd=(i)=>{let x=Math.sin(i*127.1)*43758.5453;return x-Math.floor(x)};
+const B=$('bokehs'); for(let i=0;i<14;i++){const d=document.createElement('div');d.className='bokeh';B.appendChild(d)}
+const F=$('flakes'); for(let i=0;i<18;i++){const d=document.createElement('div');d.className='flake';d.textContent='❄';F.appendChild(d)}
+const SP=$('sparks'); for(let i=0;i<22;i++){const d=document.createElement('div');d.className='spark';SP.appendChild(d)}
+
+const FX=540, FY=1135; // centro da geladeira
+window.render=function(t){
+  // fundo
+  $('streakG').setAttribute('transform',`translate(${(t*60)%600-300},0)`);
+  [...B.children].forEach((d,i)=>{const s=40+rnd(i)*110;const x=rnd(i+3)*1080, y=(rnd(i+7)*2200 - t*(20+rnd(i)*30))%2100;
+    S(d,{width:s+'px',height:s+'px',left:x+'px',top:(y<-150?y+2100:y)+'px',opacity:.25+rnd(i+9)*.45})});
+
+  // logo e título
+  const a0=eo(p(t,0.1,0.8)); S($('logo'),{opacity:a0,transform:`translateY(${(1-a0)*-40}px)`});
+  const a1=back(p(t,0.35,1.1)); S($('title'),{opacity:clamp(p(t,0.35,0.8)),transform:`scale(${0.7+0.3*a1})`});
+  const goldPulse=1+0.04*Math.sin(t*4)*clamp(p(t,1.2,1.5));
+  $('title').querySelector('.l2').style.transform=`scale(${goldPulse})`;
+
+  // geladeira: sobe e gira
+  const rise=eo(p(t,0.5,1.8));
+  let fy=FY+(1-rise)*900, fs=1, rotY=Math.sin(t*1.1)*14*clamp(p(t,1.8,2.4)), fx=FX;
+  // fase preço: geladeira sobe e diminui
+  const shrink=eio(p(t,6.8,7.6)); fs=1-0.34*shrink; fy=fy-170*shrink;
+  const floatY=Math.sin(t*2.2)*10;
+  const W=470,H=928;
+  S($('fridgeWrap'),{left:(fx-W/2)+'px',top:(fy-H/2+floatY)+'px',transform:`scale(${fs})`,transformOrigin:'50% 50%',opacity:clamp(p(t,0.5,0.9))});
+  S($('fridge'),{transform:`rotateY(${rotY}deg)`});
+  $('sheen').style.backgroundPosition=`${100-((t*55)%300)}% 0`;
+  // halo + plataforma
+  const hs=eo(p(t,0.9,1.9)); const hy=fy+floatY*.3;
+  S($('halo'),{left:(FX-410)+'px',top:(hy-410)+'px',opacity:hs*(1-0.35*shrink),transform:`scale(${(0.6+0.4*hs)*(1+0.03*Math.sin(t*3))*(1-0.25*shrink)})`});
+  S($('platform'),{left:(FX-310)+'px',top:(fy+H/2*fs-70)+'px',opacity:rise*(1-shrink),transform:`scale(${1-0.3*shrink})`});
+
+  // flocos durante Frost Free
+  const fa=clamp(p(t,2.2,2.6))*(1-clamp(p(t,4.0,4.6)));
+  [...F.children].forEach((d,i)=>{const ang=rnd(i)*6.28+t*0.6, r=270+rnd(i+1)*160;
+    S(d,{left:(FX+Math.cos(ang)*r)+'px',top:(fy-120+Math.sin(ang)*r*1.3 + ((t*60+rnd(i+2)*400)%400)-200)+'px',opacity:fa*(.5+.5*rnd(i+4)),transform:`rotate(${t*90+i*20}deg)`})});
+
+  // benefícios
+  const chips=[['c1',2.3,'L',800],['c2',3.3,'R',975],['c3',4.3,'L',1150],['c4',5.3,'R',1325]];
+  chips.forEach(([id,st,side,y])=>{const k=back(p(t,st,st+0.55)); const out=eio(p(t,6.5,6.9));
+    const x0=side==='L'?40:640, from=side==='L'?-520:1100;
+    S($(id),{left:(from+(x0-from)*k + (side==='L'?-1:1)*out*600)+'px',top:y+'px',opacity:clamp(p(t,st,st+0.3))*(1-out)})});
+
+  // nome + preço
+  const nm=eo(p(t,7.2,7.7)); S($('name'),{opacity:nm*(1-eio(p(t,10.4,10.8))),top:(1320+ (1-nm)*30)+'px'});
+  const pr=back(p(t,7.4,8.0)); const prOut=eio(p(t,10.3,10.8));
+  const shake=(t>8.9&&t<9.3)?Math.sin(t*90)*14*(1-(t-8.9)/0.4):0;
+  S($('price'),{opacity:clamp(p(t,7.4,7.7))*(1-prOut),transform:`translate(${shake}px,${-prOut*80}px) scale(${0.6+0.4*pr})`});
+  const cnt=Math.round(197*eo(p(t,7.8,8.9))); $('pval').textContent='R$ '+cnt;
+
+  // martelo
+  const gIn=eo(p(t,8.2,8.6)), hit=p(t,8.6,8.9);
+  const ang= t<8.6 ? -60+20*gIn : (t<8.9 ? -40+60*Math.pow(hit,2) : 20-20*eo(p(t,8.9,9.6)));
+  S($('gavel'),{left:(790+(1-gIn)*400)+'px',top:'1300px',opacity:clamp(p(t,8.2,8.4))*(1-clamp(p(t,9.8,10.2))),transform:`rotate(${ang}deg)`});
+  const fl=t>=8.9?Math.max(0,1-(t-8.9)/0.35):0; S($('flash'),{opacity:fl});
+  [...SP.children].forEach((d,i)=>{const k=clamp((t-8.9)/0.7); const ang=rnd(i)*6.28, r=60+k*(220+rnd(i+5)*200);
+    S(d,{left:(890+Math.cos(ang)*r)+'px',top:(1440+Math.sin(ang)*r*0.8+k*k*120)+'px',opacity:(t>=8.9?1-k:0)})});
+
+  // CTA final
+  const ct=back(p(t,10.5,11.1)); const pulse=1+0.05*Math.sin((t-11)*7)*clamp(p(t,11.1,11.3));
+  S($('cta'),{opacity:clamp(p(t,10.5,10.8)),transform:`scale(${(0.5+0.5*ct)*pulse})`});
+  const dt=eo(p(t,11.0,11.5)); S($('date'),{opacity:dt,transform:`translateY(${(1-dt)*30}px)`});
+};
+render(0);
+</script>
+</body></html>
