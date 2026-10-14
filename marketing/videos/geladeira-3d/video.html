@@ -81,6 +81,43 @@
   .v{display:none}
   body.v1 .v1, body.v2 .v2, body.v3 .v3, body.v4 .v4{display:block}
   body.v4 .gavel{display:none}
+  body.v5 .v5, body.v6 .v6, body.v7 .v7{display:block}
+  body.v5 .bigcta.v5, body.v7 .bigcta.v7, body.v6 .tape.v6{display:flex}
+  body.v5 #pillwrap, body.v5 #card, body.v6 #pillwrap, body.v6 #card, body.v7 #pillwrap, body.v7 #card{display:none}
+  body.v5 .plant, body.v5 .plant2, body.v7 .plant, body.v7 .plant2, body.v7 #halo{display:none}
+  .rays{left:-460px;top:-50px;width:2000px;height:2000px;border-radius:50%;opacity:.55;
+    background:repeating-conic-gradient(from 0deg,rgba(244,197,94,.22) 0deg 6deg,rgba(244,197,94,0) 6deg 15deg);
+    -webkit-mask-image:radial-gradient(circle,#000 0,#000 25%,transparent 62%);mask-image:radial-gradient(circle,#000 0,#000 25%,transparent 62%)}
+  .raysG{background:repeating-conic-gradient(from 3deg,rgba(61,255,138,.20) 0deg 5deg,rgba(61,255,138,0) 5deg 14deg)}
+  .giant{left:0;width:1080px;text-align:center;font-weight:900;font-size:390px;line-height:.86;letter-spacing:-.05em;white-space:nowrap}
+  .giant span{background:linear-gradient(180deg,#fff2c8 0%,#f4c55e 40%,#c98a22 80%,#8a5a12 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 12px 0 #4a2f06) drop-shadow(0 0 60px rgba(244,197,94,.45))}
+  .bar{left:40px;width:1000px;border-radius:30px;padding:3px;background:linear-gradient(135deg,#ffe3a0,#b8862b 40%,#ffe3a0 70%,#c8952f);box-shadow:0 20px 44px rgba(0,0,0,.55)}
+  .bar-in{border-radius:27px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 36px;
+    background:radial-gradient(ellipse 500px 200px at 30% 0%,#1b7a50 0%,#0f5636 55%,#0a3d27 100%)}
+  .bigcta{left:40px;width:1000px;height:120px;border-radius:30px;display:flex;align-items:center;justify-content:center;gap:18px;
+    background:linear-gradient(180deg,#5dffa0,#22c96a);color:#03200f;font-weight:900;font-size:52px;letter-spacing:-.01em;white-space:nowrap;
+    box-shadow:0 0 0 5px rgba(61,255,138,.25),0 0 60px rgba(61,255,138,.6),inset 0 3px 0 rgba(255,255,255,.5)}
+  .prodline{font-weight:700;font-size:30px;color:#dff3e8;text-align:center;white-space:nowrap}
+  .prodline b{color:#3dff8a;font-weight:800}
+  .tape{left:-80px;width:1240px;height:96px;display:flex;align-items:center;gap:34px;overflow:hidden;white-space:nowrap;
+    background:linear-gradient(180deg,#ffe7a6,#f4c55e 50%,#d89a2c);color:#062418;font-weight:900;font-size:48px;letter-spacing:.02em;
+    box-shadow:0 14px 34px rgba(0,0,0,.55),inset 0 3px 0 rgba(255,255,255,.4),inset 0 -4px 0 rgba(90,58,7,.5)}
+  .tape i{display:inline-block;width:18px;height:18px;border-radius:50%;background:#0a3d27;font-style:normal}
+  .tile2{position:relative;width:150px;height:186px;border-radius:24px;
+    background:linear-gradient(180deg,#0f4d33 0%,#0b3a27 49.6%,#06261a 50.4%,#0a3423 100%);
+    box-shadow:0 0 0 3px rgba(61,255,138,.55),0 0 40px 8px rgba(61,255,138,.35),0 24px 40px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.12);
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:136px;line-height:1;letter-spacing:-.03em}
+  .tile2 span{background:linear-gradient(180deg,#ffe7a6 0%,#f4c55e 45%,#d89a2c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;transform:translateY(-4px)}
+  .tile2::after{content:"";position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;background:#041a11}
+  .colon{font-weight:900;font-size:120px;color:#f4c55e;line-height:1;margin:0 4px}
+  .redbadge{display:inline-flex;align-items:center;gap:14px;padding:14px 28px 14px 20px;border-radius:999px;white-space:nowrap;
+    background:linear-gradient(180deg,#ff5a5a,#d61f2c);color:#fff;font-weight:900;font-size:32px;letter-spacing:.08em;
+    box-shadow:0 0 0 4px rgba(255,90,90,.25),0 0 40px rgba(255,60,60,.55)}
+  .redbadge .dot{width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff}
+  .burst{left:20px;top:1170px;width:470px;height:470px;transform:rotate(-10deg)}
+  .burst svg{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 18px 30px rgba(0,0,0,.55)) drop-shadow(0 0 40px rgba(244,197,94,.5))}
+  .burst .t{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#062418;text-align:center}
   .seal{left:730px;top:690px;width:320px;height:320px;border-radius:50%;text-align:center;padding-top:70px;white-space:nowrap;transform:rotate(-8deg);
     background:radial-gradient(circle at 35% 28%,#ffeec0,#f4c55e 45%,#c08427 100%);color:#0a3d27;
     box-shadow:0 0 0 8px rgba(255,231,166,.25),0 0 0 14px rgba(10,61,39,.9),0 0 0 17px #f4c55e,0 24px 50px rgba(0,0,0,.55),0 0 60px rgba(244,197,94,.45)}
@@ -117,6 +154,10 @@
     <path d="M110 430 L230 430 L215 520 L125 520Z" fill="#14100b" stroke="#c9a24a" stroke-width="3"/></svg>
   <div class="abs floorglow"></div>
   <div class="abs contact"></div>
+  <!-- V5: HOJE gigante atrás da geladeira -->
+  <div class="abs rays v v5" id="rays5"></div>
+  <div class="abs giant v v5" style="top:330px"><span>HOJE</span></div>
+  <div class="abs rays raysG v v7" id="rays7" style="left:-220px;top:0"></div>
   <canvas id="gl" width="1080" height="1920"></canvas>
   <div class="abs vignette"></div>
 
@@ -156,6 +197,46 @@
   </div>
   <div class="abs seal v v4"><div class="s1">ECONOMIZE</div><div class="s2">R$ 2.702</div><div class="s3">93% abaixo do<br>valor de mercado</div></div>
 
+  <!-- ===== V5 · HOJE gigante ===== -->
+  <div class="abs center v v5" id="v5head" style="top:240px">
+    <div class="h" style="font-size:56px;letter-spacing:.04em">O LEILÃO DA GELADEIRA É</div>
+  </div>
+  <div class="abs v v5" style="left:0;width:1080px;top:1500px"><div class="prodline">Geladeira Brastemp <b>Frost Free 385 L</b> Duplex Inox</div></div>
+  <div class="abs bar v v5" style="top:1560px"><div class="bar-in">
+    <div><div class="lbl">LANCE ATUAL</div><div class="val gold" style="padding:0;font-size:96px">R$ 197</div></div>
+    <div style="text-align:right"><div class="lbl">O MARTELO BATE</div><div style="font-weight:900;font-size:64px;line-height:1">ÀS <span style="color:#3dff8a">18H</span></div></div>
+  </div></div>
+  <div class="abs bigcta v v5" style="top:1770px">CORRE! DÊ SEU LANCE AGORA</div>
+
+  <!-- ===== V6 · fita de urgência + placar 18:00 ===== -->
+  <div class="abs tape v v6" style="top:232px;transform:rotate(-4deg)"><span>É HOJE</span><i></i><span>É HOJE</span><i></i><span>É HOJE</span><i></i><span>É HOJE</span><i></i><span>É HOJE</span><i></i><span>É HOJE</span></div>
+  <div class="abs center v v6" id="v6head" style="top:372px">
+    <div class="h" style="font-size:50px;letter-spacing:.06em">O MARTELO BATE HOJE ÀS</div>
+    <div style="display:flex;justify-content:center;align-items:center;margin-top:16px">
+      <div class="tile2"><span>1</span></div><div class="tile2" style="margin-left:12px"><span>8</span></div><div class="colon">:</div>
+      <div class="tile2"><span>0</span></div><div class="tile2" style="margin-left:12px"><span>0</span></div></div>
+  </div>
+  <div class="abs center v v6" style="top:1478px"><div class="pill" style="font-size:29px">Geladeira Brastemp <b>Frost Free 385 L</b> Duplex Inox</div></div>
+  <div class="abs bar v v6" style="top:1566px"><div class="bar-in">
+    <div class="redbadge" style="font-size:28px"><span class="dot"></span>ÚLTIMA CHAMADA</div>
+    <div style="text-align:right"><div class="lbl">LANCE ATUAL</div><div class="val gold" style="padding:0;font-size:92px">R$ 197</div></div>
+  </div></div>
+  <div class="abs tape v v6" style="top:1790px;transform:rotate(3deg)"><span>DÊ SEU LANCE</span><i></i><span>É HOJE ÀS 18H</span><i></i><span>DÊ SEU LANCE</span><i></i><span>É HOJE ÀS 18H</span></div>
+
+  <!-- ===== V7 · preço explosivo, geladeira à direita ===== -->
+  <div class="abs v v7" id="v7head" style="left:56px;top:270px;width:640px">
+    <div class="redbadge"><span class="dot"></span>ÚLTIMAS HORAS</div>
+    <div class="h" style="text-align:left;font-size:74px;margin-top:30px">O LEILÃO DA</div>
+    <div class="h" style="text-align:left;font-size:74px">GELADEIRA</div>
+    <div class="h gold" style="text-align:left;font-size:158px;margin-top:6px;padding-left:0">É HOJE!</div>
+    <div class="h" style="text-align:left;font-size:96px;margin-top:-4px">ÀS <span style="color:#3dff8a">18H</span></div>
+    <div class="prodline" style="text-align:left;margin-top:26px;font-size:30px;white-space:normal;line-height:1.25">Geladeira Brastemp<br><b>Frost Free 385 L</b> Duplex Inox</div>
+  </div>
+  <div class="abs burst v v7"><svg viewBox="0 0 200 200"><defs><radialGradient id="bg7" cx=".38" cy=".3"><stop offset="0" stop-color="#fff2c8"/><stop offset=".5" stop-color="#f4c55e"/><stop offset="1" stop-color="#c08427"/></radialGradient></defs>
+    <polygon fill="url(#bg7)" stroke="#0a3d27" stroke-width="3" points="100,4 113,30 140,14 143,44 173,40 163,69 192,80 168,100 192,120 163,131 173,160 143,156 140,186 113,170 100,196 87,170 60,186 57,156 27,160 37,131 8,120 32,100 8,80 37,69 27,40 57,44 60,14 87,30"/></svg>
+    <div class="t"><div style="font-weight:900;font-size:34px;letter-spacing:.08em">LANCE ATUAL</div><div style="font-weight:900;font-size:110px;line-height:.95;letter-spacing:-.04em">R$ 197</div><div style="font-weight:800;font-size:26px;margin-top:6px">93% abaixo do mercado</div></div></div>
+  <div class="abs bigcta v v7" style="top:1760px">CORRE! DÊ SEU LANCE AGORA</div>
+
   <!-- nome do produto -->
   <div class="abs center" id="pillwrap" style="top:1546px"><div class="pill">Geladeira Brastemp <b>Frost Free 385 L</b> Duplex Inox</div></div>
 
@@ -191,6 +272,7 @@ import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.j
 
 const V = (location.hash.slice(1) || 'v1');
 document.body.className = V;
+document.querySelectorAll('.v').forEach(e=>{if(!e.classList.contains(V))e.style.display='none'});
 
 // ---------- utilidades de animação ----------
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
@@ -319,6 +401,9 @@ const inner=new THREE.PointLight(0xeaf6ff,0,1.6);inner.position.set(0,1.1,.1);fr
 // câmera: geladeira de ~560px a ~1385px, pedestal até ~1500px
 camera.position.set(0,2.15,11.2);camera.lookAt(0,.93,0);
 if(V==='v4'){camera.position.set(0,2.1,12.1);camera.lookAt(0,.86,0);}
+if(V==='v5'){camera.position.set(0,2.1,12.1);camera.lookAt(0,.80,0);}
+if(V==='v6'){camera.position.set(0,2.1,13.4);camera.lookAt(0,1.10,0);}
+if(V==='v7'){camera.position.set(0,2.1,11.6);camera.lookAt(0,.86,0);}
 
 // faíscas (v2)
 const sp=$('sparks');const sparks=[];const sr=rng(99);
@@ -327,7 +412,8 @@ for(let i=0;i<28;i++){const d=document.createElement('div');d.className='spark';
 // ---------- timeline ----------
 const DUR=10;
 function angleAt(t){
-  if(V==='v4') return -.42;
+  if(V==='v4'||V==='v5'||V==='v6') return -.42;
+  if(V==='v7') return -.62;
   if(V==='v3'){
     // gira até a frente, para, abre portas, fecha e volta a girar
     if(t<2.6) return -Math.PI*1.15*(1-eo(prog(t,0,2.6))) - .32*eo(prog(t,0,2.6));
@@ -342,6 +428,7 @@ window.render=function(t){
   // entrada do produto
   const pin=back(prog(t,.15,1.25));
   turn.position.y=-.9*(1-pin);
+  turn.position.x=V==='v7'?.70:0;
   turn.scale.setScalar(.82+.18*eo(prog(t,.15,1.25)));
   turn.rotation.y=angleAt(t);
   // flutuação sutil
