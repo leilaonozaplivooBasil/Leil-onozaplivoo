@@ -79,7 +79,20 @@
   .spark{position:absolute;width:12px;height:12px;border-radius:50%;background:#ffe7a6;box-shadow:0 0 14px 4px rgba(255,214,120,.9);opacity:0}
 
   .v{display:none}
-  body.v1 .v1, body.v2 .v2, body.v3 .v3{display:block}
+  body.v1 .v1, body.v2 .v2, body.v3 .v3, body.v4 .v4{display:block}
+  body.v4 .gavel{display:none}
+  .seal{left:730px;top:690px;width:320px;height:320px;border-radius:50%;text-align:center;padding-top:70px;white-space:nowrap;transform:rotate(-8deg);
+    background:radial-gradient(circle at 35% 28%,#ffeec0,#f4c55e 45%,#c08427 100%);color:#0a3d27;
+    box-shadow:0 0 0 8px rgba(255,231,166,.25),0 0 0 14px rgba(10,61,39,.9),0 0 0 17px #f4c55e,0 24px 50px rgba(0,0,0,.55),0 0 60px rgba(244,197,94,.45)}
+  .seal .s1{font-weight:900;font-size:30px;letter-spacing:.08em}
+  .seal .s2{font-weight:900;font-size:68px;line-height:1;letter-spacing:-.03em;margin-top:4px}
+  .seal .s3{font-weight:800;font-size:21px;line-height:1.15;margin-top:8px}
+  .mkt .val{color:#eef5f1;font-size:64px;position:relative;display:inline-block}
+  .mkt .val::after{content:"";position:absolute;left:-6px;right:-6px;top:52%;height:7px;border-radius:4px;background:#ff4d4d;transform:rotate(-8deg);box-shadow:0 0 12px rgba(255,77,77,.6)}
+  .arrow{flex:0 0 auto;width:64px;height:64px}
+  .live{display:inline-flex;align-items:center;gap:14px;padding:12px 26px 12px 18px;border-radius:999px;white-space:nowrap;
+    border:2px solid rgba(255,90,90,.7);background:rgba(40,6,6,.55);color:#ff9d9d;font-weight:800;font-size:26px;letter-spacing:.1em}
+  .live .dot{width:16px;height:16px;border-radius:50%;background:#ff4d4d;box-shadow:0 0 0 6px rgba(255,77,77,.25),0 0 14px 2px rgba(255,77,77,.8)}
 </style>
 <script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
 </head>
@@ -135,6 +148,14 @@
     <div class="chip" id="c4" style="margin-top:22px"><svg viewBox="0 0 24 24" fill="none" stroke="#e5e7eb" stroke-width="2.4" stroke-linecap="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg><div>Inox<small>acabamento premium</small></div></div>
   </div>
 
+  <!-- ===== V4 · É HOJE (arte estática) ===== -->
+  <div class="abs center v v4" id="v4head" style="top:226px">
+    <div class="live"><span class="dot"></span>ÚLTIMAS HORAS · LEILÃO DA GELADEIRA</div>
+    <div class="h gold" style="font-size:176px;margin-top:8px">É HOJE!</div>
+    <div class="h" style="font-size:50px;margin-top:-6px">O MARTELO BATE ÀS 18H · <span style="color:#3dff8a">CORRE!</span></div>
+  </div>
+  <div class="abs seal v v4"><div class="s1">ECONOMIZE</div><div class="s2">R$ 2.702</div><div class="s3">93% abaixo do<br>valor de mercado</div></div>
+
   <!-- nome do produto -->
   <div class="abs center" id="pillwrap" style="top:1546px"><div class="pill">Geladeira Brastemp <b>Frost Free 385 L</b> Duplex Inox</div></div>
 
@@ -154,6 +175,9 @@
     <div class="v v3"><div class="lbl">LANCE ATUAL</div><div class="val gold" style="padding:0">R$ 197</div></div>
     <div class="sep v v3"></div>
     <div class="side v v3"><div class="lbl">O MARTELO BATE</div><div class="when">QUARTA<br><span>14/10 · 18H</span></div></div>
+    <div class="mkt v v4"><div class="lbl">VALOR DE MERCADO</div><div class="val">R$ 2.899</div></div>
+    <svg class="arrow v v4" viewBox="0 0 24 24" fill="none" stroke="#3dff8a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+    <div class="v v4"><div class="lbl" style="color:#7dffb4">LANCE ATUAL</div><div class="val gold" style="padding:0;font-size:104px">R$ 197</div></div>
     <div class="shine" id="shine"></div>
   </div></div>
   <div class="abs flash" id="flash"></div>
@@ -294,6 +318,7 @@ const inner=new THREE.PointLight(0xeaf6ff,0,1.6);inner.position.set(0,1.1,.1);fr
 
 // câmera: geladeira de ~560px a ~1385px, pedestal até ~1500px
 camera.position.set(0,2.15,11.2);camera.lookAt(0,.93,0);
+if(V==='v4'){camera.position.set(0,2.1,12.1);camera.lookAt(0,.86,0);}
 
 // faíscas (v2)
 const sp=$('sparks');const sparks=[];const sr=rng(99);
@@ -302,6 +327,7 @@ for(let i=0;i<28;i++){const d=document.createElement('div');d.className='spark';
 // ---------- timeline ----------
 const DUR=10;
 function angleAt(t){
+  if(V==='v4') return -.42;
   if(V==='v3'){
     // gira até a frente, para, abre portas, fecha e volta a girar
     if(t<2.6) return -Math.PI*1.15*(1-eo(prog(t,0,2.6))) - .32*eo(prog(t,0,2.6));
