@@ -5,7 +5,7 @@ import numpy as np, cv2
 from PIL import Image, ImageDraw, ImageFilter
 AQUI = os.path.dirname(os.path.abspath(__file__))
 tela_p, saida = sys.argv[1], sys.argv[2]
-src = Image.open(os.path.join(AQUI, 'leila-oficial.webp')).convert('RGB')
+src = Image.open(os.path.join(AQUI, 'leila-sem-giz.png')).convert('RGB')
 tela = Image.open(tela_p).convert('RGB')
 W, H = tela.size
 # cantos da área de tela na foto (TL, TR, BR, BL), medidos na imagem 1216x1294

@@ -8,6 +8,9 @@ html,body{width:230px;height:500px;overflow:hidden;background:#000;font-family:"
 .status .ic{display:flex;gap:4px;align-items:center}
 .view{position:absolute;left:0;right:0;top:44px;height:330px;overflow:hidden;background:#fff}
 .view img{position:absolute;left:50%;top:50%;width:300px;transform:translate(-50%,-48%)}
+.view img.tv{width:214px}
+.view img.ip{width:auto;height:270px}
+.view.soft{background:radial-gradient(circle at 50% 45%,#ffffff,#e9ecef)}
 .grid{position:absolute;inset:0;background:
   linear-gradient(90deg,transparent 33.1%,rgba(255,255,255,.55) 33.3%,transparent 33.5%,transparent 66.4%,rgba(255,255,255,.55) 66.6%,transparent 66.8%),
   linear-gradient(0deg,transparent 33.1%,rgba(255,255,255,.55) 33.3%,transparent 33.5%,transparent 66.4%,rgba(255,255,255,.55) 66.6%,transparent 66.8%)}
@@ -44,4 +47,10 @@ html,body{width:230px;height:500px;overflow:hidden;background:#000;font-family:"
   <div class="modes"><span>VÍDEO</span><span class="on">FOTO</span><span>RETRATO</span></div>
   <div class="bar"><div class="thumb"></div><div class="shutter"><i></i></div>
     <div class="flip"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3l-2-3H9L7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1z"/><path d="M9 13a3 3 0 0 1 5-2.2M15 13a3 3 0 0 1-5 2.2"/></svg></div></div>
-</div></body></html>
+</div>
+<script>
+const h=location.hash.slice(1);const im=document.querySelector('.view img'),th=document.querySelector('.thumb');
+if(h==='tv'){im.src='produto-tv.png';im.className='tv';th.style.backgroundImage='url(produto-tv.png)';th.style.backgroundSize='contain';th.style.backgroundRepeat='no-repeat'}
+if(h==='iphone'){im.src='produto-iphone.png';im.className='ip';th.style.backgroundImage='url(produto-iphone.png)';th.style.backgroundSize='contain';th.style.backgroundRepeat='no-repeat'}
+if(h)document.querySelector('.view').classList.add('soft');
+</script></body></html>
