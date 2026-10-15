@@ -1,0 +1,97 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- Banner "GIRE A ROLETA" (versão 3D, com a roleta do site) — mesma identidade do "QUEM DÁ MAIS?" (2026-10-08-quem-da-mais).
+     Textos exatos do dono: "GANHE MAIS DE 100 REAIS EM BÔNUS" e "GIRE A ROLETA AQUI!".
+     A roleta é a MESMA do site (src/lib/roletaLeilao20.js): 1, 5, 2, 20, tente de novo, 10, 3, 50, 1, 5, tente de novo, 2. -->
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden;background:#050b1a}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:"Inter Display","Inter",sans-serif;
+    background:
+      radial-gradient(ellipse 900px 700px at 56% 44%, #0f3a5e 0%, rgba(10,32,64,.6) 40%, rgba(5,11,26,0) 75%),
+      radial-gradient(ellipse 1400px 900px at 50% 30%, #0a1d3b 0%, #060f22 60%, #040914 100%);}
+  .beam{position:absolute;top:-120px;width:420px;height:1000px;transform-origin:top center;
+    background:linear-gradient(180deg, rgba(120,180,255,.20), rgba(120,180,255,0) 80%);filter:blur(18px)}
+  .b1{left:620px;transform:rotate(18deg)} .b2{left:900px;transform:rotate(6deg);opacity:.7}
+  .b3{left:1200px;transform:rotate(-8deg);opacity:.7} .b4{left:1450px;transform:rotate(-18deg)}
+  .pillar{position:absolute;top:0;bottom:180px;width:90px;background:linear-gradient(90deg,#071226,#0c1c36 50%,#071226)}
+  .pillar::after{content:"";position:absolute;top:0;bottom:0;left:50%;width:6px;margin-left:-3px;
+    background:linear-gradient(180deg,rgba(255,206,110,.0),#ffd27a 20%,#ffcf6e 80%,rgba(255,206,110,0));
+    box-shadow:0 0 18px 4px rgba(255,200,100,.55),0 0 60px 10px rgba(255,190,80,.25)}
+  .p1{left:40px}.p2{right:40px}
+  .floor{position:absolute;left:0;right:0;bottom:0;height:250px;background:linear-gradient(180deg,#081631 0%,#050c1c 100%)}
+  .floor::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,rgba(61,255,138,.5),transparent)}
+  .leaf{position:absolute;border-radius:0 100% 0 100%;background:linear-gradient(135deg,#0f5a35,#06321f);filter:blur(2px);opacity:.85}
+  .spark{position:absolute;border-radius:50%;background:#7dffb4;box-shadow:0 0 10px 3px rgba(61,255,138,.8)}
+  .spark.gold{background:#ffe29a;box-shadow:0 0 10px 3px rgba(255,200,90,.85)}
+
+  /* roleta 3D (renderizada em three.js: roleta3d-cena.html — mesmos valores da roleta do site) */
+  .halo-glow{position:absolute;left:530px;top:-60px;width:1120px;height:1120px;border-radius:50%;
+    background:radial-gradient(circle, rgba(40,230,120,.22) 0%, rgba(40,230,120,0) 60%)}
+  .halo{position:absolute;left:665px;top:75px;width:850px;height:850px;border-radius:50%;border:8px solid #3dff8a;opacity:.9;
+    box-shadow:0 0 30px 6px rgba(61,255,138,.9),0 0 90px 30px rgba(32,220,110,.40),inset 0 0 40px 8px rgba(61,255,138,.5)}
+  .wheel{position:absolute;left:582px;top:-15px;width:1050px;filter:drop-shadow(0 0 50px rgba(255,200,90,.35)) drop-shadow(0 30px 40px rgba(0,0,0,.6))}
+  svg.giro{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible}
+  .auct{position:absolute;z-index:2;left:1330px;bottom:-10px;height:850px;filter:drop-shadow(0 20px 40px rgba(0,0,0,.55))}
+  .logo{position:absolute;left:96px;top:70px;width:400px}
+
+  .left{position:absolute;left:110px;top:300px;width:660px;white-space:nowrap}
+  .pre{font-weight:800;font-size:58px;line-height:1;letter-spacing:-.01em;color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.5)}
+  .h1{margin-top:14px;font-weight:900;font-size:106px;line-height:.95;letter-spacing:-.02em;
+    background:linear-gradient(180deg,#b6ffd3 0%,#3dff8a 45%,#12c964 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 22px rgba(61,255,138,.45))}
+  .h1 .gold{background:linear-gradient(180deg,#fff3c4 0%,#ffd36b 45%,#d99a22 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .rule{width:150px;height:6px;border-radius:3px;margin:34px 0 40px;background:linear-gradient(90deg,#3dff8a,rgba(61,255,138,0))}
+  .cta{display:inline-flex;align-items:center;gap:18px;padding:30px 50px;border-radius:999px;
+    background:linear-gradient(180deg,#4dff95,#16c964);color:#04210f;font-weight:900;font-size:44px;letter-spacing:.03em;white-space:nowrap;
+    box-shadow:0 0 0 5px rgba(61,255,138,.28),0 0 50px 12px rgba(61,255,138,.5),0 14px 30px rgba(0,0,0,.4)}
+  .cta svg{width:44px;height:44px}
+</style></head>
+<body><div class="stage">
+  <div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div><div class="beam b4"></div>
+  <div class="pillar p1"></div><div class="pillar p2"></div>
+  <div class="leaf" style="left:120px;bottom:210px;width:150px;height:60px;transform:rotate(-35deg)"></div>
+  <div class="leaf" style="left:170px;bottom:240px;width:170px;height:56px;transform:rotate(-70deg)"></div>
+  <div class="leaf" style="left:90px;bottom:250px;width:140px;height:50px;transform:rotate(-110deg)"></div>
+  <div class="leaf" style="right:120px;bottom:210px;width:150px;height:60px;transform:rotate(35deg) scaleX(-1)"></div>
+  <div class="leaf" style="right:90px;bottom:250px;width:140px;height:50px;transform:rotate(110deg) scaleX(-1)"></div>
+  <div class="floor"></div>
+
+  <div class="halo-glow"></div>
+  <div class="halo"></div>
+  <img class="wheel" src="roleta3d.png">
+  <!-- setas de giro: a roda está rodando no sentido do relógio, puxada pela mão do leiloeiro -->
+  <svg class="giro" viewBox="0 0 1920 1080">
+    <defs>
+      <linearGradient id="rastro198" gradientUnits="userSpaceOnUse" x1="645" y1="350" x2="930" y2="55"><stop offset="0" stop-color="#ffe08a" stop-opacity="0"/><stop offset="1" stop-color="#ffe08a"/></linearGradient>
+      <linearGradient id="rastro288" gradientUnits="userSpaceOnUse" x1="1235" y1="50" x2="1478" y2="233"><stop offset="0" stop-color="#ffe08a" stop-opacity="0"/><stop offset="1" stop-color="#ffe08a"/></linearGradient>
+      <filter id="brilho"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+    <g filter="url(#brilho)" fill="none" stroke-linecap="round">
+      <path d="M 645 350 A 468 468 0 0 1 930 55" stroke="url(#rastro198)" stroke-width="9"/>
+      <path d="M 893 45 L 930 55 L 908 86" stroke="#ffe08a" stroke-width="9" stroke-linejoin="round"/>
+      <path d="M 1235 50 A 468 468 0 0 1 1478 233" stroke="url(#rastro288)" stroke-width="9"/>
+      <path d="M 1479 195 L 1478 233 L 1443 220" stroke="#ffe08a" stroke-width="9" stroke-linejoin="round"/>
+    </g>
+  </svg>
+
+  <div class="spark" style="left:690px;top:180px;width:6px;height:6px"></div>
+  <div class="spark gold" style="left:1330px;top:150px;width:8px;height:8px"></div>
+  <div class="spark gold" style="left:640px;top:760px;width:6px;height:6px"></div>
+  <div class="spark" style="left:1040px;top:70px;width:5px;height:5px"></div>
+  <div class="spark gold" style="left:1500px;top:110px;width:5px;height:5px"></div>
+  <div class="spark" style="left:760px;top:900px;width:7px;height:7px"></div>
+
+  <img class="auct" src="leiloeiro.png">
+  <img class="logo" src="logo.png">
+
+  <div class="left">
+    <div class="pre">GANHE MAIS DE</div>
+    <div class="h1"><span class="gold">100 REAIS</span><br>EM BÔNUS</div>
+    <div class="rule"></div>
+    <div class="cta">GIRE A ROLETA AQUI!
+      <svg viewBox="0 0 24 24" fill="none" stroke="#04210f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </div>
+  </div>
+</div>
+</body></html>
