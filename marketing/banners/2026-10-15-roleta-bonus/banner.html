@@ -1,0 +1,144 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- Banner "GIRE A ROLETA" — mesma identidade do "QUEM DÁ MAIS?" (2026-10-08-quem-da-mais).
+     Textos exatos do dono: "GANHE MAIS DE 100 REAIS EM BÔNUS" e "GIRE A ROLETA AQUI!".
+     A roleta não mostra valores nem prêmios: só ícones neutros (presente, moeda, estrela). -->
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden;background:#050b1a}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:"Inter Display","Inter",sans-serif;
+    background:
+      radial-gradient(ellipse 900px 700px at 56% 44%, #0f3a5e 0%, rgba(10,32,64,.6) 40%, rgba(5,11,26,0) 75%),
+      radial-gradient(ellipse 1400px 900px at 50% 30%, #0a1d3b 0%, #060f22 60%, #040914 100%);}
+  .beam{position:absolute;top:-120px;width:420px;height:1000px;transform-origin:top center;
+    background:linear-gradient(180deg, rgba(120,180,255,.20), rgba(120,180,255,0) 80%);filter:blur(18px)}
+  .b1{left:620px;transform:rotate(18deg)} .b2{left:900px;transform:rotate(6deg);opacity:.7}
+  .b3{left:1200px;transform:rotate(-8deg);opacity:.7} .b4{left:1450px;transform:rotate(-18deg)}
+  .pillar{position:absolute;top:0;bottom:180px;width:90px;background:linear-gradient(90deg,#071226,#0c1c36 50%,#071226)}
+  .pillar::after{content:"";position:absolute;top:0;bottom:0;left:50%;width:6px;margin-left:-3px;
+    background:linear-gradient(180deg,rgba(255,206,110,.0),#ffd27a 20%,#ffcf6e 80%,rgba(255,206,110,0));
+    box-shadow:0 0 18px 4px rgba(255,200,100,.55),0 0 60px 10px rgba(255,190,80,.25)}
+  .p1{left:40px}.p2{right:40px}
+  .floor{position:absolute;left:0;right:0;bottom:0;height:250px;background:linear-gradient(180deg,#081631 0%,#050c1c 100%)}
+  .floor::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,rgba(61,255,138,.5),transparent)}
+  .leaf{position:absolute;border-radius:0 100% 0 100%;background:linear-gradient(135deg,#0f5a35,#06321f);filter:blur(2px);opacity:.85}
+  .spark{position:absolute;border-radius:50%;background:#7dffb4;box-shadow:0 0 10px 3px rgba(61,255,138,.8)}
+  .spark.gold{background:#ffe29a;box-shadow:0 0 10px 3px rgba(255,200,90,.85)}
+
+  /* roleta */
+  .wheel-wrap{position:absolute;left:1065px;top:470px;width:0;height:0;transform:scale(.9)}
+  .halo-glow{position:absolute;left:-560px;top:-560px;width:1120px;height:1120px;border-radius:50%;
+    background:radial-gradient(circle, rgba(40,230,120,.20) 0%, rgba(40,230,120,0) 60%)}
+  .halo{position:absolute;left:-385px;top:-385px;width:770px;height:770px;border-radius:50%;border:8px solid #3dff8a;
+    box-shadow:0 0 30px 6px rgba(61,255,138,.9),0 0 90px 30px rgba(32,220,110,.40),inset 0 0 40px 8px rgba(61,255,138,.5)}
+  .stand{position:absolute;left:-130px;top:290px;width:260px;height:290px;
+    background:linear-gradient(90deg,#8a5a12,#f7d27a 35%,#fff0b8 50%,#e0ac43 65%,#7a4c0c);
+    clip-path:polygon(38% 0,62% 0,100% 100%,0 100%);filter:drop-shadow(0 20px 30px rgba(0,0,0,.6))}
+  .stand-base{position:absolute;left:-230px;top:550px;width:460px;height:70px;border-radius:50%;
+    background:radial-gradient(ellipse at 50% 35%,#fff0b8,#e2ae46 45%,#7a4c0c 100%);
+    box-shadow:0 0 0 4px rgba(61,255,138,.0),0 18px 40px rgba(0,0,0,.6)}
+  svg.wheel{position:absolute;left:-340px;top:-340px;width:680px;height:680px;overflow:visible;
+    filter:drop-shadow(0 0 40px rgba(255,200,90,.35)) drop-shadow(0 25px 40px rgba(0,0,0,.6))}
+
+  .auct{position:absolute;z-index:2;left:1245px;bottom:-10px;height:880px;filter:drop-shadow(0 20px 40px rgba(0,0,0,.55))}
+  .logo{position:absolute;left:96px;top:70px;width:400px}
+
+  .left{position:absolute;left:110px;top:300px;width:660px;white-space:nowrap}
+  .pre{font-weight:800;font-size:58px;line-height:1;letter-spacing:-.01em;color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.5)}
+  .h1{margin-top:14px;font-weight:900;font-size:106px;line-height:.95;letter-spacing:-.02em;
+    background:linear-gradient(180deg,#b6ffd3 0%,#3dff8a 45%,#12c964 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 22px rgba(61,255,138,.45))}
+  .h1 .gold{background:linear-gradient(180deg,#fff3c4 0%,#ffd36b 45%,#d99a22 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .rule{width:150px;height:6px;border-radius:3px;margin:34px 0 40px;background:linear-gradient(90deg,#3dff8a,rgba(61,255,138,0))}
+  .cta{display:inline-flex;align-items:center;gap:18px;padding:30px 50px;border-radius:999px;
+    background:linear-gradient(180deg,#4dff95,#16c964);color:#04210f;font-weight:900;font-size:44px;letter-spacing:.03em;white-space:nowrap;
+    box-shadow:0 0 0 5px rgba(61,255,138,.28),0 0 50px 12px rgba(61,255,138,.5),0 14px 30px rgba(0,0,0,.4)}
+  .cta svg{width:44px;height:44px}
+</style></head>
+<body><div class="stage">
+  <div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div><div class="beam b4"></div>
+  <div class="pillar p1"></div><div class="pillar p2"></div>
+  <div class="leaf" style="left:120px;bottom:210px;width:150px;height:60px;transform:rotate(-35deg)"></div>
+  <div class="leaf" style="left:170px;bottom:240px;width:170px;height:56px;transform:rotate(-70deg)"></div>
+  <div class="leaf" style="left:90px;bottom:250px;width:140px;height:50px;transform:rotate(-110deg)"></div>
+  <div class="leaf" style="right:120px;bottom:210px;width:150px;height:60px;transform:rotate(35deg) scaleX(-1)"></div>
+  <div class="leaf" style="right:90px;bottom:250px;width:140px;height:50px;transform:rotate(110deg) scaleX(-1)"></div>
+  <div class="floor"></div>
+
+  <div class="wheel-wrap">
+    <div class="halo-glow"></div>
+    <div class="halo"></div>
+    <div class="stand"></div>
+    <div class="stand-base"></div>
+    <svg class="wheel" id="wheel" viewBox="-340 -340 680 680"></svg>
+  </div>
+
+  <div class="spark" style="left:690px;top:180px;width:6px;height:6px"></div>
+  <div class="spark gold" style="left:1330px;top:150px;width:8px;height:8px"></div>
+  <div class="spark gold" style="left:640px;top:760px;width:6px;height:6px"></div>
+  <div class="spark" style="left:1040px;top:70px;width:5px;height:5px"></div>
+  <div class="spark gold" style="left:1500px;top:110px;width:5px;height:5px"></div>
+  <div class="spark" style="left:760px;top:900px;width:7px;height:7px"></div>
+
+  <img class="auct" src="leiloeiro.png">
+  <img class="logo" src="logo.png">
+
+  <div class="left">
+    <div class="pre">GANHE MAIS DE</div>
+    <div class="h1"><span class="gold">100 REAIS</span><br>EM BÔNUS</div>
+    <div class="rule"></div>
+    <div class="cta">GIRE A ROLETA AQUI!
+      <svg viewBox="0 0 24 24" fill="none" stroke="#04210f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </div>
+  </div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg', w=document.getElementById('wheel');
+const el=(t,a,p=w)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e};
+w.innerHTML=`<defs>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff2bf"/><stop offset=".3" stop-color="#f3c552"/><stop offset=".6" stop-color="#b57b16"/><stop offset=".8" stop-color="#ffe08a"/><stop offset="1" stop-color="#8a5a12"/></linearGradient>
+  <radialGradient id="segG" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="scale(300)"><stop offset=".2" stop-color="#1fe07a"/><stop offset="1" stop-color="#0a8a45"/></radialGradient>
+  <radialGradient id="segN" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="scale(300)"><stop offset=".2" stop-color="#1a3f6b"/><stop offset="1" stop-color="#081a35"/></radialGradient>
+  <radialGradient id="segO" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="scale(300)"><stop offset=".2" stop-color="#ffe9a3"/><stop offset="1" stop-color="#d69a26"/></radialGradient>
+  <radialGradient id="hub" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#fff6d0"/><stop offset=".5" stop-color="#f0c04d"/><stop offset="1" stop-color="#8a5a12"/></radialGradient>
+  <radialGradient id="bulb" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#fff3b0"/><stop offset="1" stop-color="#ffc53d" stop-opacity="0"/></radialGradient>
+</defs>`;
+// aro dourado
+el('circle',{r:330,fill:'url(#gold)'});
+el('circle',{r:300,fill:'#0b1a33'});
+const N=12, R=292, fills=['url(#segG)','url(#segN)','url(#segO)'];
+const g=el('g',{transform:'rotate(-15)'});
+for(let i=0;i<N;i++){
+  const a0=(i*360/N-90)*Math.PI/180, a1=((i+1)*360/N-90)*Math.PI/180;
+  el('path',{d:`M0 0 L${R*Math.cos(a0)} ${R*Math.sin(a0)} A${R} ${R} 0 0 1 ${R*Math.cos(a1)} ${R*Math.sin(a1)} Z`,
+    fill:fills[i%3],stroke:'url(#gold)','stroke-width':5},g);
+}
+// ícones neutros (sem números nem prêmios)
+const icon={
+  gift:(c)=>`<rect x="-26" y="-6" width="52" height="38" rx="4" fill="${c}"/><rect x="-30" y="-20" width="60" height="16" rx="4" fill="${c}"/><rect x="-5" y="-20" width="10" height="52" fill="rgba(0,0,0,.25)"/><path d="M0 -20 C-10 -40 -30 -34 -20 -22 Z M0 -20 C10 -40 30 -34 20 -22 Z" fill="${c}"/>`,
+  coin:(c)=>`<circle r="28" fill="${c}"/><circle r="20" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="4"/><path d="M0 -13 L3.8 -5.2 L12.4 -4 L6.2 2 L7.6 10.5 L0 6.5 L-7.6 10.5 L-6.2 2 L-12.4 -4 L-3.8 -5.2 Z" fill="rgba(0,0,0,.28)"/>`,
+  star:(c)=>`<path d="M0 -30 L8.8 -12 L28.5 -9.3 L14.3 4.6 L17.6 24.3 L0 15 L-17.6 24.3 L-14.3 4.6 L-28.5 -9.3 L-8.8 -12 Z" fill="${c}"/>`
+};
+const kinds=['gift','coin','star'];
+for(let i=0;i<N;i++){
+  const ang=(i+.5)*360/N, c=[ '#ffe08a','#3dff8a','#0b4a2a'][i%3];
+  const k=kinds[(i+(i/3|0))%3];
+  const gg=el('g',{transform:`rotate(${ang}) translate(0 -200)`},g);
+  gg.innerHTML=icon[k](c);
+}
+// lâmpadas no aro
+for(let i=0;i<24;i++){
+  const a=(i*15)*Math.PI/180;
+  el('circle',{cx:315*Math.cos(a),cy:315*Math.sin(a),r:14,fill:'url(#bulb)'});
+  el('circle',{cx:315*Math.cos(a),cy:315*Math.sin(a),r:6,fill:i%2?'#fffbe6':'#d9fff0'});
+}
+// centro
+el('circle',{r:70,fill:'url(#hub)',stroke:'#7a4c0c','stroke-width':3});
+el('circle',{r:48,fill:'#0b2a1c',stroke:'url(#gold)','stroke-width':5});
+el('path',{d:'M0 -26 L7.6 -10.4 L24.7 -8 L12.4 4 L15.3 21 L0 13 L-15.3 21 L-12.4 4 L-24.7 -8 L-7.6 -10.4 Z',fill:'#3dff8a'});
+// ponteiro
+const p=el('g',{transform:'translate(0 -318)'});
+el('path',{d:'M-34 -40 L34 -40 L0 34 Z',fill:'url(#gold)',stroke:'#7a4c0c','stroke-width':3},p);
+el('circle',{cx:0,cy:-40,r:16,fill:'url(#hub)',stroke:'#7a4c0c','stroke-width':3},p);
+</script>
+</body></html>
