@@ -451,3 +451,18 @@ Lista **manual, dia a dia, de itens vendidos no showroom** (vendedor · item · 
 - **Vendas fora do app no Mercado Pago:** **jul R$ 8,5 mil · ago R$ 6,1 mil · set R$ 0 · out R$ 0,15 mil** — o varejo pelo Mercado Pago **sumiu** depois de agosto, como a planilha Nexus (jun R$ 72 mil → jul R$ 11,8 mil → ago R$ 3,4 mil → nada).
 - **Transferências pequenas para outras contas da empresa** (sem par no Mercado Pago): **R$ 3.250 em agosto** (Itaú R$ 3.000 e Santander R$ 250) e **R$ 780 em setembro** (Santander) → existe **pelo menos mais uma conta**.
 
+### C15b. Cronograma de pagamentos aos parceiros (calculado pelas cláusulas; "30 dias de estruturação, depois recebem")
+
+**Regra confirmada pelo CEO (17/10):** o parceiro **recebe a partir de 30 dias depois** do aporte. Pelas cláusulas, na prática: **B** — aporte 11/08, estruturação até 10/09, **1º pagamento em 15/09 (35 dias)**; **A** — aporte 01/09, **1º pagamento em 15/10 (45 dias, pela janela do dia 15)**. Depois, **todo dia 15**.
+
+| R$ | 2026 (a partir de 15/09) | 2027 | 2028 | Total |
+|---|---:|---:|---:|---:|
+| **A** — remuneração (R$ 13.500 em 15/10/2026; R$ 9.000/mês; sobra proporcional de R$ 4.500 em 15/09/2028) | 31.500 | 108.000 | 76.500 | **216.000** |
+| **B** — remuneração (R$ 1.600 em 15/09/2026 pago; R$ 1.500/mês; 24 pagamentos até 15/08/2028) | 6.100 | 18.000 | 12.000 | **36.100** |
+| **Total de remuneração** | **37.600** | **126.000** | **88.500** | **252.100** |
+| **Devolução do principal** (A R$ 200.000 + B R$ 50.000) | — | — | **250.000** em **set/out de 2028** | **250.000** |
+
+- **Ritmo normal:** **R$ 10.500 por mês** (dia 15) de dez/2026 a ago/2028. **De hoje até 31/12/2026 faltam R$ 21.000** (15/11 e 15/12).
+- **Total das duas obrigações:** **R$ 502.100** (R$ 252.100 de remuneração + R$ 250.000 de principal).
+- **Observação:** datas de início e fim **dependem da data real de compensação** e da leitura jurídica das cláusulas de vigência (A conta 24 meses da compensação; B conta 24 repasses a partir do primeiro). **Calculado por mim; conferir com o jurídico.**
+
