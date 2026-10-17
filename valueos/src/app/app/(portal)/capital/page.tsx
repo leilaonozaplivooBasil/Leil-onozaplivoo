@@ -55,7 +55,11 @@ export default async function Capital() {
   const r = (x: number | null) => (x === null ? "—" : brl(x));
 
   const fundadores = v("CAPITAL_FOUNDERS_DECLARED");
-  const rbt12 = v("REVENUE_TAX_RBT12");
+  const mesDe = (id: string, iso: string) => serie.get(id)?.find((x) => x.periodo === iso) ?? null;
+  const declarado = (serie.get("REVENUE_TAX_DECLARED_M") ?? []).filter((x) => x.periodo >= "2026-01-01").reduce((s, x) => s + (x.valor ?? 0), 0);
+  const bancoJanMai = (serie.get("BANK_SMALL_PIX_IN") ?? []).filter((x) => x.periodo <= "2026-05-01").reduce((s, x) => s + (x.valor ?? 0), 0);
+  const balancete2025 = v("ACCOUNTING_REVENUE_Y");
+  const compra1pct = v("EQUITY_SUBSCRIPTION");
   const terceiros = v("THIRD_PARTY_CAPITAL");
   const custoCapital = v("CAPITAL_COST_M");
   const naoGasto = v("WALLET_UNSPENT_SHARE");
@@ -94,7 +98,7 @@ export default async function Capital() {
         <Titulo tag="Em uma linha">Quatro Números Que Resumem a História</Titulo>
         <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <NumeroGrande compacto valor={r(fundadores)} rotulo="investidos pelos fundadores" sub="declarado até dez/2025" etiqueta="MANAGEMENT_DATA" href="/app/prova/CAPITAL_FOUNDERS_DECLARED" />
-          <NumeroGrande compacto valor={r(rbt12)} rotulo="de receita declarada ao Simples" sub="12 meses até jun/2026" etiqueta="MANAGEMENT_DATA" href="/app/prova/REVENUE_TAX_RBT12" />
+          <NumeroGrande compacto valor={r(declarado || null)} rotulo="de receita declarada ao Simples" sub="jan a mai/2026 · 2025 zerado" etiqueta="MANAGEMENT_DATA" href="/app/prova/REVENUE_TAX_DECLARED_M" />
           <NumeroGrande compacto valor={r(terceiros)} rotulo="de capital de terceiros" sub={`custa ${r(custoCapital)} por mês`} etiqueta="MANAGEMENT_DATA" href="/app/prova/THIRD_PARTY_CAPITAL" />
           <NumeroGrande compacto valor={naoGasto === null ? "—" : `${inteiro(Math.round(naoGasto))}%`} rotulo="do depósito do cliente fica na plataforma" sub="ainda não virou compra" etiqueta="VERIFIED" href="/app/prova/WALLET_UNSPENT_SHARE" cor="verde" />
         </div>
@@ -145,27 +149,30 @@ export default async function Capital() {
           dados={vendas.map((x) => ({ rotulo: rotuloMes(x.periodo), valor: x.valor, tom: x.tom }))}
         />
         <Quadro
-          cabecalho={["Mês", "Vendas", "De onde vem", "Etiqueta"]}
-          minimo={640}
+          cabecalho={["Mês", "Vendas registradas", "Pix de clientes no banco", "Declarado ao Simples", "De onde vem a venda"]}
+          minimo={860}
           linhas={vendas.map((x) => {
             const fonte = (x.tom === "gestao" ? serie.get("SALES_HISTORY_MGMT") : serie.get("GMV_GOODS"))?.find((y) => y.periodo === x.periodo);
+            const banco = mesDe("BANK_SMALL_PIX_IN", x.periodo);
+            const simples = mesDe("REVENUE_TAX_DECLARED_M", x.periodo);
             return [
               rotuloMes(x.periodo),
-              <Valor key="v">{r(x.valor)}</Valor>,
+              <span key="v"><Valor>{r(x.valor)}</Valor><span className="ml-2 inline-block align-middle"><Etiqueta tipo={fonte?.etiqueta ?? "NAO_DISPONIVEL"} pequena /></span></span>,
+              <span key="b"><Valor>{banco ? r(banco.valor) : "—"}</Valor>{banco?.nota && <Obs>{banco.nota}</Obs>}</span>,
+              <Valor key="s">{simples ? r(simples.valor) : "—"}</Valor>,
               <span key="f">
                 {fonte?.fonte}
                 {fonte?.nota && <Obs>{fonte.nota}</Obs>}
               </span>,
-              <Etiqueta key="e" tipo={fonte?.etiqueta ?? "NAO_DISPONIVEL"} pequena />,
             ];
           })}
-          total={["Total", <Valor key="t">{r(totalVendas)}</Valor>, "dez/2025 a out/2026 (outubro até o dia 16)", ""]}
+          total={["Total", <Valor key="t">{r(totalVendas)}</Valor>, "", <Valor key="s">{r(declarado || null)}</Valor>, "dez/2025 a out/2026 (outubro até o dia 16)"]}
         />
         <Grade colunas={2} className="mt-10">
-          <Cartao tom="lateral" titulo="O que a declaração ao Simples mostra">
-            A declaração mensal do Simples de jun/2026 informa {r(rbt12)} de receita nos 12 meses anteriores — mais do que os registros internos explicam no mesmo
-            período ({r(ateMaio)} de dez/2025 a mai/2026). A diferença é coerente com vendas da fase anterior ao catálogo e será explicada mês a mês quando o
-            extrato da declaração entrar no data room.
+          <Cartao tom="lateral" titulo="Três fontes que ainda não conversam">
+            O extrato do banco confirma a venda do WhatsApp: são centenas de Pix pequenos por mês ({r(bancoJanMai)} de jan a mai/2026 só na conta Santander). A
+            declaração do Simples informa {r(declarado || null)} no mesmo período e 2025 zerado; o balancete de 2025 do contador registra {r(balancete2025)} de
+            receita naquele ano. Fechar essas três contas com o contador é o primeiro passo da due diligence.
           </Cartao>
           <Cartao tom="lateral" titulo="Por que julho cai">
             Em julho a empresa deixou de vender pelo WhatsApp para lançar o aplicativo e o leilão. O número de agosto em diante é só o que passou pelo app, pago e
@@ -201,12 +208,12 @@ export default async function Capital() {
           <Quadro
             cabecalho={["Quando", "De quem", "Valor", "Como entrou", "Etiqueta"]}
             linhas={[
-              [<Valor key="d">29/01/2026</Valor>, "Investidor 2 (primeiro aporte externo)", <Valor key="v">R$ 10.000</Valor>, <span key="c">aporte com rendimento de R$ 500 por mês<Obs>R$ 5 mil em jan; o financeiro do app registra R$ 10 mil</Obs></span>, <Etiqueta key="e" tipo="MANAGEMENT_DATA" pequena />],
+              [<Valor key="d">29/01 e 23/07/2026</Valor>, "Investidor 2 (primeiro aporte externo)", <Valor key="v">R$ 20.000</Valor>, <span key="c">rendimento de R$ 500 por mês<Obs>R$ 5 mil (29/01) e R$ 10 mil (23/07) conferidos no extrato; o restante a confirmar</Obs></span>, <Etiqueta key="e" tipo="MANAGEMENT_DATA" pequena />],
               [<Valor key="d">mar/2026</Valor>, "Dois cartões de pessoas da equipe", <Valor key="v">R$ 15.000</Valor>, "compras da empresa pagas com cartão pessoal, lançadas como investimento", <Etiqueta key="e" tipo="MANAGEMENT_DATA" pequena />],
               [<Valor key="d">11/08/2026</Valor>, "Parceiro de compra B", <Valor key="v">R$ 50.000</Valor>, "contrato · 3% ao mês", <Etiqueta key="e" tipo="VERIFIED" pequena />],
-              [<Valor key="d">ago/2026</Valor>, "Investidor 1", <Valor key="v">R$ 80.000</Valor>, <span key="c">rendimento de R$ 3.600 por mês desde 05/09<Obs>a entrada não aparece nos extratos lidos: confirmar a conta</Obs></span>, <Etiqueta key="e" tipo="MANAGEMENT_DATA" pequena />],
+              [<Valor key="d">a confirmar</Valor>, "Investidor 1", <Valor key="v">R$ 60.000</Valor>, <span key="c">rendimento de R$ 3.600 por mês desde set/2026<Obs>valor informado pelo fundador; falta apontar a entrada no extrato</Obs></span>, <Etiqueta key="e" tipo="MANAGEMENT_DATA" pequena />],
               [<Valor key="d">01/09/2026</Valor>, "Parceiro de compra A", <Valor key="v">R$ 200.000</Valor>, "contrato · 4,5% ao mês", <Etiqueta key="e" tipo="VERIFIED" pequena />],
-              [<Valor key="d">24–30/09/2026</Valor>, "A confirmar", <Valor key="v">R$ 200.000</Valor>, <span key="c">entrada no Itaú<Obs>valor conferido no extrato; falta dizer se é aporte de sócio, empréstimo ou venda</Obs></span>, <Etiqueta key="e" tipo="VERIFIED" pequena />],
+              [<Valor key="d">24–30/09/2026</Valor>, "Um diretor, comprando 1%", <Valor key="v">{r(compra1pct)}</Valor>, <span key="c">compra de participação por R$ 250 mil — faltam R$ 50 mil<Obs>entrada conferida no extrato do Itaú; contrato e origem dos recursos a documentar</Obs></span>, <Etiqueta key="e" tipo="VERIFIED" pequena />],
             ]}
           />
           <div className="mt-6">
@@ -227,11 +234,11 @@ export default async function Capital() {
           cabecalho={["Quem", "Desde", "Capital", "Paga por mês", "Ao mês", "Fonte"]}
           linhas={[
             ["Parceiro de compra A", "01/09/2026", <Valor key="a">R$ 200.000</Valor>, <Valor key="b">R$ 9.000</Valor>, "4,5%", <span key="f">contrato<Obs>não está cadastrado no financeiro do app</Obs></span>],
-            ["Investidor 1", "ago/2026", <Valor key="a">R$ 80.000</Valor>, <Valor key="b">R$ 3.600</Valor>, "4,5%", "financeiro do app"],
+            ["Investidor 1", "2026", <Valor key="a">R$ 60.000</Valor>, <Valor key="b">R$ 3.600</Valor>, "6%", "fundador + extratos"],
             ["Parceiro de compra B", "11/08/2026", <Valor key="a">R$ 50.000</Valor>, <Valor key="b">R$ 1.500</Valor>, "3%", "contrato"],
-            ["Investidor 2", "jan/2026", <Valor key="a">R$ 10.000</Valor>, <Valor key="b">R$ 500</Valor>, "5%", "financeiro do app"],
+            ["Investidor 2", "jan/2026", <Valor key="a">R$ 20.000</Valor>, <Valor key="b">R$ 500</Valor>, "2,5%", "fundador + extratos"],
           ]}
-          total={["Total", "", <Valor key="a">{r(terceiros)}</Valor>, <Valor key="b">{r(custoCapital)}</Valor>, "4,3% em média", ""]}
+          total={["Total", "", <Valor key="a">{r(terceiros)}</Valor>, <Valor key="b">{r(custoCapital)}</Valor>, "4,4% em média", ""]}
         />
         <Grade colunas={2} className="mt-10">
           <Cartao tom="azul" titulo="O que isso significa">
@@ -294,8 +301,9 @@ export default async function Capital() {
         />
         <Grade colunas={2} className="mt-10">
           <Cartao tom="lateral" titulo="A sala e o galpão">
-            O escritório custa R$ 10 mil por mês desde mar/2026; o galpão, R$ 23.036 desde set/2026. No app, de março a setembro aparecem R$ 50 mil pagos da sala
-            — com um lançamento em dobro — e três meses em aberto que o fundador informa ter pago. Falta dar baixa com o comprovante.
+            O galpão custa R$ 23.036 por mês e já são quatro meses: setembro e outubro foram pagos direto à imobiliária, e estão no extrato
+            <Etiqueta tipo="VERIFIED" pequena />. Os primeiros meses foram pagos por repasse a uma pessoa; no extrato aparecem Pix sem nome que batem com o
+            relato (15/06 e 16/07). O escritório custa R$ 10 mil por mês desde mar/2026; no app falta dar baixa em três meses e corrigir um lançamento em dobro.
           </Cartao>
           <Cartao tom="lateral" titulo="Contas vencidas no app">
             {r(vencidas)} aparecem como vencidas. Boa parte são meses de aluguel pagos e não baixados no sistema: a limpeza desse número é o próximo passo para o
@@ -338,20 +346,32 @@ export default async function Capital() {
                 Dez/2025 previa R$ 500 mil de capital operacional do Luciano (jan/2026), R$ 200 mil do Geovane (até 24/03/2026) e R$ 70 mil de outros dois diretores
                 (até 24/12/2027); a proposta de mar/2026 previa R$ 500 mil por 2%. Dizer o que virou dinheiro.
               </Cartao>
-              <Cartao tom="escuro" titulo="8 · Simples × registros internos">
-                {r(rbt12)} declarados em 12 meses contra {r(ateMaio)} registrados de dez/2025 a mai/2026. Explicar com o extrato da declaração mês a mês.
+              <Cartao tom="escuro" titulo="8 · Simples, balancete e banco não fecham">
+                A declaração do Simples (transmitida em 15/05/2026) traz 2025 zerado e {r(declarado || null)} de jan a mai/2026 — maio inteiro declarado no dia 15.
+                O balancete de 2025 traz {r(balancete2025)} de receita, R$ 616 mil de lucro e R$ 706 mil em caixa. O banco mostra {r(bancoJanMai)} em Pix de
+                clientes de jan a mai/2026 (só a conta Santander, com alguns dias faltando) e registros internos de {r(ateMaio)}. Uma receita declarada maior que a real paga imposto à toa e não se sustenta numa
+                auditoria: o contador precisa reconciliar.
+              </Cartao>
+              <Cartao tom="escuro" titulo="9 · A compra de 1% por um diretor">
+                Os {r(compra1pct)} entraram assim: R$ 130 mil por Pix de três pagadores que não são o comprador (duas pessoas e uma empresa) e R$ 70 mil em dinheiro
+                vivo, em 43 depósitos de até R$ 2 mil no mesmo dia (24/09). Depósito em espécie fracionado é exatamente o movimento que o banco comunica ao COAF. Antes
+                de registrar a participação: contrato assinado, declaração de origem de cada pagador e do dinheiro em espécie, com o contador e o advogado. E o
+                preço — 1% por R$ 250 mil — é o de uma empresa de R$ 25 milhões, não o de R$ 90 milhões do documento de out/2026.
+              </Cartao>
+              <Cartao tom="escuro" titulo="10 · Rendimento de 6% ao mês">
+                O investidor 1 recebe R$ 3.600 por mês sobre cerca de R$ 60 mil — 6% ao mês, mais de 100% ao ano. Junto com as parcelas mensais do cartão de uma
+                pessoa ligada a sócio, é o dinheiro mais caro da empresa e deve ser o primeiro a ser quitado.
               </Cartao>
             </Grade>
             <Titulo className="mt-16" sub="O que falta o fundador mandar para fechar a conta">A Lista de Pendências</Titulo>
             <ol className="mt-6 max-w-4xl list-decimal space-y-2 pl-6 text-[15px] font-light leading-relaxed text-texto">
-              <li>Comprovantes do investimento de cerca de R$ 100 mil no galpão (obra, caução, reforma).</li>
+              <li>Confirmar os Pix do galpão pagos por repasse (15/06: R$ 10 mil + R$ 5 mil; 16/07: 2 × R$ 10 mil) e o mês de agosto; somar a obra, se houver.</li>
               <li>Comprovantes da sala de abr, jun e ago/2026 e a correção do lançamento em dobro.</li>
-              <li>Origem dos R$ 200 mil que entraram no Itaú entre 24 e 30/09/2026.</li>
-              <li>Data e conta de entrada dos R$ 80 mil do investidor 1.</li>
+              <li>Compra de 1% pelo diretor: contrato e declaração de origem dos R$ 200 mil (três pagadores e R$ 70 mil em espécie).</li>
+              <li>De quem é cada entrada grande sem nome no Santander: 19 e 28/01 (R$ 10 mil cada), 03/02 (R$ 18 mil), 02/03 (R$ 10 mil), 17/03 (R$ 50 mil, que saiu no dia seguinte), 08 e 09/04 (R$ 50 mil cada), 19/05 (R$ 40 mil + R$ 60 mil), 21/05 (R$ 27 mil), 22/06 (R$ 45 mil, que saiu no mesmo dia) e 16/07 (R$ 15 mil + R$ 5 mil).</li>
               <li>Quanto cada sócio colocou de jan a out/2026, com comprovante.</li>
-              <li>Extrato do PGDAS-D mês a mês (jun/2025 a set/2026).</li>
+              <li>Declarações do Simples de jun a set/2026 e a reconciliação do contador entre Simples, balancete e banco.</li>
               <li>Prova das vendas da fase leilaowhatsapp.com: extratos Pix, envios ou exportação do site.</li>
-              <li>Vendas de 01 a 18/05/2026, que não aparecem em nenhum registro.</li>
               <li>Confirmar se o orçamento de pessoas (R$ 182 mil) já é pago ou é meta; o fundador fala em R$ 200 a 250 mil de orçamento total por mês.</li>
             </ol>
           </Conteiner>
