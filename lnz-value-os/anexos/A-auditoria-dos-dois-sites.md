@@ -184,3 +184,13 @@ Legenda de origem: **M** = Memorando · **V** = página do Valuation.
 - **Exposição real até hoje é pequena:** o painel só identifica 1–2 pessoas (visitantes anônimos podem não aparecer). Corrigir os sites agora **custa pouco em reputação**.
 - **Consequência para o plano:** os sites **continuam no Gamma**; viram "portas" com um botão para o LNZ Value OS e passam a receber os números públicos **a partir do snapshot oficial**, por atualização no próprio Gamma (há conexão com o Gamma neste ambiente). **Conteúdo de investidor (DRE, projeção, data room) nunca vai para o Gamma**, porque a página é pública e não tem login por pessoa.
 
+### 11b. Publicação confirmada (prints do CEO, 17/10/2026)
+
+| Documento | Domínio público | Endereço técnico do Gamma | Estado em 17/10 |
+|---|---|---|---|
+| Memorando (`h38mk4c7ll88ck0`) | **investmentmemorandumleilaonozap.com** | `leilao-nozap-3zd7s5g.gamma.site` | **"Você tem alterações a publicar"** — última publicação **há ~2 meses**. O que está no ar é a versão de ~agosto; as edições de hoje (14:36) **não foram publicadas**. |
+| Valuation (`wwmv0omttk4auhi`) | **valuationleilaonozap.com** | `leilao-nozap-zoi7w35.gamma.site` | **"Seu site está atualizado"** — última publicação **há ~5 horas** (republicado hoje). |
+
+- Os domínios foram ligados pelo Gamma ("Adicionar domínio personalizado"); o **registro do domínio** (quem controla o DNS) continua fora do Gamma — provável **IONOS**, mesma registradora do `leilaonozap.net`.
+- **Cuidado de processo:** o memorando tem mudanças pendentes de publicação. Antes de eu editar qualquer coisa, o CEO decide se publica ou descarta o que está pendente; a auditoria (itens 1–46) vale para a **versão publicada** (PDF).
+
