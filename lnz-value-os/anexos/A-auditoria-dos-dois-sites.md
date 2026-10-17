@@ -137,7 +137,7 @@ Legenda de origem: **M** = Memorando · **V** = página do Valuation.
 
 ---
 
-## 10. Itens que o dossiê contábil e os extratos acrescentam (47–56)
+## 10. Itens que o dossiê contábil, os extratos e o app acrescentam (47–58)
 
 > Estes itens **não estão nos dois sites com este nome**: nascem do **cruzamento** do que os sites dizem com os documentos do Drive e os extratos (Anexo C). Valores são `MANAGEMENT DATA — documento recebido`, **não autenticados** por mim.
 
@@ -154,13 +154,16 @@ Legenda de origem: **M** = Memorando · **V** = página do Valuation.
 | 55 | "Pico mensal" e crescimento | M, V | **VERIFY** | Setembro/2026 tem **≈ R$ 400 mil de entradas de terceiros** nas duas contas contra **R$ 49,2 mil de pagamentos do app**; nenhum "novo pico" pode ser publicado com base em entrada de banco sem classificar (origem dos recursos). | C9 |
 | 56 | Série "até mai/26" sem jun–set | M | **RECALCULATE** | A planilha Nexus mostra **jun R$ 72,0 mil → jul R$ 11,8 mil → ago R$ 3,4 mil → nada de setembro em diante**; o dinheiro "real" do app: ago R$ 11,7 mil · set R$ 49,2 mil · out (até 15/10) R$ 40,5 mil. Memorando termina em maio e não mostra a queda do varejo. | Parte 1 (3, 4, 5) |
 
+| 57 | "Retorno elevado sobre capital investido a cada ciclo operacional" · "O Papel do Capital" | M, V | **INCONSISTENT** | O material **público** promete retorno sobre capital; o **contrato e o painel do Parceiro** dizem "**não é investimento financeiro, não há retorno garantido, não é valor mobiliário**". O CEO confirmou que parceiros "**recebem rentabilidade**". Alinhar com o jurídico. | C14 |
+| 58 | Resultado "apurado" do painel do Parceiro (R$ 124.596/ano; valuation de 3–6×) | app | **RECALCULATE** | Em **02/10/2026** a linha "**Parceiros de compra (5%)**" foi **retirada** dos cenários; com ela o anual era **R$ 88.884**. Se há remuneração real, o resultado mostrado está **superestimado**. | C14 |
+
 ### Resumo acrescentado
 
 | Etiqueta | Itens 47–56 |
 |---|---:|
-| INCONSISTENT | 2 (47, 48) |
-| RECALCULATE | 2 (49, 56) |
+| INCONSISTENT | 3 (47, 48, 57) |
+| RECALCULATE | 3 (49, 56, 58) |
 | VERIFY | 5 (50, 51, 52, 53, 55) |
 | REMOVE | 1 (54) |
 
-> Total da auditoria com esta seção: **56 itens numerados** (46 dos sites + 10 do dossiê), mais o 20b.
+> Total da auditoria com esta seção: **58 itens numerados** (46 dos sites + 12 do dossiê e do app), mais o 20b.

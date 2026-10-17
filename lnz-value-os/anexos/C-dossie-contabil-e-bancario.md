@@ -365,36 +365,40 @@ Lista **manual, dia a dia, de itens vendidos no showroom** (vendedor · item · 
 
 **Impacto no modelo:** vendas do app em set/out ≈ **R$ 33 mil e R$ 27 mil por mês no Mercado Pago**, 93–98% depósito de carteira; **tudo o mais que entra nas contas é de natureza ainda não documentada**.
 
-
 ---
 
-## C14. Aportes e venda de participação — informação do CEO em 17/10/2026 (`MANAGEMENT DATA`, **sem documento**)
+## C14. Aportes e venda de participação — informação do CEO em 17/10/2026 (`MANAGEMENT DATA`, **sem contrato à vista**)
 
-**O que foi dito (resumo fiel; partes da mensagem ficaram ambíguas):**
-1. Os depósitos grandes são **aportes de "parceiros de compra" (investidores)**.
-2. Entraram **R$ 200 mil na compra de uma participação equivalente a 1%** da empresa; o cliente **vai enviar mais R$ 50 mil**; isso foi feito **mantendo o valor de mercado** da empresa (**R$ 250 mil por 1% = R$ 25 mi "pós-dinheiro"**; só os R$ 200 mil por 1% dariam R$ 20 mi — **a confirmar qual**).
-3. Há **outros valores: R$ 50 mil e mais R$ 200 mil em 1º/09**, "investimento em parceiro de compra".
+**O que o CEO informou (confirmado em duas mensagens):**
+1. **Compra de participação (equity):** **R$ 200 mil entraram no Itaú no fim de setembro** e equivalem a **1% da empresa**. Com a empresa avaliada hoje em **R$ 25 mi, 1% = R$ 250 mil**; o cliente **enviará mais R$ 50 mil**.
+2. **Parceiro de compra:** **R$ 50 mil e R$ 200 mil (esta em 01/09)** **não foram compra direta**; foram **aporte no parceiro de compra, em que o parceiro recebe rentabilidade**.
 
-**O que os extratos mostram (créditos de terceiros ≥ R$ 5.000; sem nomes):**
+**Cruzamento com os extratos (valores, sem nomes):**
 
-| Data | Banco | R$ | Situação |
-|---|---|---:|---|
-| 21/07 | Santander | 5.000 | sem explicação |
-| 23/07 | Santander | 10.000 | sem explicação |
-| 03/08 | Santander | 10.000 + 23.000 | sem explicação |
-| **11/08** | Santander | **50.000** | **coincide com "R$ 50 mil"** (natureza a confirmar) |
-| **01/09** | Santander | **100.000 + 100.000** | **coincide com "R$ 200 mil em 1º/09"** (equity ou parceiro de compra? a confirmar) |
-| 24/09 | Itaú | 10.000 + 12.000 + 20.000 + 38.000 (= 80.000) | sem explicação |
-| 30/09 | Itaú | 5.000 + 7.000 + 8.000 + 10.000 + 10.000 + 10.000 (= 50.000) | sem explicação |
-| 24/09 | Itaú | 43 depósitos em dinheiro de R$ 100 a R$ 2.000 (= 70.000) | sem explicação |
+| Data | Banco | R$ | O que é (segundo o CEO) | Bate com o extrato? |
+|---|---|---:|---|---|
+| 11/08 | Santander | 50.000 | aporte no parceiro de compra | **sim** (1 PIX) |
+| 01/09 | Santander | 100.000 + 100.000 | aporte no parceiro de compra | **sim** (2 PIX) |
+| 24/09 e 30/09 | Itaú | 80.000 (4 PIX) + 70.000 (43 depósitos em dinheiro de R$ 100 a R$ 2.000) + 40.000 (5 PIX) + 10.000 (de uma empresa) = **200.000,00** | **compra de 1% (equity)** | **sim, soma exata** |
 
-- **R$ 250 mil dos R$ 449 mil em créditos de R$ 5 mil ou mais (jul–out) coincidem com o que foi dito**; **R$ 199 mil + os R$ 70 mil em dinheiro continuam sem explicação.** Em jan–jun, os 19 PIX de R$ 428,6 mil também seguem sem classificação.
-- **O app não registra nada disso:** a tabela `partner_plan_purchases` está vazia; os 11 pedidos de plano de parceiro no app foram **todos cancelados** (R$ 3,07 mi, nunca pagos). Os R$ 50 mil e R$ 200 mil **entraram direto no banco**, fora do app.
-- **Depósitos de carteira do app (set/out):** 22 pessoas distintas, maior depósito R$ 4.000; **só 1 depósito de conta com cargo "parceiro" (R$ 1.250)**. Ou seja, **os aportes de R$ 250 mil não são os depósitos de carteira do app.**
+- **Resultado:** os créditos de terceiros de jul–out ficam assim: **R$ 450 mil explicados pelo CEO (sem contrato)**; sobram **R$ 69 mil em 7 créditos de R$ 5 mil ou mais** (fev, mai, jun, jul, ago) e os **19 PIX de jan–jun (R$ 428,6 mil)** sem classificação.
+- **Ponto de atenção — compra de equity em dinheiro vivo fracionado:** R$ 70 mil dos R$ 200 mil do equity entraram em **43 depósitos em dinheiro de uma única data**. Para vender participação, o normal é identificar o comprador, a origem do dinheiro e o contrato. **Peça ao advogado o procedimento de identificação do investidor antes de qualquer outra venda de participação.**
+- **O app não registra nenhum desses aportes:** a tabela `partner_plan_purchases` está vazia; os 11 pedidos de plano de parceiro feitos no app foram **todos cancelados** (R$ 3,07 mi, nunca pagos). Os depósitos de carteira de set/out são de **22 pessoas**, o maior de R$ 4.000, só 1 de conta "parceiro" (R$ 1.250).
 
-**O que isso significa para o modelo (proposta):**
-- **Não é receita.** É **capital** (se houver aumento de capital com alteração contratual) **ou passivo** (se houver devolução/repasse prometido ao "parceiro de compra"). **Uma venda de 1% muda o quadro de sócios** — preciso da **alteração do contrato social** e do contrato de compra.
-- **Quem recebeu?** Se as cotas vendidas são **de um sócio** (venda secundária), o dinheiro é **do sócio, não da empresa**, e não entra no caixa da operação. Se é **aumento de capital**, entra no patrimônio. **A conta bancária que recebeu diz onde caiu, não de quem é o dinheiro.**
-- **Dado de valuation:** uma venda real de 1% a R$ 250 mil **seria um preço de transação** (R$ 25 mi pós-dinheiro). Peso proposto **zero até haver documento**, e depois **baixo**: 1% minoritário, preço fixado pela administração, comprador possivelmente da própria rede, possíveis condições (recompra, repasse). Entra como linha própria na triangulação ("transação da própria empresa") e **nunca** como confirmação do valor de R$ 25 mi.
-- **Cuidado jurídico (não é parecer):** oferecer participação societária a investidores (inclusive por site/memorando) pode ter regras próprias; **levar ao advogado antes de novas captações**.
+### Como o "parceiro de compra" funciona (lido no Contrato-Matriz do Drive e no painel do Parceiro do app)
 
+| Item | O que diz |
+|---|---|
+| Aporte | PIX/transferência para a **conta da empresa** (a do Santander); só vale após compensação. |
+| Uso | **100% na compra de lotes** (não vai para estrutura, marketing ou folha). |
+| Remuneração | **% individual sobre o lucro líquido apurado** (o % fica no quadro-resumo de cada parceiro; **está em branco na matriz**). Repasse **mensal**, após **30 dias de estruturação**, durante **24 meses**. |
+| Garantia | **Nenhuma** de retorno; sem remuneração mínima. |
+| Capital | **Devolvido ao fim**: "saldo econômico do capital aportado" em até **30 dias após o fechamento final**; **não** é promessa de devolver o valor nominal (perdas reduzem). |
+| Natureza declarada | "Parceria comercial"; **não** sociedade, mútuo ou valor mobiliário (cláusula 4); a cláusula 4.4 diz que o enquadramento seguirá a **substância econômica**. |
+| Estado jurídico | O **Mapa Jurídico de 23/09/2026** lista o "**modelo econômico e jurídico do Parceiro de Compra**" ainda **a definir**; o Contrato-Matriz foi criado **no fim de agosto**, **depois** do aporte de 11/08. |
+
+**O que isso significa para o modelo:**
+1. **Os R$ 250 mil do parceiro de compra são passivo** (devolução do saldo econômico em ~24 meses + participação mensal no lucro). Na ponte do valor da empresa entram **como dívida pelo valor aportado**; **o custo (a "rentabilidade") entra na DRE como linha própria** — preciso do **% de cada contrato** e dos **repasses já feitos**.
+2. **O R$ 200 mil do equity é capital** (se houver aumento de capital com alteração contratual) **ou dinheiro do sócio** (se for venda de cotas de um sócio). **Sem contrato e sem alteração na Junta, o Value OS guarda como "aporte informado" e dá peso zero como preço de transação.** Depois de documentado, o peso é **baixo**: 1% minoritário, preço fixado pela administração, comprador possivelmente da rede, possíveis condições.
+3. **Linha "Parceiros de compra (5%)" retirada em 02/10/2026:** o código do painel do Parceiro tinha **5% da receita do lote como "remuneração dos parceiros de compra"** (R$ 4.000 por lote de R$ 80 mil). Em **02/10/2026, por decisão da diretoria, essa linha saiu de todos os cenários** e os resultados foram recalculados para cima: **resultado do lote R$ 4.952 → R$ 8.952; resultado mensal "hoje" R$ 7.407 → R$ 10.383; anualizado R$ 88.884 → R$ 124.596**. Se os parceiros **de fato recebem rentabilidade** (como o CEO informou), **o custo é real** e os números mostrados a investidor **ficam superestimados** sem ele. As versões anteriores estão no ramo de restauração do app. **O Value OS usa a linha com o valor realmente pago.**
+4. **Cuidado jurídico (não é parecer):** captar dinheiro de várias pessoas para uma atividade tocada por terceiros, com retorno em dinheiro, **pode ter enquadramento próprio** mesmo quando o contrato diz "parceria comercial"; e o **memorando público** fala em "**retorno elevado sobre capital investido a cada ciclo**". **Levar ao advogado antes de novas captações e antes de divulgar o memorando.**

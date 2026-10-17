@@ -56,6 +56,8 @@ A tela só mostra o valor quando a linha for 🟢/🟡. Linha 🔴 aparece como 
 
 ---
 
+> **Linha obrigatória na DRE (17/10/2026):** **"Remuneração de parceiros de compra"**, com o valor **realmente pago**. O painel do Parceiro tinha 5% da receita do lote para isso e **a linha foi retirada em 02/10/2026**; o Value OS **não** a retira (Anexo C14).
+
 ## 7.3 O "mostrador de lacunas": o que o app deixa ver de **setembro/2026**
 
 > Não é a DRE. É um retrato para mostrar **a distância entre o que entra, o que é receita e o que sai**, com os números que já temos.
