@@ -146,17 +146,20 @@ E um sexto, urgente: **a Livoo saiu hoje e os dois sites ainda a anunciam** (ite
 
 ---
 
-## 1.5 O que eu **não** consegui verificar (honestidade)
+## 1.5 O que **não** foi verificado (estado em 17/10/2026, depois de tudo o que o CEO enviou)
 
 - **Os dois sites ao vivo** (só as capturas em PDF).
-- **A planilha Nexus completa** — li as primeiras linhas de cada aba (total de julho: R$ 70.269,22). Falta o CSV para calcular a série mensal nov/25–out/26.
-- **Extratos de 2025 e de jul–out/2026**, e **outras contas** além de Santander e Mercado Pago. Sem eles o caixa não reconcilia (achado 19) e a série de receita 2025 não tem prova bancária.
-- **Se os arquivos do dossiê são autênticos:** li PDFs entregues pela empresa; **não consultei o banco, a Receita nem a Junta**.
-- **O PGDAS-D em si** (só vi a citação no código do app).
-- **Contrato social atual**, quadro de sócios e **quem é dono do app, da marca e dos domínios**.
-- **Os aportes e investimentos** nas empresas (o CEO vai informar) e os **contratos dos consórcios**.
-- **O estado real de variáveis da Vercel** (ex.: `SESSAO_MODO`, `CRON_SECRET`) — não li valores de segredo.
-- **Passivos fora do app** (empréstimos, tributos em atraso, parcelamentos).
-- **Por que o estoque a custo caiu de R$ 321 mil (26/05) para R$ 64 mil (hoje)** — precisa de explicação.
+- **A série de nov/25–mai/26 do memorando** (o app Nexus antigo não está disponível) → fica como `MANAGEMENT DATA`.
+- **Extratos de 2025 e de outras contas** (há transferências para pelo menos mais uma conta) → o caixa de 31/12/2025 **não reconcilia**.
+- **Autenticidade dos documentos do dossiê** (não consultei banco, Receita nem Junta).
+- **Contrato social atual** e **quem é dono do app, da marca e dos domínios**.
+- **Contrato do 1%** (ainda não existe) e **origem dos R$ 70 mil em dinheiro** de 24/09.
+- **R$ 69 mil (jul–ago) e R$ 428,6 mil (jan–jun) em créditos grandes** sem classificação.
+- **Contratos dos consórcios** (há boletos e relatório; não há contrato).
+- **Balancete/PGDAS 2026, folha, dívidas e parcelamentos.**
+- **Variáveis da Vercel** (não li segredos).
+- **Por que o estoque a custo caiu de R$ 321 mil (26/05) para R$ 64 mil.**
+
+**O que FOI verificado depois da primeira versão:** extratos do Mercado Pago jul–16/out (fecham ao centavo e casam com o app e com os bancos), contratos dos parceiros A e B, relatório de consórcio × extratos, composição do cartão empresa (informada).
 
 **Nenhum arquivo do app, do banco ou dos sites foi alterado.** Tudo o que fiz em produção foi leitura.

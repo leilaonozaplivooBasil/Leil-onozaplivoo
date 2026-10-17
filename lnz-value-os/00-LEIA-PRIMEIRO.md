@@ -2,6 +2,7 @@
 ## Primeira entrega: análise e proposta (17/10/2026)
 
 > **Status: PROPOSTA PARA A SUA APROVAÇÃO. Nada foi construído.**
+> **Dados: fechados em 17/10/2026** com tudo o que o CEO enviou (extratos Itaú, Santander e Mercado Pago, dossiê contábil, contratos de parceiros, aportes informados). O que não existe está marcado como "informado" ou "não disponível" — ver Parte 12.3.
 > Nenhum código do Value OS foi escrito. **Nenhuma linha do app, do banco, dos dois sites ou da produção foi alterada** — o que fiz no banco e no código do app foi **só leitura**.
 > Também **não apresento nenhum número de valuation** nesta entrega: a referência de R$ 25 mi já foi vista (então a primeira rodada não pode ser cega) e o dado ainda não fecha (ver abaixo).
 
@@ -38,7 +39,7 @@
 | 11 · Riscos | `PARTE-11-riscos.md` | dados, financeiro, legal/conformidade, segurança, credibilidade, técnico |
 | 12 · Decisões | `PARTE-12-decisoes.md` | **25 decisões suas (DEC-1…25)** e os **10 dados que faltam** |
 
-**Anexos:** `anexos/A-auditoria-dos-dois-sites.md` (59 itens) · `anexos/B-evidencias-do-banco.md` (números do banco e as consultas) · `anexos/C-dossie-contabil-e-bancario.md` (dossiê do Drive e extratos).
+**Anexos:** `anexos/A-auditoria-dos-dois-sites.md` (59 itens) · `anexos/B-evidencias-do-banco.md` (números do banco e as consultas) · `anexos/C-dossie-contabil-e-bancario.md` (dossiê do Drive e extratos; **C10** Mercado Pago pelo app · **C11** consórcio · **C13** extratos Mercado Pago jul–out · **C14** aportes e 1% · **C15** contratos dos parceiros e cronograma).
 
 ---
 

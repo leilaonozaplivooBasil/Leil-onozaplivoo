@@ -47,27 +47,28 @@
 
 ---
 
-## 12.3 **Dados que faltam** (peço, em ordem de importância)
+## 12.3 **Estado dos dados — fechado em 17/10/2026** (o CEO informou que enviou tudo o que tinha; nada mais será pedido)
 
-| # | O que mandar | Para quê | Quem tem |
+| # | Item | Situação | Como o Value OS trata |
 |---|---|---|---|
-| 1 | ~~Mercado Pago de agosto~~ — **recebido** (série jul–16/out completa, Anexo C13/C13b) | — | — |
-| 2 | **Lista dos aportes e investimentos** (quem, quando, quanto, contrato, repasse prometido) | Classificar os 19 + 20 créditos grandes e montar a ponte | CEO |
-| 3 | **Extratos de 2025 e de todas as outras contas** (Nubank? outras do Santander/Itaú; contas dos sócios usadas pela empresa) | Reconciliar o caixa de R$ 705,9 mil do balanço de 2025 | financeiro |
-| 4 | **Contrato social atual** e quadro de sócios | DEC-1 (perímetro) | contador / jurídico |
-| 5 | **Quem é o dono do app, marca e domínios** (contratos de cessão) | DEC-1 | jurídico |
-| 6 | **Exportação do Nexus antigo** (CSV das vendas nov/25–mai/26) ou acesso ao app antigo | Provar a série do memorando | quem desenvolveu |
-| 7 | **Contratos e extratos dos consórcios** (valor da carta, parcelas pagas/a pagar, saldo devedor, contemplação, alienação) | DEC-8 | CEO |
-| 8 | **Balancete/DRE 2026**, **PGDAS-D e DAS pagos 2026**, documento de **opção pelo Simples** | Receita e passivo fiscal | contador |
-| 9 | **Folha/pró-labore, aluguel, dívidas e parcelamentos** | Passivos fora do app | financeiro |
-| 10 | **Comprovantes dos 39 créditos ≥ R$ 5.000** (quem pagou e por quê) | Origem dos recursos | financeiro / CEO |
-| 11 | ~~Faturas do cartão empresa~~ — **dispensadas pelo CEO** | Composição informada (aluguel de R$ 10 mil — o "hotel" —, tecnologia e marketing); **fatura em aberto: R$ 0 (informado)** | — |
-| 12 | **Certificado de conclusão da DocuSign** dos contratos A e B (**B recebido; assinado em 11/08 segundo o CEO**) | Datas e IPs da assinatura | CEO / jurídico |
-| 13 | **Dizer o que é o terceiro envelope DocuSign** ("a aguardar por mais 2 pessoas", há 2 meses) e **baixar já os certificados** (a conta de teste expirou) | Pode ser um terceiro contrato não assinado; risco de perder acesso | CEO |
+| 1 | Mercado Pago jul–16/out | **recebido** (fecha ao centavo; Anexo C13) | `VERIFIED` (extrato) |
+| 2 | Aportes e venda de participação | **informado pelo CEO** + 2 contratos de parceiro (A e B); contrato do 1% **ainda não existe** (será assinado após o último R$ 50 mil) | parceiros = **passivo** (C15b); 1% = **preço informado, peso zero** até o contrato |
+| 3 | Extratos de 2025 e de outras contas | **não disponíveis** | caixa de 31/12/2025 fica **`MANAGEMENT DATA — não reconciliado`** |
+| 4 | Contrato social atual / quem é dono do app, marca e domínios | **não disponíveis** | perímetro **A (Compras Full)** por padrão; ativos de tecnologia marcados **"titularidade a confirmar"** |
+| 5 | Nexus antigo (nov/25–mai/26) | **não disponível** | série do memorando = **`MANAGEMENT DATA`**, fora da série oficial (que começa em 01/08/2026) |
+| 6 | Consórcios | relatório de 30/06 + 21 boletos no Drive + extratos | cotas no nome da empresa entram na ponte pelo que os boletos e extratos mostram; sem contrato, **saldo devedor estimado** |
+| 7 | Balancete/PGDAS 2026, folha, dívidas | **não disponíveis** | tributos e passivos **estimados** e marcados `AI ASSUMPTION` |
+| 8 | Comprovantes dos créditos grandes | **R$ 450 mil explicados pelo CEO** (C14); R$ 69 mil (jul–ago) e R$ 428,6 mil (jan–jun) **sem explicação** | ficam como **"entrada não classificada"** (não é receita) |
+| 9 | Faturas do cartão empresa | **dispensadas** | composição informada (aluguel, tecnologia, marketing); fatura em aberto **R$ 0** |
+| 10 | Certificado DocuSign e terceiro envelope | **dispensados pelo CEO** | contratos A e B valem como assinados (painel: "concluído há 2 meses"); terceiro envelope **não considerado** |
+
+> **Efeito:** o motor pode rodar com o que existe. Tudo o que está como "informado", "estimado" ou "não classificado" **aparece com a etiqueta na tela** e abaixa o **Data Quality Score** — não some.
 
 ---
 
 ## 12.4 O que acontece depois da sua resposta
+
+> **Resposta rápida:** se você responder só **"aprovado"**, adoto a **recomendação de todas as 25 decisões** (DEC-1 a DEC-25) e começo a Fase 0/1. Se quiser mudar alguma, diga o número e o ajuste.
 
 ```
  Sua resposta (12.1 + 12.2)
