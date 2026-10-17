@@ -128,7 +128,7 @@ Os pesos **mudam com o estágio** (tabela de transição fica na metodologia) �
 
 ---
 
-> **Dívida com parceiros de compra (contratos A e B, 17/10/2026):** principal **R$ 250 mil** (R$ 200 mil + R$ 50 mil) a devolver em ~24 meses **+ remuneração fixa de R$ 10.500/mês** (4,5% e 3% ao mês). Entra na ponte **como dívida pelo principal**, com a **parte acima do custo de mercado** a valor presente; **outros parceiros prováveis** (Anexo C15) entram quando houver contrato. **Venda de 1% por R$ 250 mil** (R$ 200 mil recebidos + R$ 50 mil a receber): **preço informado, peso zero até haver contrato e alteração contratual** (Anexo C14).
+> **Dívida com parceiros de compra (contratos A e B, 17/10/2026):** principal **R$ 250 mil** (R$ 200 mil + R$ 50 mil) a devolver em ~24 meses **+ remuneração fixa de R$ 10.500/mês** (4,5% e 3% ao mês). Entra na ponte **como dívida pelo principal**, com a **parte acima do custo de mercado** a valor presente; o CEO informa que **só existem estes 2 contratos** (qualquer novo entra com contrato). **Venda de 1% por R$ 250 mil** (R$ 200 mil recebidos + R$ 50 mil a receber): **preço informado, peso zero até haver contrato e alteração contratual** (Anexo C14).
 
 ## 8.6 Modo Cego (Blind Valuation)
 
