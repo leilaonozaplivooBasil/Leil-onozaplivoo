@@ -61,7 +61,7 @@
 | 8 | **Balancete/DRE 2026**, **PGDAS-D e DAS pagos 2026**, documento de **opção pelo Simples** | Receita e passivo fiscal | contador |
 | 9 | **Folha/pró-labore, aluguel, dívidas e parcelamentos** | Passivos fora do app | financeiro |
 | 10 | **Comprovantes dos 39 créditos ≥ R$ 5.000** (quem pagou e por quê) | Origem dos recursos | financeiro / CEO |
-| 11 | ~~Faturas do cartão empresa~~ — **dispensadas pelo CEO** | Composição informada (aluguel, tecnologia, marketing, ≈ R$ 10 mil de hotel); só preciso saber **quanto está em aberto hoje** na fatura corrente | — |
+| 11 | ~~Faturas do cartão empresa~~ — **dispensadas pelo CEO** | Composição informada (aluguel de R$ 10 mil — o "hotel" —, tecnologia e marketing); só preciso saber **quanto está em aberto hoje** na fatura corrente | — |
 | 12 | **Certificado de conclusão da DocuSign** do contrato A e **contrato B assinado** | Prova de assinatura e de data | CEO / jurídico |
 
 ---
