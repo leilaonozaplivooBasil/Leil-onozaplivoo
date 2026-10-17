@@ -10,11 +10,11 @@ export default function Entrar() {
 
   return (
     <main className="flex flex-1 items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md rounded-2xl border border-border bg-surface p-8">
-        <p className="text-xs font-semibold uppercase tracking-widest text-accent">
-          LNZ Value OS
-        </p>
-        <h1 className="mt-2 text-2xl font-semibold">Área do investidor</h1>
+      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-black/70 p-8 shadow-2xl backdrop-blur-md">
+        <span className="inline-block rounded-md bg-pill px-2.5 py-1 text-xs uppercase tracking-wide text-black">
+          Área do investidor
+        </span>
+        <h1 className="mt-4 font-display text-3xl font-light text-white">Memorando e números com prova</h1>
         <p className="mt-2 text-sm text-muted">
           Acesso só por convite. Digite seu e-mail e enviamos um código de
           entrada.
@@ -39,7 +39,7 @@ export default function Entrar() {
           <button
             type="submit"
             disabled={pendente}
-            className="w-full rounded-lg bg-accent px-4 py-2.5 font-semibold text-accent-ink disabled:opacity-60"
+            className="w-full rounded-lg bg-accent px-4 py-3 font-semibold text-accent-ink transition hover:brightness-110 disabled:opacity-60"
           >
             {pendente ? "Enviando…" : "Receber código"}
           </button>

@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import { cache } from "react";
 import { criarClienteServidor } from "@/lib/supabase/server";
 import type { Etiqueta } from "@/lib/etiquetas";
@@ -12,15 +13,29 @@ export type ValorMetrica = {
 };
 
 // Todos os valores carregados, já organizados: o mais recente de cada métrica e a série completa.
-export const valoresCarregados = cache(async () => {
+// Prévia visual local (só em desenvolvimento): lê os valores de um arquivo em vez do banco.
+export const emPrevia = () => process.env.NODE_ENV === "development" && process.env.VALUEOS_PREVIA === "1";
+
+type Linha = { metric_id: string; periodo: string; valor: number | string | null; etiqueta: string | null; fonte: string; nota: string | null };
+
+async function linhas(): Promise<Linha[]> {
+  if (emPrevia() && process.env.VALUEOS_PREVIA_DADOS) {
+    const todas = JSON.parse(await readFile(process.env.VALUEOS_PREVIA_DADOS, "utf8")) as Linha[];
+    return todas.sort((a, b) => b.periodo.localeCompare(a.periodo));
+  }
   const supabase = await criarClienteServidor();
   const { data } = await supabase
     .from("vos_valores")
     .select("metric_id, periodo, valor, etiqueta, fonte, nota")
     .order("periodo", { ascending: false });
+  return (data ?? []) as Linha[];
+}
+
+export const valoresCarregados = cache(async () => {
+  const data = await linhas();
   const ultimo = new Map<string, ValorMetrica>();
   const serie = new Map<string, ValorMetrica[]>();
-  for (const bruto of data ?? []) {
+  for (const bruto of data) {
     const v: ValorMetrica = {
       ...bruto,
       valor: bruto.valor === null ? null : Number(bruto.valor),

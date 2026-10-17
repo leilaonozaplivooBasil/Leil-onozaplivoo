@@ -2,64 +2,110 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 
-export const ITENS = [
-  { href: "/app", rotulo: "Visão geral", tempo: "30 s" },
-  { href: "/app/memorando", rotulo: "Memorando", tempo: "1 min" },
-  { href: "/app/numeros", rotulo: "Números com prova", tempo: "5 min" },
-  { href: "/app/dre", rotulo: "DRE", tempo: "5 min" },
-  { href: "/app/parceiros", rotulo: "Parceiros de compra", tempo: "5 min" },
-  { href: "/app/riscos", rotulo: "Riscos", tempo: "5 min" },
-  { href: "/app/valuation", rotulo: "Valuation", tempo: "30 min" },
-  { href: "/app/governanca", rotulo: "Governança e time", tempo: "30 min" },
-  { href: "/app/roadmap", rotulo: "Metas e simulação", tempo: "30 min" },
-  { href: "/app/dataroom", rotulo: "Data room", tempo: "30 min" },
-  { href: "/app/cargas", rotulo: "Cargas", tempo: "30 min" },
+type Item = { href: string; rotulo: string };
+
+const PRINCIPAIS: Item[] = [
+  { href: "/app", rotulo: "Início" },
+  { href: "/app/memorando", rotulo: "Memorando" },
+  { href: "/app/valuation", rotulo: "Valuation" },
 ];
+const NUMEROS: Item[] = [
+  { href: "/app/numeros", rotulo: "Números com prova" },
+  { href: "/app/dre", rotulo: "DRE" },
+  { href: "/app/parceiros", rotulo: "Parceiros de compra" },
+  { href: "/app/cargas", rotulo: "Cargas de dados" },
+];
+const DEPOIS: Item[] = [
+  { href: "/app/riscos", rotulo: "Riscos" },
+  { href: "/app/governanca", rotulo: "Governança" },
+  { href: "/app/roadmap", rotulo: "Metas" },
+  { href: "/app/dataroom", rotulo: "Data room" },
+];
+export const TODOS = [...PRINCIPAIS, ...NUMEROS, ...DEPOIS];
 
-// Navegação do portal: coluna na tela grande, faixa rolável no celular.
-export function Navegacao({ horizontal }: { horizontal?: boolean }) {
+function useAtivo() {
   const caminho = usePathname();
-  const ativo = (href: string) => (href === "/app" ? caminho === "/app" : caminho.startsWith(href));
-  if (horizontal) {
-    return (
-      <nav aria-label="Seções" className="flex gap-1 overflow-x-auto px-4 py-2 text-sm">
-        {ITENS.map((i) => (
-          <Link
-            key={i.href}
-            href={i.href}
-            className={`whitespace-nowrap rounded-full px-3 py-1.5 ${ativo(i.href) ? "bg-accent/15 font-semibold text-accent" : "text-muted hover:text-foreground"}`}
-            aria-current={ativo(i.href) ? "page" : undefined}
-          >
-            {i.rotulo}
-          </Link>
-        ))}
-      </nav>
-    );
-  }
-  // Mostra o título do grupo ("30 s", "1 min"…) só no primeiro item de cada grupo.
-  const comGrupo = ITENS.map((i, k) => ({ ...i, mostraTempo: k === 0 || ITENS[k - 1].tempo !== i.tempo }));
+  return (href: string) => (href === "/app" ? caminho === "/app" : caminho.startsWith(href));
+}
+
+// Fecha o menu aberto quando a página muda.
+function useFechaAoNavegar() {
+  const ref = useRef<HTMLDetailsElement>(null);
+  const caminho = usePathname();
+  useEffect(() => {
+    if (ref.current) ref.current.open = false;
+  }, [caminho]);
+  return ref;
+}
+
+function Link1({ i, ativo }: { i: Item; ativo: boolean }) {
   return (
-    <nav aria-label="Seções" className="space-y-1 text-sm">
-      {comGrupo.map((i) => {
-        const mostraTempo = i.mostraTempo;
-        return (
-          <div key={i.href}>
-            {mostraTempo && (
-              <p className="mb-1 mt-4 px-3 text-[11px] font-semibold uppercase tracking-widest text-muted first:mt-0">
-                {i.tempo}
-              </p>
-            )}
+    <Link
+      href={i.href}
+      aria-current={ativo ? "page" : undefined}
+      className={`rounded-md px-3 py-2 text-sm transition ${ativo ? "text-pill" : "text-white/80 hover:text-white"}`}
+    >
+      {i.rotulo}
+    </Link>
+  );
+}
+
+export function Navegacao() {
+  const ativo = useAtivo();
+  const numeros = useFechaAoNavegar();
+  const algumNumero = NUMEROS.some((i) => ativo(i.href));
+  return (
+    <nav aria-label="Seções" className="hidden items-center gap-1 lg:flex">
+      {PRINCIPAIS.map((i) => (
+        <Link1 key={i.href} i={i} ativo={ativo(i.href)} />
+      ))}
+      <details ref={numeros} className="relative">
+        <summary className={`rounded-md px-3 py-2 text-sm transition ${algumNumero ? "text-pill" : "text-white/80 hover:text-white"}`}>
+          Números <span aria-hidden>▾</span>
+        </summary>
+        <div className="absolute left-0 top-full z-30 mt-2 w-56 rounded-lg border border-border bg-surface p-1 shadow-2xl">
+          {NUMEROS.map((i) => (
             <Link
+              key={i.href}
               href={i.href}
-              className={`block rounded-lg px-3 py-2 ${ativo(i.href) ? "bg-accent/15 font-semibold text-accent" : "text-muted hover:bg-surface-2 hover:text-foreground"}`}
               aria-current={ativo(i.href) ? "page" : undefined}
+              className={`block rounded-md px-3 py-2 text-sm ${ativo(i.href) ? "bg-accent/15 text-pill" : "text-white/85 hover:bg-white/5"}`}
             >
               {i.rotulo}
             </Link>
-          </div>
-        );
-      })}
+          ))}
+        </div>
+      </details>
+      {DEPOIS.map((i) => (
+        <Link1 key={i.href} i={i} ativo={ativo(i.href)} />
+      ))}
     </nav>
+  );
+}
+
+export function MenuCelular() {
+  const ativo = useAtivo();
+  const ref = useFechaAoNavegar();
+  return (
+    <details ref={ref} className="lg:hidden">
+      <summary className="rounded-md border border-border px-3 py-2 text-sm text-white">Menu</summary>
+      <div className="absolute inset-x-0 top-full z-30 border-b border-border bg-background/98 px-5 py-4 shadow-2xl">
+        <ul className="grid grid-cols-2 gap-1">
+          {TODOS.map((i) => (
+            <li key={i.href}>
+              <Link
+                href={i.href}
+                aria-current={ativo(i.href) ? "page" : undefined}
+                className={`block rounded-md px-3 py-2.5 text-sm ${ativo(i.href) ? "bg-accent/15 text-pill" : "text-white/85"}`}
+              >
+                {i.rotulo}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
   );
 }

@@ -2,7 +2,8 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { criarClienteServidor } from "@/lib/supabase/server";
 import { NDA_VERSAO } from "@/lib/nda";
-import { Navegacao } from "@/components/nav";
+import Image from "next/image";
+import { MenuCelular, Navegacao } from "@/components/nav";
 
 export const dynamic = "force-dynamic";
 
@@ -73,37 +74,31 @@ export default async function LayoutPortal({
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <header className="sticky top-0 z-20 border-b border-border bg-background/90 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3">
-          <a href="/app" className="block">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">LNZ Value OS</p>
-            <p className="text-xs text-muted">Leilão NoZap · área do investidor</p>
+      <header className="sticky top-0 z-30 border-b border-white/10 bg-black/85 backdrop-blur-md">
+        <div className="relative mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-5 py-3 sm:px-8">
+          <a href="/app" className="flex items-center gap-3" aria-label="Leilão NoZap · início do portal">
+            <Image src="/m/logo-horizontal.png" alt="Leilão NoZap" width={110} height={40} priority className="h-9 w-auto" />
+            <span className="hidden border-l border-white/15 pl-3 text-xs uppercase tracking-[0.18em] text-muted sm:inline">Área do investidor</span>
           </a>
-          <div className="flex items-center gap-4 text-sm">
-            <span className="hidden text-muted sm:inline">
+          <Navegacao />
+          <div className="flex items-center gap-3 text-sm">
+            <span className="hidden text-xs text-muted xl:inline">
               {perfil.nome ?? perfil.email} · {PAPEL[perfil.papel] ?? perfil.papel}
             </span>
-            <a href="/sair" className="underline">
+            <a href="/sair" className="text-white/80 underline underline-offset-4 hover:text-white">
               Sair
             </a>
+            <MenuCelular />
           </div>
-        </div>
-        <div className="border-t border-border lg:hidden">
-          <Navegacao horizontal />
         </div>
       </header>
-      <div className="mx-auto flex w-full max-w-7xl flex-1 gap-8 px-4 py-8">
-        <aside className="hidden w-56 shrink-0 lg:block">
-          <div className="sticky top-24">
-            <Navegacao />
-          </div>
-        </aside>
-        <main className="min-w-0 flex-1">{children}</main>
-      </div>
-      <footer className="border-t border-border px-4 py-5 text-center text-xs text-muted">
-        Material confidencial, de uso restrito a convidados. Não é oferta pública de valores mobiliários nem promessa
-        de retorno. Cada número mostra a origem e a etiqueta de qualidade; o valuation independente só aparece depois
-        da metodologia v1.0 travada e do primeiro fechamento oficial.
+      <main className="flex-1">{children}</main>
+      <footer className="border-t border-white/10 px-5 py-8 text-center text-xs leading-relaxed text-muted">
+        <p className="mx-auto max-w-3xl">
+          Documento confidencial — uso restrito a convidados com termo de sigilo aceito. Não é oferta pública de valores
+          mobiliários nem promessa de retorno. Cada número mostra a origem e a etiqueta de qualidade; o valuation independente
+          só aparece depois da metodologia v1.0 travada e do primeiro fechamento oficial.
+        </p>
       </footer>
     </div>
   );

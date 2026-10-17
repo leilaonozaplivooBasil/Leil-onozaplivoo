@@ -31,7 +31,7 @@ export default async function Nda({
       <p className="text-xs font-semibold uppercase tracking-widest text-accent">
         Antes de entrar
       </p>
-      <h1 className="mt-2 text-2xl font-semibold">Termo de sigilo</h1>
+      <h1 className="mt-3 font-display text-4xl font-light">Termo de sigilo</h1>
       <p className="mt-2 text-sm text-muted">
         Versão {NDA_VERSAO}. O aceite fica registrado com data, hora e endereço
         de rede.

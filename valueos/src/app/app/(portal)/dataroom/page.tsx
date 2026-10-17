@@ -47,7 +47,7 @@ export default async function DataRoom() {
                 <li key={i[0]} className="flex flex-col gap-1">
                   <span className="flex items-start justify-between gap-2">
                     <span>{i[0]}</span>
-                    <span className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold ${COR[i[1]]}`}>{i[1]}</span>
+                    <span className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold ${COR[i[1]]}`}>{i[1]}</span>
                   </span>
                   {i[2] && <span className="text-xs text-muted">{i[2]}</span>}
                 </li>

@@ -22,9 +22,9 @@ export default async function Cargas() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto w-full max-w-6xl space-y-6 px-5 py-12 sm:px-8 sm:py-16">
       <div>
-        <h1 className="text-2xl font-semibold">Cargas</h1>
+        <h1 className="font-display text-4xl font-light">Cargas</h1>
         <p className="mt-1 text-sm text-muted">
           Cada busca ou arquivo vira uma carga com data, autor e impressão digital. Nenhuma carga é apagada.
         </p>
@@ -34,7 +34,7 @@ export default async function Cargas() {
           <article key={c.id} className="rounded-2xl border border-border bg-surface p-5 text-sm">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <p className="font-medium">{c.descricao}</p>
-              <span className="rounded-full bg-muted/15 px-2 py-0.5 text-[11px] font-semibold uppercase text-muted">{TIPO[c.tipo] ?? c.tipo}</span>
+              <span className="rounded-full bg-muted/15 px-2 py-0.5 text-xs font-semibold uppercase text-muted">{TIPO[c.tipo] ?? c.tipo}</span>
             </div>
             <dl className="mt-2 grid gap-x-6 gap-y-1 text-xs text-muted sm:grid-cols-2">
               <div><dt className="inline font-semibold">Origem: </dt><dd className="inline">{c.origem}</dd></div>

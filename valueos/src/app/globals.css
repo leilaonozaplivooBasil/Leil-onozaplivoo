@@ -1,33 +1,41 @@
 @import "tailwindcss";
 
+/* Identidade do memorando: preto, verde da marca, etiqueta verde-menta, azul de apoio. */
 :root {
-  --background: #0b0f14;
-  --surface: #121821;
-  --surface-2: #18212c;
-  --border: #1f2a37;
-  --foreground: #e6edf3;
-  --muted: #8b98a5;
+  --background: #050505;
+  --surface: #0e0e10;
+  --surface-2: #18181b;
+  --cinza: #3f3f46;
+  --border: #27272a;
+  --foreground: #f4f4f5;
+  --texto: #d4d4d8;
+  --muted: #a1a1aa;
   --accent: #00b86b;
-  --accent-ink: #052e1a;
+  --accent-ink: #04130b;
+  --pill: #5cf59e;
+  --info: #22a6f2;
   --warn: #e8b23a;
   --danger: #ef5a5a;
-  --info: #5bb0f0;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
+  --color-cinza: var(--cinza);
   --color-border: var(--border);
   --color-foreground: var(--foreground);
+  --color-texto: var(--texto);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
+  --color-pill: var(--pill);
+  --color-info: var(--info);
   --color-warn: var(--warn);
   --color-danger: var(--danger);
-  --color-info: var(--info);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-roboto), system-ui, sans-serif;
+  --font-display: var(--font-poppins), var(--font-roboto), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 html {
@@ -37,42 +45,49 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-roboto), system-ui, sans-serif;
   font-size: 16px;
 }
 
-/* Foco visível em tudo que recebe teclado. */
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--pill);
   outline-offset: 2px;
   border-radius: 6px;
 }
 
-/* Texto corrido das páginas de narrativa (memorando, valuation, riscos). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* Texto corrido (carta, capítulos). */
 .prosa p {
-  margin-top: 0.75rem;
-  line-height: 1.7;
-  color: #c9d3dd;
+  margin-top: 1rem;
+  line-height: 1.75;
+  color: var(--texto);
+  font-weight: 300;
 }
 .prosa p:first-child {
   margin-top: 0;
 }
 .prosa strong {
   color: var(--foreground);
+  font-weight: 500;
 }
 .prosa ul {
   margin-top: 0.75rem;
   padding-left: 1.25rem;
   list-style: disc;
-  color: #c9d3dd;
-  line-height: 1.7;
-}
-.prosa blockquote {
-  margin-top: 1rem;
-  border-left: 3px solid var(--accent);
-  padding-left: 1rem;
-  color: var(--foreground);
-  font-style: italic;
+  color: var(--texto);
+  line-height: 1.75;
+  font-weight: 300;
 }
 
 details > summary {
@@ -86,7 +101,11 @@ details[open] > summary .seta {
   transform: rotate(90deg);
 }
 
-/* Números sempre alinhados. */
 .num {
   font-variant-numeric: tabular-nums;
+}
+
+/* Seta do "A infraestrutura que faltava". */
+.seta-faixa {
+  clip-path: polygon(0 0, calc(100% - 3rem) 0, calc(100% - 3rem) -12%, 100% 50%, calc(100% - 3rem) 112%, calc(100% - 3rem) 100%, 0 100%);
 }

@@ -53,13 +53,13 @@ export default async function Prova({
   const cargaPorId = new Map((cargas ?? []).map((c) => [c.id, c]));
 
   return (
-    <div className="space-y-8">
+    <div className="mx-auto w-full max-w-6xl space-y-8 px-5 py-12 sm:px-8 sm:py-16">
       <div>
         <Link href="/app/numeros" className="text-sm text-muted underline">
           ← Números com prova
         </Link>
         <p className="mt-4 text-xs uppercase tracking-widest text-muted">{metrica.familia}</p>
-        <h1 className="mt-1 text-2xl font-semibold">{metrica.nome}</h1>
+        <h1 className="mt-1 font-display text-4xl font-light">{metrica.nome}</h1>
         <p className="font-mono text-xs text-muted">{metrica.metric_id} · {metrica.versao}</p>
       </div>
 
@@ -78,9 +78,9 @@ export default async function Prova({
         <div className="rounded-2xl border border-border bg-surface p-5 text-sm">
           <p className="text-xs uppercase tracking-widest text-muted">Como ler</p>
           <ul className="mt-2 space-y-2 text-muted">
-            <li><span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${ETIQUETA.VERIFIED.classe}`}>VERIFICADO</span> veio do banco do app, de extrato ou de contrato, e dá para refazer.</li>
-            <li><span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${ETIQUETA.MANAGEMENT_DATA.classe}`}>DADO DA ADMINISTRAÇÃO</span> informado pela empresa, sem documento que prove sozinho.</li>
-            <li><span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${ETIQUETA.FORECAST.classe}`}>PROJEÇÃO</span> e <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${ETIQUETA.AI_ASSUMPTION.classe}`}>PREMISSA</span> não são fatos.</li>
+            <li><span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${ETIQUETA.VERIFIED.classe}`}>VERIFICADO</span> veio do banco do app, de extrato ou de contrato, e dá para refazer.</li>
+            <li><span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${ETIQUETA.MANAGEMENT_DATA.classe}`}>DADO DA ADMINISTRAÇÃO</span> informado pela empresa, sem documento que prove sozinho.</li>
+            <li><span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${ETIQUETA.FORECAST.classe}`}>PROJEÇÃO</span> e <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${ETIQUETA.AI_ASSUMPTION.classe}`}>PREMISSA</span> não são fatos.</li>
             <li>Cada prova tem um <strong>hash</strong> que inclui o hash da prova anterior: mudar uma quebra todas as seguintes.</li>
           </ul>
         </div>
@@ -100,7 +100,7 @@ export default async function Prova({
                   <p className="text-xs uppercase tracking-widest text-muted">{mesCurto(v.periodo)}</p>
                   <p className="font-mono text-2xl">{formata(v.valor, metrica.unidade)}</p>
                 </div>
-                <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${et.classe}`}>{et.texto}</span>
+                <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${et.classe}`}>{et.texto}</span>
               </div>
               <dl className="mt-3 grid gap-x-6 gap-y-1 text-xs text-muted sm:grid-cols-2">
                 <div><dt className="inline font-semibold">Origem: </dt><dd className="inline">{v.fonte}</dd></div>
@@ -121,7 +121,7 @@ export default async function Prova({
               {evid && (
                 <details className="mt-3 text-xs">
                   <summary className="cursor-pointer text-muted">Consulta e resultado bruto (conselho/administração)</summary>
-                  <pre className="mt-2 overflow-auto rounded-lg bg-background p-3 font-mono text-[11px] leading-relaxed">{evid.consulta}
+                  <pre className="mt-2 overflow-auto rounded-lg bg-background p-3 font-mono text-xs leading-relaxed">{evid.consulta}
 
 {JSON.stringify(evid.resultado, null, 2)}</pre>
                 </details>

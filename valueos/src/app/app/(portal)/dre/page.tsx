@@ -59,9 +59,9 @@ export default async function Dre() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto w-full max-w-6xl space-y-6 px-5 py-12 sm:px-8 sm:py-16">
       <div>
-        <h1 className="text-2xl font-semibold">DRE conceitual — ago a out/2026</h1>
+        <h1 className="font-display text-4xl font-light">DRE conceitual — ago a out/2026</h1>
         <p className="mt-1 text-sm text-muted">
           Cada linha vem de métricas com prova (clique no nome). Linha cinza = o dado ainda não existe, e o motivo está escrito. Outubro vai até o dia 16.
         </p>
@@ -100,7 +100,7 @@ export default async function Dre() {
                   return (
                     <td key={p} className="px-4 py-3 text-right align-top">
                       <div className="font-mono">{formata(c.valor, "BRL")}</div>
-                      <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${et.classe}`}>{et.texto}</span>
+                      <span className={`rounded-full px-1.5 py-0.5 text-xs font-semibold ${et.classe}`}>{et.texto}</span>
                     </td>
                   );
                 })}

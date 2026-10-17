@@ -8,7 +8,7 @@ export function Etiqueta({ tipo, pequena }: { tipo: TipoEtiqueta | string; peque
   const et = ETIQUETA[(tipo as TipoEtiqueta) in ETIQUETA ? (tipo as TipoEtiqueta) : "NAO_DISPONIVEL"];
   return (
     <span
-      className={`inline-block whitespace-nowrap rounded-full font-semibold ${pequena ? "px-1.5 py-0.5 text-[11px]" : "px-2 py-0.5 text-xs"} ${et.classe}`}
+      className={`inline-block whitespace-nowrap rounded-full font-semibold ${pequena ? "px-1.5 py-0.5 text-xs" : "px-2 py-0.5 text-xs"} ${et.classe}`}
     >
       {et.texto}
     </span>
@@ -42,7 +42,7 @@ export function Numero({
   const conteudo = (
     <>
       <p className="text-xs uppercase tracking-widest text-muted">{rotulo}</p>
-      <p className={`num mt-2 font-semibold ${grande ? "text-3xl sm:text-4xl" : "text-2xl"}`}>{valor}</p>
+      <p className={`num mt-2 font-display font-light ${grande ? "text-4xl sm:text-5xl" : "text-3xl"}`}>{valor}</p>
       <div className="mt-2 flex flex-wrap items-center gap-2">
         {etiqueta && <Etiqueta tipo={etiqueta} pequena />}
         {origem && <span className="text-xs text-muted">{origem}</span>}
@@ -71,10 +71,12 @@ export function Pagina({
   children?: ReactNode;
 }) {
   return (
-    <div className="space-y-10">
+    <div className="mx-auto w-full max-w-6xl space-y-10 px-5 py-12 sm:px-8 sm:py-16">
       <header className="max-w-3xl">
-        {sobretitulo && <p className="text-xs font-semibold uppercase tracking-widest text-accent">{sobretitulo}</p>}
-        <h1 className="mt-2 text-3xl font-semibold leading-tight sm:text-4xl">{titulo}</h1>
+        {sobretitulo && (
+          <span className="inline-block rounded-md bg-pill px-2.5 py-1 text-xs uppercase tracking-wide text-black">{sobretitulo}</span>
+        )}
+        <h1 className="mt-3 font-display text-4xl font-light leading-tight sm:text-5xl">{titulo}</h1>
         {descricao && <div className="mt-3 text-base text-muted">{descricao}</div>}
       </header>
       {children}
@@ -99,7 +101,7 @@ export function Secao({
     <section id={id} className="scroll-mt-24 space-y-5">
       <div className="max-w-3xl">
         {sobretitulo && <p className="text-xs font-semibold uppercase tracking-widest text-muted">{sobretitulo}</p>}
-        <h2 className="mt-1 text-2xl font-semibold leading-snug">{titulo}</h2>
+        <h2 className="mt-1 font-display text-2xl font-light leading-snug sm:text-3xl">{titulo}</h2>
         {descricao && <div className="mt-2 text-sm text-muted">{descricao}</div>}
       </div>
       {children}
@@ -119,8 +121,8 @@ export function Cartao({
   className?: string;
 }) {
   return (
-    <div className={`rounded-2xl border p-5 ${destaque ? "border-accent/40 bg-accent/5" : "border-border bg-surface"} ${className}`}>
-      {titulo && <p className="mb-2 text-sm font-semibold">{titulo}</p>}
+    <div className={`min-w-0 rounded-2xl border p-5 ${destaque ? "border-accent/40 bg-accent/5" : "border-border bg-surface"} ${className}`}>
+      {titulo && <p className="mb-2 font-display text-lg font-light text-accent">{titulo}</p>}
       <div className="text-sm">{children}</div>
     </div>
   );
@@ -128,7 +130,7 @@ export function Cartao({
 
 export function Grade({ colunas = 3, children }: { colunas?: 2 | 3 | 4; children: ReactNode }) {
   const c = { 2: "sm:grid-cols-2", 3: "sm:grid-cols-2 lg:grid-cols-3", 4: "sm:grid-cols-2 lg:grid-cols-4" }[colunas];
-  return <div className={`grid gap-4 ${c}`}>{children}</div>;
+  return <div className={`grid grid-cols-1 gap-4 ${c}`}>{children}</div>;
 }
 
 export function Aviso({
@@ -173,13 +175,13 @@ export function Barras({
             d.etiqueta === "VERIFIED" ? "bg-accent" : d.etiqueta === "FORECAST" ? "bg-info/70" : d.etiqueta === "AI_ASSUMPTION" ? "bg-danger/60" : "bg-warn/70";
           return (
             <div key={d.rotulo} className="flex flex-1 flex-col items-center justify-end gap-1">
-              <span className="num text-[11px] text-muted">{d.valor === null ? "—" : formato(d.valor)}</span>
+              <span className="num text-xs text-muted">{d.valor === null ? "—" : formato(d.valor)}</span>
               <div
                 className={`w-full rounded-t ${d.valor === null ? "border border-dashed border-border" : cor}`}
                 style={{ height: d.valor === null ? 24 : h }}
                 aria-label={`${d.rotulo}: ${d.valor === null ? "não disponível" : formato(d.valor)}`}
               />
-              <span className="text-[11px] text-muted">{d.rotulo}</span>
+              <span className="text-xs text-muted">{d.rotulo}</span>
             </div>
           );
         })}

@@ -1,18 +1,28 @@
+import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { criarClienteServidor } from "@/lib/supabase/server";
 import { valoresCarregados } from "@/lib/metricas";
 import { mesCurto } from "@/lib/etiquetas";
-import { Aviso, Cartao, Etiqueta, Grade, Legenda, Numero, SeloReferencia, brl, inteiro } from "@/components/ui";
+import { Etiqueta, Legenda, SeloReferencia, brl, inteiro } from "@/components/ui";
+import { Conteiner, Faixa, NumeroGrande, Tag } from "@/components/marca";
 
 export const dynamic = "force-dynamic";
 
-// A capa: em 30 segundos, o que a empresa é, o que já está provado e para onde ir.
-export default async function VisaoGeral() {
+const PORTAS = [
+  { href: "/app/memorando", imagem: "/m/fundador.jpg", tempo: "1 minuto para a tese", titulo: "Memorando de investimento", texto: "Carta do fundador e os 12 capítulos — edição atualizada com os números do sistema." },
+  { href: "/app/numeros", imagem: "/m/comparai.jpg", tempo: "5 minutos", titulo: "Números com prova", texto: "Trinta métricas com definição única, origem e impressão digital. Clique e veja de onde veio." },
+  { href: "/app/valuation", imagem: "/m/cap5-modelo.jpg", tempo: "30 minutos", titulo: "Valuation", texto: "Referência do fundador, metodologia de nove métodos e a ponte do valor da empresa ao valor do sócio." },
+  { href: "/app/dataroom", imagem: "/m/cap8-barreiras.jpg", tempo: "Due diligence", titulo: "Data room", texto: "O que existe, o que está parcial e o que falta — pasta por pasta." },
+];
+
+// A capa do portal: o que a empresa é, o que já está provado e para onde ir.
+export default async function Inicio() {
   const supabase = await criarClienteServidor();
-  const [{ data: metricas }, { ultimo }, { data: snapshots }] = await Promise.all([
+  const [{ data: metricas }, { ultimo, serie }, { data: snapshots }] = await Promise.all([
     supabase.from("vos_metricas").select("metric_id").eq("ativo", true),
     valoresCarregados(),
-    supabase.from("vos_snapshots").select("tipo, periodo, fechado_em").eq("tipo", "official").order("periodo", { ascending: false }).limit(1),
+    supabase.from("vos_snapshots").select("tipo, periodo").eq("tipo", "official").order("periodo", { ascending: false }).limit(1),
   ]);
 
   const todas = (metricas ?? []).map((m) => m.metric_id);
@@ -20,133 +30,125 @@ export default async function VisaoGeral() {
   const verificadas = comValor.filter((id) => ultimo.get(id)!.etiqueta === "VERIFIED").length;
   const qualidade = todas.length ? Math.round((100 * (verificadas + 0.5 * (comValor.length - verificadas))) / todas.length) : 0;
   const oficial = snapshots?.[0];
-
-  const gmv = ultimo.get("GMV_GOODS");
-  const entradas = ultimo.get("CASH_IN_GROSS");
-  const clientes = ultimo.get("CUSTOMERS_PAYING_90D");
-  const licenciados = ultimo.get("LICENSEES_ACTIVE_30D");
-  const passivo = ultimo.get("PARTNER_CAPITAL_LIABILITY");
-  const carteira = ultimo.get("WALLET_LIABILITY_TOTAL");
-  const periodo = gmv ? mesCurto(gmv.periodo) : "—";
+  const u = (id: string) => ultimo.get(id);
+  const arremates = u("GMV_AUCTION");
+  const lances = u("BIDS_COUNT");
+  const pagantes = u("CUSTOMERS_PAYING_90D");
+  const gmv = u("GMV_GOODS");
+  const passivo = u("PARTNER_CAPITAL_LIABILITY");
+  const anterior = (id: string) => {
+    const lista = serie.get(id) ?? [];
+    return lista.length >= 2 ? lista[lista.length - 2] : null;
+  };
+  const arrAnt = anterior("GMV_AUCTION");
+  const lancesAnt = anterior("BIDS_COUNT");
+  const compara = (atual: number | null | undefined, ant: { valor: number | null; periodo: string } | null, fmt: (x: number) => string) =>
+    atual != null && ant?.valor != null
+      ? `${atual >= ant.valor ? "já acima de" : "contra"} ${mesCurto(ant.periodo)} inteiro (${fmt(ant.valor)})`
+      : "";
+  const carteira = u("WALLET_LIABILITY_TOTAL");
 
   return (
-    <div className="space-y-12">
-      <section className="space-y-6">
-        <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-widest text-accent">Leilão NoZap · Compras Full Comércio Ltda</p>
-          <h1 className="mt-2 text-3xl font-semibold leading-tight sm:text-5xl">
-            Infraestrutura de recommerce, leilão e distribuição pelo WhatsApp — com cada número rastreável.
+    <div>
+      <section className="relative isolate overflow-hidden">
+        <Image src="/m/capa.jpg" alt="" fill priority sizes="100vw" className="-z-10 object-cover" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-black via-black/85 to-black/40" aria-hidden />
+        <Conteiner className="py-24 sm:py-32">
+          <Tag>Área do investidor · confidencial</Tag>
+          <h1 className="mt-5 max-w-4xl font-display text-4xl font-light leading-[1.1] text-white sm:text-6xl">
+            A nova infraestrutura do <span className="text-accent">recommerce brasileiro</span> — com cada número rastreável.
           </h1>
-          <p className="mt-4 text-base text-muted">
-            Este portal junta o memorando de investimento, os números recalculados do sistema, os contratos e os
-            riscos. Nada aqui é promessa: o que foi verificado está marcado, o que foi informado está marcado, e o que
-            ainda não existe diz por quê.
+          <p className="mt-6 max-w-2xl text-lg font-light text-texto">
+            Memorando, números do sistema, contratos e riscos num só lugar. O que foi verificado está marcado, o que foi informado está
+            marcado, e o que ainda não existe diz por quê.
           </p>
-        </div>
-        <Legenda />
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href="/app/memorando" className="inline-flex items-center gap-2 rounded-md bg-accent px-5 py-3 font-semibold text-accent-ink hover:brightness-110">
+              Ler o memorando <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+            <Link href="/app/numeros" className="rounded-md border border-white/40 px-5 py-3 font-semibold text-white hover:bg-white/10">
+              Ver os números com prova
+            </Link>
+          </div>
+        </Conteiner>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-muted">30 segundos · o que já está provado ({periodo})</h2>
-        <Grade colunas={4}>
-          <Numero rotulo="Mercadoria vendida e paga" valor={gmv?.valor != null ? brl(gmv.valor) : "—"} etiqueta={gmv?.etiqueta} origem={gmv?.nota ?? undefined} href="/app/prova/GMV_GOODS" grande />
-          <Numero rotulo="Entradas brutas no app" valor={entradas?.valor != null ? brl(entradas.valor) : "—"} etiqueta={entradas?.etiqueta} origem="inclui depósito de carteira" href="/app/prova/CASH_IN_GROSS" grande />
-          <Numero rotulo="Clientes pagantes (90 dias)" valor={clientes?.valor != null ? inteiro(clientes.valor) : "—"} etiqueta={clientes?.etiqueta} origem="contas distintas" href="/app/prova/CUSTOMERS_PAYING_90D" grande />
-          <Numero rotulo="Licenciados com acesso (30 dias)" valor={licenciados?.valor != null ? inteiro(licenciados.valor) : "—"} etiqueta={licenciados?.etiqueta} origem="de 15 a 23, conforme a definição" href="/app/prova/LICENSEES_ACTIVE_30D" grande />
-        </Grade>
-        <Grade colunas={3}>
-          <Cartao>
-            <p className="text-xs uppercase tracking-widest text-muted">Valuation independente</p>
-            <p className="mt-2 text-2xl font-semibold">Ainda não calculado</p>
-            <p className="mt-2 text-xs text-muted">
-              Só nasce depois da metodologia v1.0 travada e do primeiro fechamento oficial. Enquanto isso, a única
-              referência é a declarada pelo fundador: <span className="num font-semibold text-foreground">R$ 25 mi</span>{" "}
-              <SeloReferencia /> — é ponto de partida, não resultado.
+      <Faixa>
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <Tag>30 segundos · o que já está provado</Tag>
+            <h2 className="mt-3 font-display text-3xl font-light text-white sm:text-4xl">
+              {gmv ? mesCurto(gmv.periodo) : ""}, direto do banco do aplicativo
+            </h2>
+          </div>
+          <Link href="/app/numeros" className="text-sm text-pill underline underline-offset-4">todos os 30 números</Link>
+        </div>
+        <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <NumeroGrande valor={arremates?.valor != null ? brl(arremates.valor) : "—"} rotulo="Arremates pagos" sub={`${arremates?.nota ?? ""} · ${compara(arremates?.valor, arrAnt, brl)}`} etiqueta={arremates?.etiqueta} href="/app/prova/GMV_AUCTION" />
+          <NumeroGrande valor={lances?.valor != null ? inteiro(lances.valor) : "—"} rotulo="Lances" sub={`${lances?.nota ?? ""} · ${compara(lances?.valor, lancesAnt, inteiro)}`} etiqueta={lances?.etiqueta} href="/app/prova/BIDS_COUNT" />
+          <NumeroGrande valor={gmv?.valor != null ? brl(gmv.valor) : "—"} rotulo="Mercadoria vendida e paga" sub="sem depósitos, sem adesões" etiqueta={gmv?.etiqueta} href="/app/prova/GMV_GOODS" />
+          <NumeroGrande valor={pagantes?.valor != null ? inteiro(pagantes.valor) : "—"} rotulo="Clientes pagantes" sub="contas distintas, últimos 90 dias" etiqueta={pagantes?.etiqueta} href="/app/prova/CUSTOMERS_PAYING_90D" />
+        </div>
+      </Faixa>
+
+      <section className="border-y border-white/10 bg-surface">
+        <Conteiner className="grid gap-px py-0 md:grid-cols-3">
+          <div className="py-10 md:pr-8">
+            <p className="text-xs uppercase tracking-widest text-muted">Valuation</p>
+            <p className="num mt-3 font-display text-4xl font-semibold text-accent">R$ 25.000.000</p>
+            <div className="mt-2"><SeloReferencia /></div>
+            <p className="mt-3 text-sm font-light text-texto">
+              O valuation independente sai com método, pesos fixados antes e faixa — depois da metodologia v1.0 e do primeiro fechamento oficial.
             </p>
-            <Link href="/app/valuation" className="mt-3 inline-block text-sm underline">
-              Ver a metodologia
-            </Link>
-          </Cartao>
-          <Cartao>
+            <Link href="/app/valuation" className="mt-3 inline-block text-sm text-pill underline underline-offset-4">ver metodologia</Link>
+          </div>
+          <div className="border-white/10 py-10 md:border-l md:px-8">
             <p className="text-xs uppercase tracking-widest text-muted">Qualidade do dado</p>
-            <p className="num mt-2 text-2xl font-semibold">{qualidade}/100</p>
-            <p className="mt-2 text-xs text-muted">
-              {verificadas} verificadas · {comValor.length - verificadas} informadas · {todas.length - comValor.length} sem valor. A nota
-              mede a prova por trás dos números, não o desempenho da empresa.
+            <p className="num mt-3 font-display text-4xl font-light text-white">{qualidade}<span className="text-2xl text-muted">/100</span></p>
+            <p className="mt-3 text-sm font-light text-texto">
+              {verificadas} verificadas · {comValor.length - verificadas} informadas · {todas.length - comValor.length} sem valor. A nota mede a prova por trás dos números.
             </p>
-            <Link href="/app/numeros" className="mt-3 inline-block text-sm underline">
-              Ver os 30 números
-            </Link>
-          </Cartao>
-          <Cartao>
+            <p className="mt-3 text-xs text-muted">Último fechamento oficial: {oficial ? mesCurto(oficial.periodo) : "nenhum ainda"} · série oficial desde 01/08/2026</p>
+          </div>
+          <div className="border-white/10 py-10 md:border-l md:pl-8">
             <p className="text-xs uppercase tracking-widest text-muted">Obrigações já conhecidas</p>
-            <p className="num mt-2 text-2xl font-semibold">
+            <p className="num mt-3 font-display text-4xl font-light text-white">
               {passivo?.valor != null && carteira?.valor != null ? brl(passivo.valor + carteira.valor) : "—"}
             </p>
-            <p className="mt-2 text-xs text-muted">
-              Capital de parceiros de compra a devolver ({passivo?.valor != null ? brl(passivo.valor) : "—"}) + saldos de clientes e
-              rede ({carteira?.valor != null ? brl(carteira.valor) : "—"}). <Etiqueta tipo="VERIFIED" pequena />
+            <p className="mt-3 text-sm font-light text-texto">
+              Capital de parceiros de compra a devolver ({passivo?.valor != null ? brl(passivo.valor) : "—"}) + saldos de clientes e rede ({carteira?.valor != null ? brl(carteira.valor) : "—"}).
             </p>
-            <Link href="/app/parceiros" className="mt-3 inline-block text-sm underline">
-              Ver os contratos
+            <div className="mt-3 flex items-center gap-3"><Etiqueta tipo="VERIFIED" pequena /><Link href="/app/parceiros" className="text-sm text-pill underline underline-offset-4">ver contratos</Link></div>
+          </div>
+        </Conteiner>
+      </section>
+
+      <Faixa>
+        <Tag>Por onde começar</Tag>
+        <div className="mt-8 grid gap-5 md:grid-cols-2">
+          {PORTAS.map((p) => (
+            <Link key={p.href} href={p.href} className="group relative isolate flex min-h-[260px] flex-col justify-end overflow-hidden rounded-xl border border-white/10 p-7">
+              <Image src={p.imagem} alt="" fill sizes="(min-width:768px) 50vw, 100vw" className="-z-10 object-cover transition duration-500 group-hover:scale-[1.03]" />
+              <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black via-black/75 to-black/20" aria-hidden />
+              <p className="text-xs uppercase tracking-widest text-pill">{p.tempo}</p>
+              <p className="mt-2 font-display text-3xl font-light text-white">{p.titulo}</p>
+              <p className="mt-2 max-w-md text-[15px] font-light text-texto">{p.texto}</p>
+              <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-pill">Abrir <ArrowRight className="h-4 w-4" aria-hidden /></span>
             </Link>
-          </Cartao>
-        </Grade>
-        <Aviso tipo="regra" titulo="Depósito não é receita">
-          Dinheiro que o cliente coloca na carteira é obrigação da empresa com ele. Em setembro e outubro, cerca de dois
-          terços das entradas do app foram depósitos — por isso a capa mostra mercadoria vendida, não entradas.
-        </Aviso>
-      </section>
+          ))}
+        </div>
+        <div className="mt-8 grid gap-3 text-sm sm:grid-cols-3">
+          {[["/app/dre", "DRE ago–out/26"], ["/app/parceiros", "Parceiros de compra"], ["/app/riscos", "Riscos e o que reduz cada um"], ["/app/governanca", "Governança e time"], ["/app/roadmap", "Metas e simulação"], ["/app/cargas", "Cargas de dados"]].map(([href, t]) => (
+            <Link key={href} href={href} className="flex items-center justify-between rounded-lg border border-white/10 bg-surface px-4 py-3 text-white hover:border-accent/60">
+              {t} <ArrowRight className="h-4 w-4 text-pill" aria-hidden />
+            </Link>
+          ))}
+        </div>
+      </Faixa>
 
-      <section className="space-y-4">
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-muted">1 minuto · por que a empresa existe</h2>
-        <Link href="/app/memorando" className="block rounded-2xl border border-border bg-surface p-6 transition hover:border-accent/60">
-          <p className="text-xs font-semibold uppercase tracking-widest text-accent">Memorando de investimento · versão revisada</p>
-          <p className="mt-2 text-xl font-semibold">O Brasil não sofre por falta de produto, de consumidor nem de empreendedor. Sofre por falta de conexão eficiente.</p>
-          <p className="mt-2 text-sm text-muted">
-            Carta do fundador, problema, oportunidade, solução, tecnologia, modelo de negócio, tração, governança, barreiras, roadmap e
-            visão 2035 — doze capítulos, com cada número etiquetado e os dados do sistema ao lado do que a administração declara.
-          </p>
-          <span className="mt-3 inline-block text-sm underline">Ler o memorando →</span>
-        </Link>
-      </section>
-
-      <section className="space-y-4">
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-muted">5 minutos · tração, financeiro e risco</h2>
-        <Grade colunas={4}>
-          <Numero rotulo="Números" valor="30 métricas" origem="definição, origem e hash" href="/app/numeros" />
-          <Numero rotulo="DRE" valor="ago–out/26" origem="duas visões: venda e comissão" href="/app/dre" />
-          <Numero rotulo="Parceiros de compra" valor="R$ 502 mil" origem="obrigação total dos 2 contratos" href="/app/parceiros" />
-          <Numero rotulo="Riscos" valor="10 primeiros" origem="com o que reduz cada um" href="/app/riscos" />
-        </Grade>
-      </section>
-
-      <section className="space-y-4">
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-muted">30 minutos · análise completa</h2>
-        <Grade colunas={4}>
-          <Numero rotulo="Valuation" valor="Metodologia v1.0" origem="9 métodos, pesos pré-registrados" href="/app/valuation" />
-          <Numero rotulo="Governança" valor="8 níveis" origem="time, fundador × sócio, 1%" href="/app/governanca" />
-          <Numero rotulo="Metas e simulação" valor="Plano × realizado" origem="o que precisa ser verdade" href="/app/roadmap" />
-          <Numero rotulo="Data room" valor="9 pastas" origem="o que existe e o que falta" href="/app/dataroom" />
-        </Grade>
-      </section>
-
-      <section className="grid gap-4 sm:grid-cols-2">
-        <Cartao titulo="Último fechamento oficial">
-          <p className="num text-xl font-semibold">{oficial ? mesCurto(oficial.periodo) : "Nenhum ainda"}</p>
-          <p className="mt-1 text-xs text-muted">
-            O fechamento oficial é um retrato imutável, com impressão digital. Até o primeiro, tudo o que você vê é leitura ao vivo
-            da última carga — por isso ainda não há valuation.
-          </p>
-        </Cartao>
-        <Cartao titulo="Série oficial">
-          <p className="num text-xl font-semibold">desde 01/08/2026</p>
-          <p className="mt-1 text-xs text-muted">
-            É o marco do próprio app (“antes disso é teste, sem valor financeiro”). O histórico anterior aparece no memorando como dado
-            da administração, nunca somado à série oficial.
-          </p>
-        </Cartao>
-      </section>
+      <Conteiner className="pb-16">
+        <Legenda />
+      </Conteiner>
     </div>
   );
 }

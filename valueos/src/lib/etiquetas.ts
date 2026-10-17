@@ -1,10 +1,10 @@
 // Etiquetas de qualidade do dado, iguais em todas as telas.
 export const ETIQUETA = {
-  VERIFIED: { texto: "VERIFICADO", classe: "bg-accent/15 text-accent" },
-  MANAGEMENT_DATA: { texto: "DADO DA ADMINISTRAÇÃO", classe: "bg-warn/15 text-warn" },
-  FORECAST: { texto: "PROJEÇÃO", classe: "bg-sky-400/15 text-sky-300" },
-  AI_ASSUMPTION: { texto: "PREMISSA", classe: "bg-danger/15 text-danger" },
-  NAO_DISPONIVEL: { texto: "NÃO DISPONÍVEL", classe: "bg-muted/15 text-muted" },
+  VERIFIED: { texto: "VERIFICADO", classe: "border border-accent/60 bg-accent/10 text-pill" },
+  MANAGEMENT_DATA: { texto: "DADO DA ADMINISTRAÇÃO", classe: "border border-warn/60 bg-warn/10 text-warn" },
+  FORECAST: { texto: "PROJEÇÃO", classe: "border border-info/60 bg-info/10 text-info" },
+  AI_ASSUMPTION: { texto: "PREMISSA", classe: "border border-danger/60 bg-danger/10 text-danger" },
+  NAO_DISPONIVEL: { texto: "NÃO DISPONÍVEL", classe: "border border-muted/50 bg-muted/10 text-muted" },
 } as const;
 
 export type Etiqueta = keyof typeof ETIQUETA;

@@ -50,7 +50,7 @@ export default async function Roadmap() {
       </Secao>
 
       <Secao sobretitulo="Série oficial" titulo="O que já aconteceu, mês a mês">
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Cartao titulo="Entradas brutas no app (com depósitos)">
             <Barras dados={entradas.map((s) => ({ rotulo: mesCurto(s.periodo), valor: s.valor, etiqueta: s.etiqueta }))} formato={brlMil} />
           </Cartao>
