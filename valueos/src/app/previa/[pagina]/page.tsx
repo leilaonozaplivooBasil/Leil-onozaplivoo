@@ -9,6 +9,7 @@ import Riscos from "@/app/app/(portal)/riscos/page";
 import Governanca from "@/app/app/(portal)/governanca/page";
 import Roadmap from "@/app/app/(portal)/roadmap/page";
 import DataRoom from "@/app/app/(portal)/dataroom/page";
+import Capital from "@/app/app/(portal)/capital/page";
 import { MenuCelular, Navegacao } from "@/components/nav";
 
 export const dynamic = "force-dynamic";
@@ -22,6 +23,7 @@ const PAGINAS: Record<string, () => Promise<React.ReactNode>> = {
   governanca: Governanca,
   roadmap: Roadmap,
   dataroom: DataRoom,
+  capital: Capital,
 };
 
 // Prévia visual com dados de arquivo, para conferir o desenho sem login. Não existe fora do modo de desenvolvimento.

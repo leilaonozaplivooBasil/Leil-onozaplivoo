@@ -13,6 +13,7 @@ const PRINCIPAIS: Item[] = [
 ];
 const NUMEROS: Item[] = [
   { href: "/app/numeros", rotulo: "Números com prova" },
+  { href: "/app/capital", rotulo: "Capital e custos" },
   { href: "/app/dre", rotulo: "DRE" },
   { href: "/app/parceiros", rotulo: "Parceiros de compra" },
   { href: "/app/cargas", rotulo: "Cargas de dados" },

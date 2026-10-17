@@ -22,7 +22,7 @@ export default async function Numeros() {
     <Pagina
       sobretitulo="5 minutos"
       titulo="Números com prova"
-      descricao="Trinta métricas, cada uma com definição única, origem e impressão digital. Clique no nome para ver de onde o número veio."
+      descricao={`${todas.length} métricas, cada uma com definição única, origem e impressão digital. Clique no nome para ver de onde o número veio.`}
     >
       <Legenda />
       {familias.map((familia) => (

@@ -11,9 +11,9 @@ export const dynamic = "force-dynamic";
 
 const PORTAS = [
   { href: "/app/memorando", imagem: "/m/fundador.jpg", tempo: "1 minuto para a tese", titulo: "Memorando de investimento", texto: "Carta do fundador e os 12 capítulos — edição atualizada com os números do sistema." },
-  { href: "/app/numeros", imagem: "/m/comparai.jpg", tempo: "5 minutos", titulo: "Números com prova", texto: "Trinta métricas com definição única, origem e impressão digital. Clique e veja de onde veio." },
+  { href: "/app/numeros", imagem: "/m/comparai.jpg", tempo: "5 minutos", titulo: "Números com prova", texto: "Cada métrica com definição única, origem e impressão digital. Clique e veja de onde veio." },
+  { href: "/app/capital", imagem: "/m/bilhoes-parados.jpg", tempo: "10 minutos", titulo: "A história do dinheiro", texto: "De onde veio cada real, quanto custa o capital, o custo fixo e o que fica na carteira do cliente." },
   { href: "/app/valuation", imagem: "/m/cap5-modelo.jpg", tempo: "30 minutos", titulo: "Valuation", texto: "Referência do fundador, metodologia de nove métodos e a ponte do valor da empresa ao valor do sócio." },
-  { href: "/app/dataroom", imagem: "/m/cap8-barreiras.jpg", tempo: "Due diligence", titulo: "Data room", texto: "O que existe, o que está parcial e o que falta — pasta por pasta." },
 ];
 
 // A capa do portal: o que a empresa é, o que já está provado e para onde ir.
@@ -81,7 +81,7 @@ export default async function Inicio() {
               {gmv ? mesCurto(gmv.periodo) : ""}, direto do banco do aplicativo
             </h2>
           </div>
-          <Link href="/app/numeros" className="text-sm text-pill underline underline-offset-4">todos os 30 números</Link>
+          <Link href="/app/numeros" className="text-sm text-pill underline underline-offset-4">{`todos os ${todas.length} números`}</Link>
         </div>
         <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <NumeroGrande valor={arremates?.valor != null ? brl(arremates.valor) : "—"} rotulo="Arremates pagos" compacto sub={`${arremates?.nota ?? ""} · ${compara(arremates?.valor, arrAnt, brl)}`} etiqueta={arremates?.etiqueta} href="/app/prova/GMV_AUCTION" />
@@ -138,7 +138,7 @@ export default async function Inicio() {
           ))}
         </div>
         <div className="mt-8 grid gap-3 text-sm sm:grid-cols-3">
-          {[["/app/dre", "DRE ago–out/26"], ["/app/parceiros", "Parceiros de compra"], ["/app/riscos", "Riscos e o que reduz cada um"], ["/app/governanca", "Governança e time"], ["/app/roadmap", "Metas e simulação"], ["/app/cargas", "Cargas de dados"]].map(([href, t]) => (
+          {[["/app/dre", "DRE ago–out/26"], ["/app/parceiros", "Parceiros de compra"], ["/app/riscos", "Riscos e o que reduz cada um"], ["/app/governanca", "Governança e time"], ["/app/roadmap", "Metas e simulação"], ["/app/dataroom", "Data room"]].map(([href, t]) => (
             <Link key={href} href={href} className="flex items-center justify-between rounded-lg border border-white/10 bg-surface px-4 py-3 text-white hover:border-accent/60">
               {t} <ArrowRight className="h-4 w-4 text-pill" aria-hidden />
             </Link>
