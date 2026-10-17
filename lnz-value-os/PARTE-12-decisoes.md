@@ -3,7 +3,7 @@
 > **Em português simples:** nada do que está nas Partes 1–11 vira código, banco ou mudança de site sem a sua resposta. Esta parte junta **tudo o que só você pode decidir**, com a **minha recomendação** e o **porquê**. Você pode responder só "ok" ou "ajustar" em cada linha.
 > **Três níveis de aprovação, separados:**
 > 1. **Desenho** — aprovar as Partes 1–11 como direção (ou pedir ajuste).
-> 2. **Decisões** — as 20 linhas de 12.1 e 12.2.
+> 2. **Decisões** — as 22 linhas de 12.1 e 12.2.
 > 3. **Mudança em produção** — cada item S1–S7 e D1–D10 da Parte 10 é aprovado **um a um**, na zona vermelha só com a sua ordem e na janela 01h00–02h15.
 
 ---
@@ -39,6 +39,8 @@
 | **DEC-18** | **Melhorias de dado no app (D1–D10, Parte 10)** | Aprovar **só depois** da Fase 1; começar por D4, D6, D9 (fora da zona vermelha) e depois D1–D3 (custo, canal, frete). | O Value OS começa **sem** tocar produção. |
 | **DEC-19** | **Revisão externa** | Contador independente (CRC) + advogado revisam: declaração de faturamento, PGDAS × livros × banco, regime tributário, **classificação dos créditos grandes e dos depósitos em dinheiro**, enquadramento dos aportes. **Antes** do Data Room. | Não é parecer meu; é de quem assina. |
 | **DEC-20** | **Dossiê no Drive** | Tirar as pastas de documentos pessoais (08, 12, 14) do compartilhamento; manter o dossiê só com quem precisa. | Não abri essas pastas. |
+| **DEC-21** | **A venda de 1% (R$ 200 mil + R$ 50 mil)** | Registrar como **aumento de capital** (entra no patrimônio) ou como **venda de cotas de sócio** (dinheiro do sócio) — **definir com advogado e contador**; até lá o Value OS a guarda como **"aporte informado, sem documento"** e dá **peso zero** como preço de transação. | Preciso do **contrato de compra, da alteração contratual na Junta e do comprovante**. |
+| **DEC-22** | **"Parceiro de compra"**: capital ou dívida? | Se há **repasse/devolução prometida, é passivo** (entra na ponte do valor); se não há, é capital. Livro próprio de aportes, **fora do app** (o app não registra). | Cada aporte: quem, quando, quanto, contrato, retorno prometido. |
 
 ---
 

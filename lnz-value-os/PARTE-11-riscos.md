@@ -63,6 +63,7 @@
 | **R-L6** | **Dados pessoais (LGPD):** o app guarda CPF, endereços, IP; o dossiê tem documentos pessoais de sócios em pasta compartilhada. | M | M | FATO | Tirar as pastas 08/12/14 do compartilhamento; o Value OS recebe **só agregados**; registro de acesso; retenção definida. |
 | **R-L7** | **Sigilo do dossiê:** foi compartilhado "em caráter confidencial". Um repositório de código **não** é o lugar de dados pessoais ou de números sensíveis por pessoa. | B | A | FATO | Nos arquivos que gerei só há **agregados** (sem CPF, conta ou nome de pessoa). Manter o Data Room real num cofre com acesso controlado, não em repositório. |
 | **R-L8** | **Propriedade intelectual:** quem escreveu o código (contratos de trabalho/prestação), titularidade da marca e dos domínios. | M | M | dado faltante | Contratos de cessão no Data Room. |
+| **R-L9** | **Venda de participação sem documento à vista.** Informada: 1% por R$ 250 mil (R$ 25 mi pós-dinheiro); no contrato social que li, as cotas estão com uma só sócia. Se foi venda de cotas dela, o dinheiro não é da empresa; se foi aumento de capital, falta alteração contratual. Pode também cair em regras de oferta de participação a investidores. | M | A | MANAGEMENT DATA + extratos (C14) | Contrato de compra, alteração na Junta, identificação do investidor e do pagador; **advogado antes de nova captação** (DEC-21). |
 
 ---
 

@@ -365,3 +365,36 @@ Lista **manual, dia a dia, de itens vendidos no showroom** (vendedor · item · 
 
 **Impacto no modelo:** vendas do app em set/out ≈ **R$ 33 mil e R$ 27 mil por mês no Mercado Pago**, 93–98% depósito de carteira; **tudo o mais que entra nas contas é de natureza ainda não documentada**.
 
+
+---
+
+## C14. Aportes e venda de participação — informação do CEO em 17/10/2026 (`MANAGEMENT DATA`, **sem documento**)
+
+**O que foi dito (resumo fiel; partes da mensagem ficaram ambíguas):**
+1. Os depósitos grandes são **aportes de "parceiros de compra" (investidores)**.
+2. Entraram **R$ 200 mil na compra de uma participação equivalente a 1%** da empresa; o cliente **vai enviar mais R$ 50 mil**; isso foi feito **mantendo o valor de mercado** da empresa (**R$ 250 mil por 1% = R$ 25 mi "pós-dinheiro"**; só os R$ 200 mil por 1% dariam R$ 20 mi — **a confirmar qual**).
+3. Há **outros valores: R$ 50 mil e mais R$ 200 mil em 1º/09**, "investimento em parceiro de compra".
+
+**O que os extratos mostram (créditos de terceiros ≥ R$ 5.000; sem nomes):**
+
+| Data | Banco | R$ | Situação |
+|---|---|---:|---|
+| 21/07 | Santander | 5.000 | sem explicação |
+| 23/07 | Santander | 10.000 | sem explicação |
+| 03/08 | Santander | 10.000 + 23.000 | sem explicação |
+| **11/08** | Santander | **50.000** | **coincide com "R$ 50 mil"** (natureza a confirmar) |
+| **01/09** | Santander | **100.000 + 100.000** | **coincide com "R$ 200 mil em 1º/09"** (equity ou parceiro de compra? a confirmar) |
+| 24/09 | Itaú | 10.000 + 12.000 + 20.000 + 38.000 (= 80.000) | sem explicação |
+| 30/09 | Itaú | 5.000 + 7.000 + 8.000 + 10.000 + 10.000 + 10.000 (= 50.000) | sem explicação |
+| 24/09 | Itaú | 43 depósitos em dinheiro de R$ 100 a R$ 2.000 (= 70.000) | sem explicação |
+
+- **R$ 250 mil dos R$ 449 mil em créditos de R$ 5 mil ou mais (jul–out) coincidem com o que foi dito**; **R$ 199 mil + os R$ 70 mil em dinheiro continuam sem explicação.** Em jan–jun, os 19 PIX de R$ 428,6 mil também seguem sem classificação.
+- **O app não registra nada disso:** a tabela `partner_plan_purchases` está vazia; os 11 pedidos de plano de parceiro no app foram **todos cancelados** (R$ 3,07 mi, nunca pagos). Os R$ 50 mil e R$ 200 mil **entraram direto no banco**, fora do app.
+- **Depósitos de carteira do app (set/out):** 22 pessoas distintas, maior depósito R$ 4.000; **só 1 depósito de conta com cargo "parceiro" (R$ 1.250)**. Ou seja, **os aportes de R$ 250 mil não são os depósitos de carteira do app.**
+
+**O que isso significa para o modelo (proposta):**
+- **Não é receita.** É **capital** (se houver aumento de capital com alteração contratual) **ou passivo** (se houver devolução/repasse prometido ao "parceiro de compra"). **Uma venda de 1% muda o quadro de sócios** — preciso da **alteração do contrato social** e do contrato de compra.
+- **Quem recebeu?** Se as cotas vendidas são **de um sócio** (venda secundária), o dinheiro é **do sócio, não da empresa**, e não entra no caixa da operação. Se é **aumento de capital**, entra no patrimônio. **A conta bancária que recebeu diz onde caiu, não de quem é o dinheiro.**
+- **Dado de valuation:** uma venda real de 1% a R$ 250 mil **seria um preço de transação** (R$ 25 mi pós-dinheiro). Peso proposto **zero até haver documento**, e depois **baixo**: 1% minoritário, preço fixado pela administração, comprador possivelmente da própria rede, possíveis condições (recompra, repasse). Entra como linha própria na triangulação ("transação da própria empresa") e **nunca** como confirmação do valor de R$ 25 mi.
+- **Cuidado jurídico (não é parecer):** oferecer participação societária a investidores (inclusive por site/memorando) pode ter regras próprias; **levar ao advogado antes de novas captações**.
+
