@@ -55,8 +55,8 @@ export default async function Prova({
   return (
     <div className="space-y-8">
       <div>
-        <Link href="/app" className="text-sm text-muted underline">
-          ← Visão geral
+        <Link href="/app/numeros" className="text-sm text-muted underline">
+          ← Números com prova
         </Link>
         <p className="mt-4 text-xs uppercase tracking-widest text-muted">{metrica.familia}</p>
         <h1 className="mt-1 text-2xl font-semibold">{metrica.nome}</h1>

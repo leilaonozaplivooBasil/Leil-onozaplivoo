@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { criarClienteServidor } from "@/lib/supabase/server";
 import { NDA_VERSAO } from "@/lib/nda";
+import { Navegacao } from "@/components/nav";
 
 export const dynamic = "force-dynamic";
 
@@ -68,33 +69,41 @@ export default async function LayoutPortal({
     user_agent: h.get("user-agent") ?? null,
   });
 
+  const PAPEL: Record<string, string> = { INVESTOR: "investidor", BOARD: "conselho", ADMIN: "administração" };
+
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <header className="border-b border-border bg-surface">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-accent">
-              LNZ Value OS
-            </p>
+      <header className="sticky top-0 z-20 border-b border-border bg-background/90 backdrop-blur">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3">
+          <a href="/app" className="block">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">LNZ Value OS</p>
             <p className="text-xs text-muted">Leilão NoZap · área do investidor</p>
-          </div>
-          <nav className="flex items-center gap-4 text-sm">
-            <a href="/app" className="hover:underline">Visão geral</a>
-            <a href="/app/dre" className="hover:underline">DRE</a>
-            <a href="/app/cargas" className="hover:underline">Cargas</a>
+          </a>
+          <div className="flex items-center gap-4 text-sm">
             <span className="hidden text-muted sm:inline">
-              {perfil.nome ?? perfil.email} · {perfil.papel}
+              {perfil.nome ?? perfil.email} · {PAPEL[perfil.papel] ?? perfil.papel}
             </span>
             <a href="/sair" className="underline">
               Sair
             </a>
-          </nav>
+          </div>
+        </div>
+        <div className="border-t border-border lg:hidden">
+          <Navegacao horizontal />
         </div>
       </header>
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">{children}</main>
-      <footer className="border-t border-border px-4 py-4 text-center text-xs text-muted">
-        Material confidencial. Não é oferta pública nem promessa de retorno. Cada
-        número mostra a origem e a etiqueta de qualidade.
+      <div className="mx-auto flex w-full max-w-7xl flex-1 gap-8 px-4 py-8">
+        <aside className="hidden w-56 shrink-0 lg:block">
+          <div className="sticky top-24">
+            <Navegacao />
+          </div>
+        </aside>
+        <main className="min-w-0 flex-1">{children}</main>
+      </div>
+      <footer className="border-t border-border px-4 py-5 text-center text-xs text-muted">
+        Material confidencial, de uso restrito a convidados. Não é oferta pública de valores mobiliários nem promessa
+        de retorno. Cada número mostra a origem e a etiqueta de qualidade; o valuation independente só aparece depois
+        da metodologia v1.0 travada e do primeiro fechamento oficial.
       </footer>
     </div>
   );
