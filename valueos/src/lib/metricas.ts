@@ -27,7 +27,8 @@ async function linhas(): Promise<Linha[]> {
   const { data } = await supabase
     .from("vos_valores")
     .select("metric_id, periodo, valor, etiqueta, fonte, nota")
-    .order("periodo", { ascending: false });
+    .order("periodo", { ascending: false })
+    .order("criado_em", { ascending: false });
   return (data ?? []) as Linha[];
 }
 
@@ -43,6 +44,8 @@ export const valoresCarregados = cache(async () => {
     };
     if (!ultimo.has(v.metric_id)) ultimo.set(v.metric_id, v);
     const lista = serie.get(v.metric_id) ?? [];
+    // Correção entra como linha nova no mesmo período (o banco só acrescenta): vale a mais recente.
+    if (lista.some((x) => x.periodo === v.periodo)) continue;
     lista.push(v);
     serie.set(v.metric_id, lista);
   }

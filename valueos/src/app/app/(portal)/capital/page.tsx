@@ -67,6 +67,8 @@ export default async function Capital() {
   const cadastrado = v("FIXED_COST_REGISTERED_M");
   const pagoSet = serie.get("EXPENSES_PAID")?.find((x) => x.periodo === "2026-09-01")?.valor ?? null;
   const vencidas = v("EXPENSES_OVERDUE");
+  const mediaMes = terceiros && custoCapital ? (100 * custoCapital) / terceiros : 0;
+  const aoAno = (Math.pow(1 + mediaMes / 100, 12) - 1) * 100;
   const receitaPropriaSet =
     (serie.get("REVENUE_COMMISSION_RETAINED")?.find((x) => x.periodo === "2026-09-01")?.valor ?? 0) +
     (serie.get("REVENUE_FEES")?.find((x) => x.periodo === "2026-09-01")?.valor ?? 0);
@@ -211,7 +213,7 @@ export default async function Capital() {
               [<Valor key="d">29/01 e 23/07/2026</Valor>, "Investidor 2 (primeiro aporte externo)", <Valor key="v">R$ 20.000</Valor>, <span key="c">rendimento de R$ 500 por mês<Obs>R$ 5 mil (29/01) e R$ 10 mil (23/07) conferidos no extrato; o restante a confirmar</Obs></span>, <Etiqueta key="e" tipo="MANAGEMENT_DATA" pequena />],
               [<Valor key="d">mar/2026</Valor>, "Dois cartões de pessoas da equipe", <Valor key="v">R$ 15.000</Valor>, "compras da empresa pagas com cartão pessoal, lançadas como investimento", <Etiqueta key="e" tipo="MANAGEMENT_DATA" pequena />],
               [<Valor key="d">11/08/2026</Valor>, "Parceiro de compra B", <Valor key="v">R$ 50.000</Valor>, "contrato · 3% ao mês", <Etiqueta key="e" tipo="VERIFIED" pequena />],
-              [<Valor key="d">a confirmar</Valor>, "Investidor 1", <Valor key="v">R$ 60.000</Valor>, <span key="c">rendimento de R$ 3.600 por mês desde set/2026<Obs>valor informado pelo fundador; falta apontar a entrada no extrato</Obs></span>, <Etiqueta key="e" tipo="MANAGEMENT_DATA" pequena />],
+              [<Valor key="d">2026</Valor>, "Investidor 1 (familiar de um diretor)", <Valor key="v">R$ 70.000</Valor>, <span key="c">R$ 50 mil em um carro, que lastreia uma carta de crédito, e R$ 20 mil em limite de cartão de crédito<Obs>não entrou como dinheiro em conta; rende R$ 3.600 por mês</Obs></span>, <Etiqueta key="e" tipo="MANAGEMENT_DATA" pequena />],
               [<Valor key="d">01/09/2026</Valor>, "Parceiro de compra A", <Valor key="v">R$ 200.000</Valor>, "contrato · 4,5% ao mês", <Etiqueta key="e" tipo="VERIFIED" pequena />],
               [<Valor key="d">24–30/09/2026</Valor>, "Um diretor, comprando 1%", <Valor key="v">{r(compra1pct)}</Valor>, <span key="c">compra de participação por R$ 250 mil — faltam R$ 50 mil<Obs>entrada conferida no extrato do Itaú; contrato e origem dos recursos a documentar</Obs></span>, <Etiqueta key="e" tipo="VERIFIED" pequena />],
             ]}
@@ -234,16 +236,16 @@ export default async function Capital() {
           cabecalho={["Quem", "Desde", "Capital", "Paga por mês", "Ao mês", "Fonte"]}
           linhas={[
             ["Parceiro de compra A", "01/09/2026", <Valor key="a">R$ 200.000</Valor>, <Valor key="b">R$ 9.000</Valor>, "4,5%", <span key="f">contrato<Obs>não está cadastrado no financeiro do app</Obs></span>],
-            ["Investidor 1", "2026", <Valor key="a">R$ 60.000</Valor>, <Valor key="b">R$ 3.600</Valor>, "6%", "fundador + extratos"],
+            ["Investidor 1", "2026", <Valor key="a">R$ 70.000</Valor>, <Valor key="b">R$ 3.600</Valor>, "5,1%", "fundador + extratos"],
             ["Parceiro de compra B", "11/08/2026", <Valor key="a">R$ 50.000</Valor>, <Valor key="b">R$ 1.500</Valor>, "3%", "contrato"],
             ["Investidor 2", "jan/2026", <Valor key="a">R$ 20.000</Valor>, <Valor key="b">R$ 500</Valor>, "2,5%", "fundador + extratos"],
           ]}
-          total={["Total", "", <Valor key="a">{r(terceiros)}</Valor>, <Valor key="b">{r(custoCapital)}</Valor>, "4,4% em média", ""]}
+          total={["Total", "", <Valor key="a">{r(terceiros)}</Valor>, <Valor key="b">{r(custoCapital)}</Valor>, `${mediaMes.toLocaleString("pt-BR", { maximumFractionDigits: 1 })}% em média`, ""]}
         />
         <Grade colunas={2} className="mt-10">
           <Cartao tom="azul" titulo="O que isso significa">
             Em setembro, a receita própria do app (comissões e taxas) foi de {r(receitaPropriaSet)}. O custo desse capital é de {r(custoCapital)} por mês — maior que
-            a receita própria. É dinheiro que funcionou para comprar estoque, mas é caro: perto de 66% ao ano.
+            a receita própria. É dinheiro que funcionou para comprar estoque, mas é caro: perto de {inteiro(Math.round(aoAno))}% ao ano.
           </Cartao>
           <Cartao tom="cheio" titulo="O primeiro uso de um aporte">
             Trocar dinheiro caro por dinheiro paciente. Quitar {r(terceiros)} de capital remunerado libera {r(custoCapital)} por mês de caixa — antes de qualquer
@@ -331,8 +333,8 @@ export default async function Capital() {
                 fixo prometido a investidor pode ser tratado como oferta pública: precisa de parecer jurídico antes de circular.
               </Cartao>
               <Cartao tom="escuro" titulo="4 · Despesas a separar da empresa">
-                No financeiro do app há, por mês: R$ 24,6 mil de restaurante do hotel, R$ 10,3 mil de dois aluguéis de moradia e R$ 23 mil de parcelas do cartão de
-                uma pessoa ligada a sócio (restam R$ 138 mil até abr/2027). Classificar o que é da empresa e o que é pessoa física.
+                No financeiro do app há, por mês: R$ 24,6 mil de restaurante do hotel e R$ 10,3 mil de dois aluguéis de moradia. As faturas do cartão emprestado (R$ 23
+                mil por mês, R$ 179 mil lançados até abr/2027) precisam das notas de cada compra. Classificar o que é da empresa e o que é pessoa física.
               </Cartao>
               <Cartao tom="escuro" titulo="5 · Lançamentos com erro">
                 Aluguel do escritório lançado duas vezes por mês (R$ 10 mil a mais). Título de capitalização de R$ 10 mil por mês, cuja descrição diz R$ 1 mil. O
@@ -358,9 +360,10 @@ export default async function Capital() {
                 de registrar a participação: contrato assinado, declaração de origem de cada pagador e do dinheiro em espécie, com o contador e o advogado. E o
                 preço — 1% por R$ 250 mil — é o de uma empresa de R$ 25 milhões, não o de R$ 90 milhões do documento de out/2026.
               </Cartao>
-              <Cartao tom="escuro" titulo="10 · Rendimento de 6% ao mês">
-                O investidor 1 recebe R$ 3.600 por mês sobre cerca de R$ 60 mil — 6% ao mês, mais de 100% ao ano. Junto com as parcelas mensais do cartão de uma
-                pessoa ligada a sócio, é o dinheiro mais caro da empresa e deve ser o primeiro a ser quitado.
+              <Cartao tom="escuro" titulo="10 · O cartão de um familiar de diretor">
+                O investidor 1 entrou com um carro (R$ 50 mil, que lastreia uma carta de crédito) e R$ 20 mil de limite de cartão, e recebe cerca de 5% ao mês. A
+                empresa usa esse cartão e paga a fatura todo mês (R$ 20 a 23 mil). Funciona, mas compra em cartão de pessoa física é difícil de provar como despesa
+                da empresa: o caminho é migrar para cartão da empresa e documentar o carro como garantia.
               </Cartao>
             </Grade>
             <Titulo className="mt-16" sub="O que falta o fundador mandar para fechar a conta">A Lista de Pendências</Titulo>
