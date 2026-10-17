@@ -19,11 +19,21 @@ export default async function LayoutPortal({
   } = await supabase.auth.getUser();
   if (!user) redirect("/entrar");
 
-  const { data: perfil } = await supabase
+  let { data: perfil } = await supabase
     .from("vos_profiles")
     .select("papel, nome, email")
     .eq("user_id", user.id)
     .maybeSingle();
+
+  // Conta antiga sem perfil? Se houver convite válido, ativa agora.
+  if (!perfil) {
+    await supabase.rpc("vos_ativar_convite");
+    ({ data: perfil } = await supabase
+      .from("vos_profiles")
+      .select("papel, nome, email")
+      .eq("user_id", user.id)
+      .maybeSingle());
+  }
 
   if (!perfil || !PAPEIS_COM_ACESSO.includes(perfil.papel)) {
     return (
