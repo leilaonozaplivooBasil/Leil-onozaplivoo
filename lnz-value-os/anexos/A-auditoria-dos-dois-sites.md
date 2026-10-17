@@ -137,7 +137,7 @@ Legenda de origem: **M** = Memorando · **V** = página do Valuation.
 
 ---
 
-## 10. Itens que o dossiê contábil, os extratos e o app acrescentam (47–58)
+## 10. Itens que o dossiê contábil, os extratos e o app acrescentam (47–59)
 
 > Estes itens **não estão nos dois sites com este nome**: nascem do **cruzamento** do que os sites dizem com os documentos do Drive e os extratos (Anexo C). Valores são `MANAGEMENT DATA — documento recebido`, **não autenticados** por mim.
 
@@ -157,13 +157,15 @@ Legenda de origem: **M** = Memorando · **V** = página do Valuation.
 | 57 | "Retorno elevado sobre capital investido a cada ciclo operacional" · "O Papel do Capital" | M, V | **INCONSISTENT** | O material **público** promete retorno sobre capital; o **contrato e o painel do Parceiro** dizem "**não é investimento financeiro, não há retorno garantido, não é valor mobiliário**". O CEO confirmou que parceiros "**recebem rentabilidade**". Alinhar com o jurídico. | C14 |
 | 58 | Resultado "apurado" do painel do Parceiro (R$ 124.596/ano; valuation de 3–6×) | app | **RECALCULATE** | Em **02/10/2026** a linha "**Parceiros de compra (5%)**" foi **retirada** dos cenários; com ela o anual era **R$ 88.884**. Se há remuneração real, o resultado mostrado está **superestimado**. | C14 |
 
+| 59 | "Participação no resultado apurado; não há retorno garantido" (painel do Parceiro) | app | **INCONSISTENT** | O **contrato individual assinado** do parceiro A promete **R$ 9.000 fixos por mês e devolução do principal**; o contrato B fixa **3% do capital por mês**. Texto e prática divergem. | C15 |
+
 ### Resumo acrescentado
 
 | Etiqueta | Itens 47–56 |
 |---|---:|
-| INCONSISTENT | 3 (47, 48, 57) |
+| INCONSISTENT | 4 (47, 48, 57, 59) |
 | RECALCULATE | 3 (49, 56, 58) |
 | VERIFY | 5 (50, 51, 52, 53, 55) |
 | REMOVE | 1 (54) |
 
-> Total da auditoria com esta seção: **58 itens numerados** (46 dos sites + 12 do dossiê e do app), mais o 20b.
+> Total da auditoria com esta seção: **59 itens numerados** (46 dos sites + 13 do dossiê, dos contratos e do app), mais o 20b.

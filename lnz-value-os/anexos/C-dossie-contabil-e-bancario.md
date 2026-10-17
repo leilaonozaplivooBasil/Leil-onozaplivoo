@@ -402,3 +402,38 @@ Lista **manual, dia a dia, de itens vendidos no showroom** (vendedor · item · 
 2. **O R$ 200 mil do equity é capital** (se houver aumento de capital com alteração contratual) **ou dinheiro do sócio** (se for venda de cotas de um sócio). **Sem contrato e sem alteração na Junta, o Value OS guarda como "aporte informado" e dá peso zero como preço de transação.** Depois de documentado, o peso é **baixo**: 1% minoritário, preço fixado pela administração, comprador possivelmente da rede, possíveis condições.
 3. **Linha "Parceiros de compra (5%)" retirada em 02/10/2026:** o código do painel do Parceiro tinha **5% da receita do lote como "remuneração dos parceiros de compra"** (R$ 4.000 por lote de R$ 80 mil). Em **02/10/2026, por decisão da diretoria, essa linha saiu de todos os cenários** e os resultados foram recalculados para cima: **resultado do lote R$ 4.952 → R$ 8.952; resultado mensal "hoje" R$ 7.407 → R$ 10.383; anualizado R$ 88.884 → R$ 124.596**. Se os parceiros **de fato recebem rentabilidade** (como o CEO informou), **o custo é real** e os números mostrados a investidor **ficam superestimados** sem ele. As versões anteriores estão no ramo de restauração do app. **O Value OS usa a linha com o valor realmente pago.**
 4. **Cuidado jurídico (não é parecer):** captar dinheiro de várias pessoas para uma atividade tocada por terceiros, com retorno em dinheiro, **pode ter enquadramento próprio** mesmo quando o contrato diz "parceria comercial"; e o **memorando público** fala em "**retorno elevado sobre capital investido a cada ciclo**". **Levar ao advogado antes de novas captações e antes de divulgar o memorando.**
+
+
+---
+
+## C15. Contratos de "parceiro de compra" recebidos em 17/10/2026 (dois documentos)
+
+**Confidencialidade:** contêm dados pessoais (CPF, endereço, conta, e-mail). **Nada disso vai para este anexo.** Os parceiros aparecem como **A** (R$ 200 mil) e **B** (R$ 50 mil).
+
+| | **Parceiro A — R$ 200.000** | **Parceiro B — R$ 50.000** |
+|---|---|---|
+| Documento | Contrato individual de 10 páginas, **datado de 01/09/2026**, com **envelope DocuSign** e 4 assinaturas (representante da empresa, parceiro e 2 testemunhas). **Falta o certificado de conclusão da DocuSign.** | Contrato-padrão de 6 páginas, **sem data e sem assinatura visível** (formulário preenchido). |
+| Remuneração | **3,0% ao mês + 1,5% de "fee de originação" = 4,5% ao mês = R$ 9.000/mês**, durante **24 meses**. **Fixa.** O contrato diz que lucro ou prejuízo **não altera a base** (cláusulas 8.5, 12.2 e 14). | **3% ao mês sobre o capital = R$ 1.500/mês**, durante 24 meses de repasses (depois de 30 dias de estruturação). Escrita como "participação no lucro", mas o valor é **% do capital**. |
+| Devolução do capital | **Valor nominal integral (R$ 200.000)** em até 30 dias após o 24º mês (cláusula 15.2). | Capital "disponibilizado para retirada" em até 30 dias após o fim. |
+| Primeiro pagamento | **15/10/2026**, pro rata: **R$ 300 por dia** desde a compensação. | 30 dias de estruturação, depois mensal. |
+| Atraso | IPCA + juros de mora de 1% ao mês. | — |
+| Natureza declarada | "Parceria comercial"; **não é mútuo**, mas a cláusula 4.4 diz que prevalece a **substância econômica**. | Cláusula 3.2: "**em nenhuma hipótese** promessa de rendimento, taxa de juros, mútuo ou captação junto ao público" — **e a cláusula 7.1 fixa 3% ao mês sobre o capital**. |
+
+### Conferência com os extratos (valores e datas; sem nomes)
+
+| Contrato diz | Extrato mostra | Resultado |
+|---|---|---|
+| A: 1º pagamento 15/10 = 45 dias × R$ 300 = **R$ 13.500** | Mercado Pago 15/10: **R$ 13.500** ao parceiro A, pago no mesmo dia em que a empresa transferiu **R$ 13.500** a ele | **bate ao centavo** |
+| B: 3% de R$ 50 mil = **R$ 1.500/mês** | Mercado Pago: **R$ 1.600 em 15/09** e **R$ 1.500 em 15/10** ao parceiro B | **bate** (1º mês com pro rata) |
+| B: aporte de R$ 50 mil | Santander **11/08/2026: R$ 50.000**, **o documento do pagador é o mesmo CPF do contrato** | **bate** |
+| A: aporte de R$ 200 mil em 01/09 | Santander **01/09/2026: 2 PIX de R$ 100.000**, de **dois pagadores cujos documentos são diferentes do CPF do parceiro A** | **valor e data batem; o pagador não** (o contrato prevê "conta previamente validada", cláusula 6.4/Anexo I) |
+
+### O que isso muda
+
+1. **Não é "participação no lucro"; é pagamento fixo mensal + devolução do principal.** Para o **parceiro A**, o contrato deixa isso explícito. Em substância é **dívida com juros de 4,5% ao mês** (≈ 70% ao ano compostos); o **B**, 3% ao mês (≈ 43% ao ano). **O Value OS os trata como passivo financeiro.**
+2. **Obrigações fixas conhecidas (só estes 2 contratos):** **R$ 10.500 por mês**; em 24 meses **R$ 252.000 de remuneração + R$ 250.000 de principal = R$ 502.000 nominais**. Isso é **maior do que a receita contabilizada pelo app em setembro (R$ 6.060)** e do **mesmo tamanho do resultado mensal "apurado" mostrado no painel (R$ 10.383)**.
+3. **Há mais parceiros do que os dois contratos.** Nos extratos: **15/09 → 9 pagamentos redondos de R$ 1.000 ou mais (R$ 37,2 mil)**, incluindo **6 PIX de R$ 2.000** e um de **R$ 7.000**; **15/10 → R$ 45,6 mil**, dos quais **R$ 30.551** não são dos parceiros A e B. **Hipótese a confirmar:** se forem repasses de outros parceiros a 3%–4,5% ao mês, o capital de parceiros seria da **ordem de R$ 1 mi**, e não R$ 250 mil.
+4. **O texto que o parceiro lê no painel do app contradiz o contrato do A:** o painel diz "**não há garantia de retorno, não é investimento**"; o contrato A promete **mensalidade fixa e devolução do principal**.
+5. **Pontos para o advogado (não é parecer):** (a) juros de 4,5% ao mês e a qualificação como **empréstimo** ou **captação de investimento coletivo**; (b) o **fee de 1,5% remunera quem traz novos parceiros** (comissão de indicação sobre captação); (c) **as duas testemunhas são pessoas ligadas à própria empresa**; (d) contrato B sem data e sem assinatura, já em execução; (e) **pagador diferente do parceiro** no aporte A (origem dos recursos).
+6. **Para o modelo:** substituir a linha de "5% da receita" por um **cronograma fixo de obrigações por contrato** (principal, remuneração, datas) e tratá-lo como **dívida na ponte** pelo principal, com a **remuneração acima do custo de mercado** descontada ao valor presente.
+

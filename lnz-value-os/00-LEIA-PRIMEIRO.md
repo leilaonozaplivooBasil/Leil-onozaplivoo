@@ -36,9 +36,9 @@
 | 9 · Investor experience | `PARTE-09-investor-experience.md` | papéis, telas, Evidence Ledger, Data Room, Ask LNZ AI |
 | 10 · Roadmap | `PARTE-10-roadmap.md` | fases 0–5, mudanças no app (S1–S7, D1–D10), reuso/refazer |
 | 11 · Riscos | `PARTE-11-riscos.md` | dados, financeiro, legal/conformidade, segurança, credibilidade, técnico |
-| 12 · Decisões | `PARTE-12-decisoes.md` | **23 decisões suas (DEC-1…23)** e os **10 dados que faltam** |
+| 12 · Decisões | `PARTE-12-decisoes.md` | **24 decisões suas (DEC-1…24)** e os **10 dados que faltam** |
 
-**Anexos:** `anexos/A-auditoria-dos-dois-sites.md` (58 itens) · `anexos/B-evidencias-do-banco.md` (números do banco e as consultas) · `anexos/C-dossie-contabil-e-bancario.md` (dossiê do Drive e extratos).
+**Anexos:** `anexos/A-auditoria-dos-dois-sites.md` (59 itens) · `anexos/B-evidencias-do-banco.md` (números do banco e as consultas) · `anexos/C-dossie-contabil-e-bancario.md` (dossiê do Drive e extratos).
 
 ---
 
