@@ -62,7 +62,7 @@ A tela só mostra o valor quando a linha for 🟢/🟡. Linha 🔴 aparece como 
 
 | Setembro/2026 | R$ | Como ler |
 |---|---:|---|
-| Entrou no app (pedidos pagos, tudo) | 49.185 | Anexo B3 |
+| Pedidos pagos no app (tudo) | 49.185 | Anexo B3 — **inclui R$ 15.937 pagos com saldo da carteira** (dinheiro que já tinha sido contado como depósito; ver Anexo C10) |
 | ↳ **Depósito de carteira** (obrigação com cliente) | 30.773 | **não é receita** |
 | ↳ Venda de mercadoria (arremate 11.454 + loja 5.461) | 16.915 | `GMV_GOODS` |
 | ↳ Adesão paga | 1.497 | 1 adesão |
@@ -70,6 +70,8 @@ A tela só mostra o valor quando a linha for 🟢/🟡. Linha 🔴 aparece como 
 | **Despesas efetivamente pagas** (`financial_expenses`) | **103.127** | aluguel 37,5 mil · cartão 23 mil · salários 19 mil · escritório 10 mil · "custo do aporte" 5,6 mil… |
 | Despesas vencidas em aberto (acumulado fev–set) | **166.923** | ou estão vencidas, ou foram pagas e **não baixadas** |
 | Despesas pendentes outubro | 119.768 | inclui salários R$ 53 mil |
+
+**Correção de leitura (Anexo C10):** o **dinheiro novo** que entrou pelo Mercado Pago em setembro foi **≈ R$ 33 mil, 93% depósito de carteira**; os outros R$ 16 mil de "pedidos pagos" são compra com saldo (dupla contagem se somados ao depósito).
 
 **Leitura (preliminar, a validar):** o **app sozinho** gera, em ordem de grandeza, **R$ 6–17 mil/mês** de resultado reconhecido contra **~R$ 100 mil/mês** de despesas pagas. Há outras fontes de caixa fora do app (varejo Nexus, vendas no Mercado Livre pela conta do Mercado Pago, aportes). **O Value OS precisa juntar tudo** — e a primeira pergunta de um investidor será: *"quem financia a diferença?"*. As evidências apontam para **aportes e parceiros** (19 PIX ≥ R$ 5 mil nos extratos; despesa "custo do aporte"), que **não são receita**.
 

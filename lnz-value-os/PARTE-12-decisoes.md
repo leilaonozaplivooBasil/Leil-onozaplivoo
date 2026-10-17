@@ -46,7 +46,7 @@
 
 | # | O que mandar | Para quê | Quem tem |
 |---|---|---|---|
-| 1 | **Relatórios do Mercado Pago em CSV**: *Liberações de dinheiro* e *Movimentações*, de **jul a out/2026** (e nov–dez/2025, se existirem). *Painel → Atividade → Relatórios.* | Eu **não consigo puxar** o Mercado Pago (o token fica na Vercel e não deve passar por mim). Sem isso, setembro e outubro ficam incompletos. | financeiro |
+| 1 | **Extrato da conta Mercado Pago em CSV** (*Atividade → Relatórios → Dinheiro em conta / Liberações*), de **01/07 a 17/10/2026** (e nov–dez/2025, se existirem). Pode ser salvo na pasta "02 — Extratos Mercado Pago" do Drive. | **Já tenho** o que o **app** guardou do Mercado Pago (192 pagamentos aprovados, jul–16/10; Anexo C10). **Não tenho** a conta inteira: PIX direto, QR/links fora do app, transferências, saques e vendas de outros canais só aparecem no extrato. Eu **não leio o token** do Mercado Pago (fica na Vercel). | financeiro |
 | 2 | **Lista dos aportes e investimentos** (quem, quando, quanto, contrato, repasse prometido) | Classificar os 19 + 20 créditos grandes e montar a ponte | CEO |
 | 3 | **Extratos de 2025 e de todas as outras contas** (Nubank? outras do Santander/Itaú; contas dos sócios usadas pela empresa) | Reconciliar o caixa de R$ 705,9 mil do balanço de 2025 | financeiro |
 | 4 | **Contrato social atual** e quadro de sócios | DEC-1 (perímetro) | contador / jurídico |

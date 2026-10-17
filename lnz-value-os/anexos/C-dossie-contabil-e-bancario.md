@@ -264,3 +264,58 @@ O app **antigo**, que o documento de 28/04/2026 chama de "banco canônico" (R$ 4
 ### Mercado Pago — o que eu consigo e o que não consigo fazer
 
 **Não tenho acesso direto à conta do Mercado Pago** (nem deveria ter: o token fica nas variáveis de ambiente da Vercel, que eu não leio). O que o app já guarda: `gateway_eventos` (desde 03/10) e o JSON `gateway` em `catalog_sales`. **Para o histórico completo, preciso do relatório exportado do painel do Mercado Pago** (Atividade → Relatórios → *Liberações de dinheiro* e *Movimentações*, em CSV) de **jul a out/2026** (e de nov–dez/2025, se existirem).
+
+
+---
+
+## C10. Mercado Pago pelo que o **app** guardou (jul – 16/out/2026)
+
+**Fonte:** coluna `gateway` de `catalog_sales` (324 pagamentos conferidos pela conciliação do app) e `gateway_eventos` (03–16/10). **Só leitura, agregados.** O app só vê o que **nasceu nele**: não vê PIX mandado direto à conta, venda por QR/link fora do app, transferências nem saques.
+**Limite:** isto **não é** o extrato completo da conta Mercado Pago de jul–out (esse continua pendente — ver Parte 12.3).
+
+| Mês (BRT) | Pagamentos aprovados | Bruto R$ | PIX | Cartão |
+|---|---:|---:|---:|---:|
+| Jul | 24 | 1.033 | 24 | 0 |
+| Ago | 54 | 7.873 | 52 | 2 (1 cartão + 1 saldo MP) |
+| Set | 80 | **33.625** | 74 | 6 |
+| Out (até 16/10) | 34 | **26.980** | 32 | 2 |
+| **Total** | **192** | **69.511** | | |
+
+- **Líquido recebido:** R$ 68.412 → custo do gateway ≈ **R$ 1,1 mil (1,6% do bruto)**; PIX ≈ **1,0%**; cartão parcelado pesa mais (a validar). Devoluções: **R$ 4**. Sem chargeback e sem disputa.
+- **Tentativas que nunca entraram:** 126 canceladas e 6 rejeitadas (132 no total), somando **R$ 3,17 mi** (inclui 3 PIX de R$ 1.000.000 rejeitados). **Nunca somar.**
+- **O que isto corrige no retrato de setembro:** dos R$ 49.185 de "pedidos pagos", **R$ 15.937 foram pagos com saldo da carteira** (arremate R$ 11.454 + loja R$ 4.484), ou seja, **dinheiro que já tinha sido contado quando virou depósito**. O **dinheiro novo** pelo Mercado Pago em setembro foi **≈ R$ 33,2–33,6 mil**, dos quais **93% eram depósito de carteira**. Em outubro (até 16/10): **≈ R$ 26,8 mil, 98% depósito.**
+- **Varredura do gateway (desde 07/10):** em 15/10 o dono classificou **4 PIX sem venda no app (R$ 1.500 + R$ 13.500 + R$ 30.551 + R$ 918 = R$ 46.469)** como "movimentação entre contas da empresa". É **compatível** com as saídas do Itaú para "contas da empresa" em outubro (R$ 52.605), mas **só o extrato do Mercado Pago confirma**.
+- **Comparação que importa:** em setembro entraram ≈ **R$ 400 mil de terceiros** nas contas Santander e Itaú; o app e o Mercado Pago dele explicam **≈ R$ 33 mil**. O resto **não vem da operação do app** — é o que a documentação dos aportes (e do consórcio, C11) precisa explicar.
+
+---
+
+## C11. Relatório de alavancagem via consórcio (30/06/2026) — `MANAGEMENT DATA`, cruzado com os extratos
+
+**Fonte:** documento do Drive "Resumo dos Meses – Operação de Alavancagem via Consórcio" (TTT Corporate, 30/06/2026, montado a partir de um grupo de mensagens e comprovantes). **Não contém dado de pessoa neste anexo** (nomes e contratos ficam no Drive).
+
+**O que o relatório afirma (não verificado, salvo onde indicado):**
+- **25 cotas** no Consórcio Nacional Volkswagen: **22 em nome da Compras Full** (grupo 91400, 36 meses, **R$ 1.484,84 por cota = R$ 32.666/mês**) e **3 em nome de uma pessoa física** (grupo 91380, 18 meses, R$ 12.207/mês).
+- Estratégia: cotas com **lance embutido** (≈ 24–25% do crédito), carta contemplada **rende 1% ao mês**, bem alienado gera liquidez; cartas também são **transferidas a terceiros** em troca de caixa.
+- **5 cartas contempladas** em 30/06. Compromisso mensal total declarado: **R$ 50.873** (inclui uma parcela de um veículo comprado de terceiro).
+- Caixa que saiu "comprovado": **R$ 133.072**; retornos "realizados + a receber": **R$ 254.671**; lucro bruto declarado **R$ 121.599** (a maior parte é **a receber** — `FORECAST`, não resultado).
+
+**Conferência contra os extratos (feita por script):**
+
+| O relatório diz | Extrato diz | Resultado |
+|---|---|---|
+| 25 boletos Itaú em 20/05 = **R$ 45.572,58** | Itaú maio: 25 boletos = **R$ 45.572,58** | **bate ao centavo** |
+| 24 comprovantes Mercado Pago em 22/06 = **R$ 44.653,49** | Mercado Pago 22/06/2026: 24 pagamentos de consórcio = **R$ 44.653,49** | **bate ao centavo** |
+| Compromisso mensal R$ 50.873 | Consórcio visto nos extratos: ≈ R$ 12–18 mil/mês (Santander + Mercado Pago + Itaú) | **as contas que tenho cobrem só parte** → existem **outras contas** pagando |
+
+**Consequências para o valuation (proposta):**
+1. Os pagamentos de consórcio são **fluxo real e rastreável**; as cartas e os veículos entram na **ponte** (ativo não operacional **menos** saldo devedor das parcelas), nunca no EV da operação.
+2. **Perímetro:** parte das cotas é da Compras Full, parte de pessoa física e parte de outra empresa do grupo (TTT Corporate). O Value OS precisa de **uma tabela por cota** (titular, crédito, parcelas pagas/a pagar, situação).
+3. **Compromisso de ≈ R$ 51 mil/mês** é maior do que **toda a receita reconhecida pelo app** (R$ 6 mil em setembro). Isso é **passivo financeiro**, não operação.
+4. **Hipótese a testar (não conclusão):** parte dos créditos grandes e redondos dos extratos (por exemplo, o PIX de R$ 100.000 de abril, ou valores de R$ 50.000 e R$ 55.000) pode ser **liquidez de carta/veículo** descrita neste relatório. Só a lista de aportes e o extrato com **quem pagou** confirmam; até lá, a classificação é **"não explicado"**.
+5. No Drive há a pasta **BOLETOS CONSÓRCIO** (pelo menos 21 boletos do grupo 91400, enviados em 17/10) — serve de prova das parcelas; ainda não foram lidos um a um.
+
+---
+
+## C12. Planilha `vendas.xlsx` (Drive)
+
+Lista **manual, dia a dia, de itens vendidos no showroom** (vendedor · item · valor), com tickets de R$ 3 a algumas centenas de reais. A leitura pelo Drive foi **cortada em 89 mil caracteres de um arquivo de 2 MB** e cobre só **04/06 a 12/07/2026**. Não é a série nov/25–mai/26. Para usar, preciso do arquivo baixado (CSV por aba).
