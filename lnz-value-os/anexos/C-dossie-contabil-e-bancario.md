@@ -466,3 +466,9 @@ Lista **manual, dia a dia, de itens vendidos no showroom** (vendedor · item · 
 - **Total das duas obrigações:** **R$ 502.100** (R$ 252.100 de remuneração + R$ 250.000 de principal).
 - **Observação:** datas de início e fim **dependem da data real de compensação** e da leitura jurídica das cláusulas de vigência (A conta 24 meses da compensação; B conta 24 repasses a partir do primeiro). **Calculado por mim; conferir com o jurídico.**
 
+### C15c. Painel da DocuSign (captura de tela enviada pelo CEO em 17/10/2026)
+
+- Os envelopes dos contratos **A** e **B** aparecem como **"Concluído — há 2 meses"**. Isso **corrobora** que **não foram assinados hoje** (17/10) e é **compatível** com **B em 11/08** e **A em 01/09**. A **hora exata** só o **certificado de conclusão** dá.
+- Há um **terceiro envelope** (nome técnico, sem título) **"A aguardar por mais 2 pessoas — há 2 meses"**: **ainda não está assinado**. **O CEO precisa dizer o que é** (contrato de parceiro? 1%? outro?). Se for contrato de parceiro, **há um terceiro aporte/contrato em aberto**.
+- A conta mostra **"O seu período de avaliação expirou" (0 dias restantes)**: é uma conta de **teste**. **Risco:** perder acesso aos envelopes e aos **certificados de conclusão**. **Baixar agora** o PDF e o certificado de cada contrato e guardar no Drive; para contratos novos (inclusive o do 1%), usar **plano pago** ou outra plataforma de assinatura.
+

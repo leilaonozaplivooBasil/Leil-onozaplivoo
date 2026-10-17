@@ -63,6 +63,7 @@
 | 10 | **Comprovantes dos 39 créditos ≥ R$ 5.000** (quem pagou e por quê) | Origem dos recursos | financeiro / CEO |
 | 11 | ~~Faturas do cartão empresa~~ — **dispensadas pelo CEO** | Composição informada (aluguel de R$ 10 mil — o "hotel" —, tecnologia e marketing); **fatura em aberto: R$ 0 (informado)** | — |
 | 12 | **Certificado de conclusão da DocuSign** dos contratos A e B (**B recebido; assinado em 11/08 segundo o CEO**) | Datas e IPs da assinatura | CEO / jurídico |
+| 13 | **Dizer o que é o terceiro envelope DocuSign** ("a aguardar por mais 2 pessoas", há 2 meses) e **baixar já os certificados** (a conta de teste expirou) | Pode ser um terceiro contrato não assinado; risco de perder acesso | CEO |
 
 ---
 
