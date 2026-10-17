@@ -100,8 +100,8 @@ export default async function Overview() {
                   return (
                     <tr key={m.metric_id} className="border-t border-border">
                       <td className="px-4 py-3">
-                        <div className="font-medium">{m.nome}</div>
-                        <div className="font-mono text-xs text-muted">{m.metric_id}</div>
+                        <a href={`/app/prova/${m.metric_id}`} className="font-medium hover:underline">{m.nome}</a>
+                        <div className="font-mono text-xs text-muted">{m.metric_id} · clique para provar</div>
                       </td>
                       <td className="px-4 py-3 text-muted">{v ? new Date(v.periodo).toLocaleDateString("pt-BR", { month: "short", year: "numeric" }) : "—"}</td>
                       <td className="px-4 py-3 text-right font-mono">{formata(v?.valor ?? null, m.unidade)}</td>

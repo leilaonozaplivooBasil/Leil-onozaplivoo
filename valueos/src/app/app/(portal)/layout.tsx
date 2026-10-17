@@ -68,14 +68,17 @@ export default async function LayoutPortal({
             </p>
             <p className="text-xs text-muted">Leilão NoZap · área do investidor</p>
           </div>
-          <div className="flex items-center gap-4 text-sm">
+          <nav className="flex items-center gap-4 text-sm">
+            <a href="/app" className="hover:underline">Visão geral</a>
+            <a href="/app/dre" className="hover:underline">DRE</a>
+            <a href="/app/cargas" className="hover:underline">Cargas</a>
             <span className="hidden text-muted sm:inline">
               {perfil.nome ?? perfil.email} · {perfil.papel}
             </span>
             <a href="/sair" className="underline">
               Sair
             </a>
-          </div>
+          </nav>
         </div>
       </header>
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">{children}</main>
