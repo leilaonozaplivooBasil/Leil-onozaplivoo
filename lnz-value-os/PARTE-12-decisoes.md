@@ -39,7 +39,7 @@
 | **DEC-18** | **Melhorias de dado no app (D1–D10, Parte 10)** | Aprovar **só depois** da Fase 1; começar por D4, D6, D9 (fora da zona vermelha) e depois D1–D3 (custo, canal, frete). | O Value OS começa **sem** tocar produção. |
 | **DEC-19** | **Revisão externa** | Contador independente (CRC) + advogado revisam: declaração de faturamento, PGDAS × livros × banco, regime tributário, **classificação dos créditos grandes e dos depósitos em dinheiro**, enquadramento dos aportes. **Antes** do Data Room. | Não é parecer meu; é de quem assina. |
 | **DEC-20** | **Dossiê no Drive** | Tirar as pastas de documentos pessoais (08, 12, 14) do compartilhamento; manter o dossiê só com quem precisa. | Não abri essas pastas. |
-| **DEC-21** | **A venda de 1% (R$ 200 mil no Itaú + R$ 50 mil a receber)** | Registrar como **aumento de capital** (entra no patrimônio) ou como **venda de cotas de sócio** (dinheiro do sócio) — **definir com advogado e contador**. O Value OS a guarda como **"aporte informado, sem documento"** e dá **peso zero** como preço de transação até haver contrato e alteração contratual. | Preciso do **contrato de compra, da alteração contratual na Junta, do comprovante e da identificação do comprador**. |
+| **DEC-21** | **A venda de 1% (R$ 200 mil no Itaú + R$ 50 mil a receber; contrato só após o último R$ 50 mil)** | Registrar como **aumento de capital** (entra no patrimônio) ou como **venda de cotas de sócio** (dinheiro do sócio) — **definir com advogado e contador**. O Value OS a guarda como **"aporte informado, sem documento"** e dá **peso zero** como preço de transação até haver contrato e alteração contratual. | Preciso do **contrato de compra, da alteração contratual na Junta, do comprovante e da identificação do comprador**. |
 | **DEC-22** | **"Parceiro de compra"** (contratos A e B e os que existirem) | **É passivo com remuneração fixa**: principal a devolver em ~24 meses + R$ mensais. Cronograma por contrato; **advogado** define o enquadramento e o texto público (sem promessa de retorno); regularizar o contrato B (data e assinatura reais, **sem retroagir**). | Preciso do **certificado DocuSign** do A, do **B assinado** e da **lista de repasses pagos** a A e B. |
 | **DEC-23** | **A linha "Parceiros de compra (5%)" retirada em 02/10** | **Voltar** com o valor realmente pago (ou mostrar as duas versões lado a lado) em tudo o que for mostrado a investidor. | Muda o resultado anualizado de R$ 124.596 para R$ 88.884 no cenário "hoje". |
 | **DEC-24** | **Teste de sustentabilidade** | Mostrar sempre **"a empresa pagaria os parceiros sem novos aportes?"** (receita do app × serviço da dívida). | Evita que o valuation esconda dependência de captação. |
@@ -51,7 +51,7 @@
 
 | # | O que mandar | Para quê | Quem tem |
 |---|---|---|---|
-| 1 | **Mercado Pago de AGOSTO/2026** (01/08 a 31/08), em PDF ou CSV | Recebi jul, set e out (Anexo C13). **Só falta agosto** para fechar julho–outubro. | financeiro |
+| 1 | ~~Mercado Pago de agosto~~ — **recebido** (série jul–16/out completa, Anexo C13/C13b) | — | — |
 | 2 | **Lista dos aportes e investimentos** (quem, quando, quanto, contrato, repasse prometido) | Classificar os 19 + 20 créditos grandes e montar a ponte | CEO |
 | 3 | **Extratos de 2025 e de todas as outras contas** (Nubank? outras do Santander/Itaú; contas dos sócios usadas pela empresa) | Reconciliar o caixa de R$ 705,9 mil do balanço de 2025 | financeiro |
 | 4 | **Contrato social atual** e quadro de sócios | DEC-1 (perímetro) | contador / jurídico |

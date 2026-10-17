@@ -323,11 +323,11 @@ Lista **manual, dia a dia, de itens vendidos no showroom** (vendedor · item · 
 
 ---
 
-## C13. Extratos do Mercado Pago de jul, set e out/2026 (enviados em 17/10)
+## C13. Extratos do Mercado Pago de jul, ago, set e out/2026 (enviados em 17/10)
 
-**O que chegou:** julho (01–31/07), setembro (01–30/09; veio também uma cópia parcial 01–27/09) e outubro (01–16/10; veio duas vezes, idênticas). **Falta agosto** (o saldo foi de R$ 99,16 em 31/07 para R$ 4.279,55 em 01/09). Conta da Compras Full Comércio Ltda. Só agregados; nomes de pessoas ficam fora.
+**O que chegou:** julho (01–31/07), **agosto (01–31/08, chegou depois)**, setembro (01–30/09; veio também uma cópia parcial 01–27/09) e outubro (01–16/10; veio duas vezes, idênticas). **Série completa jul–16/out, sem buraco:** o saldo final de cada mês é o inicial do seguinte (R$ 99,16 → R$ 4.279,55 → R$ 10.282,72). Conta da Compras Full Comércio Ltda. Só agregados; nomes de pessoas ficam fora.
 
-**Testes de integridade do leitor:** entradas e saídas somadas = cabeçalho do extrato (**diferença R$ 0,00** nos 3 meses) · cadeia de saldo linha a linha **62/62 (jul), 178/178 (set), 114/114 (out)** sem falha · saldo final conferido.
+**Testes de integridade do leitor:** entradas e saídas somadas = cabeçalho do extrato (**diferença R$ 0,00** nos 3 meses) · cadeia de saldo linha a linha **62/62 (jul), 76/76 (ago), 178/178 (set), 114/114 (out)** sem falha · saldo final conferido.
 
 ### Resumo por mês (R$)
 
@@ -346,7 +346,7 @@ Lista **manual, dia a dia, de itens vendidos no showroom** (vendedor · item · 
 
 1. **Em setembro e outubro, toda a entrada de terceiros do Mercado Pago é venda do app.** Casei o **número da operação** do extrato com o número do pagamento guardado no app: **set: 80 de 80 entradas de venda casam (R$ 33.001)**; **out: 34 de 35 casam (R$ 26.603 de R$ 26.757)** — sobra 1 PIX de R$ 154,55 — e 4 dos 5 cancelamentos casam com vendas do app. **Não há receita escondida no Mercado Pago nesses meses.**
 2. **Em julho não é assim:** só 24 de 27 QR casam; **4 liberações (R$ 6.383) e 2 PIX (R$ 2.100) = R$ 8,5 mil não são do app** (varejo, outro canal ou venda no marketplace; a confirmar).
-3. **O Mercado Pago é a "mesa de pagamentos" da empresa:** é abastecido por transferências do Santander e do Itaú e paga pessoas, boletos e compras. **Todas as transferências da empresa para ele em setembro (7, R$ 81.247,68) e outubro (8, R$ 57.178,30) aparecem como saídas do Santander e do Itaú, com o mesmo valor e a mesma data (zero de diferença).** Os R$ 51,2 mil que saíram do Santander e do Itaú em agosto devem estar no extrato de agosto (que falta).
+3. **O Mercado Pago é a "mesa de pagamentos" da empresa:** é abastecido por transferências do Santander e do Itaú e paga pessoas, boletos e compras. **Todas as transferências da empresa para ele em setembro (7, R$ 81.247,68) e outubro (8, R$ 57.178,30) aparecem como saídas do Santander e do Itaú, com o mesmo valor e a mesma data (zero de diferença).** Em agosto só **R$ 1.326** foram do Itaú para o Mercado Pago (2 transferências, batem); os **R$ 46.658,91** que saíram do Santander em 13/08 foram **para o Itaú** (o Itaú recebeu o mesmo valor no mesmo dia).
 4. **Repasse no mesmo dia:** em 05/10 e 15/10, **4 entradas da própria empresa (R$ 49.151) saíram do Mercado Pago no mesmo dia, com o mesmo valor, para pessoas/empresas**; em 15/09 foi parecido (R$ 20,6 mil entrando; saídas de R$ 2.000 em lote). **Quem recebeu e por quê** está nos extratos (com nome) e precisa de documento: folha, comissão, devolução de aporte ou empréstimo? **Não classifico.**
 5. **Tamanho das saídas por PIX a pessoas e empresas:** set 58 PIX (3 de R$ 5 mil ou mais = R$ 37,6 mil); out 36 PIX (**3 de R$ 5 mil ou mais = R$ 62,4 mil**); em set, 12 PIX de R$ 1.000 ou mais e valor redondo (R$ 29,3 mil).
 
@@ -369,7 +369,7 @@ Lista **manual, dia a dia, de itens vendidos no showroom** (vendedor · item · 
 
 ## C14. Aportes e venda de participação — informação do CEO em 17/10/2026 (`MANAGEMENT DATA`, **sem contrato à vista**)
 
-**O que o CEO informou (confirmado em duas mensagens):**
+**O que o CEO informou (confirmado em duas mensagens; e em 17/10 à noite: o contrato do 1% só será assinado depois que o restante de R$ 50 mil entrar; o comprador é "C. R." — nome completo só no contrato; aqui ficam as iniciais por ser dado pessoal de terceiro):**
 1. **Compra de participação (equity):** **R$ 200 mil entraram no Itaú no fim de setembro** e equivalem a **1% da empresa**. Com a empresa avaliada hoje em **R$ 25 mi, 1% = R$ 250 mil**; o cliente **enviará mais R$ 50 mil**.
 2. **Parceiro de compra:** **R$ 50 mil e R$ 200 mil (esta em 01/09)** **não foram compra direta**; foram **aporte no parceiro de compra, em que o parceiro recebe rentabilidade**.
 
@@ -436,4 +436,18 @@ Lista **manual, dia a dia, de itens vendidos no showroom** (vendedor · item · 
 4. **O texto que o parceiro lê no painel do app contradiz o contrato do A:** o painel diz "**não há garantia de retorno, não é investimento**"; o contrato A promete **mensalidade fixa e devolução do principal**.
 5. **Pontos para o advogado (não é parecer):** (a) juros de 4,5% ao mês e a qualificação como **empréstimo** ou **captação de investimento coletivo**; (b) o **fee de 1,5% remunera quem traz novos parceiros** (comissão de indicação sobre captação); (c) **as duas testemunhas são pessoas ligadas à própria empresa**; (d) contrato B sem data e sem assinatura, já em execução; (e) **pagador diferente do parceiro** no aporte A (origem dos recursos).
 6. **Para o modelo:** substituir a linha de "5% da receita" por um **cronograma fixo de obrigações por contrato** (principal, remuneração, datas) e tratá-lo como **dívida na ponte** pelo principal, com a **remuneração acima do custo de mercado** descontada ao valor presente.
+
+### C13b. Agosto/2026 no Mercado Pago (chegou depois)
+
+| Agosto (01–31/08) | R$ |
+|---|---:|
+| Saldo inicial → final | 99,16 → 4.279,55 |
+| Entradas de terceiros (liberações R$ 270 + QR R$ 7.326 + PIX R$ 6.310) | **13.906** |
+| Transferências da própria empresa (2, do Itaú; **batem**) | 1.326 |
+| PIX a pessoas e empresas (12) | −8.805 |
+| Pagamentos e compras (5) | −2.247 |
+
+- **Casamento com o app (número da operação):** liberações **2/2**, QR **50/50** (R$ 7.596) e PIX **2/5**. **R$ 6.122 em 3 PIX (um de R$ 4.860 e um de R$ 1.260) não são do app.**
+- **Vendas fora do app no Mercado Pago:** **jul R$ 8,5 mil · ago R$ 6,1 mil · set R$ 0 · out R$ 0,15 mil** — o varejo pelo Mercado Pago **sumiu** depois de agosto, como a planilha Nexus (jun R$ 72 mil → jul R$ 11,8 mil → ago R$ 3,4 mil → nada).
+- **Transferências pequenas para outras contas da empresa** (sem par no Mercado Pago): **R$ 3.250 em agosto** (Itaú R$ 3.000 e Santander R$ 250) e **R$ 780 em setembro** (Santander) → existe **pelo menos mais uma conta**.
 
