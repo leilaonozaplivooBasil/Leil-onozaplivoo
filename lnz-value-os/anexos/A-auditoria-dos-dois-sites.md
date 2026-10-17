@@ -1,7 +1,7 @@
 # Anexo A — Auditoria dos dois sites (item 42)
 
 **Base da análise:** as duas capturas em PDF que você enviou — `LEILAO-NOZAP.pdf` (Memorando de Investimento, 60 páginas) e `LEILAO-NOZAP_1.pdf` (página única com o valuation).
-**Limite:** **não consegui abrir os sites ao vivo** (o ambiente não resolve os dois endereços). Não avaliei botões, links, scripts, SEO nem o que muda com o tempo. Pareei cada PDF ao site **pelo conteúdo**, não pelo endereço.
+**Limite:** não abri os endereços ao vivo, mas em **17/10 li os dois sites na origem, no Gamma** (ver seção 11) — links e botões conferidos lá. Pareei cada PDF ao site pelo conteúdo e pelo Gamma.
 **Estado dos números:** todos os números dos sites são `MANAGEMENT DATA` (dado da administração, sem rastro) até aparecerem no Metrics Registry com origem no banco.
 
 ## Como ler as etiquetas
@@ -100,8 +100,8 @@ Legenda de origem: **M** = Memorando · **V** = página do Valuation.
 | # | Informação | Onde | Etiqueta | O que encontrei / o que fazer |
 |---|---|---|---|---|
 | 40 | Rodapé do memorando: "Documento confidencial — uso restrito para investidores" | M | **INCONSISTENT** | Se o site é aberto sem login, o rótulo "confidencial" contradiz o acesso. A Parte 9 (Investor Experience) propõe acesso em 3 níveis. |
-| 41 | Botão "Acessar Data Room" | M | **VERIFY** | Não consegui ver para onde leva. Se não existe data room, o botão promete algo que não há. |
-| 42 | Botões "Baixar Memorando Completo", "Acessar a Plataforma", "Agendar Reunião Estratégica" | V | **KEEP** (a validar o destino) | — |
+| 41 | Botão "Acessar Data Room" | M | **REMOVE / reescrever** | **Lido no Gamma (17/10):** o memorando tem **um único link**, "Solicitar Reunião Estratégica", que leva ao site do valuation; **"Acessar Data Room" não leva a lugar nenhum**. Trocar pelo botão de acesso ao LNZ Value OS quando existir. |
+| 42 | Botões "Baixar Memorando Completo", "Acessar a Plataforma", "Agendar Reunião Estratégica" | V | **KEEP** | **Lido no Gamma (17/10):** "Baixar Memorando" → formulário Google (pede dados antes de liberar); "Acessar a Plataforma" → `leilaonozap.net`; "Agendar Reunião" → WhatsApp. Funcionam. |
 
 ## 9. Narrativa e história
 
@@ -169,3 +169,18 @@ Legenda de origem: **M** = Memorando · **V** = página do Valuation.
 | REMOVE | 1 (54) |
 
 > Total da auditoria com esta seção: **59 itens numerados** (46 dos sites + 13 do dossiê, dos contratos e do app), mais o 20b.
+
+---
+
+## 11. Onde os sites moram: Gamma (lido em 17/10/2026)
+
+| Site | No Gamma | Tamanho | Última edição | Visualizações (painel do Gamma) |
+|---|---|---|---|---|
+| **Memorando de Investimento** | documento "LEILÃO NOZAP" (`h38mk4c7ll88ck0`) | 60 cartões | **17/10/2026 14:36** (hoje) | 177 visualizações, **2 pessoas identificadas** |
+| **Valuation** | documento "LEILÃO NOZAP" (`wwmv0omttk4auhi`) | 2 cartões | 19/08/2026 | 176 visualizações, **1 pessoa identificada** |
+| (não é site) | documento "LEILÃO NOZAP" (`f7wibx4fujbzuq7`) | 2 cartões | 21/06/2026 | 10 visualizações |
+
+- O terceiro documento é o **roteiro usado para gerar o memorando** ("Crie uma apresentação premium…", com os 17 slides e os nomes do conselho). **Não é público, mas convém arquivar**: mostra que o memorando foi gerado por IA a partir de um roteiro, e tem nomes de pessoas.
+- **Exposição real até hoje é pequena:** o painel só identifica 1–2 pessoas (visitantes anônimos podem não aparecer). Corrigir os sites agora **custa pouco em reputação**.
+- **Consequência para o plano:** os sites **continuam no Gamma**; viram "portas" com um botão para o LNZ Value OS e passam a receber os números públicos **a partir do snapshot oficial**, por atualização no próprio Gamma (há conexão com o Gamma neste ambiente). **Conteúdo de investidor (DRE, projeção, data room) nunca vai para o Gamma**, porque a página é pública e não tem login por pessoa.
+

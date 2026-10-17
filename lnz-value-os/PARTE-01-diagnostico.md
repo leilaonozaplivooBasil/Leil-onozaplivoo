@@ -63,7 +63,7 @@
 ## 1.2 Os dois sites — diagnóstico
 
 **O que são:** vitrines de narrativa. **Nenhum número vem do sistema**, e nenhum dos dois endereços aparece no código do app (nem em redirecionamentos nem em CORS). **FATO** (busca no repositório).
-**Onde estão hospedados:** **não estão na sua conta Vercel** (a conta só tem `leilaonozap.net`). **FATO** (Vercel). **Pergunta aberta:** em qual plataforma e quem controla o DNS? (Parte 12.)
+**Onde estão hospedados:** **no Gamma** (confirmado em 17/10; Anexo A seção 11). O memorando foi editado hoje às 14:36. O painel do Gamma identifica só 1–2 pessoas vendo cada site.
 **Limite da minha análise:** trabalhei com as **capturas em PDF**; não consegui abrir os sites ao vivo.
 
 Resumo da auditoria (46 itens, Anexo A): **KEEP 13 · VERIFY 22 · RECALCULATE 7 · REMOVE 3 · INCONSISTENT 6.**
