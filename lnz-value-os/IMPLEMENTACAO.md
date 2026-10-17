@@ -40,6 +40,7 @@
 ## Pendências do CEO
 
 - ~~Supabase → URL Configuration e template do Magic Link~~ — feito pelo CEO em 17/10 (login testado de ponta a ponta).
-- **E-mail pelo remetente da empresa (Brevo):** Supabase → Authentication → Emails → SMTP Settings → habilitar SMTP personalizado com `smtp-relay.brevo.com`, porta 587, remetente `relacionamento@leilaonozap.com` (já verificado no Brevo), nome "Leilão NoZap", usuário = login SMTP do Brevo, senha = **chave SMTP gerada no Brevo** (só o CEO vê; não passa pelo chat). Depois, trocar o assunto do template para "Seu código de acesso · Leilão NoZap".
+- ~~E-mail pelo remetente da empresa (Brevo)~~ — **feito pelo CEO em 17/10 à noite:** Supabase Auth com SMTP personalizado (`smtp-relay.brevo.com:587`, remetente `relacionamento@leilaonozap.com`, nome "Leilão NoZap"), usando a chave SMTP `supabase-portal` criada no Brevo (sem expiração fixa). Limite sobe para 30 e-mails/hora. **Alerta:** chave SMTP do Brevo **expira após 90 dias sem uso** — se o portal ficar 3 meses sem ninguém pedir código, gerar outra chave no Brevo e colar de novo no Supabase. A chave de API do app (`BREVO_API_KEY`) é outra coisa e não foi tocada.
+- **Assunto do e-mail de código:** trocar `Your Magic Link` por "Seu código de acesso · Leilão NoZap" (Supabase → Authentication → Emails → Modelos → Magic link or OTP → Subject).
 - Decidir o que fazer com as alterações não publicadas do memorando no Gamma.
 - (Opcional) criar um projeto Supabase próprio em São Paulo e me avisar para migrar.
