@@ -3,7 +3,7 @@
 > **Em português simples:** nada do que está nas Partes 1–11 vira código, banco ou mudança de site sem a sua resposta. Esta parte junta **tudo o que só você pode decidir**, com a **minha recomendação** e o **porquê**. Você pode responder só "ok" ou "ajustar" em cada linha.
 > **Três níveis de aprovação, separados:**
 > 1. **Desenho** — aprovar as Partes 1–11 como direção (ou pedir ajuste).
-> 2. **Decisões** — as 24 linhas de 12.1 e 12.2.
+> 2. **Decisões** — as 25 linhas de 12.1 e 12.2.
 > 3. **Mudança em produção** — cada item S1–S7 e D1–D10 da Parte 10 é aprovado **um a um**, na zona vermelha só com a sua ordem e na janela 01h00–02h15.
 
 ---
@@ -43,6 +43,7 @@
 | **DEC-22** | **"Parceiro de compra"** (contratos A e B e os que existirem) | **É passivo com remuneração fixa**: principal a devolver em ~24 meses + R$ mensais. Cronograma por contrato; **advogado** define o enquadramento e o texto público (sem promessa de retorno); regularizar o contrato B (data e assinatura reais, **sem retroagir**). | Preciso do **certificado DocuSign** do A, do **B assinado** e da **lista de repasses pagos** a A e B. |
 | **DEC-23** | **A linha "Parceiros de compra (5%)" retirada em 02/10** | **Voltar** com o valor realmente pago (ou mostrar as duas versões lado a lado) em tudo o que for mostrado a investidor. | Muda o resultado anualizado de R$ 124.596 para R$ 88.884 no cenário "hoje". |
 | **DEC-24** | **Teste de sustentabilidade** | Mostrar sempre **"a empresa pagaria os parceiros sem novos aportes?"** (receita do app × serviço da dívida). | Evita que o valuation esconda dependência de captação. |
+| **DEC-25** | **Cartões de crédito em nome de pessoas** | Lançar a **despesa na compra**, com categoria; **fatura em aberto = passivo**; avaliar ter **cartão da empresa (CNPJ)**. | Hoje o app só vê o pagamento da fatura. |
 
 ---
 
@@ -60,7 +61,7 @@
 | 8 | **Balancete/DRE 2026**, **PGDAS-D e DAS pagos 2026**, documento de **opção pelo Simples** | Receita e passivo fiscal | contador |
 | 9 | **Folha/pró-labore, aluguel, dívidas e parcelamentos** | Passivos fora do app | financeiro |
 | 10 | **Comprovantes dos 39 créditos ≥ R$ 5.000** (quem pagou e por quê) | Origem dos recursos | financeiro / CEO |
-| 11 | **Classificar os pagamentos redondos de 15/09 (R$ 35,6 mil) e 15/10 (R$ 30,6 mil)** que **não são** dos contratos A e B: para quem e por quê (comissão, folha, devolução, outro) | O CEO informa que só existem 2 contratos de parceiro; esses pagamentos precisam de natureza | CEO / financeiro |
+| 11 | **Faturas dos cartões de crédito da empresa (ago, set, out)** e a **lista de cartões e portadores** | O CEO informa que os pagamentos de 15/09 (R$ 35,6 mil) e 15/10 (R$ 30,6 mil) são cartão de crédito; sem a fatura não sei **o que foi comprado** nem quanto está **em aberto** | CEO / financeiro |
 | 12 | **Certificado de conclusão da DocuSign** do contrato A e **contrato B assinado** | Prova de assinatura e de data | CEO / jurídico |
 
 ---
