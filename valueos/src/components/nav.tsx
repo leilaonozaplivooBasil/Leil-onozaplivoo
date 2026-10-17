@@ -45,7 +45,7 @@ function Link1({ i, ativo }: { i: Item; ativo: boolean }) {
     <Link
       href={i.href}
       aria-current={ativo ? "page" : undefined}
-      className={`rounded-md px-3 py-2 text-sm transition ${ativo ? "text-pill" : "text-white/80 hover:text-white"}`}
+      className={`whitespace-nowrap rounded-md px-3 py-2 text-sm transition ${ativo ? "text-pill" : "text-white/80 hover:text-white"}`}
     >
       {i.rotulo}
     </Link>
@@ -57,12 +57,12 @@ export function Navegacao() {
   const numeros = useFechaAoNavegar();
   const algumNumero = NUMEROS.some((i) => ativo(i.href));
   return (
-    <nav aria-label="Seções" className="hidden items-center gap-1 lg:flex">
+    <nav aria-label="Seções" className="hidden items-center gap-0.5 xl:flex">
       {PRINCIPAIS.map((i) => (
         <Link1 key={i.href} i={i} ativo={ativo(i.href)} />
       ))}
       <details ref={numeros} className="relative">
-        <summary className={`rounded-md px-3 py-2 text-sm transition ${algumNumero ? "text-pill" : "text-white/80 hover:text-white"}`}>
+        <summary className={`whitespace-nowrap rounded-md px-3 py-2 text-sm transition ${algumNumero ? "text-pill" : "text-white/80 hover:text-white"}`}>
           Números <span aria-hidden>▾</span>
         </summary>
         <div className="absolute left-0 top-full z-30 mt-2 w-56 rounded-lg border border-border bg-surface p-1 shadow-2xl">
@@ -89,7 +89,7 @@ export function MenuCelular() {
   const ativo = useAtivo();
   const ref = useFechaAoNavegar();
   return (
-    <details ref={ref} className="lg:hidden">
+    <details ref={ref} className="xl:hidden">
       <summary className="rounded-md border border-border px-3 py-2 text-sm text-white">Menu</summary>
       <div className="absolute inset-x-0 top-full z-30 border-b border-border bg-background/98 px-5 py-4 shadow-2xl">
         <ul className="grid grid-cols-2 gap-1">

@@ -27,6 +27,16 @@
 - Nomes da diretoria vêm do site público; parceiros de compra e comprador do 1% continuam como A, B e iniciais.
 - Componentes em `valueos/src/components/ui.tsx` (Etiqueta, Numero, Secao, Cartao, Aviso, Barras, Tabela, NotaRevisao, Legenda) e navegação em `nav.tsx`. Papel do usuário em `lib/papel.ts`; valores das métricas em `lib/metricas.ts`.
 
+## Identidade visual dos sites dentro do portal (17/10/2026, noite)
+
+- **Pedido do CEO:** o portal com a cara do memorando e do site de valuation (Gamma), só que mais profissional, com os dados de hoje. Fonte do desenho: os dois PDFs enviados (60 páginas do memorando + página do valuation) e a leitura dos documentos no Gamma.
+- **Identidade:** fundo preto, verde da marca `#00B86B`, etiqueta de capítulo verde-menta, **Poppins** nos títulos e **Roboto** no texto (as mesmas fontes do PDF), barra superior com a logo do app. Tokens em `valueos/src/app/globals.css`; peças visuais em `valueos/src/components/marca.tsx` (Capitulo, Cartao, CartaoNumerado, LinhaDoTempo, Trajetoria, Setas, GraficoBarras, Ciclo, NumeroGrande, Hoje).
+- **Imagens:** 25 artes tiradas dos próprios PDFs (foto do fundador, capa, mapas, abertura de cada capítulo, logo com transparência, logos do ecossistema) em `valueos/public/m/`, comprimidas (≈ 5 MB no total).
+- **Memorando (`/app/memorando`):** refeito na ordem do original — carta do fundador na íntegra, trajetória, conquistas, convergência, linha do tempo (com jun/ago/set/out de 2026 acrescentados), resumo executivo, os 12 capítulos, 12 barreiras, capítulo 9 com **R$ 25.000.000 em destaque e selo de referência do fundador**, ciclo virtuoso e mensagem final (botões: reunião por WhatsApp e data room). Números trocados pelos do sistema, com etiqueta e link para a prova.
+- **Valuation (`/app/valuation`):** capa no estilo do site de valuation; **“O que vale R$ 25.000.000”** com cada ativo ao lado do número de hoje; **painel vivo** (no lugar da planilha) com ago/set/out linha a linha; mercado, momento, ecossistema, roadmap; e a metodologia v1.0, a ponte e os comparáveis.
+- **Início e login** no mesmo padrão. **Conferência visual** por fotos de tela (1280 px, 1024 px e celular 390 px), sem rolagem lateral e sem texto abaixo de 12 px; prévia local em `/previa/<página>` (só em modo de desenvolvimento, com dados de arquivo).
+- **Remuneração paga aos parceiros no painel** (set R$ 1.600; out R$ 15.000) está escrita no código da página: virar métrica própria na próxima carga.
+
 ## Próximos passos (ordem)
 
 1. ~~Login, convite, termo, acesso~~ — feito.

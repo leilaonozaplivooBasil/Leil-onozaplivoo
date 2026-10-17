@@ -84,10 +84,10 @@ export default async function Inicio() {
           <Link href="/app/numeros" className="text-sm text-pill underline underline-offset-4">todos os 30 números</Link>
         </div>
         <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          <NumeroGrande valor={arremates?.valor != null ? brl(arremates.valor) : "—"} rotulo="Arremates pagos" sub={`${arremates?.nota ?? ""} · ${compara(arremates?.valor, arrAnt, brl)}`} etiqueta={arremates?.etiqueta} href="/app/prova/GMV_AUCTION" />
-          <NumeroGrande valor={lances?.valor != null ? inteiro(lances.valor) : "—"} rotulo="Lances" sub={`${lances?.nota ?? ""} · ${compara(lances?.valor, lancesAnt, inteiro)}`} etiqueta={lances?.etiqueta} href="/app/prova/BIDS_COUNT" />
-          <NumeroGrande valor={gmv?.valor != null ? brl(gmv.valor) : "—"} rotulo="Mercadoria vendida e paga" sub="sem depósitos, sem adesões" etiqueta={gmv?.etiqueta} href="/app/prova/GMV_GOODS" />
-          <NumeroGrande valor={pagantes?.valor != null ? inteiro(pagantes.valor) : "—"} rotulo="Clientes pagantes" sub="contas distintas, últimos 90 dias" etiqueta={pagantes?.etiqueta} href="/app/prova/CUSTOMERS_PAYING_90D" />
+          <NumeroGrande valor={arremates?.valor != null ? brl(arremates.valor) : "—"} rotulo="Arremates pagos" compacto sub={`${arremates?.nota ?? ""} · ${compara(arremates?.valor, arrAnt, brl)}`} etiqueta={arremates?.etiqueta} href="/app/prova/GMV_AUCTION" />
+          <NumeroGrande valor={lances?.valor != null ? inteiro(lances.valor) : "—"} rotulo="Lances" compacto sub={`${lances?.nota ?? ""} · ${compara(lances?.valor, lancesAnt, inteiro)}`} etiqueta={lances?.etiqueta} href="/app/prova/BIDS_COUNT" />
+          <NumeroGrande valor={gmv?.valor != null ? brl(gmv.valor) : "—"} rotulo="Mercadoria vendida e paga" compacto sub="sem depósitos, sem adesões" etiqueta={gmv?.etiqueta} href="/app/prova/GMV_GOODS" />
+          <NumeroGrande valor={pagantes?.valor != null ? inteiro(pagantes.valor) : "—"} rotulo="Clientes pagantes" compacto sub="contas distintas, últimos 90 dias" etiqueta={pagantes?.etiqueta} href="/app/prova/CUSTOMERS_PAYING_90D" />
         </div>
       </Faixa>
 

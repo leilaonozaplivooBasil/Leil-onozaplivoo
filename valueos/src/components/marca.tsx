@@ -184,6 +184,7 @@ export function NumeroGrande({
   etiqueta,
   href,
   cor = "branco",
+  compacto,
 }: {
   valor: ReactNode;
   rotulo: ReactNode;
@@ -191,10 +192,12 @@ export function NumeroGrande({
   etiqueta?: TipoEtiqueta | string;
   href?: string;
   cor?: "branco" | "verde";
+  compacto?: boolean;
 }) {
+  const tamanho = compacto ? "text-3xl sm:text-4xl" : "text-5xl sm:text-6xl";
   const corpo = (
-    <div className="text-center">
-      <p className={`num font-display text-5xl font-light tracking-tight sm:text-6xl ${cor === "verde" ? "text-accent" : "text-white"}`}>{valor}</p>
+    <div className="min-w-0 text-center">
+      <p className={`num font-display ${tamanho} font-light tracking-tight ${cor === "verde" ? "text-accent" : "text-white"}`}>{valor}</p>
       <p className="mt-3 font-display text-xl font-light text-accent">{rotulo}</p>
       {sub && <p className="mt-1 text-sm font-light text-muted">{sub}</p>}
       {etiqueta && (

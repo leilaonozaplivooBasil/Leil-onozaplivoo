@@ -769,7 +769,7 @@ export default async function Memorando() {
         <div className="mt-8 grid gap-8 sm:grid-cols-3">
           <NumeroGrande valor={n(pagantes)} rotulo="Clientes pagantes" sub="últimos 90 dias" etiqueta="VERIFIED" href="/app/prova/CUSTOMERS_PAYING_90D" />
           <NumeroGrande valor={n(recorrentes)} rotulo="Compraram 2+ vezes" sub="desde junho de 2026" etiqueta="VERIFIED" href="/app/prova/BUYERS_REPEAT" />
-          <NumeroGrande valor={estoque !== null ? brlMil(estoque) : "—"} rotulo="Estoque a custo" sub="posição de 17/10/2026" etiqueta="VERIFIED" href="/app/prova/INVENTORY_AT_COST" />
+          <NumeroGrande compacto valor={estoque !== null ? brlMil(estoque) : "—"} rotulo="Estoque a custo" sub="posição de 17/10/2026" etiqueta="VERIFIED" href="/app/prova/INVENTORY_AT_COST" />
         </div>
       </Faixa>
 
