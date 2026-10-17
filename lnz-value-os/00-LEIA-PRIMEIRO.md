@@ -18,7 +18,7 @@
 7. **Recomendo uma área separada, com login próprio** (não dentro do app) e o app só com um botão; os dois sites viram "portas" do mesmo sistema (Partes 3 e 9).
 8. **5 pontos de segurança** foram encontrados no app (nenhum foi alterado) — Parte 1, Parte 10 (S1–S7).
 9. **Os extratos mostram um padrão de entradas que precisa de documentação** (valores redondos, 43 depósitos em dinheiro no mesmo dia). Pode ter explicação legítima; **recomendo advogado e contador antes de montar o Data Room** (Parte 11, R-L1; Anexo C9).
-10. **Mercado Pago:** vejo o que o **app** guardou dele (192 pagamentos aprovados, R$ 69,5 mil, jul–16/10; Anexo C10). **Não vejo a conta inteira** (PIX direto, QR/links fora do app, transferências, saques): para isso preciso do **extrato em CSV** (Parte 12.3). Eu não leio o token, que fica na Vercel.
+10. **Mercado Pago:** recebi os extratos de jul, set e out (fecham ao centavo; Anexo C13). **Só falta agosto.** Em set e out toda entrada de terceiros dele é venda do app (≈ R$ 33 mil e R$ 27 mil/mês); os R$ 400 mil de setembro entraram por Santander e Itaú e **ainda não têm origem documentada**.
 
 ---
 

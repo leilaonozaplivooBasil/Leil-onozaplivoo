@@ -319,3 +319,49 @@ O app **antigo**, que o documento de 28/04/2026 chama de "banco canônico" (R$ 4
 ## C12. Planilha `vendas.xlsx` (Drive)
 
 Lista **manual, dia a dia, de itens vendidos no showroom** (vendedor · item · valor), com tickets de R$ 3 a algumas centenas de reais. A leitura pelo Drive foi **cortada em 89 mil caracteres de um arquivo de 2 MB** e cobre só **04/06 a 12/07/2026**. Não é a série nov/25–mai/26. Para usar, preciso do arquivo baixado (CSV por aba).
+
+
+---
+
+## C13. Extratos do Mercado Pago de jul, set e out/2026 (enviados em 17/10)
+
+**O que chegou:** julho (01–31/07), setembro (01–30/09; veio também uma cópia parcial 01–27/09) e outubro (01–16/10; veio duas vezes, idênticas). **Falta agosto** (o saldo foi de R$ 99,16 em 31/07 para R$ 4.279,55 em 01/09). Conta da Compras Full Comércio Ltda. Só agregados; nomes de pessoas ficam fora.
+
+**Testes de integridade do leitor:** entradas e saídas somadas = cabeçalho do extrato (**diferença R$ 0,00** nos 3 meses) · cadeia de saldo linha a linha **62/62 (jul), 178/178 (set), 114/114 (out)** sem falha · saldo final conferido.
+
+### Resumo por mês (R$)
+
+| | Jul | Set | Out (até 16/10) |
+|---|---:|---:|---:|
+| Saldo inicial → final | 0,00 → 99,16 | 4.279,55 → 10.282,72 | 10.282,72 → 160,90 |
+| **Entradas de terceiros** (liberações + QR + PIX) | 9.647 | **33.001** | **26.757** |
+| Transferências **da própria empresa** (entram) | 2.427 | **81.248** | **57.178** |
+| Pagamentos a pessoas e empresas (PIX) | −7.889 | −68.979 | −76.862 |
+| Boletos de consórcio (identificados pelo nome) | — | −12.320 | — |
+| Outros boletos e contas | −3.647 | −11.649 | −5.413 |
+| Pagamentos e compras | −118 | −15.057 | −12.075 |
+| Cancelamentos e estornos (líquido) | — | — | ≈ 0 |
+
+### O que os extratos provam
+
+1. **Em setembro e outubro, toda a entrada de terceiros do Mercado Pago é venda do app.** Casei o **número da operação** do extrato com o número do pagamento guardado no app: **set: 80 de 80 entradas de venda casam (R$ 33.001)**; **out: 34 de 35 casam (R$ 26.603 de R$ 26.757)** — sobra 1 PIX de R$ 154,55 — e 4 dos 5 cancelamentos casam com vendas do app. **Não há receita escondida no Mercado Pago nesses meses.**
+2. **Em julho não é assim:** só 24 de 27 QR casam; **4 liberações (R$ 6.383) e 2 PIX (R$ 2.100) = R$ 8,5 mil não são do app** (varejo, outro canal ou venda no marketplace; a confirmar).
+3. **O Mercado Pago é a "mesa de pagamentos" da empresa:** é abastecido por transferências do Santander e do Itaú e paga pessoas, boletos e compras. **Todas as transferências da empresa para ele em setembro (7, R$ 81.247,68) e outubro (8, R$ 57.178,30) aparecem como saídas do Santander e do Itaú, com o mesmo valor e a mesma data (zero de diferença).** Os R$ 51,2 mil que saíram do Santander e do Itaú em agosto devem estar no extrato de agosto (que falta).
+4. **Repasse no mesmo dia:** em 05/10 e 15/10, **4 entradas da própria empresa (R$ 49.151) saíram do Mercado Pago no mesmo dia, com o mesmo valor, para pessoas/empresas**; em 15/09 foi parecido (R$ 20,6 mil entrando; saídas de R$ 2.000 em lote). **Quem recebeu e por quê** está nos extratos (com nome) e precisa de documento: folha, comissão, devolução de aporte ou empréstimo? **Não classifico.**
+5. **Tamanho das saídas por PIX a pessoas e empresas:** set 58 PIX (3 de R$ 5 mil ou mais = R$ 37,6 mil); out 36 PIX (**3 de R$ 5 mil ou mais = R$ 62,4 mil**); em set, 12 PIX de R$ 1.000 ou mais e valor redondo (R$ 29,3 mil).
+
+### Visão das três contas juntas em setembro (R$)
+
+| Entradas de fora da empresa | | Saídas para fora da empresa | |
+|---|---:|---|---:|
+| Itaú | 200.000 | PIX a pessoas e empresas (3 contas) | 169.654 |
+| Santander | 200.446 | Boletos e contas (3 contas) | ≈ 66.600 |
+| Mercado Pago | 33.455 | Para a sócia-administradora | 28.341 |
+| | | Compras, viagem, fornecedor, capitalização e outros | ≈ 33.730 |
+| **Total** | **433.901** | **Total** | **298.319** |
+
+- **R$ 400.000,00 exatos** entraram em lotes grandes e redondos em set: **Santander R$ 200.000 + Itaú R$ 120.000 (PIX) + R$ 80.000 (depósitos em dinheiro e recebimento PJ)**. **Só R$ 33,5 mil** são vendas do app. **Natureza dos R$ 400 mil: desconhecida** (aporte, empréstimo, outra receita?). Peça a documentação antes de qualquer número para investidor.
+- **Consórcio identificado pelo nome em setembro:** R$ 16,6 mil (Mercado Pago R$ 12,3 mil + Santander R$ 4,3 mil) contra o compromisso declarado de **≈ R$ 44,9 mil/mês** em parcelas → o resto está em **outras contas** ou em boletos sem o nome do consórcio.
+
+**Impacto no modelo:** vendas do app em set/out ≈ **R$ 33 mil e R$ 27 mil por mês no Mercado Pago**, 93–98% depósito de carteira; **tudo o mais que entra nas contas é de natureza ainda não documentada**.
+
