@@ -61,6 +61,7 @@
 | 8 | Comprovantes dos créditos grandes | **R$ 450 mil explicados pelo CEO** (C14); R$ 69 mil (jul–ago) e R$ 428,6 mil (jan–jun) **sem explicação** | ficam como **"entrada não classificada"** (não é receita) |
 | 9 | Faturas do cartão empresa | **dispensadas** | composição informada (aluguel, tecnologia, marketing); fatura em aberto **R$ 0** |
 | 10 | Certificado DocuSign e terceiro envelope | **dispensados pelo CEO** | contratos A e B valem como assinados (painel: "concluído há 2 meses"); terceiro envelope **não considerado** |
+| 11 | **Livro de Investimentos** (tudo o que já foi investido: data, quem pagou, valor, para quê, comprovante) | **o CEO vai informar** (17/10) | entra como custo de reposição (piso), ativos na ponte e capital dos sócios — ver Parte 8.5b |
 
 > **Efeito:** o motor pode rodar com o que existe. Tudo o que está como "informado", "estimado" ou "não classificado" **aparece com a etiqueta na tela** e abaixa o **Data Quality Score** — não some.
 

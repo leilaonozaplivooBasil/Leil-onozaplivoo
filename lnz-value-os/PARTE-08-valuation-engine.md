@@ -130,6 +130,21 @@ Os pesos **mudam com o estágio** (tabela de transição fica na metodologia) �
 
 > **Dívida com parceiros de compra (contratos A e B, 17/10/2026):** principal **R$ 250 mil** (R$ 200 mil + R$ 50 mil) a devolver em ~24 meses **+ remuneração fixa de R$ 10.500/mês** (4,5% e 3% ao mês). Entra na ponte **como dívida pelo principal**, com a **parte acima do custo de mercado** a valor presente; o CEO informa que **só existem estes 2 contratos** (qualquer novo entra com contrato). **Venda de 1% por R$ 250 mil** (R$ 200 mil recebidos + R$ 50 mil a receber): **preço informado, peso zero até haver contrato e alteração contratual** (Anexo C14).
 
+### 8.5b Como entra **tudo o que já foi investido** na empresa (pergunta do CEO, 17/10)
+
+O dinheiro investido **não vira valor por si só** ("investi X, vale X" é o argumento que o investidor derruba primeiro). Ele entra por **quatro portas**, cada uma com peso próprio:
+
+| Porta | O que conta | Como entra | Onde já está no desenho |
+|---|---|---|---|
+| **1. Custo de reposição** | o que alguém gastaria **hoje** para refazer o que existe: app (331 mil linhas), marca, base de clientes, rede de licenciados, processos | **método de piso** da triangulação (peso 10%) — o valor **não cai abaixo** disso sem motivo | 8.2 método 7 · 8.3 |
+| **2. Ativos que a empresa tem** | estoque a custo, cotas de consórcio (no nome da empresa), veículos, caixa, créditos a receber | **somados na ponte** do valor da operação para o valor do sócio | 8.5 |
+| **3. Capital dos sócios** | capital social (R$ 500 mil integralizados), aportes de sócio, lucros reinvestidos | mostra **quanto os sócios colocaram** × **quanto vale hoje** (o investidor compara os dois) | 7.5 balanço |
+| **4. Compromisso do fundador** | dinheiro próprio, tempo, patrimônio pessoal exposto (consórcio no nome do sócio, cartão) | **qualitativo** (scorecard) e na narrativa do memorando — não vira R$ | 8.2 método 9 |
+
+**O que não conta:** gasto que **não deixou ativo** (aluguel, viagem, salário já pago) — a não ser que tenha construído algo que existe hoje (código, base, marca). E dinheiro **no nome de pessoa física** só conta se houver contrato de cessão para a empresa.
+
+**O que preciso para medir (o "Livro de Investimentos", Fase 2):** uma linha por investimento — **data · quem pagou (empresa ou sócio) · valor · para quê (tecnologia / estoque / marketing / consórcio / estrutura / capital social) · comprovante · o que existe hoje por causa dele.** Sem isso, a porta 1 fica estimada por mim (`AI ASSUMPTION`) e a porta 3 usa só o balanço de 2025.
+
 ## 8.6 Modo Cego (Blind Valuation)
 
 Para reduzir o viés de ancoragem:
