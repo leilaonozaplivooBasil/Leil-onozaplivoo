@@ -40,7 +40,7 @@
 | **DEC-19** | **Revisão externa** | Contador independente (CRC) + advogado revisam: declaração de faturamento, PGDAS × livros × banco, regime tributário, **classificação dos créditos grandes e dos depósitos em dinheiro**, enquadramento dos aportes. **Antes** do Data Room. | Não é parecer meu; é de quem assina. |
 | **DEC-20** | **Dossiê no Drive** | Tirar as pastas de documentos pessoais (08, 12, 14) do compartilhamento; manter o dossiê só com quem precisa. | Não abri essas pastas. |
 | **DEC-21** | **A venda de 1% (R$ 200 mil no Itaú + R$ 50 mil a receber; contrato só após o último R$ 50 mil)** | Registrar como **aumento de capital** (entra no patrimônio) ou como **venda de cotas de sócio** (dinheiro do sócio) — **definir com advogado e contador**. O Value OS a guarda como **"aporte informado, sem documento"** e dá **peso zero** como preço de transação até haver contrato e alteração contratual. | Preciso do **contrato de compra, da alteração contratual na Junta, do comprovante e da identificação do comprador**. |
-| **DEC-22** | **"Parceiro de compra"** (contratos A e B e os que existirem) | **É passivo com remuneração fixa**: principal a devolver em ~24 meses + R$ mensais. Cronograma por contrato; **advogado** define o enquadramento e o texto público (sem promessa de retorno); contrato B **regularizado em 17/10/2026** (assinatura real, **sem retroagir**) — **manter assim**; o contrato do 1% segue a mesma regra. | Preciso do **certificado de conclusão DocuSign** dos contratos A e B e da **lista de repasses pagos** a A e B. |
+| **DEC-22** | **"Parceiro de compra"** (contratos A e B e os que existirem) | **É passivo com remuneração fixa**: principal a devolver em ~24 meses + R$ mensais. Cronograma por contrato; **advogado** define o enquadramento e o texto público (sem promessa de retorno); contrato B **assinado em 11/08/2026** (informado; confirmar pelo certificado DocuSign); o contrato do 1% deve ser assinado **com a data real**, sem retroagir. | Preciso do **certificado de conclusão DocuSign** dos contratos A e B e da **lista de repasses pagos** a A e B. |
 | **DEC-23** | **A linha "Parceiros de compra (5%)" retirada em 02/10** | **Voltar** com o valor realmente pago (ou mostrar as duas versões lado a lado) em tudo o que for mostrado a investidor. | Muda o resultado anualizado de R$ 124.596 para R$ 88.884 no cenário "hoje". |
 | **DEC-24** | **Teste de sustentabilidade** | Mostrar sempre **"a empresa pagaria os parceiros sem novos aportes?"** (receita do app × serviço da dívida). | Evita que o valuation esconda dependência de captação. |
 | **DEC-25** | **Cartão empresa** | Lançar a **despesa na compra**, com categoria; **fatura em aberto = passivo** (hoje **R$ 0**, informado). | Hoje o app só vê o pagamento da fatura. |
@@ -62,7 +62,7 @@
 | 9 | **Folha/pró-labore, aluguel, dívidas e parcelamentos** | Passivos fora do app | financeiro |
 | 10 | **Comprovantes dos 39 créditos ≥ R$ 5.000** (quem pagou e por quê) | Origem dos recursos | financeiro / CEO |
 | 11 | ~~Faturas do cartão empresa~~ — **dispensadas pelo CEO** | Composição informada (aluguel de R$ 10 mil — o "hotel" —, tecnologia e marketing); **fatura em aberto: R$ 0 (informado)** | — |
-| 12 | **Certificado de conclusão da DocuSign** dos contratos A e B (**B recebido assinado em 17/10**) | Datas e IPs da assinatura | CEO / jurídico |
+| 12 | **Certificado de conclusão da DocuSign** dos contratos A e B (**B recebido; assinado em 11/08 segundo o CEO**) | Datas e IPs da assinatura | CEO / jurídico |
 
 ---
 
