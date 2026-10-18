@@ -109,7 +109,6 @@ export default async function Capital() {
     { id: "CASH_JJ_TECH_EST", tipo: "Tecnologia e plataformas" },
     { id: "CASH_JJ_CONSUMPTION_EST", tipo: "Consumo do dia a dia" },
     { id: "CASH_JJ_OFFICE_EST", tipo: "Escritório" },
-    { id: "CASH_JJ_WAREHOUSE_EST", tipo: "Galpão, pago por repasse" },
   ];
   const restoJJ = semNome - estimativas.reduce((s, e) => s + (v(e.id) ?? 0), 0);
 
@@ -174,8 +173,8 @@ export default async function Capital() {
               { quando: "Jan/2026", texto: "Catálogo leilaonozap.com no ar e primeiro aporte externo, de R$ 5 mil (29/01).", etiqueta: "MANAGEMENT_DATA" },
               { quando: "Mar/2026", texto: "Escritório no Hotel Atlântico Sul, no Recreio: R$ 10 mil por mês desde então.", etiqueta: "MANAGEMENT_DATA" },
               { quando: "Abr/2026", texto: "Lotes do Mercado Livre (4.549 peças) e o NEXUS passando a registrar cada venda. Melhor mês até ali: R$ 69.891 até o dia 23.", etiqueta: "MANAGEMENT_DATA" },
-              { quando: "Jun/2026", texto: "Pico da venda pelo WhatsApp: R$ 74.438 no mês, pela planilha diária. Entrada do galpão: R$ 35 mil pagos por repasse, em junho e julho.", etiqueta: "MANAGEMENT_DATA" },
-              { quando: "Jul/2026", texto: "O aplicativo entra no ar com carteira e loja. Primeiro depósito de cliente em 18/07.", etiqueta: "VERIFIED" },
+              { quando: "Jun/2026", texto: "Pico da venda pelo WhatsApp: R$ 74.438 no mês, pela planilha diária.", etiqueta: "MANAGEMENT_DATA" },
+              { quando: "Jul/2026", texto: "O aplicativo entra no ar com carteira e loja. Primeiro depósito de cliente em 18/07. Entrada do galpão: R$ 20 mil, em 23 e 27/07.", etiqueta: "VERIFIED" },
               { quando: "Ago/2026", texto: "Parceiro de compra B entra com R$ 50 mil, a 3% ao mês. Começam os leilões com lance.", etiqueta: "VERIFIED" },
               { quando: "Set/2026", texto: "Parceiro A entra com R$ 200 mil, a 4,5% ao mês. Mais R$ 200 mil entram no Itaú, origem a confirmar.", etiqueta: "VERIFIED", novo: true },
               { quando: "Out/2026", texto: `${inteiro(v("USERS_REGISTERED") ?? 0)} contas no app e ${r(v("GMV_AUCTION"))} em arremates até o dia 16.`, etiqueta: "VERIFIED", novo: true },
@@ -417,7 +416,7 @@ export default async function Capital() {
           cabecalho={["Item", "Orçamento (set/26)", "Cadastrado no app (nov/26)", "Observação"]}
           linhas={[
             ["Pessoas — diretoria e equipe", <Valor key="a">R$ 182.000</Valor>, <Valor key="b">R$ 70.900</Valor>, "não é folha tradicional: parte é retirada e parte é participação por meta"],
-            ["Galpão", <Valor key="a">R$ 23.100</Valor>, <Valor key="b">R$ 23.036</Valor>, "até out/2026: R$ 35 mil de entrada e três mensalidades de R$ 23 mil, cerca de R$ 104 mil"],
+            ["Galpão", <Valor key="a">R$ 23.100</Valor>, <Valor key="b">R$ 23.036</Valor>, "até out/2026: R$ 20 mil de entrada e três mensalidades de R$ 23 mil, cerca de R$ 89 mil"],
             ["Escritório no Recreio", <Valor key="a">R$ 10.000</Valor>, <Valor key="b">R$ 20.000</Valor>, "lançado duas vezes no app; o valor real é R$ 10 mil"],
             ["Tecnologia", <Valor key="a">R$ 5.000</Valor>, <Valor key="b">R$ 5.208</Valor>, "inclui R$ 2.680 por mês da construção do aplicativo"],
             ["Marketing", <Valor key="a">R$ 5.000</Valor>, <Valor key="b">R$ 105</Valor>, "o plano do ranking prevê R$ 36 a 40 mil por mês de tráfego"],
@@ -429,9 +428,10 @@ export default async function Capital() {
         />
         <Grade colunas={2} className="mt-10">
           <Cartao tom="lateral" titulo="A sala e o galpão">
-            O galpão custa R$ 23.036 por mês e já são quatro meses pagos: uma entrada de R$ 35 mil por repasse (15/06 e 16/07) e três mensalidades de
-            R$ 23 mil — cerca de R$ 104 mil até outubro <Etiqueta tipo="MANAGEMENT_DATA" pequena />. Duas mensalidades estão no extrato com o nome da
-            imobiliária (08/09 por boleto e 08/10 por Pix) <Etiqueta tipo="VERIFIED" pequena />. O escritório custa R$ 10 mil por mês desde mar/2026; no app falta dar baixa em três meses e corrigir um lançamento em dobro.
+            O galpão custa R$ 23.036 por mês e já são quatro meses pagos: R$ 20 mil de entrada e três mensalidades de R$ 23 mil — cerca de R$ 89 mil até
+            outubro. A entrada (Pix de R$ 10 mil em 23/07 e em 27/07, à imobiliária da proprietária) e duas mensalidades (08/09 por boleto e 08/10 por
+            Pix) estão no extrato com nome <Etiqueta tipo="VERIFIED" pequena />; a outra mensalidade é informada pelo fundador{" "}
+            <Etiqueta tipo="MANAGEMENT_DATA" pequena />. O escritório custa R$ 10 mil por mês desde mar/2026; no app falta dar baixa em três meses e corrigir um lançamento em dobro.
           </Cartao>
           <Cartao tom="lateral" titulo="Contas vencidas no app">
             {r(vencidas)} aparecem como vencidas. Boa parte são meses de aluguel pagos e não baixados no sistema: a limpeza desse número é o próximo passo para o
