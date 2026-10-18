@@ -12,8 +12,8 @@ window.DATAPOVO = {
     { n: '5', nome: 'Custo de vida' },
   ],
 
-  // Quem responde pelos dados e como pedir exclusão. Aparece no aviso de consentimento.
-  // Vazio = a urna só conta votos e NÃO pede WhatsApp de ninguém.
+  // Quem fez e responde pela enquete (nome ou empresa/CNPJ + contato). Aparece no rodapé das duas páginas
+  // e no aviso de consentimento. Vazio = a urna só conta votos e NÃO pede WhatsApp de ninguém.
   // Exemplo: 'DataPovo — contato@seudominio.com.br'
   RESPONSAVEL: '',
 

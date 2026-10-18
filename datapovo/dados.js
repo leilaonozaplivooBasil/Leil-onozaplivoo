@@ -55,6 +55,11 @@
       if (!d.contatos.some(c => c.whatsapp === whatsapp)) d.contatos.push({ nome, whatsapp, consentimento, em: new Date().toISOString() });
       gravarLocal(d);
     },
+    // Texto de rodapé: o que é (enquete aberta) e quem fez.
+    aviso() {
+      return 'Enquete de opinião aberta, sem método estatístico: não representa toda a população e não é votação oficial nem pesquisa eleitoral.' +
+        (C.RESPONSAVEL ? ' Realizada por ' + C.RESPONSAVEL + '.' : '');
+    },
     // Compartilha o link da urna (menu do celular ou, no computador, copia o link).
     async compartilhar() {
       const url = new URL('./', location.href).href;

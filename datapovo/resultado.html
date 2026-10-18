@@ -57,6 +57,7 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background
     </div>
   </main>
   <p class="upd" id="upd"></p>
+  <p class="upd" id="legal"></p>
 </div>
 <div id="toast" role="status"></div>
 
@@ -73,6 +74,7 @@ const num = v => v.toLocaleString('pt-BR');
 
 $('#q').textContent = C.PERGUNTA;
 $('#teste').hidden = DP.remoto;
+$('#legal').textContent = DP.aviso();
 
 async function atualizar() {
   try {

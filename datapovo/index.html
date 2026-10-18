@@ -111,7 +111,7 @@ button,input{font:inherit}
     </section>
   </main>
 
-  <p class="legal">Pesquisa de opinião — não é votação oficial e não tem valor eleitoral.</p>
+  <p class="legal" id="legal"></p>
 </div>
 <div id="toast" role="status"></div>
 
@@ -297,6 +297,7 @@ document.addEventListener('keydown', e => {
   e.preventDefault();
 });
 $('#teste').hidden = DP.remoto;
+$('#legal').textContent = DP.aviso();
 render();
 if (jaVotou()) { mode = 'fim'; render(); mostrar(telaJa()); }
 })();
