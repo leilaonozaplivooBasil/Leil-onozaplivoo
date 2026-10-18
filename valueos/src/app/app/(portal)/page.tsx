@@ -47,6 +47,14 @@ export default async function Inicio() {
       ? `${atual >= ant.valor ? "já acima de" : "contra"} ${mesCurto(ant.periodo)} inteiro (${fmt(ant.valor)})`
       : "";
   const carteira = u("WALLET_LIABILITY_TOTAL");
+  const terceiros = u("THIRD_PARTY_CAPITAL");
+  // O tamanho real da operação: extratos de 2026, histórico de lotes e a base de contatos — não só os meses do app.
+  const soma = (id: string) => (serie.get(id) ?? []).reduce((t, x) => t + (x.valor ?? 0), 0);
+  const v = (id: string) => u(id)?.valor ?? null;
+  const deClientes = soma("CASH_IN_CUSTOMERS_M");
+  const investido = (v("CAPITAL_FOUNDERS_DECLARED") ?? 0) + soma("CASH_IN_CAPITAL_M");
+  const n = (x: number | null) => (x === null ? "—" : inteiro(x));
+  const r = (x: number | null) => (x === null ? "—" : brl(x));
 
   return (
     <div>
@@ -72,6 +80,21 @@ export default async function Inicio() {
           </div>
         </Conteiner>
       </section>
+
+      <Faixa>
+        <Tag>O tamanho real da operação</Tag>
+        <h2 className="mt-3 font-display text-3xl font-light text-white sm:text-4xl">Extratos de 2026, histórico de lotes e a base de clientes</h2>
+        <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <NumeroGrande valor={r(v("CASH_MOVED_2026"))} rotulo="movimentados nas contas" compacto sub="entradas + saídas, jan a 16/out/2026" etiqueta="VERIFIED" href="/app/prova/CASH_MOVED_2026" cor="verde" />
+          <NumeroGrande valor={r(deClientes)} rotulo="pagos por clientes em 2026" compacto sub={`${n(v("CUSTOMER_PAYMENTS_2026"))} pagamentos nas contas`} etiqueta="VERIFIED" href="/app/prova/CASH_IN_CUSTOMERS_M" />
+          <NumeroGrande valor={r(investido)} rotulo="investidos até out/2026" compacto sub="fundadores + capital que entrou em 2026" etiqueta="MANAGEMENT_DATA" href="/app/capital" />
+          <NumeroGrande valor={n(v("CUSTOMER_BASE_UNIQUE"))} rotulo="pessoas na base de clientes" compacto sub="WhatsApp, CRM e app, sem repetir · cerca de 10 mil impactados (estimativa)" etiqueta="VERIFIED" href="/app/prova/CUSTOMER_BASE_UNIQUE" />
+          <NumeroGrande valor={r(v("LOTS_BOUGHT_MARKET_VALUE"))} rotulo="em lotes comprados" compacto sub={`${n(v("LOTS_BOUGHT"))} lotes, ${n(v("LOTS_BOUGHT_PIECES"))} peças, abr a jul/2026 · valor de mercado`} etiqueta="VERIFIED" href="/app/prova/LOTS_BOUGHT_MARKET_VALUE" />
+          <NumeroGrande valor={r(v("LOTS_ANALYZED_MARKET_VALUE"))} rotulo="em lotes analisados pela plataforma" compacto sub={`${n(v("LOTS_ANALYZED"))} lotes, ${n(v("LOTS_ANALYZED_PIECES"))} peças, ago a out/2026`} etiqueta="VERIFIED" href="/app/prova/LOTS_ANALYZED_MARKET_VALUE" />
+          <NumeroGrande valor={r(v("INVENTORY_PEAK_DECLARED"))} rotulo="pico do estoque" compacto sub="a preço de venda, informado pelo fundador" etiqueta="MANAGEMENT_DATA" href="/app/prova/INVENTORY_PEAK_DECLARED" />
+          <NumeroGrande valor={n(v("WHATSAPP_BASE"))} rotulo="contatos no WhatsApp da empresa" compacto sub="a base que está sendo trazida para o app" etiqueta="VERIFIED" href="/app/prova/WHATSAPP_BASE" />
+        </div>
+      </Faixa>
 
       <Faixa>
         <div className="flex flex-wrap items-end justify-between gap-4">
@@ -108,17 +131,17 @@ export default async function Inicio() {
             <p className="mt-3 text-sm font-light text-texto">
               {verificadas} verificadas · {comValor.length - verificadas} informadas · {todas.length - comValor.length} sem valor. A nota mede a prova por trás dos números.
             </p>
-            <p className="mt-3 text-xs text-muted">Último fechamento oficial: {oficial ? mesCurto(oficial.periodo) : "nenhum ainda"} · série oficial desde 01/08/2026</p>
+            <p className="mt-3 text-xs text-muted">Último fechamento oficial: {oficial ? mesCurto(oficial.periodo) : "nenhum ainda"} · vendas no app desde jun/2026 · extratos conciliados desde jan/2026</p>
           </div>
           <div className="border-white/10 py-10 md:border-l md:pl-8">
             <p className="text-xs uppercase tracking-widest text-muted">Obrigações já conhecidas</p>
             <p className="num mt-3 font-display text-4xl font-light text-white">
-              {passivo?.valor != null && carteira?.valor != null ? brl(passivo.valor + carteira.valor) : "—"}
+              {terceiros?.valor != null && carteira?.valor != null ? brl(terceiros.valor + carteira.valor) : "—"}
             </p>
             <p className="mt-3 text-sm font-light text-texto">
-              Capital de parceiros de compra a devolver ({passivo?.valor != null ? brl(passivo.valor) : "—"}) + saldos de clientes e rede ({carteira?.valor != null ? brl(carteira.valor) : "—"}).
+              Capital de terceiros a devolver ({terceiros?.valor != null ? brl(terceiros.valor) : "—"}: parceiros de compra {passivo?.valor != null ? brl(passivo.valor) : "—"} e investidores com rendimento) + saldos de clientes e rede ({carteira?.valor != null ? brl(carteira.valor) : "—"}).
             </p>
-            <div className="mt-3 flex items-center gap-3"><Etiqueta tipo="VERIFIED" pequena /><Link href="/app/parceiros" className="text-sm text-pill underline underline-offset-4">ver contratos</Link></div>
+            <div className="mt-3 flex items-center gap-3"><Etiqueta tipo="MANAGEMENT_DATA" pequena /><Link href="/app/parceiros" className="text-sm text-pill underline underline-offset-4">ver contratos</Link></div>
           </div>
         </Conteiner>
       </section>

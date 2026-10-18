@@ -120,11 +120,11 @@ export default async function Valuation() {
           No site, os ativos aparecem como afirmação. Aqui, cada um traz o número medido no sistema, a etiqueta de qualidade e o link para a prova.
         </p>
         <Grade colunas={2} className="mt-8">
-          <Cartao tom="lateral" titulo="Tecnologia proprietária" rodape={<Hoje href="/app/prova/TECH_LOC">{`${n(loc)} linhas em 2.033 arquivos (site: 178 mil / 883)`}</Hoje>}>
+          <Cartao tom="lateral" titulo="Tecnologia proprietária" rodape={<Hoje href="/app/prova/TECH_LOC">{`${n(loc)} linhas em ${n(v("TECH_FILES"))} arquivos versionados (o site antigo dizia 178 mil / 883)`}</Hoje>}>
             Marketplace, aplicativo, leilão com reserva de saldo, analisador de lotes, CRM, financeiro e comissionamento — código próprio sobre infraestrutura de mercado.
           </Cartao>
-          <Cartao tom="lateral" titulo="Operação validada" rodape={<Hoje href="/app/prova/CASH_IN_GROSS">{`entradas no app: ago ${r(entAgo)} → set ${r(entSet)}`}</Hoje>}>
-            Vendas reais, pagas e conciliadas ao centavo entre o app, o gateway e os bancos.
+          <Cartao tom="lateral" titulo="Operação validada" rodape={<Hoje href="/app/prova/CASH_MOVED_2026">{`${r(v("CASH_MOVED_2026"))} movimentados nas contas em 2026 · ${r(soma("CASH_IN_CUSTOMERS_M"))} de clientes em ${n(v("CUSTOMER_PAYMENTS_2026"))} pagamentos`}</Hoje>}>
+            Vendas reais, pagas e conciliadas ao centavo entre o app, o gateway e os bancos. Entradas no app: ago {r(entAgo)} → set {r(entSet)}.
           </Cartao>
           <Cartao tom="lateral" titulo="Leilão inteligente" rodape={<Hoje href="/app/prova/GMV_AUCTION">{`arremates: set ${r(arrSet)} · out (16 dias) ${r(arrOut)}`}</Hoje>}>
             O motor de escala já em operação: reserva de saldo por lance e devolução automática a quem não vence.
@@ -132,13 +132,18 @@ export default async function Valuation() {
           <Cartao tom="lateral" titulo="Rede comercial nacional" rodape={<Hoje href="/app/prova/LICENSEES_TOTAL">{`${n(v("LICENSEES_TOTAL"))} licenciados por cargo · ${n(v("LICENSEES_ACTIVE_30D"))} ativos em 30 dias (site: “80+”)`}</Hoje>}>
             Licenciados, executivos, vendedores e parceiros, organizados em oito níveis de carreira.
           </Cartao>
-          <Cartao tom="lateral" titulo="Base de clientes" rodape={<Hoje href="/app/prova/CUSTOMERS_PAYING_90D">{`${n(v("USERS_REGISTERED"))} contas · ${n(v("CUSTOMERS_PAYING_90D"))} pagantes em 90 dias · ${n(v("BUYERS_REPEAT"))} recorrentes`}</Hoje>}>
-            Compradores ativos que compram pelo WhatsApp e pelo aplicativo.
+          <Cartao tom="lateral" titulo="Base de clientes" rodape={<Hoje href="/app/prova/CUSTOMER_BASE_UNIQUE">{`${n(v("CUSTOMER_BASE_UNIQUE"))} pessoas na base (WhatsApp, CRM e app) · ${n(v("USERS_REGISTERED"))} contas no app · ${n(v("CUSTOMERS_PAYING_90D"))} pagantes em 90 dias`}</Hoje>}>
+            Compradores que compram pelo WhatsApp e pelo aplicativo. A administração estima cerca de 10 mil pessoas impactadas: {n(v("WHATSAPP_BASE"))} contatos no
+            WhatsApp × 3 <Etiqueta tipo="MANAGEMENT_DATA" pequena />.
           </Cartao>
           <Cartao tom="lateral" titulo="Modelo de licenciamento" rodape={<Hoje href="/app/prova/REVENUE_FEES">{`adesões e taxas: ago ${r(mes("REVENUE_FEES", "2026-08-01"))} · set ${r(mes("REVENUE_FEES", "2026-09-01"))} · receita recorrente contratada: ${r(v("REVENUE_RECURRING"))}`}</Hoje>}>
             Licença com adesão; a recorrência (mensalidade) ainda não existe e entra no valuation como opção, não como receita.
           </Cartao>
-          <Cartao tom="lateral" titulo="Ecossistema integrado" rodape={<Hoje href="/app/prova/INVENTORY_AT_COST">{`estoque a custo de ${r(estoque)}`}</Hoje>}>
+          <Cartao tom="lateral" titulo="Lotes e estoque" rodape={<Hoje href="/app/prova/LOTS_BOUGHT_MARKET_VALUE">{`${n(v("LOTS_BOUGHT"))} lotes comprados (${n(v("LOTS_BOUGHT_PIECES"))} peças, ${r(v("LOTS_BOUGHT_MARKET_VALUE"))} a valor de mercado) · ${n(v("LOTS_ANALYZED"))} analisados (${r(v("LOTS_ANALYZED_MARKET_VALUE"))}) · estoque a custo hoje ${r(estoque)}`}</Hoje>}>
+            Lotes de devolução e excedente do Mercado Livre, comprados por uma fração do valor de mercado. O estoque chegou perto de R$ 1 milhão a preço de venda em
+            maio <Etiqueta tipo="MANAGEMENT_DATA" pequena />; cerca de 8 mil produtos vendidos desde o início, segundo o fundador.
+          </Cartao>
+          <Cartao tom="lateral" titulo="Ecossistema integrado" rodape={<Hoje etiqueta="MANAGEMENT_DATA">ComparAI, Top College e X-EOS: perímetro a documentar</Hoje>}>
             Leilão NoZap, ComparAI, Top College e X-EOS — empresas complementares que se reforçam.
           </Cartao>
           <Cartao tom="lateral" titulo="Propriedade intelectual" rodape={<Hoje etiqueta="NAO_DISPONIVEL">titularidade do código, marca e domínios a documentar no data room</Hoje>}>
@@ -243,7 +248,7 @@ export default async function Valuation() {
         <div className="mt-10">
           <p className="font-display text-2xl font-light text-accent">Modelo econômico declarado</p>
           <Grade colunas={3} className="mt-4">
-            <Cartao tom="escuro" titulo="Aquisição de lotes">Compra a 20–25% do valor de mercado. <span className="mt-2 block"><Etiqueta tipo="MANAGEMENT_DATA" pequena /></span></Cartao>
+            <Cartao tom="escuro" titulo="Aquisição de lotes">Compra por cerca de 19% do valor de mercado — média registrada nos {n(v("LOTS_BOUGHT"))} lotes comprados. <span className="mt-2 block"><Etiqueta tipo="VERIFIED" pequena /></span></Cartao>
             <Cartao tom="escuro" titulo="Venda ao consumidor">20% abaixo do mercado, para giro rápido. <span className="mt-2 block"><Etiqueta tipo="MANAGEMENT_DATA" pequena /></span></Cartao>
             <Cartao tom="escuro" titulo="Margem por venda">Será medida quando o custo de cada venda for gravado no app. <span className="mt-2 block"><Etiqueta tipo="NAO_DISPONIVEL" pequena /></span></Cartao>
           </Grade>
@@ -427,7 +432,7 @@ export default async function Valuation() {
               <ul className="list-disc space-y-1 pl-5">
                 <li>Margem por venda não comprovada: o app ainda não grava o custo de cada venda.</li>
                 <li>Gasto maior que a venda: em 2026, só {parteVenda}% das saídas foram pagas com dinheiro de clientes; o resto veio de capital.</li>
-                <li>Série curta: extratos conciliados de jan a out/2026; dados do app desde 01/08/2026.</li>
+                <li>Série curta: extratos conciliados de jan a out/2026; vendas no app desde jun/2026 e série oficial desde 01/08/2026.</li>
                 <li>Obrigações fixas (parceiros, consórcios, contas) maiores que a receita reconhecida.</li>
                 <li>Perímetro, quadro societário e titularidade dos ativos a documentar.</li>
               </ul>

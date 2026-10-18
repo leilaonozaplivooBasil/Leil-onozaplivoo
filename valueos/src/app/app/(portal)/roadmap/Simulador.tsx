@@ -60,7 +60,7 @@ export function Simulador({ inicial }: { inicial: Entradas }) {
         {campo("margem", "Margem bruta sobre a venda (%)", 0, 60, 1, (v) => `${v}%`, "premissa — aproximação medida na loja: +6% a +15%; custo por venda não é gravado")}
         {campo("comissao", "Comissão paga à rede (%)", 0, 40, 1, (v) => `${v}%`, "código do app: licenciado 3–6%, vendedor 10%, loja ~11%, distribuidor até 20%")}
         {campo("despesas", "Despesas fixas por mês (R$)", 0, 300_000, 1000, brl, "despesas pagas em out/26 (lançamento manual): R$ 53,3 mil")}
-        {campo("parceiros", "Remuneração dos parceiros de compra (R$/mês)", 0, 50_000, 500, brl, "contratos A e B: R$ 10.500 até ago/2028")}
+        {campo("parceiros", "Remuneração dos parceiros de compra (R$/mês)", 0, 50_000, 500, brl, "capital de terceiros hoje: R$ 14.600 (parceiros A e B R$ 10.500 + investidores R$ 4.100)")}
       </div>
       <div className="space-y-4">
         <div className="rounded-2xl border border-danger/40 bg-danger/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-danger">

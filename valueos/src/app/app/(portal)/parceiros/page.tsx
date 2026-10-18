@@ -14,6 +14,8 @@ export default async function Parceiros() {
   const servico = ultimo.get("PARTNER_CAPITAL_SERVICE_M");
   const comissao = serie.get("REVENUE_COMMISSION_RETAINED") ?? [];
   const gmv = serie.get("GMV_GOODS") ?? [];
+  // Remuneração devida por mês: B entrou em 11/08 (1º repasse em 15/09); A entrou em 01/09 (1º repasse em 15/10).
+  const DEVIDA: Record<string, number> = { "2026-08-01": 0, "2026-09-01": 1500, "2026-10-01": 10500 };
 
   return (
     <Pagina
@@ -84,12 +86,12 @@ export default async function Parceiros() {
             return (
               <Cartao key={c.periodo} titulo={mesCurto(c.periodo)}>
                 <dl className="space-y-1">
-                  <div className="flex justify-between gap-2"><dt className="text-muted">Remuneração devida</dt><dd className="num">R$ 10.500</dd></div>
+                  <div className="flex justify-between gap-2"><dt className="text-muted">Remuneração devida</dt><dd className="num">{brl(DEVIDA[c.periodo] ?? 10500)}</dd></div>
                   <div className="flex justify-between gap-2"><dt className="text-muted">Receita reconhecida pelo app (comissão)</dt><dd className="num">{c.valor != null ? brl(c.valor) : "—"}</dd></div>
                   <div className="flex justify-between gap-2"><dt className="text-muted">Mercadoria vendida (GMV)</dt><dd className="num">{g?.valor != null ? brl(g.valor) : "—"}</dd></div>
                 </dl>
                 <p className="mt-3 text-xs text-muted">
-                  {c.valor != null && c.valor < 10500
+                  {c.valor != null && c.valor < (DEVIDA[c.periodo] ?? 10500)
                     ? "Pela receita reconhecida, não. Pela margem do varejo, só quando o custo por venda for gravado."
                     : "Pela receita reconhecida, sim."}
                 </p>

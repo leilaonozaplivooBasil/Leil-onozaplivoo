@@ -70,7 +70,7 @@ export default async function Roadmap() {
             margem: 15,
             comissao: 10,
             despesas: despesas?.valor != null ? Math.round(despesas.valor / 1000) * 1000 : 53_000,
-            parceiros: 10_500,
+            parceiros: 14_600,
           }}
         />
       </Secao>

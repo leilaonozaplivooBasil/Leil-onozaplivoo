@@ -74,11 +74,8 @@ export default async function Capital() {
     (serie.get("REVENUE_COMMISSION_RETAINED")?.find((x) => x.periodo === "2026-09-01")?.valor ?? 0) +
     (serie.get("REVENUE_FEES")?.find((x) => x.periodo === "2026-09-01")?.valor ?? 0);
 
-  // Vendas mês a mês: antes do app (registro da gestão) e depois (sistema).
+  // Vendas registradas antes do app (registro da gestão).
   const antes = (serie.get("SALES_HISTORY_MGMT") ?? []).map((x) => ({ periodo: x.periodo, valor: x.valor, tom: "gestao" as const }));
-  const depois = (serie.get("GMV_GOODS") ?? []).map((x) => ({ periodo: x.periodo, valor: x.valor, tom: "verificado" as const }));
-  const vendas = [...antes, ...depois].sort((a, b) => a.periodo.localeCompare(b.periodo));
-  const totalVendas = vendas.reduce((s, x) => s + (x.valor ?? 0), 0);
   const ateMaio = antes.filter((x) => x.periodo <= "2026-05-01").reduce((s, x) => s + (x.valor ?? 0), 0);
 
   // O caixa de 2026, conciliado nos extratos: o que entrou, o que saiu e para onde foi.
@@ -121,6 +118,19 @@ export default async function Capital() {
   const doacoes = v("SOCIAL_DONATIONS");
   const n = (x: number | null) => (x === null ? "—" : inteiro(x));
 
+  // Dinheiro de clientes mês a mês: dez/2025 pelo registro da operação; 2026 pelos extratos, que são a prova mais forte.
+  const clientes = [
+    ...antes.filter((x) => x.periodo < "2026-01-01"),
+    ...(serie.get("CASH_IN_CUSTOMERS_M") ?? []).map((x) => ({ periodo: x.periodo, valor: x.valor, tom: "verificado" as const })),
+  ].sort((a, b) => a.periodo.localeCompare(b.periodo));
+  const totalClientes = clientes.reduce((s, x) => s + (x.valor ?? 0), 0);
+  const registrado = (iso: string) => (iso < "2026-08-01" ? mesDe("SALES_HISTORY_MGMT", iso) : mesDe("GMV_GOODS", iso));
+  const totalRegistrado = clientes.reduce((s, x) => s + (registrado(x.periodo)?.valor ?? 0), 0);
+  const melhor = clientes.reduce((m, x) => ((x.valor ?? 0) > (m?.valor ?? 0) ? x : m), clientes[0]);
+  const clientesJanMai = clientes.filter((x) => x.periodo >= "2026-01-01" && x.periodo <= "2026-05-01").reduce((s, x) => s + (x.valor ?? 0), 0);
+  const movimentado = v("CASH_MOVED_2026");
+  const outrasEntradas = movimentado !== null ? movimentado - saidas - deClientes - deCapital : null;
+
   return (
     <div>
       {/* CAPA */}
@@ -154,13 +164,14 @@ export default async function Capital() {
           <Titulo tag="Linha do tempo do dinheiro" sub="Uma mesma empresa (Compras Full Comércio Ltda), três canais de venda">Do WhatsApp ao Aplicativo</Titulo>
           <Grade colunas={3} className="mt-10">
             <Cartao tom="cinza" titulo="1 · O MVP no WhatsApp">
-              Venda direta pelo WhatsApp, Facebook e OLX, com pagamento por Pix — ainda sem pagamento integrado. O registro que sobrou dessa fase é o de <strong>595 produtos</strong> vendidos
-              no MVP. O fundador informa mais de 10 mil produtos vendidos e mais de 10 mil clientes impactados pelo site leilaowhatsapp.com, hoje fora do ar — esse
-              número entra no portal quando houver extrato que o comprove.
+              Venda direta pelo WhatsApp, Facebook e OLX e depois pelo site leilaowhatsapp.com, com pagamento por Pix — ainda sem pagamento integrado. O fundador
+              informa <strong>cerca de 8 mil produtos vendidos e cerca de 10 mil clientes impactados</strong> desde o início <Etiqueta tipo="MANAGEMENT_DATA" pequena />. O
+              site está fora do ar; o case documentado é o de cerca de 600 produtos vendidos da casa do fundador — e a conta que sustenta os dois números está na seção de lotes.
             </Cartao>
             <Cartao tom="cinza" titulo="2 · Catálogo, showroom e NEXUS">
               De dez/2025 a jul/2026: catálogo leilaonozap.com, showroom no Recreio, time de vendedores e o NEXUS registrando cada comprovante. É a fase com
-              série mensal de vendas, de {r(vendas[0]?.valor ?? null)} no primeiro mês até {r(antes.find((x) => x.periodo === "2026-06-01")?.valor ?? null)} em junho.
+              série mensal, de {r(clientes[0]?.valor ?? null)} no primeiro mês até {r(melhor?.valor ?? null)} de clientes no banco em {melhor ? rotuloMes(melhor.periodo) : "—"}, e
+              com lotes do Mercado Livre: {n(v("LOTS_BOUGHT"))} lotes e {n(v("LOTS_BOUGHT_PIECES"))} peças.
             </Cartao>
             <Cartao tom="lateral" titulo="3 · O aplicativo e o leilão">
               Desde jul/2026, leilaonozap.net com carteira, loja e leilão. A venda pelo WhatsApp foi reduzida de propósito para levar a base para o app — por isso a
@@ -169,15 +180,17 @@ export default async function Capital() {
           </Grade>
           <LinhaDoTempo
             itens={[
+              { quando: "2024–2025", texto: "O MVP: venda pelo WhatsApp, Facebook e OLX e o site leilaowhatsapp.com, com pagamento por Pix. Cerca de 3 lotes comprados no começo (~1.200 peças), segundo o fundador.", etiqueta: "MANAGEMENT_DATA" },
               { quando: "Nov/2025", texto: "A empresa recomeça no Vale do Recreio. Primeira compra às cegas: 551 produtos, cerca de R$ 34 mil, com o último recurso do fundador.", etiqueta: "MANAGEMENT_DATA" },
               { quando: "Dez/2025", texto: "Primeiro mês de vendas registradas: R$ 26.358. O documento dos fundadores soma R$ 1.231.000 investidos.", etiqueta: "MANAGEMENT_DATA" },
               { quando: "Jan/2026", texto: "Catálogo leilaonozap.com no ar e primeiro aporte externo, de R$ 5 mil (29/01).", etiqueta: "MANAGEMENT_DATA" },
               { quando: "Mar/2026", texto: "Escritório no Hotel Atlântico Sul, no Recreio: R$ 10 mil por mês desde então.", etiqueta: "MANAGEMENT_DATA" },
-              { quando: "Abr/2026", texto: "Lotes do Mercado Livre (4.549 peças) e o NEXUS passando a registrar cada venda. Melhor mês até ali: R$ 69.891 até o dia 23.", etiqueta: "MANAGEMENT_DATA" },
+              { quando: "Abr/2026", texto: "Dois lotes do Mercado Livre: 4.549 peças, R$ 351 mil a valor de mercado. O NEXUS passa a registrar cada venda. Melhor mês de dinheiro de clientes no banco: R$ 91.963.", etiqueta: "VERIFIED" },
+              { quando: "Mai/2026", texto: "Mais dois lotes: 2.592 peças, R$ 280 mil a valor de mercado. O estoque chega perto de R$ 1 milhão a preço de venda, segundo o fundador.", etiqueta: "MANAGEMENT_DATA" },
               { quando: "Jun/2026", texto: "Pico da venda pelo WhatsApp: R$ 74.438 no mês, pela planilha diária.", etiqueta: "MANAGEMENT_DATA" },
-              { quando: "Jul/2026", texto: "O aplicativo entra no ar com carteira e loja. Primeiro depósito de cliente em 18/07. Entrada do galpão: R$ 20 mil, em 23 e 27/07.", etiqueta: "VERIFIED" },
-              { quando: "Ago/2026", texto: "Parceiro de compra B entra com R$ 50 mil, a 3% ao mês. Começam os leilões com lance.", etiqueta: "VERIFIED" },
-              { quando: "Set/2026", texto: "Parceiro A entra com R$ 200 mil, a 4,5% ao mês. Mais R$ 200 mil entram no Itaú, origem a confirmar.", etiqueta: "VERIFIED", novo: true },
+              { quando: "Jul/2026", texto: "O aplicativo ganha carteira e loja (as vendas pelo app começaram em junho). Primeiro depósito de cliente em 18/07 e primeiros leilões encerrados. Entrada do galpão: R$ 20 mil, em 23 e 27/07.", etiqueta: "VERIFIED" },
+              { quando: "Ago/2026", texto: "Parceiro de compra B entra com R$ 50 mil, a 3% ao mês. O analisador de lotes passa a avaliar lotes do Mercado Livre: 33 lotes e 82 mil peças até outubro.", etiqueta: "VERIFIED" },
+              { quando: "Set/2026", texto: "Parceiro A entra com R$ 200 mil, a 4,5% ao mês. Um diretor compra 1% por R$ 250 mil — R$ 200 mil já entraram no Itaú.", etiqueta: "VERIFIED", novo: true },
               { quando: "Out/2026", texto: `${inteiro(v("USERS_REGISTERED") ?? 0)} contas no app e ${r(v("GMV_AUCTION"))} em arremates até o dia 16.`, etiqueta: "VERIFIED", novo: true },
             ]}
           />
@@ -186,44 +199,74 @@ export default async function Capital() {
 
       {/* VENDAS DESDE O PRIMEIRO DIA */}
       <Faixa>
-        <Titulo tag="Quanto já foi vendido" sub="Mercadoria vendida por mês, somando todos os canais">{`${r(totalVendas)} em Onze Meses`}</Titulo>
+        <Titulo tag="Quanto os clientes já pagaram" sub="Dinheiro de clientes que entrou nas contas da empresa, mês a mês">{`${r(totalClientes)} Pagos por Clientes desde Dez/2025`}</Titulo>
         <GraficoBarras
-          titulo="Cinza: registro da operação (PDV, WhatsApp, NEXUS, planilha) · Verde: medido no aplicativo"
+          titulo="Cinza: registro da operação (dez/2025) · Verde: dinheiro de clientes nos extratos do Itaú, Santander e Mercado Pago (2026)"
           formato={(x) => (x >= 1000 ? `${inteiro(Math.round(x / 1000))} mil` : inteiro(Math.round(x)))}
-          dados={vendas.map((x) => ({ rotulo: rotuloMes(x.periodo), valor: x.valor, tom: x.tom }))}
+          dados={clientes.map((x) => ({ rotulo: rotuloMes(x.periodo), valor: x.valor, tom: x.tom }))}
         />
         <Quadro
-          cabecalho={["Mês", "Vendas registradas", "Pix de clientes no banco", "Declarado ao Simples", "De onde vem a venda"]}
+          cabecalho={["Mês", "Dinheiro de clientes nas contas", "Vendas registradas", "Declarado ao Simples", "De onde vem"]}
           minimo={860}
-          linhas={vendas.map((x) => {
-            const fonte = (x.tom === "gestao" ? serie.get("SALES_HISTORY_MGMT") : serie.get("GMV_GOODS"))?.find((y) => y.periodo === x.periodo);
-            const banco = mesDe("BANK_SMALL_PIX_IN", x.periodo);
+          linhas={clientes.map((x) => {
+            const banco = x.periodo >= "2026-01-01" ? mesDe("CASH_IN_CUSTOMERS_M", x.periodo) : null;
+            const reg = registrado(x.periodo);
             const simples = mesDe("REVENUE_TAX_DECLARED_M", x.periodo);
             return [
-              rotuloMes(x.periodo),
-              <span key="v"><Valor>{r(x.valor)}</Valor><span className="ml-2 inline-block align-middle"><Etiqueta tipo={fonte?.etiqueta ?? "NAO_DISPONIVEL"} pequena /></span></span>,
-              <span key="b"><Valor>{banco ? r(banco.valor) : "—"}</Valor>{banco?.nota && <Obs>{banco.nota}</Obs>}</span>,
+              x.periodo === "2026-10-01" ? `${rotuloMes(x.periodo)} (até 16)` : rotuloMes(x.periodo),
+              <span key="v"><Valor>{r(x.valor)}</Valor><span className="ml-2 inline-block align-middle"><Etiqueta tipo={banco ? "VERIFIED" : "MANAGEMENT_DATA"} pequena /></span></span>,
+              <span key="r"><Valor>{reg ? r(reg.valor) : "—"}</Valor>{reg?.fonte && <Obs>{reg.fonte}</Obs>}</span>,
               <Valor key="s">{simples ? r(simples.valor) : "—"}</Valor>,
-              <span key="f">
-                {fonte?.fonte}
-                {fonte?.nota && <Obs>{fonte.nota}</Obs>}
-              </span>,
+              <span key="f">{banco ? banco.nota ?? "extratos" : "registro da operação (NEXUS)"}</span>,
             ];
           })}
-          total={["Total", <Valor key="t">{r(totalVendas)}</Valor>, "", <Valor key="s">{r(declarado || null)}</Valor>, "dez/2025 a out/2026 (outubro até o dia 16)"]}
+          total={["Total", <Valor key="t">{r(totalClientes)}</Valor>, <Valor key="g">{r(totalRegistrado)}</Valor>, <Valor key="s">{r(declarado || null)}</Valor>, "dez/2025 a 16/out/2026"]}
         />
         <Grade colunas={2} className="mt-10">
           <Cartao tom="lateral" titulo="Três fontes que ainda não conversam">
-            O extrato do banco confirma a venda do WhatsApp: são centenas de Pix pequenos por mês ({r(bancoJanMai)} de jan a mai/2026 só na conta Santander). A
+            O extrato do banco confirma a venda do WhatsApp: são centenas de Pix pequenos por mês ({r(clientesJanMai)} de clientes de jan a mai/2026). A
             declaração do Simples informa {r(declarado || null)} no mesmo período e 2025 zerado; o balancete de 2025 do contador registra {r(balancete2025)} de
             receita naquele ano. Fechar essas três contas com o contador é o primeiro passo da due diligence.
           </Cartao>
           <Cartao tom="lateral" titulo="Por que julho cai">
-            Em julho a empresa deixou de vender pelo WhatsApp para lançar o aplicativo e o leilão. O número de agosto em diante é só o que passou pelo app, pago e
-            conferido — sem a venda de balcão e de grupo, que antes fazia o volume.
+            Em julho a empresa deixou de vender pelo WhatsApp para levar a base para o aplicativo e o leilão. Agosto é o mês mais baixo ({r(mesDe("CASH_IN_CUSTOMERS_M", "2026-08-01")?.valor ?? null)}
+            de clientes); setembro e outubro voltam a subir com o leilão. A base do WhatsApp tem {n(v("WHATSAPP_BASE"))} contatos, e a maior parte ainda não entrou no app.
           </Cartao>
         </Grade>
       </Faixa>
+
+      {/* LOTES E ESTOQUE */}
+      <section className="border-y border-white/10 bg-surface py-16 sm:py-24">
+        <Conteiner>
+          <Titulo tag="Lotes e estoque" sub="Lotes de devolução e excedente do Mercado Livre, comprados e analisados — pelo registro do aplicativo">
+            {`${r(v("LOTS_BOUGHT_MARKET_VALUE"))} em Lotes Comprados`}
+          </Titulo>
+          <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <NumeroGrande compacto valor={n(v("LOTS_BOUGHT_PIECES"))} rotulo="peças compradas em lotes" sub={`${n(v("LOTS_BOUGHT"))} lotes, abr a jul/2026`} etiqueta="VERIFIED" href="/app/prova/LOTS_BOUGHT" />
+            <NumeroGrande compacto valor={r(v("INVENTORY_PEAK_DECLARED"))} rotulo="pico do estoque" sub="a preço de venda, em maio" etiqueta="MANAGEMENT_DATA" href="/app/prova/INVENTORY_PEAK_DECLARED" />
+            <NumeroGrande compacto valor={r(v("LOTS_ANALYZED_MARKET_VALUE"))} rotulo="em lotes analisados" sub={`${n(v("LOTS_ANALYZED"))} lotes e ${n(v("LOTS_ANALYZED_PIECES"))} peças, ago a out/2026`} etiqueta="VERIFIED" href="/app/prova/LOTS_ANALYZED_MARKET_VALUE" cor="verde" />
+            <NumeroGrande compacto valor={r(v("INVENTORY_AT_COST"))} rotulo="em estoque hoje, a custo" sub="o que sobrou depois das vendas" etiqueta="VERIFIED" href="/app/prova/INVENTORY_AT_COST" />
+          </div>
+          <Grade colunas={3} className="mt-10">
+            <Cartao tom="lateral" titulo="Como a empresa compra">
+              Lote de devolução e excedente do Mercado Livre, comprado por uma fração do valor de mercado: nos lotes já comprados, o valor registrado é cerca de{" "}
+              {v("LOTS_BOUGHT_MARKET_VALUE") ? `${Math.round((100 * 123484.19) / (v("LOTS_BOUGHT_MARKET_VALUE") ?? 1))}%` : "—"} do valor de mercado das peças. Cada lote vira
+              produto cadastrado no app — {n(3305)} produtos saíram dos lotes de abril a julho.
+            </Cartao>
+            <Cartao tom="cheio" titulo="Como os números da administração se sustentam">
+              <strong>Clientes:</strong> {n(v("WHATSAPP_BASE"))} contatos medidos no WhatsApp da empresa; se cada um alcança ao menos mais duas pessoas, são cerca de{" "}
+              {n((v("WHATSAPP_BASE") ?? 0) * 3)} pessoas — o fundador fala em 10 mil. Somando CRM e app, sem repetir, a base medida é de {n(v("CUSTOMER_BASE_UNIQUE"))} pessoas.{" "}
+              <strong>Produtos:</strong> {n(v("LOTS_BOUGHT_PIECES"))} peças em lotes com registro no app + cerca de {n(v("LOTS_BEFORE_APP_PIECES"))} em 3 lotes comprados antes
+              do app = ~{n((v("LOTS_BOUGHT_PIECES") ?? 0) + (v("LOTS_BEFORE_APP_PIECES") ?? 0))} peças. Hoje há {n(v("INVENTORY_PIECES"))} peças em estoque; o fundador
+              informa cerca de {n(v("PRODUCTS_SOLD_DECLARED"))} produtos vendidos desde o início.
+            </Cartao>
+            <Cartao tom="lateral" titulo="O analisador de lotes">
+              Desde agosto, o app lê o manifesto de cada lote do Mercado Livre, classifica e precifica as peças. Já passaram por ele {n(v("LOTS_ANALYZED"))} lotes de 14
+              centros de distribuição em SP, MG e RJ — {n(v("LOTS_ANALYZED_PIECES"))} peças avaliadas. Analisar não é comprar: é o funil de onde saem as próximas compras.
+            </Cartao>
+          </Grade>
+        </Conteiner>
+      </section>
 
       {/* DE ONDE VEIO O DINHEIRO */}
       <section className="border-y border-white/10 bg-surface py-16 sm:py-24">
@@ -258,7 +301,9 @@ export default async function Capital() {
               [<Valor key="d">2026</Valor>, "Investidor 1 (familiar de um diretor)", <Valor key="v">R$ 70.000</Valor>, <span key="c">R$ 50 mil em um carro, que lastreia uma carta de crédito, e R$ 20 mil em limite de cartão de crédito<Obs>não entrou como dinheiro em conta; rende R$ 3.600 por mês</Obs></span>, <Etiqueta key="e" tipo="MANAGEMENT_DATA" pequena />],
               [<Valor key="d">01/09/2026</Valor>, "Parceiro de compra A", <Valor key="v">R$ 200.000</Valor>, "contrato · 4,5% ao mês", <Etiqueta key="e" tipo="VERIFIED" pequena />],
               [<Valor key="d">24–30/09/2026</Valor>, "Um diretor, comprando 1%", <Valor key="v">{r(compra1pct)}</Valor>, <span key="c">compra de participação por R$ 250 mil — faltam R$ 50 mil<Obs>entrada conferida no extrato do Itaú; contrato e origem dos recursos a documentar</Obs></span>, <Etiqueta key="e" tipo="VERIFIED" pequena />],
+              [<Valor key="d">jan a jul/2026</Valor>, "Aportes dos sócios e outras entradas grandes", <Valor key="v">R$ 375.813</Valor>, "Santander, sem o nome de quem mandou", <Etiqueta key="e" tipo="VERIFIED" pequena />],
             ]}
+            total={["2026", "Total de capital que entrou nas contas", <Valor key="v">{r(deCapital)}</Valor>, "pelos extratos; o carro, o limite de cartão e os cartões da equipe não passaram pela conta", <Etiqueta key="e" tipo="VERIFIED" pequena />]}
           />
           <div className="mt-6">
           <Nota>
@@ -298,7 +343,8 @@ export default async function Capital() {
           total={["Total", <Valor key="c">{r(deClientes)}</Valor>, <Valor key="k">{r(deCapital)}</Valor>, <Valor key="s">{r(saidas)}</Valor>, <Valor key="d">{r(deClientes + deCapital - saidas)}</Valor>]}
         />
         <p className="mt-4 text-sm font-light text-muted">
-          Pix e depósitos de até R$ 5 mil na conta Santander de jan a jul contam como cliente; acima disso, como aporte. Valores que entraram e saíram iguais
+          Pix e depósitos de até R$ 5 mil na conta Santander de jan a jul contam como cliente; acima disso, como aporte. Mais {r(outrasEntradas)} de estornos e
+          rendimentos completam o que entrou. Valores que entraram e saíram iguais
           (R$ 117 mil em 15/01, 17–18/03, 13–16/04 e 22/06) ficam fora, como transferência. O saldo que já estava nas contas em 01/01 não entra na conta.{" "}
           <Etiqueta tipo="VERIFIED" pequena />
         </p>
@@ -425,7 +471,7 @@ export default async function Capital() {
             ["Custo do capital de terceiros", <Valor key="a">—</Valor>, <Valor key="b">R$ 5.600</Valor>, "mais R$ 9.000 do parceiro A, fora do app"],
             ["Outras despesas cadastradas", <Valor key="a">—</Valor>, <Valor key="b">R$ 71.227</Valor>, "em revisão: alimentação, parcelas de cartão, consórcio, aluguéis e capitalização"],
           ]}
-          total={["Total", <Valor key="a">{r(orcamento)}</Valor>, <Valor key="b">{r(cadastrado)}</Valor>, "com o tráfego planejado, o orçamento vai a R$ 271.100"]}
+          total={["Total", <Valor key="a">{r(orcamento)}</Valor>, <Valor key="b">{r(cadastrado)}</Valor>, `com o tráfego planejado (R$ 36 a 40 mil), o orçamento vai a ${r((orcamento ?? 0) + 36000)} a ${r((orcamento ?? 0) + 40000)}`]}
         />
         <Grade colunas={2} className="mt-10">
           <Cartao tom="lateral" titulo="A sala e o galpão">
@@ -508,9 +554,12 @@ export default async function Capital() {
                 Aluguel do escritório lançado duas vezes por mês (R$ 10 mil a mais). Título de capitalização de R$ 10 mil por mês, cuja descrição diz R$ 1 mil. O
                 parceiro A (R$ 9 mil por mês) não está cadastrado.
               </Cartao>
-              <Cartao tom="escuro" titulo="6 · “10 mil produtos”">
-                A página inicial do app chegou a mostrar “+10 mil produtos leiloados”, vindo de um modelo de exemplo; saiu por não ter base no banco, e um teste
-                automático impede que volte. Até chegar o extrato da fase leilaowhatsapp.com, o número defensável é 595 produtos no MVP e a série mensal desta página.
+              <Cartao tom="escuro" titulo="6 · “8 mil produtos” e “10 mil clientes”">
+                São estimativas da administração. Os 10 mil clientes saem de {n(v("WHATSAPP_BASE"))} contatos no WhatsApp × 3 (cada contato alcança ao menos mais duas
+                pessoas); os 8 mil produtos, de ~8,5 mil peças compradas. O que tem prova: {n(v("CUSTOMER_BASE_UNIQUE"))} pessoas na base, {n(v("CUSTOMER_PAYMENTS_2026"))}
+                pagamentos de clientes em 2026 e {n(v("LOTS_BOUGHT_PIECES"))} peças em lotes registrados. A conta das peças (compradas menos o estoque de hoje) dá cerca de 6 mil
+                saídas dos lotes, mais o MVP — perto, mas abaixo dos 8 mil: os lotes do começo e as vendas da fase WhatsApp fecham a diferença. O app já tirou da home o
+                “+10 mil produtos leiloados”, que vinha de um modelo de exemplo.
               </Cartao>
               <Cartao tom="escuro" titulo="7 · Compromissos de integralização">
                 Dez/2025 previa R$ 500 mil de capital operacional do Luciano (jan/2026), R$ 200 mil do Geovane (até 24/03/2026) e R$ 70 mil de outros dois diretores
@@ -563,8 +612,9 @@ export default async function Capital() {
       {/* FECHO */}
       <Faixa>
         <Citacao verde>
-          Uma empresa que começou com 551 produtos e o último recurso do fundador, registrou mais de R$ 300 mil em vendas em onze meses, construiu um aplicativo próprio e hoje
-          tem clientes que deixam metade do depósito esperando o próximo leilão — e toda sexta abre a porta para a comunidade. O que falta não é história: é
+          Uma empresa que começou com 551 produtos e o último recurso do fundador movimentou {r(movimentado)} nas suas contas em 2026, recebeu {r(deClientes)} de
+          clientes, comprou lotes que valem {r(v("LOTS_BOUGHT_MARKET_VALUE"))} a preço de mercado, construiu um aplicativo próprio e hoje tem clientes que deixam
+          metade do depósito esperando o próximo leilão — e toda sexta abre a porta para a comunidade. O que falta não é história: é
           trocar o dinheiro caro e provar cada número.
         </Citacao>
         <Texto className="mt-8">

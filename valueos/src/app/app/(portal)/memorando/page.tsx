@@ -18,9 +18,9 @@ export const dynamic = "force-dynamic";
 
 const WHATSAPP = "https://wa.me/5521998753772";
 
-// Série do memorando publicado (nov/25–mai/26): dado da administração, sem rastro no sistema.
-const SERIE_DECLARADA = [
-  ["nov/25", 16336], ["dez/25", 26358], ["jan/26", 27034], ["fev/26", 17191], ["mar/26", 23000], ["abr/26", 60374], ["mai/26", 181000],
+// Nov e dez/2025 vêm do registro da operação (dado da administração); de 2026 em diante, o dinheiro de clientes nos extratos.
+const SERIE_2025 = [
+  ["2025-11-01", 16336], ["2025-12-01", 26358],
 ] as const;
 
 const CAPITULOS = [
@@ -56,6 +56,14 @@ export default async function Memorando() {
   const recorrentes = v("BUYERS_REPEAT");
   const estoque = v("INVENTORY_AT_COST");
   const comissao = v("REVENUE_COMMISSION_RETAINED");
+  const clientes2026 = s("CASH_IN_CUSTOMERS_M");
+  const serieClientes = [
+    ...SERIE_2025.map(([p, val]) => ({ periodo: p as string, valor: val as number, tom: "gestao" as const })),
+    ...clientes2026.map((x) => ({ periodo: x.periodo, valor: x.valor, tom: "verificado" as const })),
+  ];
+  const deClientes = clientes2026.reduce((t, x) => t + (x.valor ?? 0), 0);
+  const melhorMes = serieClientes.reduce((m, x) => ((x.valor ?? 0) > (m.valor ?? 0) ? x : m), serieClientes[0]);
+  const lotesTexto = `${inteiro(v("LOTS_BOUGHT") ?? 0)} lotes comprados (${inteiro(v("LOTS_BOUGHT_PIECES") ?? 0)} peças) e ${inteiro(v("LOTS_ANALYZED") ?? 0)} analisados (${inteiro(v("LOTS_ANALYZED_PIECES") ?? 0)} peças)`;
   const n = (x: number | null) => (x === null ? "—" : inteiro(x));
   const r = (x: number | null) => (x === null ? "—" : brl(x));
   const vezes = (a: number | null, b: number | null) => (a && b ? (a / b).toLocaleString("pt-BR", { maximumFractionDigits: 1 }) : "—");
@@ -72,7 +80,7 @@ export default async function Memorando() {
           <h1 className="font-display text-5xl font-semibold tracking-tight text-white sm:text-7xl">LEILÃO NOZAP</h1>
           <div className="mx-auto mt-8 h-px max-w-3xl bg-white/50" />
           <p className="mt-6 text-lg font-light text-white/90">Investment Memorandum · Memorando de Investimento · 2026</p>
-          <p className="mt-3 text-sm font-light text-pill">Edição atualizada em 17/10/2026 — números do sistema, com prova</p>
+          <p className="mt-3 text-sm font-light text-pill">Edição atualizada em 18/10/2026 — números do sistema e dos extratos, com prova</p>
         </Conteiner>
       </section>
 
@@ -218,13 +226,14 @@ export default async function Memorando() {
           itens={[
             { quando: "Jul 2024", texto: "Encerramento do ciclo anterior. Início dos estudos sobre recommerce, devoluções e redistribuição inteligente." },
             { quando: "Ago 2024", texto: "Primeiro MVP. Mais de 600 produtos comercializados da residência do fundador via WhatsApp, Facebook e OLX. Mais de 60% vendidos rapidamente. Validação prática do modelo." },
+            { quando: "2024 – 2025", texto: "O site leilaowhatsapp.com, com pagamento por Pix, e os primeiros lotes (cerca de 3 lotes, ~1.200 peças). Desde o início, cerca de 8 mil produtos vendidos e cerca de 10 mil clientes impactados.", etiqueta: "MANAGEMENT_DATA" },
             { quando: "Set 2024", texto: "Estruturação da operação. Criação do escritório. Desenvolvimento da tese de mercado. Início da construção da base tecnológica." },
             { quando: "Out 2024 – Mar 2025", texto: "Pesquisa de mercado. Metodologia. Formação da equipe inicial. Negociações com fornecedores e parceiros estratégicos." },
             { quando: "Abr 2025", texto: "Início efetivo da construção da plataforma. Primeiros módulos operacionais. Primeiras integrações e validações técnicas." },
             { quando: "Nov 2025", texto: "Primeira estrutura executiva formada. Operação comercial organizada. Primeiras vendas através da rede." },
             { quando: "Jun 2026", texto: "Aplicativo em produção: primeiras vendas pagas registradas no sistema (01/06/2026). Primeira turma em formação.", etiqueta: "VERIFIED", novo: true },
-            { quando: "Ago 2026", texto: "Marco oficial do app: a série financeira auditável começa em 01/08/2026. Leilões com reserva de saldo por lance em operação.", etiqueta: "VERIFIED", novo: true },
-            { quando: "Set 2026", texto: `Primeiro capital de parceiros de compra (R$ 250 mil, 2 contratos) e primeira venda de participação informada (1%). Mês de maior movimento no app: ${r(entSet)} em entradas.`, etiqueta: "VERIFIED", novo: true },
+            { quando: "Ago 2026", texto: `Marco oficial do app: a série financeira auditável começa em 01/08/2026. Leilões com reserva de saldo por lance em operação. Parceiro de compra B entra com R$ 50 mil (11/08). O analisador de lotes começa a avaliar lotes do Mercado Livre: ${inteiro(v("LOTS_ANALYZED") ?? 0)} lotes até outubro.`, etiqueta: "VERIFIED", novo: true },
+            { quando: "Set 2026", texto: `Parceiro de compra A entra com R$ 200 mil (01/09) e um diretor compra 1% por R$ 250 mil (R$ 200 mil pagos). Mês de maior movimento no app: ${r(entSet)} em entradas.`, etiqueta: "VERIFIED", novo: true },
             { quando: "Out 2026", texto: `Leilão acelera: em 16 dias, ${r(arrOut)} em arremates e ${n(lancesOut)} lances — acima de setembro inteiro. Lançado este portal do investidor, com cada número rastreável.`, etiqueta: "VERIFIED", novo: true },
             { quando: "Dez 2026", texto: "Lançamento oficial. Meta: 300 licenciados ativos · 8 lojas físicas · Distribuidor Recreio · R$ 1M+/mês.", etiqueta: "FORECAST" },
           ]}
@@ -326,7 +335,7 @@ export default async function Memorando() {
         </div>
         <p className="mt-6 text-sm font-light text-muted">
           Fonte: banco do app (tabela de vendas pagas e mensagens de lance), carga de 17/10/2026, com impressão digital.{" "}
-          <Link href="/app/numeros" className="text-pill underline underline-offset-2">Ver os 30 números com prova</Link>.
+          <Link href="/app/numeros" className="text-pill underline underline-offset-2">Ver todos os números com prova</Link>.
         </p>
       </Faixa>
 
@@ -573,7 +582,7 @@ export default async function Memorando() {
             </div>
           ))}
         </div>
-        <div className="mt-8"><Hoje>40 lotes recebidos e processados no sistema entre abril e outubro de 2026</Hoje></div>
+        <div className="mt-8"><Hoje href="/app/prova/LOTS_ANALYZED">{`${lotesTexto} entre abril e outubro de 2026 — ${r(v("LOTS_ANALYZED_MARKET_VALUE"))} a valor de mercado avaliados`}</Hoje></div>
       </Faixa>
 
       <Faixa>
@@ -648,7 +657,7 @@ export default async function Memorando() {
         </div>
         <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <NumeroGrande valor={loc ? `${Math.round(loc / 1000)}K+` : "—"} rotulo="Linhas de código" cor="verde" etiqueta="VERIFIED" href="/app/prova/TECH_LOC" />
-          <NumeroGrande valor="2.033" rotulo="Arquivos" cor="verde" etiqueta="VERIFIED" />
+          <NumeroGrande valor={n(v("TECH_FILES"))} rotulo="Arquivos" cor="verde" etiqueta="VERIFIED" href="/app/prova/TECH_FILES" />
           <NumeroGrande valor={n(contas)} rotulo="Contas de clientes" cor="verde" etiqueta="VERIFIED" href="/app/prova/USERS_REGISTERED" />
           <NumeroGrande valor="1" rotulo="Aplicação própria" cor="verde" etiqueta="VERIFIED" />
         </div>
@@ -698,7 +707,7 @@ export default async function Memorando() {
                   ["03 Marketplace", "ativo", `comissão retida: ${r(comissao)} em outubro (até 16)`],
                   ["04 Leilão Inteligente", "ativo", `arremates: ${r(arrOut)} em outubro (até 16)`],
                   ["05 Lojas Físicas", "ativo", "operação informada pela administração"],
-                  ["06 Análise de Lotes", "crescendo", "40 lotes processados (abr–out/26)"],
+                  ["06 Análise de Lotes", "crescendo", `${lotesTexto} (abr–out/26)`],
                   ["07 Serviços a Fornecedores", "crescendo", "infraestrutura para fabricantes parceiros"],
                   ["08 ComparAI", "ativo", "consultas de preço em uso"],
                   ["09 Live Commerce próprio", "planejado", "próximo canal"],
@@ -748,14 +757,21 @@ export default async function Memorando() {
       <Faixa>
         <Titulo tag="Evolução da receita">Da Operação Manual ao Aplicativo</Titulo>
         <p className="mt-4 max-w-5xl font-light text-texto">
-          Antes do aplicativo, a operação vendia por WhatsApp e loja física, com lançamento manual. A partir de agosto de 2026 a venda passa a ser registrada pelo próprio sistema — e é essa série que vale como número oficial.
+          Antes do aplicativo, a operação vendia por WhatsApp e loja física, com pagamento por Pix. O extrato do banco registra cada pagamento: {r(deClientes)} de clientes em 2026, em {n(v("CUSTOMER_PAYMENTS_2026"))} pagamentos, e {r(v("CASH_MOVED_2026"))} movimentados nas contas. A partir de agosto de 2026 a venda do app também é registrada pelo próprio sistema.
         </p>
-        <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[1.5fr_1fr]">
-          <div>
-            <GraficoBarras titulo="Receita declarada na edição anterior (R$) — nov/25 a mai/26" dados={SERIE_DECLARADA.map(([rot, val]) => ({ rotulo: rot, valor: val, tom: "gestao" as const }))} formato={kmil} />
+        <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+          <div className="min-w-0">
+            <GraficoBarras titulo="Dinheiro de clientes por mês (R$) — nov/25 a out/26" dados={serieClientes.map((x) => ({ rotulo: `${x.periodo.slice(5, 7)}/${x.periodo.slice(2, 4)}`, valor: x.valor, tom: x.tom }))} formato={kmil} />
             <p className="mt-2 text-xs text-muted">
-              <Etiqueta tipo="MANAGEMENT_DATA" pequena /> Operação manual, antes do app; sem rastro no sistema. Crescimento de nov/25 a mai/26: +1.008%.
+              <Etiqueta tipo="VERIFIED" pequena /> 2026: extratos do Itaú, do Santander e do Mercado Pago (outubro até o dia 16). Nov e dez/2025: registro da operação{" "}
+              <Etiqueta tipo="MANAGEMENT_DATA" pequena />. Do primeiro mês ao melhor ({melhorMes ? mesCurto(melhorMes.periodo) : "—"}): {vezes(melhorMes?.valor ?? null, SERIE_2025[0][1])}×.
             </p>
+            {conselho && (
+              <p className="mt-2 text-xs text-warn">
+                Só para o conselho: a edição anterior do memorando trazia R$ 181 mil em mai/26, somando todos os canais; no banco, o dinheiro de clientes de maio soma{" "}
+                {r(mes("CASH_IN_CUSTOMERS_M", "2026-05-01"))}. Vendas no cartão e no balcão que não passaram por estas contas precisam de comprovante para entrar.
+              </p>
+            )}
           </div>
           <div>
             <GraficoBarras titulo="Entradas pagas no aplicativo (R$) — série oficial" dados={entradas.map((x) => ({ rotulo: mesCurto(x.periodo), valor: x.valor, tom: "verificado" as const }))} formato={kmil} />
@@ -769,7 +785,10 @@ export default async function Memorando() {
         <div className="mt-8 grid gap-8 sm:grid-cols-3">
           <NumeroGrande valor={n(pagantes)} rotulo="Clientes pagantes" sub="últimos 90 dias" etiqueta="VERIFIED" href="/app/prova/CUSTOMERS_PAYING_90D" />
           <NumeroGrande valor={n(recorrentes)} rotulo="Compraram 2+ vezes" sub="desde junho de 2026" etiqueta="VERIFIED" href="/app/prova/BUYERS_REPEAT" />
-          <NumeroGrande compacto valor={estoque !== null ? brlMil(estoque) : "—"} rotulo="Estoque a custo" sub="posição de 17/10/2026" etiqueta="VERIFIED" href="/app/prova/INVENTORY_AT_COST" />
+          <NumeroGrande compacto valor={estoque !== null ? brlMil(estoque) : "—"} rotulo="Estoque a custo" sub={`${n(v("INVENTORY_PIECES"))} peças hoje · pico de ~R$ 1 mi em maio (informado)`} etiqueta="VERIFIED" href="/app/prova/INVENTORY_AT_COST" />
+          <NumeroGrande compacto valor={n(v("CUSTOMER_BASE_UNIQUE"))} rotulo="Pessoas na base" sub="WhatsApp, CRM e app, sem repetir · ~10 mil impactados (estimativa)" etiqueta="VERIFIED" href="/app/prova/CUSTOMER_BASE_UNIQUE" />
+          <NumeroGrande compacto valor={r(v("LOTS_BOUGHT_MARKET_VALUE"))} rotulo="Em lotes comprados" sub={`${n(v("LOTS_BOUGHT_PIECES"))} peças com registro no app · ~8 mil produtos vendidos desde o início (informado)`} etiqueta="VERIFIED" href="/app/prova/LOTS_BOUGHT_MARKET_VALUE" />
+          <NumeroGrande compacto valor={r(v("CASH_MOVED_2026"))} rotulo="Movimentados nas contas" sub="entradas + saídas, jan a 16/out/2026" etiqueta="VERIFIED" href="/app/prova/CASH_MOVED_2026" />
         </div>
       </Faixa>
 

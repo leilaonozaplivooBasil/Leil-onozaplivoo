@@ -28,6 +28,7 @@ const LINHAS: Linha[] = [
   { rotulo: "Para comparar: receita reconhecida pelo app (visão agente — só a comissão retida)", metricas: [{ id: "REVENUE_COMMISSION_RETAINED", sinal: 1 }] },
   { rotulo: "Para comparar: depósitos de carteira (não é receita)", metricas: [{ id: "WALLET_DEPOSITS", sinal: 1 }] },
   { rotulo: "Para comparar: entradas de terceiros nos bancos (inclui aportes)", metricas: [{ id: "BANK_INFLOWS_THIRD_PARTY", sinal: 1 }] },
+  { rotulo: "Para comparar: dinheiro de clientes nas contas (extratos, todos os canais)", metricas: [{ id: "CASH_IN_CUSTOMERS_M", sinal: 1 }] },
 ];
 
 const PERIODOS = ["2026-08-01", "2026-09-01", "2026-10-01"];
@@ -37,7 +38,8 @@ export default async function Dre() {
   const { data } = await supabase
     .from("vos_valores")
     .select("metric_id, periodo, valor, etiqueta")
-    .in("periodo", PERIODOS);
+    .in("periodo", PERIODOS)
+    .order("criado_em", { ascending: true }); // correção entra como linha nova: a mais recente sobrescreve no mapa
   const valores = (data ?? []) as Valor[];
   const mapa = new Map<string, Valor>();
   for (const v of valores) mapa.set(`${v.metric_id}|${v.periodo}`, v);
