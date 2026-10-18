@@ -14,7 +14,7 @@ const METODOS = [
   ["Método VC (valor de saída ÷ retorno exigido)", "20%", "é a conta que um investidor de risco faz; depende do plano"],
   ["Transações precedentes", "15%", "preço real pago por empresas parecidas; escasso no Brasil"],
   ["Soma das partes (varejo · leilão · loja · licenciamento · tecnologia)", "15%", "cada negócio tem perfil e comparável diferente"],
-  ["Fluxo de caixa descontado (cenários ponderados)", "10%", "baixo até haver 12 meses de série de dinheiro real"],
+  ["Fluxo de caixa descontado (cenários ponderados)", "10%", "baixo até haver 12 meses de série de dinheiro real; hoje são 9,5 meses de extratos conciliados"],
   ["Piso: custo de reposição da tecnologia + patrimônio ajustado", "10%", "o valor não cai abaixo do que se reconstrói ou liquida"],
   ["Economia por unidade (LTV/CAC)", "5%", "sobe para 15–20% quando houver CAC e margem por venda"],
   ["Scorecard / Berkus (conferência)", "0%", "só para mostrar se o resultado destoa de um padrão de mercado"],
@@ -42,6 +42,18 @@ export default async function Valuation() {
   const entSet = mes("CASH_IN_GROSS", "2026-09-01");
   const arrSet = mes("GMV_AUCTION", "2026-09-01");
   const arrOut = mes("GMV_AUCTION", "2026-10-01");
+
+  // Quanto custou chegar até aqui: referência do método do piso (custo de reposição), vinda do livro do capital.
+  const soma = (id: string, desde = "") => (serie.get(id) ?? []).filter((x) => x.periodo >= desde).reduce((s, x) => s + (x.valor ?? 0), 0);
+  const fundadores = v("CAPITAL_FOUNDERS_DECLARED");
+  const capital2026 = soma("CASH_IN_CAPITAL_M");
+  const galpao = v("WAREHOUSE_TOTAL_PAID");
+  const time3 = soma("CASH_OUT_TEAM_M", "2026-08-01");
+  const caixa = v("CASH_BALANCE_BANKS");
+  const terceiros = v("THIRD_PARTY_CAPITAL");
+  const custoCapital = v("CAPITAL_COST_M");
+  const saidas = soma("CASH_OUT_M");
+  const parteVenda = saidas ? Math.round((100 * soma("CASH_IN_CUSTOMERS_M")) / saidas) : 0;
 
   // O painel vivo: as linhas que entram no modelo, mês a mês.
   const PERIODOS = ["2026-08-01", "2026-09-01", "2026-10-01"];
@@ -298,6 +310,43 @@ export default async function Valuation() {
         </Grade>
 
         <div className="mt-14">
+          <Titulo tag="Quanto custou chegar até aqui" sub="Referência do método do piso: o custo de reposição parte do que já foi investido para construir a operação">
+            {`${r((fundadores ?? 0) + capital2026)} Investidos até Outubro de 2026`}
+          </Titulo>
+          <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <NumeroGrande compacto valor={r(fundadores)} rotulo="dos fundadores" sub="declarado até dez/2025" etiqueta="MANAGEMENT_DATA" href="/app/prova/CAPITAL_FOUNDERS_DECLARED" />
+            <NumeroGrande compacto valor={r(capital2026)} rotulo="de capital em 2026" sub="conferido nos extratos, jan a 16/out" etiqueta="VERIFIED" href="/app/prova/CASH_IN_CAPITAL_M" />
+            <NumeroGrande compacto valor={r(galpao)} rotulo="no galpão" sub="entrada, 3 mensalidades e frete" etiqueta="MANAGEMENT_DATA" href="/app/prova/WAREHOUSE_TOTAL_PAID" />
+            <NumeroGrande compacto valor={r(time3)} rotulo="em time e comissões" sub="pagos de ago a out/2026" etiqueta="VERIFIED" href="/app/prova/CASH_OUT_TEAM_M" />
+          </div>
+          <div className="mt-8 overflow-x-auto rounded-lg border border-white/15">
+            <table className="w-full min-w-[720px] text-left text-[15px]">
+              <thead className="bg-accent text-accent-ink">
+                <tr><th className="px-5 py-3 font-semibold">O que o capital pagou</th><th className="px-5 py-3 font-semibold">Quanto</th><th className="px-5 py-3 font-semibold">Detalhe</th><th className="px-5 py-3 font-semibold">Etiqueta</th></tr>
+              </thead>
+              <tbody className="bg-black/40 font-light text-white">
+                {[
+                  ["Galpão", `${r(galpao)} até out/2026`, "entrada de R$ 20 mil (23 e 27/07), três mensalidades de R$ 23.036 e frete para trazer os produtos", "MANAGEMENT_DATA"],
+                  ["Escritório no Recreio", "R$ 10 mil por mês", "desde mar/2026 — cerca de R$ 80 mil até outubro", "MANAGEMENT_DATA"],
+                  ["Tecnologia e plataformas", "cerca de R$ 10 mil por mês", `desenvolvedores e plataformas; ${n(loc)} linhas de código próprias`, "MANAGEMENT_DATA"],
+                  ["Time, vendas e comissões", `${r(time3)} de ago a out/2026`, "pagos com nome nos extratos", "VERIFIED"],
+                ].map(([item, quanto, detalhe, et]) => (
+                  <tr key={item} className="border-t border-white/10 align-top">
+                    <td className="px-5 py-3">{item}</td>
+                    <td className="num whitespace-nowrap px-5 py-3">{quanto}</td>
+                    <td className="px-5 py-3 text-texto">{detalhe}</td>
+                    <td className="px-5 py-3"><Etiqueta tipo={et} pequena /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Link href="/app/capital" className="mt-4 inline-flex items-center gap-1 text-sm text-pill underline underline-offset-2">
+            Ver o livro do capital completo <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+          </Link>
+        </div>
+
+        <div className="mt-14">
           <Titulo tag="Antes de qualquer número">O Que Está Sendo Avaliado</Titulo>
           <Grade colunas={3} className="mt-8">
             <Cartao tom="escuro" titulo="A. Compras Full Comércio Ltda">A empresa com CNPJ, contas, contabilidade e o nome fantasia Leilão NoZap. É o perímetro padrão enquanto a titularidade dos outros ativos não for documentada.</Cartao>
@@ -339,12 +388,13 @@ export default async function Valuation() {
               <tbody className="font-light text-white">
                 {[
                   ["Valor da operação (EV) — triangulação dos métodos", "+", "não calculado", "NAO_DISPONIVEL"],
-                  ["Caixa verificado", "+", "extratos de 2025 e de todas as contas não disponíveis", "NAO_DISPONIVEL"],
+                  ["Caixa nas contas da empresa (Itaú, Santander e Mercado Pago)", "+", caixa === null ? "—" : `${r(caixa)} em 16–17/10`, "VERIFIED"],
                   ["Estoque a custo", "+", r(estoque), "VERIFIED"],
                   ["Cotas de consórcio no nome da empresa, líquidas do saldo devedor", "+", "21 cartas (2 contempladas); saldo devedor a informar", "MANAGEMENT_DATA"],
                   ["Saldos de clientes e rede (carteira, comissões, crédito de vendedor)", "−", r(carteira), "VERIFIED"],
                   ["Capital dos parceiros de compra (principal)", "−", r(parceiros), "VERIFIED"],
-                  ["Remuneração dos parceiros acima do custo de mercado (valor presente)", "−", "a calcular na metodologia", "NAO_DISPONIVEL"],
+                  ["Capital de investidores com rendimento mensal (principal)", "−", terceiros !== null && parceiros !== null ? r(terceiros - parceiros) : "—", "MANAGEMENT_DATA"],
+                  ["Remuneração do capital de terceiros acima do custo de mercado (valor presente)", "−", `hoje ${r(custoCapital)} por mês; valor presente a calcular`, "NAO_DISPONIVEL"],
                   ["Despesas vencidas em aberto (lançamento do app)", "−", r(vencidas), "MANAGEMENT_DATA"],
                   ["Tributos e encargos a pagar", "−", "R$ 83,2 mil + R$ 85,0 mil em 31/12/2025; situação atual desconhecida", "MANAGEMENT_DATA"],
                   ["Obrigação do 1% do faturamento bruto aos fundadores", "−", "base de cálculo a definir", "NAO_DISPONIVEL"],
@@ -370,12 +420,14 @@ export default async function Valuation() {
                 <li>Pagamentos conciliados ao centavo entre app, Mercado Pago e bancos (jul–out/2026).</li>
                 <li>Código próprio de porte: {n(loc)} linhas medidas no repositório.</li>
                 <li>Rede em formação, metodologia de formação e marca com história.</li>
+                <li>Comunidade presencial medida: {n(v("SOCIAL_MEETINGS"))} encontros do Conexão e {n(v("SOCIAL_PEOPLE"))} pessoas desde out/2025.</li>
               </ul>
             </Cartao>
             <Cartao tom="escuro" titulo="O que ainda limita o valor">
               <ul className="list-disc space-y-1 pl-5">
                 <li>Margem por venda não comprovada: o app ainda não grava o custo de cada venda.</li>
-                <li>Série histórica curta: dinheiro real auditável desde 01/08/2026.</li>
+                <li>Gasto maior que a venda: em 2026, só {parteVenda}% das saídas foram pagas com dinheiro de clientes; o resto veio de capital.</li>
+                <li>Série curta: extratos conciliados de jan a out/2026; dados do app desde 01/08/2026.</li>
                 <li>Obrigações fixas (parceiros, consórcios, contas) maiores que a receita reconhecida.</li>
                 <li>Perímetro, quadro societário e titularidade dos ativos a documentar.</li>
               </ul>
