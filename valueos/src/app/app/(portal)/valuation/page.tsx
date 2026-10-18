@@ -120,7 +120,7 @@ export default async function Valuation() {
           No site, os ativos aparecem como afirmação. Aqui, cada um traz o número medido no sistema, a etiqueta de qualidade e o link para a prova.
         </p>
         <Grade colunas={2} className="mt-8">
-          <Cartao tom="lateral" titulo="Tecnologia proprietária" rodape={<Hoje href="/app/prova/TECH_LOC">{`${n(loc)} linhas em ${n(v("TECH_FILES"))} arquivos versionados (o site antigo dizia 178 mil / 883)`}</Hoje>}>
+          <Cartao tom="lateral" titulo="Tecnologia proprietária" rodape={<Hoje href="/app/prova/TECH_LOC">{`${n(loc)} linhas em ${n(v("TECH_FILES"))} arquivos de código, sem testes (o site antigo dizia 178 mil / 883)`}</Hoje>}>
             Marketplace, aplicativo, leilão com reserva de saldo, analisador de lotes, CRM, financeiro e comissionamento — código próprio sobre infraestrutura de mercado.
           </Cartao>
           <Cartao tom="lateral" titulo="Operação validada" rodape={<Hoje href="/app/prova/CASH_MOVED_2026">{`${r(v("CASH_MOVED_2026"))} movimentados nas contas em 2026 · ${r(soma("CASH_IN_CUSTOMERS_M"))} de clientes em ${n(v("CUSTOMER_PAYMENTS_2026"))} pagamentos`}</Hoje>}>
