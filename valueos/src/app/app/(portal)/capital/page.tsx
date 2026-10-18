@@ -97,7 +97,7 @@ export default async function Capital() {
     { id: "CASH_OUT_CARDS_M", tipo: "Cartões usados pela empresa", oque: "faturas dos cartões de uma executiva e de um investidor" },
     { id: "CASH_OUT_TEAM_M", tipo: "Time, vendas e comissões", oque: "pessoas da equipe, vendedores e comissão por venda" },
     { id: "CASH_OUT_ADMIN_M", tipo: "Administração e sócios", oque: "repasses à administradora da operação e retiradas" },
-    { id: "CASH_OUT_RENT_M", tipo: "Galpão, escritório e aluguéis", oque: "galpão a R$ 23.036 por mês desde setembro" },
+    { id: "CASH_OUT_RENT_M", tipo: "Galpão, escritório e aluguéis", oque: "galpão (R$ 23.036 por mês), outros aluguéis e o hotel do escritório" },
     { id: "CASH_OUT_CAPITAL_M", tipo: "Rendimentos, consórcio e capitalização", oque: "o custo do capital de terceiros" },
     { id: "CASH_OUT_STOCK_M", tipo: "Estoque, compras e frete", oque: "lotes e mercadoria para o leilão e a loja" },
     { id: "CASH_OUT_TECH_M", tipo: "Plataformas e tecnologia", oque: "assinaturas, meios de pagamento e marketing pagos pela conta" },
@@ -174,10 +174,10 @@ export default async function Capital() {
               { quando: "Jan/2026", texto: "Catálogo leilaonozap.com no ar e primeiro aporte externo, de R$ 5 mil (29/01).", etiqueta: "MANAGEMENT_DATA" },
               { quando: "Mar/2026", texto: "Escritório no Hotel Atlântico Sul, no Recreio: R$ 10 mil por mês desde então.", etiqueta: "MANAGEMENT_DATA" },
               { quando: "Abr/2026", texto: "Lotes do Mercado Livre (4.549 peças) e o NEXUS passando a registrar cada venda. Melhor mês até ali: R$ 69.891 até o dia 23.", etiqueta: "MANAGEMENT_DATA" },
-              { quando: "Jun/2026", texto: "Pico da venda pelo WhatsApp: R$ 74.438 no mês, pela planilha diária.", etiqueta: "MANAGEMENT_DATA" },
+              { quando: "Jun/2026", texto: "Pico da venda pelo WhatsApp: R$ 74.438 no mês, pela planilha diária. Entrada do galpão: R$ 35 mil pagos por repasse, em junho e julho.", etiqueta: "MANAGEMENT_DATA" },
               { quando: "Jul/2026", texto: "O aplicativo entra no ar com carteira e loja. Primeiro depósito de cliente em 18/07.", etiqueta: "VERIFIED" },
-              { quando: "Ago/2026", texto: "Mudança para o galpão. Parceiro de compra B entra com R$ 50 mil, a 3% ao mês. Começam os leilões com lance.", etiqueta: "VERIFIED" },
-              { quando: "Set/2026", texto: "Galpão a R$ 23.036 por mês. Parceiro A entra com R$ 200 mil, a 4,5% ao mês. Mais R$ 200 mil entram no Itaú, origem a confirmar.", etiqueta: "VERIFIED", novo: true },
+              { quando: "Ago/2026", texto: "Parceiro de compra B entra com R$ 50 mil, a 3% ao mês. Começam os leilões com lance.", etiqueta: "VERIFIED" },
+              { quando: "Set/2026", texto: "Parceiro A entra com R$ 200 mil, a 4,5% ao mês. Mais R$ 200 mil entram no Itaú, origem a confirmar.", etiqueta: "VERIFIED", novo: true },
               { quando: "Out/2026", texto: `${inteiro(v("USERS_REGISTERED") ?? 0)} contas no app e ${r(v("GMV_AUCTION"))} em arremates até o dia 16.`, etiqueta: "VERIFIED", novo: true },
             ]}
           />
@@ -417,7 +417,7 @@ export default async function Capital() {
           cabecalho={["Item", "Orçamento (set/26)", "Cadastrado no app (nov/26)", "Observação"]}
           linhas={[
             ["Pessoas — diretoria e equipe", <Valor key="a">R$ 182.000</Valor>, <Valor key="b">R$ 70.900</Valor>, "não é folha tradicional: parte é retirada e parte é participação por meta"],
-            ["Galpão", <Valor key="a">R$ 23.100</Valor>, <Valor key="b">R$ 23.036</Valor>, "o fundador informa cerca de R$ 100 mil investidos na obra — falta comprovante"],
+            ["Galpão", <Valor key="a">R$ 23.100</Valor>, <Valor key="b">R$ 23.036</Valor>, "até out/2026: R$ 35 mil de entrada e três mensalidades de R$ 23 mil, cerca de R$ 104 mil"],
             ["Escritório no Recreio", <Valor key="a">R$ 10.000</Valor>, <Valor key="b">R$ 20.000</Valor>, "lançado duas vezes no app; o valor real é R$ 10 mil"],
             ["Tecnologia", <Valor key="a">R$ 5.000</Valor>, <Valor key="b">R$ 5.208</Valor>, "inclui R$ 2.680 por mês da construção do aplicativo"],
             ["Marketing", <Valor key="a">R$ 5.000</Valor>, <Valor key="b">R$ 105</Valor>, "o plano do ranking prevê R$ 36 a 40 mil por mês de tráfego"],
@@ -429,9 +429,9 @@ export default async function Capital() {
         />
         <Grade colunas={2} className="mt-10">
           <Cartao tom="lateral" titulo="A sala e o galpão">
-            O galpão custa R$ 23.036 por mês e já são quatro meses: setembro e outubro foram pagos direto à imobiliária, e estão no extrato
-            <Etiqueta tipo="VERIFIED" pequena />. Os primeiros meses foram pagos por repasse a uma pessoa; no extrato aparecem Pix sem nome que batem com o
-            relato (15/06 e 16/07). O escritório custa R$ 10 mil por mês desde mar/2026; no app falta dar baixa em três meses e corrigir um lançamento em dobro.
+            O galpão custa R$ 23.036 por mês e já são quatro meses pagos: uma entrada de R$ 35 mil por repasse (15/06 e 16/07) e três mensalidades de
+            R$ 23 mil — cerca de R$ 104 mil até outubro <Etiqueta tipo="MANAGEMENT_DATA" pequena />. Duas mensalidades estão no extrato com o nome da
+            imobiliária (08/09 por boleto e 08/10 por Pix) <Etiqueta tipo="VERIFIED" pequena />. O escritório custa R$ 10 mil por mês desde mar/2026; no app falta dar baixa em três meses e corrigir um lançamento em dobro.
           </Cartao>
           <Cartao tom="lateral" titulo="Contas vencidas no app">
             {r(vencidas)} aparecem como vencidas. Boa parte são meses de aluguel pagos e não baixados no sistema: a limpeza desse número é o próximo passo para o
@@ -545,7 +545,6 @@ export default async function Capital() {
             </Grade>
             <Titulo className="mt-16" sub="O que falta o fundador mandar para fechar a conta">A Lista de Pendências</Titulo>
             <ol className="mt-6 max-w-4xl list-decimal space-y-2 pl-6 text-[15px] font-light leading-relaxed text-texto">
-              <li>Confirmar os Pix do galpão pagos por repasse (15/06: R$ 10 mil + R$ 5 mil; 16/07: 2 × R$ 10 mil) e o mês de agosto; somar a obra, se houver.</li>
               <li>Comprovantes da sala de abr, jun e ago/2026 e a correção do lançamento em dobro.</li>
               <li>Compra de 1% pelo diretor: contrato e declaração de origem dos R$ 200 mil (três pagadores e R$ 70 mil em espécie).</li>
               <li>Quanto cada sócio colocou de jan a out/2026, com comprovante.</li>
