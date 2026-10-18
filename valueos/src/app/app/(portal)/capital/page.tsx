@@ -104,6 +104,14 @@ export default async function Capital() {
     { id: "CASH_OUT_OPS_M", tipo: "Operação e outras despesas", oque: "alimentação, transporte, contas, bancos e fornecedores menores" },
   ].sort((a, b) => nosTres(b.id) - nosTres(a.id));
   const cartoesMes = nosTres("CASH_OUT_CARDS_M") / 3;
+  // Jan a jul o banco não identifica quem recebeu: a divisão usa o que o fundador informa, e o resto fica junto.
+  const estimativas = [
+    { id: "CASH_JJ_TECH_EST", tipo: "Tecnologia e plataformas" },
+    { id: "CASH_JJ_CONSUMPTION_EST", tipo: "Consumo do dia a dia" },
+    { id: "CASH_JJ_OFFICE_EST", tipo: "Escritório" },
+    { id: "CASH_JJ_WAREHOUSE_EST", tipo: "Galpão, pago por repasse" },
+  ];
+  const restoJJ = semNome - estimativas.reduce((s, e) => s + (v(e.id) ?? 0), 0);
 
   // O lado social: o Conexão, medido no app do Vale do Recreio.
   const encontros = v("SOCIAL_MEETINGS");
@@ -255,8 +263,7 @@ export default async function Capital() {
           <div className="mt-6">
           <Nota>
             <strong>Aportes dos sócios em 2026:</strong> os documentos param em dez/2025, mas o extrato não. De janeiro a julho, a conta Santander recebeu
-            cerca de R$ 493 mil em valores grandes sem o nome de quem mandou — é aí que estão os aportes que o fundador seguiu fazendo para pagar sala,
-            galpão e equipe. O extrato com nome desse período separa quem colocou quanto.
+            cerca de R$ 376 mil em valores grandes — é aí que estão os aportes que o fundador seguiu fazendo para pagar sala, galpão e equipe.
           </Nota>
           </div>
         </Conteiner>
@@ -291,8 +298,9 @@ export default async function Capital() {
           total={["Total", <Valor key="c">{r(deClientes)}</Valor>, <Valor key="k">{r(deCapital)}</Valor>, <Valor key="s">{r(saidas)}</Valor>, <Valor key="d">{r(deClientes + deCapital - saidas)}</Valor>]}
         />
         <p className="mt-4 text-sm font-light text-muted">
-          Pix e depósitos de até R$ 5 mil na conta Santander de jan a jul contam como cliente; acima disso, como aporte. O saldo que já estava nas contas em
-          01/01 não entra na conta. <Etiqueta tipo="VERIFIED" pequena />
+          Pix e depósitos de até R$ 5 mil na conta Santander de jan a jul contam como cliente; acima disso, como aporte. Valores que entraram e saíram iguais
+          (R$ 117 mil em 15/01, 17–18/03, 13–16/04 e 22/06) ficam fora, como transferência. O saldo que já estava nas contas em 01/01 não entra na conta.{" "}
+          <Etiqueta tipo="VERIFIED" pequena />
         </p>
 
         <Titulo className="mt-16" sub="Agosto a outubro: os meses em que todas as contas mostram o nome de quem recebeu">
@@ -309,7 +317,23 @@ export default async function Capital() {
           ])}
           total={["Total", ...TRES.map((p) => <Valor key={p}>{r(doMes("CASH_OUT_M", p))}</Valor>), <Valor key="t3">{r(saidasTres)}</Valor>, "100%"]}
         />
-        <Grade colunas={2} className="mt-10">
+
+        <Titulo className="mt-16" sub="Até 19/07 a conta principal era a do Santander, e o banco não imprime quem recebeu cada pagamento. O total é do extrato; a divisão usa o que o fundador informa.">
+          {`Janeiro a Julho: ${r(semNome)} Pelo Santander`}
+        </Titulo>
+        <Quadro
+          cabecalho={["Para onde foi", "Valor", "Como foi calculado", "Etiqueta"]}
+          minimo={760}
+          linhas={[
+            ...estimativas.map((e) => {
+              const x = ultimo.get(e.id);
+              return [e.tipo, <Valor key="v">{r(x?.valor ?? null)}</Valor>, x?.nota ?? "—", <Etiqueta key="e" tipo={x?.etiqueta ?? "NAO_DISPONIVEL"} pequena />];
+            }),
+            ["Equipe, estoque, comissões e demais pagamentos", <Valor key="v">{r(restoJJ)}</Valor>, "o que sobra do total", <Etiqueta key="e" tipo="MANAGEMENT_DATA" pequena />],
+          ]}
+          total={["Total que saiu do Santander", <Valor key="v">{r(semNome)}</Valor>, "comprovantes diários do banco, 15/01 a 19/07", <Etiqueta key="e" tipo="VERIFIED" pequena />]}
+        />
+        <Grade colunas={3} className="mt-10">
           <Cartao tom="lateral" titulo="Os cartões que a empresa usa">
             A empresa usa dois cartões de pessoas físicas como cartões da empresa — o de uma executiva, que o deixou à disposição, e o de um investidor — e paga
             as faturas todo mês: em média {r(cartoesMes)} de agosto a outubro. Pelos cartões passam o aluguel do escritório (R$ 10 mil), as plataformas e
@@ -320,11 +344,6 @@ export default async function Capital() {
             O aplicativo foi construído por um time de quatro desenvolvedores contratados por serviço. Nas contas com nome eles quase não aparecem, porque foram
             pagos pela conta Santander de jan a jul e pelos cartões. O financeiro do app registra R$ 2.680 por mês de construção do aplicativo desde fev/2026, e
             o fundador informa cerca de R$ 10 mil por mês em tecnologia, somando pessoas e plataformas <Etiqueta tipo="MANAGEMENT_DATA" pequena />.
-          </Cartao>
-          <Cartao tom="lateral" titulo="Janeiro a julho">
-            Até 19/07 a conta principal era a do Santander, e dela só há comprovantes diários, sem o nome de quem recebeu. Saíram por ali {r(semNome)}: é aí que
-            estão o time, a tecnologia, o estoque e os aluguéis do primeiro semestre. O valor é verificado; o destino de cada pagamento se fecha com o extrato com
-            nome do período.
           </Cartao>
           <Cartao tom="cheio" titulo="Quanto a empresa recebeu para chegar até aqui">
             {r(fundadores)} declarados pelos fundadores até dez/2025 e {r(deCapital)} de capital que entrou nas contas em 2026: {r(recebido)}. Parte é dinheiro
@@ -529,12 +548,10 @@ export default async function Capital() {
               <li>Confirmar os Pix do galpão pagos por repasse (15/06: R$ 10 mil + R$ 5 mil; 16/07: 2 × R$ 10 mil) e o mês de agosto; somar a obra, se houver.</li>
               <li>Comprovantes da sala de abr, jun e ago/2026 e a correção do lançamento em dobro.</li>
               <li>Compra de 1% pelo diretor: contrato e declaração de origem dos R$ 200 mil (três pagadores e R$ 70 mil em espécie).</li>
-              <li>De quem é cada entrada grande sem nome no Santander: 19 e 28/01 (R$ 10 mil cada), 03/02 (R$ 18 mil), 02/03 (R$ 10 mil), 17/03 (R$ 50 mil, que saiu no dia seguinte), 08 e 09/04 (R$ 50 mil cada), 19/05 (R$ 40 mil + R$ 60 mil), 21/05 (R$ 27 mil), 22/06 (R$ 45 mil, que saiu no mesmo dia) e 16/07 (R$ 15 mil + R$ 5 mil).</li>
               <li>Quanto cada sócio colocou de jan a out/2026, com comprovante.</li>
               <li>Declarações do Simples de jun a set/2026 e a reconciliação do contador entre Simples, balancete e banco.</li>
               <li>Prova das vendas da fase leilaowhatsapp.com: extratos Pix, envios ou exportação do site.</li>
               <li>Confirmar se o orçamento de pessoas (R$ 182 mil) já é pago ou é meta; o fundador fala em R$ 200 a 250 mil de orçamento total por mês.</li>
-              <li>Extrato do Santander com nome de 15/01 a 19/07/2026: fecha {r(semNome)} de saídas e cerca de R$ 493 mil de entradas sem nome.</li>
               <li>Faturas dos dois cartões de ago a out/2026, para separar escritório, plataformas, consumo e o que for pessoal.</li>
               <li>Contratos ou recibos de serviço dos desenvolvedores do aplicativo.</li>
               <li>Notas e Pix do café e das doações do Conexão.</li>
