@@ -19,11 +19,16 @@
     return t ? JSON.parse(t) : null;
   }
 
+  // Modo teste: guarda no aparelho; se o navegador bloquear o armazenamento, segue só em memória.
+  let memLocal = { votos: {}, contatos: [] };
   const lerLocal = () => {
-    try { return JSON.parse(localStorage.getItem(LKEY)) || { votos: {}, contatos: [] }; }
-    catch { return { votos: {}, contatos: [] }; }
+    try { return JSON.parse(localStorage.getItem(LKEY)) || memLocal; }
+    catch { return memLocal; }
   };
-  const gravarLocal = d => localStorage.setItem(LKEY, JSON.stringify(d));
+  const gravarLocal = d => {
+    memLocal = d;
+    try { localStorage.setItem(LKEY, JSON.stringify(d)); } catch { /* sem armazenamento */ }
+  };
 
   // Cria elemento sem usar innerHTML (textos vêm como texto, nunca como HTML).
   function h(tag, props, ...kids) {
