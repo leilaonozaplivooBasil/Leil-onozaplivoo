@@ -67,6 +67,7 @@ export default async function Capital() {
   const cadastrado = v("FIXED_COST_REGISTERED_M");
   const pagoSet = serie.get("EXPENSES_PAID")?.find((x) => x.periodo === "2026-09-01")?.valor ?? null;
   const vencidas = v("EXPENSES_OVERDUE");
+  const galpaoTotal = v("WAREHOUSE_TOTAL_PAID");
   const mediaMes = terceiros && custoCapital ? (100 * custoCapital) / terceiros : 0;
   const aoAno = (Math.pow(1 + mediaMes / 100, 12) - 1) * 100;
   const receitaPropriaSet =
@@ -416,7 +417,7 @@ export default async function Capital() {
           cabecalho={["Item", "Orçamento (set/26)", "Cadastrado no app (nov/26)", "Observação"]}
           linhas={[
             ["Pessoas — diretoria e equipe", <Valor key="a">R$ 182.000</Valor>, <Valor key="b">R$ 70.900</Valor>, "não é folha tradicional: parte é retirada e parte é participação por meta"],
-            ["Galpão", <Valor key="a">R$ 23.100</Valor>, <Valor key="b">R$ 23.036</Valor>, "até out/2026: R$ 20 mil de entrada e três mensalidades de R$ 23 mil, cerca de R$ 89 mil"],
+            ["Galpão", <Valor key="a">R$ 23.100</Valor>, <Valor key="b">R$ 23.036</Valor>, `até out/2026: entrada, três mensalidades e frete para trazer os produtos — ${r(galpaoTotal)}`],
             ["Escritório no Recreio", <Valor key="a">R$ 10.000</Valor>, <Valor key="b">R$ 20.000</Valor>, "lançado duas vezes no app; o valor real é R$ 10 mil"],
             ["Tecnologia", <Valor key="a">R$ 5.000</Valor>, <Valor key="b">R$ 5.208</Valor>, "inclui R$ 2.680 por mês da construção do aplicativo"],
             ["Marketing", <Valor key="a">R$ 5.000</Valor>, <Valor key="b">R$ 105</Valor>, "o plano do ranking prevê R$ 36 a 40 mil por mês de tráfego"],
@@ -428,9 +429,9 @@ export default async function Capital() {
         />
         <Grade colunas={2} className="mt-10">
           <Cartao tom="lateral" titulo="A sala e o galpão">
-            O galpão custa R$ 23.036 por mês e já são quatro meses pagos: R$ 20 mil de entrada e três mensalidades de R$ 23 mil — cerca de R$ 89 mil até
-            outubro. A entrada (Pix de R$ 10 mil em 23/07 e em 27/07, à imobiliária da proprietária) e duas mensalidades (08/09 por boleto e 08/10 por
-            Pix) estão no extrato com nome <Etiqueta tipo="VERIFIED" pequena />; a outra mensalidade é informada pelo fundador{" "}
+            O galpão custa R$ 23.036 por mês e já são quatro meses pagos: R$ 20 mil de entrada, três mensalidades de R$ 23 mil e cerca de R$ 3 mil de frete
+            para trazer os produtos — {r(galpaoTotal)} até outubro. A entrada (Pix de R$ 10 mil em 23/07 e em 27/07, à imobiliária da proprietária) e duas mensalidades (08/09 por boleto e 08/10 por
+            Pix) estão no extrato com nome <Etiqueta tipo="VERIFIED" pequena />; a outra mensalidade e o frete são informados pelo fundador{" "}
             <Etiqueta tipo="MANAGEMENT_DATA" pequena />. O escritório custa R$ 10 mil por mês desde mar/2026; no app falta dar baixa em três meses e corrigir um lançamento em dobro.
           </Cartao>
           <Cartao tom="lateral" titulo="Contas vencidas no app">
