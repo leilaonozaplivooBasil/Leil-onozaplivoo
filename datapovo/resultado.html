@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B1F3A">
+<meta name="referrer" content="no-referrer">
+<title>DataPovo — Placar do povo</title>
+<style>
+:root{--navy:#0B1F3A;--yellow:#F5B800}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--navy);color:#fff}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.wrap{max-width:720px;margin:0 auto;padding:calc(12px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom))}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.brand{font-weight:800;font-size:24px}.brand b{color:var(--yellow)}
+.top a{color:#BFD0E8;font-size:14px}
+#teste{background:var(--yellow);color:#2B2100;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:600;margin-bottom:12px}
+#teste[hidden]{display:none}
+.card{background:#fff;color:#14202E;border-radius:16px;padding:20px}
+.q{font-size:clamp(20px,4vw,26px);font-weight:800;line-height:1.2;margin:0 0 4px}
+.total{display:flex;align-items:baseline;gap:8px;margin:10px 0 18px;color:#4B5865}
+.total b{font-size:40px;color:#14202E;line-height:1}
+.bars{display:flex;flex-direction:column;gap:14px}
+.bt{display:flex;justify-content:space-between;gap:12px;margin-bottom:5px}
+.bt .lb{font-weight:700}.bt .vl{color:#4B5865;font-variant-numeric:tabular-nums;white-space:nowrap}
+.track{height:18px;border-radius:9px;background:#E8ECF1;overflow:hidden}
+.fill{height:100%;border-radius:9px;background:var(--c);transition:width .4s}
+.sub{margin-top:18px;padding-top:14px;border-top:1px solid #E1E6EC;display:flex;gap:18px;flex-wrap:wrap;color:#4B5865;font-size:14px}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.btn{border:0;border-radius:8px;padding:12px 16px;font:700 15px system-ui,sans-serif;cursor:pointer;background:#0B1F3A;color:#fff;text-decoration:none}
+.btn.alt{background:#EEF1F5;color:#16202B;border:1px solid #CBD2DA}
+.upd{margin:12px 2px 0;font-size:12px;color:#8FA4C4}
+.err{background:#FBE6E6;color:#7A1F1F;border-radius:8px;padding:10px 12px;margin-top:12px;font-size:14px}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#111;color:#fff;
+  padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw}
+#toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">Data<b>Povo</b></div>
+    <a href="index.html">Votar</a>
+  </div>
+  <div id="teste" hidden>MODO TESTE: este placar mostra só os votos deste aparelho.</div>
+  <main class="card">
+    <h1 class="q" id="q"></h1>
+    <div class="total"><b id="total">0</b><span id="totalLb">votos</span></div>
+    <div class="bars" id="bars"></div>
+    <div class="sub" id="sub"></div>
+    <div id="erro"></div>
+    <div class="row">
+      <a class="btn" href="index.html">Votar</a>
+      <button class="btn alt" id="share" type="button">Compartilhar</button>
+    </div>
+  </main>
+  <p class="upd" id="upd"></p>
+</div>
+<div id="toast" role="status"></div>
+
+<script src="config.js"></script>
+<script src="dados.js"></script>
+<script>
+(() => {
+'use strict';
+const C = window.DATAPOVO, DP = window.DP, h = DP.h;
+const $ = s => document.querySelector(s);
+const COLORS = ['#2F6FDE','#E0A100','#1B9E5A','#D9455F','#7B4FD1','#13A5B8','#E26A2C','#6B7A8C'];
+const pct = (v, t) => (t ? v / t * 100 : 0).toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%';
+const num = v => v.toLocaleString('pt-BR');
+
+$('#q').textContent = C.PERGUNTA;
+$('#teste').hidden = DP.remoto;
+
+async function atualizar() {
+  try {
+    const r = await DP.resultado();
+    const linhas = C.OPCOES.map((o, i) => ({ nome: o.nome, v: r[o.n] || 0, cor: COLORS[i % COLORS.length] })).sort((a, b) => b.v - a.v);
+    const branco = r.BRANCO || 0, nulo = r.NULO || 0;
+    const total = linhas.reduce((s, l) => s + l.v, 0) + branco + nulo;   // só conta chaves conhecidas
+    $('#total').textContent = num(total);
+    $('#totalLb').textContent = total === 1 ? 'voto' : 'votos';
+    $('#bars').replaceChildren(...linhas.map(l => h('div', null,
+      h('div', { class: 'bt' }, h('span', { class: 'lb' }, l.nome), h('span', { class: 'vl' }, `${num(l.v)} · ${pct(l.v, total)}`)),
+      h('div', { class: 'track' }, h('div', { class: 'fill', style: `width:${total ? l.v / total * 100 : 0}%;--c:${l.cor}` })))));
+    $('#sub').replaceChildren(h('span', null, `Em branco: ${num(branco)} (${pct(branco, total)})`), h('span', null, `Nulos: ${num(nulo)} (${pct(nulo, total)})`));
+    $('#erro').replaceChildren();
+    $('#upd').textContent = 'Atualizado às ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) + ' · atualiza sozinho';
+  } catch (e) {
+    $('#erro').replaceChildren(h('div', { class: 'err' }, 'Não foi possível carregar o placar agora. Tentando de novo…'));
+  }
+}
+
+let toastT;
+$('#share').addEventListener('click', async () => {
+  const msg = await DP.compartilhar();
+  if (!msg) return;
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 3000);
+});
+
+atualizar();
+setInterval(atualizar, 20000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) atualizar(); });
+})();
+</script>
+</body>
+</html>
