@@ -5,6 +5,16 @@
 - **Sempre responda em português do Brasil**, com linguagem simples, do dia a dia, como para quem entende do negócio mas não é programador.
 - Evite jargão técnico; quando for necessário, explique logo em seguida. Frases curtas: o que foi feito, o que funciona, o que falta.
 
+## Documento oficial do dono (decisão de 18/10/2026)
+
+O documento oficial do projeto é `docs/CLAUDE_HANDOFF.md` no repositório
+`leilonozap` (branch `claude/project-structure-analysis-r1prad`), seção
+**"HISTÓRICO PARA O DONO — O QUE MELHOROU"**. Regra permanente: toda
+melhoria entregue (segurança, funcionalidade, correção visível) ganha uma
+linha lá, em português simples, no mesmo ciclo que fecha a etapa, sem o
+dono precisar pedir. Detalhe completo da regra está no `CLAUDE.md` daquele
+repositório.
+
 ## Métodos de trabalho (superpowers) — o que vale MAIS do que eles
 
 Os métodos em `.claude/skills/` (`brainstorming`, `writing-plans`, `executing-plans`, `subagent-driven-development`,
