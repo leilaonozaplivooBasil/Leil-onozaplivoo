@@ -8,6 +8,7 @@ import {
 import { valoresCarregados } from "@/lib/metricas";
 import { papelAtual, eConselho } from "@/lib/papel";
 import { mesCurto } from "@/lib/etiquetas";
+import { valorPlano } from "@/lib/plano";
 import { Etiqueta, NotaRevisao, SeloReferencia, brl, brlMil, inteiro } from "@/components/ui";
 import {
   Capitulo, Cartao, CartaoNumerado, Ciclo, Citacao, Conteiner, Faixa, GraficoBarras, Grade, Hoje, Imagem, LinhaDoTempo,
@@ -35,6 +36,7 @@ export default async function Memorando() {
   const conselho = eConselho(papel);
   const v = (id: string) => ultimo.get(id)?.valor ?? null;
   const s = (id: string) => serie.get(id) ?? [];
+  const plano = valorPlano({ cadastros: v("USERS_REGISTERED") ?? 0, compradores: v("APP_BUYERS") ?? 0, compras: v("APP_PAID_PURCHASES") ?? 0 });
   const mes = (id: string, iso: string) => s(id).find((x) => x.periodo === iso)?.valor ?? null;
 
   const gmv = s("GMV_GOODS");
@@ -264,13 +266,14 @@ export default async function Memorando() {
           <div className="grid gap-8 sm:grid-cols-2">
             <div>
               <p className="font-display text-2xl font-light text-white">Valuation</p>
-              <p className="num mt-3 whitespace-nowrap font-display text-4xl font-bold leading-none text-accent xl:text-[2.6rem]">R$ 25.000.000</p>
-              <div className="mt-3">
+              <p className="num mt-3 whitespace-nowrap font-display text-4xl font-bold leading-none text-accent xl:text-[2.6rem]">{brl(plano)}</p>
+              <div className="mt-3 flex flex-wrap gap-2">
                 <SeloReferencia />
+                <Etiqueta tipo="FORECAST" pequena />
               </div>
               <p className="mt-2 text-sm font-light text-muted">
-                Valor de referência declarado pelo fundador. O valuation independente, com método e faixa, é calculado neste portal —{" "}
-                <Link href="/app/valuation" className="text-pill underline underline-offset-2">ver metodologia</Link>.
+                Valor de hoje pela conta do plano de 12 meses; a venda de 1% foi a R$ 25 milhões. A conta, linha por linha —{" "}
+                <Link href="/app/valuation#plano" className="text-pill underline underline-offset-2">ver a conta</Link>.
               </p>
             </div>
             <div>
@@ -928,19 +931,20 @@ export default async function Memorando() {
             <Image src="/m/logo.png" alt="Leilão NoZap" fill sizes="288px" className="object-contain" />
           </div>
           <p className="mt-10 font-display text-4xl font-light text-white">Valuation</p>
-          <p className="mt-2 font-display text-2xl font-light text-white/90">Por Que R$ 25 Milhões?</p>
-          <p className="num mt-8 font-display text-5xl font-bold tracking-tight text-accent sm:text-8xl">R$ 25.000.000</p>
-          <div className="mt-4"><SeloReferencia /></div>
+          <p className="mt-2 font-display text-2xl font-light text-white/90">{`Por Que R$ ${Math.round(plano / 1_000_000)} Milhões?`}</p>
+          <p className="num mt-8 font-display text-5xl font-bold tracking-tight text-accent sm:text-8xl">{brl(plano)}</p>
+          <div className="mt-4 flex flex-wrap justify-center gap-2"><SeloReferencia /><Etiqueta tipo="FORECAST" pequena /></div>
           <p className="mx-auto mt-6 max-w-4xl font-light text-texto">
-            Uma das perguntas mais importantes para qualquer investidor é: por que essa empresa vale R$ 25 milhões? A resposta não está em uma única variável. Ela está na combinação dos ativos — e, a partir desta edição, cada ativo traz ao lado o número que o sistema mede hoje.
+            {`Uma das perguntas mais importantes para qualquer investidor é: por que essa empresa vale R$ ${Math.round(plano / 1_000_000)} milhões? A resposta tem duas partes. A primeira é a conta do plano: o que a empresa vende em 12 meses no Recreio e no digital, quanto sobra e quanto um investidor de risco paga por isso. A segunda é a combinação dos ativos que já existem — e, a partir desta edição, cada ativo traz ao lado o número que o sistema mede hoje.`}
           </p>
+          <Link href="/app/valuation#plano" className="mt-6 inline-block rounded-md bg-accent px-5 py-3 font-semibold text-accent-ink hover:brightness-110">Ver a conta do plano</Link>
         </Conteiner>
       </section>
 
       <Faixa>
         <Titulo tag="Composição do valuation">Os Ativos que Compõem o Valuation</Titulo>
         <Grade colunas={2} className="mt-8">
-          <Cartao tom="lateral" titulo="Ativo 01 — Tecnologia" rodape={<Hoje href="/app/prova/TECH_LOC">{`${n(loc)} linhas em 2.033 arquivos`}</Hoje>}>
+          <Cartao tom="lateral" titulo="Ativo 01 — Tecnologia" rodape={<Hoje href="/app/prova/TECH_LOC">{`${n(loc)} linhas em ${n(v("TECH_FILES"))} arquivos`}</Hoje>}>
             Código próprio sobre infraestrutura de mercado. Marketplace. Aplicativos. IA. Analisador. CRM. Comissionamento. Leilão Inteligente.
           </Cartao>
           <Cartao tom="lateral" titulo="Ativo 02 — Operação Validada" rodape={<Hoje href="/app/prova/CASH_IN_GROSS">{`${r(entSet)} em entradas no app em setembro; ${n(pagantes)} clientes pagantes em 90 dias`}</Hoje>}>
@@ -1229,7 +1233,7 @@ export default async function Memorando() {
           ))}
         </div>
         <div className="mx-auto my-8 h-px max-w-5xl bg-white/25" />
-        <p className="font-semibold text-accent">Valuation de referência do fundador: R$ 25.000.000</p>
+        <p className="font-semibold text-accent">{`Valuation do fundador pela conta do plano: ${brl(plano)} · a venda de 1% foi a R$ 25.000.000`}</p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="rounded-md border border-accent px-5 py-3 font-semibold text-pill hover:bg-accent/10">
             Solicitar Reunião Estratégica
@@ -1249,8 +1253,8 @@ export default async function Memorando() {
             itens={[
               "Esta edição substitui a de ~agosto publicada no Gamma. Mantida toda a narrativa; números trocados pelos do sistema com etiqueta.",
               "Retirados: Livoo/LivroLive (parceria encerrada em 17/10/2026), “TikTok Shop ativo”, “99% concluído”, “PHIZ em fase final”, “valuation conservador”, “sem perda financeira / sem risco típico de apostas” (revisão jurídica pendente), “receita recorrente” (não há cobrança periódica no sistema).",
-              "Atualizados: linhas de código 178 mil → 331 mil (2.033 arquivos); “80+ licenciados ativos” → três contagens do sistema (15 · 23 · 8); série de receita: a declarada (nov/25–mai/26) aparece rotulada e separada da série oficial do app (ago–out/26).",
-              "Mantido em destaque, com selo de referência do fundador: R$ 25.000.000. O valuation independente segue sem número até a metodologia v1.0 e o primeiro fechamento oficial.",
+              "Atualizados: linhas de código 178 mil → 337 mil (2.047 arquivos); “80+ licenciados ativos” → três contagens do sistema (15 · 23 · 8); série de receita: a declarada (nov/25–mai/26) aparece rotulada e separada da série oficial do app (ago–out/26).",
+              "Valuation em destaque, com selo de referência do fundador: R$ 25.000.000 → R$ 35.000.000 pela conta do plano (18/10/2026), aberta linha por linha em Valuation. O valuation independente segue sem número até a metodologia v1.0 e o primeiro fechamento oficial.",
               "Fora do memorando, mas visível ao investidor em outras páginas: a queda do varejo físico na planilha (jun R$ 72 mil → ago R$ 3,4 mil) em Riscos; a dívida com parceiros de compra em Parceiros de compra. As divergências contábeis detalhadas ficam na seção do conselho em Riscos.",
             ]}
           />

@@ -6,6 +6,7 @@ import { valoresCarregados } from "@/lib/metricas";
 import { mesCurto } from "@/lib/etiquetas";
 import { Etiqueta, Legenda, SeloReferencia, brl, inteiro } from "@/components/ui";
 import { Conteiner, Faixa, NumeroGrande, Tag } from "@/components/marca";
+import { valorPlano } from "@/lib/plano";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +14,7 @@ const PORTAS = [
   { href: "/app/memorando", imagem: "/m/fundador.jpg", tempo: "1 minuto para a tese", titulo: "Memorando de investimento", texto: "Carta do fundador e os 12 capítulos — edição atualizada com os números do sistema." },
   { href: "/app/numeros", imagem: "/m/comparai.jpg", tempo: "5 minutos", titulo: "Números com prova", texto: "Cada métrica com definição única, origem e impressão digital. Clique e veja de onde veio." },
   { href: "/app/capital", imagem: "/m/bilhoes-parados.jpg", tempo: "10 minutos", titulo: "A história do dinheiro", texto: "De onde veio cada real, quanto custa o capital, o custo fixo e o que fica na carteira do cliente." },
-  { href: "/app/valuation", imagem: "/m/cap5-modelo.jpg", tempo: "30 minutos", titulo: "Valuation", texto: "Referência do fundador, metodologia de nove métodos e a ponte do valor da empresa ao valor do sócio." },
+  { href: "/app/valuation", imagem: "/m/cap5-modelo.jpg", tempo: "30 minutos", titulo: "Valuation", texto: "A conta do plano linha por linha, a metodologia de nove métodos e a ponte do valor da empresa ao valor do sócio." },
 ];
 
 // A capa do portal: o que a empresa é, o que já está provado e para onde ir.
@@ -54,6 +55,7 @@ export default async function Inicio() {
   const deClientes = soma("CASH_IN_CUSTOMERS_M");
   const investido = (v("CAPITAL_FOUNDERS_DECLARED") ?? 0) + soma("CASH_IN_CAPITAL_M");
   const n = (x: number | null) => (x === null ? "—" : inteiro(x));
+  const plano = valorPlano({ cadastros: v("USERS_REGISTERED") ?? 0, compradores: v("APP_BUYERS") ?? 0, compras: v("APP_PAID_PURCHASES") ?? 0 });
   const r = (x: number | null) => (x === null ? "—" : brl(x));
 
   return (
@@ -118,12 +120,12 @@ export default async function Inicio() {
         <Conteiner className="grid gap-px py-0 md:grid-cols-3">
           <div className="py-10 md:pr-8">
             <p className="text-xs uppercase tracking-widest text-muted">Valuation</p>
-            <p className="num mt-3 font-display text-4xl font-semibold text-accent">R$ 25.000.000</p>
-            <div className="mt-2"><SeloReferencia /></div>
+            <p className="num mt-3 font-display text-4xl font-semibold text-accent">{brl(plano)}</p>
+            <div className="mt-2 flex flex-wrap gap-2"><SeloReferencia /><Etiqueta tipo="FORECAST" pequena /></div>
             <p className="mt-3 text-sm font-light text-texto">
-              O valuation independente sai com método, pesos fixados antes e faixa — depois da metodologia v1.0 e do primeiro fechamento oficial.
+              Pela conta do plano de 12 meses (a venda de 1% foi a R$ 25 milhões). O valuation independente sai com método, pesos fixados antes e faixa — depois da metodologia v1.0 e do primeiro fechamento oficial.
             </p>
-            <Link href="/app/valuation" className="mt-3 inline-block text-sm text-pill underline underline-offset-4">ver metodologia</Link>
+            <Link href="/app/valuation#plano" className="mt-3 inline-block text-sm text-pill underline underline-offset-4">ver a conta</Link>
           </div>
           <div className="border-white/10 py-10 md:border-l md:px-8">
             <p className="text-xs uppercase tracking-widest text-muted">Qualidade do dado</p>

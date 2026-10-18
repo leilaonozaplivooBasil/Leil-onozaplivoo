@@ -5,6 +5,7 @@ export const dynamic = "force-dynamic";
 
 // Para o investidor: fatores de risco em linguagem direta, com o que reduz cada um.
 const FATORES = [
+  ["Valor que depende do plano", "Os R$ 35 milhões vêm da conta do plano de 12 meses: 100 mil cadastros (hoje 1.173) e 36 mil compradores no Recreio, com três lojas e o distribuidor até mar/2027. Sem os cadastros, a mesma conta dá cerca de R$ 8,5 milhões.", "Medir todo mês o plano contra o realizado (cadastros, compradores, gasto por comprador, margem), com a conta aberta em Valuation."],
   ["Histórico curto", "O app vende desde jun/2026 e tem série oficial desde 01/08/2026; os extratos conciliados cobrem jan a out/2026 (9,5 meses). Ainda é pouco para projeção e fluxo de caixa descontado.", "Faixa larga declarada; peso baixo do DCF; fechamento mensal oficial para crescer a série."],
   ["Margem por venda não comprovada", "O app não grava o custo por venda; o valor de mercado do estoque foi apagado em setembro. Unit economics fica sem fonte.", "Gravar custo por venda no app (mudança D1, zona vermelha, com ordem do dono). Até lá, margem marcada como premissa."],
   ["Receita sem definição única", "Memorando, declaração ao banco, livros, PGDAS e extratos trazem valores diferentes para o mesmo período.", "Uma definição de receita (DEC-2) e radar de discrepâncias entre as fontes."],
@@ -39,7 +40,7 @@ export default async function Riscos() {
       titulo="Riscos"
       descricao="Um portal de investidor que esconde risco não vale nada. Aqui estão os fatores que alargam a faixa de valor e o que reduz cada um. Nenhum item é parecer jurídico ou contábil."
     >
-      <Secao sobretitulo="Fatores de risco" titulo="Os dez que mais pesam hoje">
+      <Secao sobretitulo="Fatores de risco" titulo="Os onze que mais pesam hoje">
         <Tabela
           cabecalho={["Fator", "O que é", "O que reduz"]}
           linhas={FATORES.map((f) => [<strong key="f">{f[0]}</strong>, <span key="o" className="text-muted">{f[1]}</span>, <span key="r" className="text-muted">{f[2]}</span>])}

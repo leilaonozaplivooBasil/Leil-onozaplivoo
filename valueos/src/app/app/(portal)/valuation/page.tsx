@@ -6,6 +6,8 @@ import { papelAtual, eConselho } from "@/lib/papel";
 import { mesCurto } from "@/lib/etiquetas";
 import { Etiqueta, NotaRevisao, SeloReferencia, brl, inteiro } from "@/components/ui";
 import { Capitulo, Cartao, Citacao, Conteiner, Faixa, Grade, Hoje, NumeroGrande, Tag, Texto, Titulo } from "@/components/marca";
+import { valorPlano } from "@/lib/plano";
+import { ContaDoPlano } from "./ContaDoPlano";
 
 export const dynamic = "force-dynamic";
 
@@ -54,6 +56,7 @@ export default async function Valuation() {
   const custoCapital = v("CAPITAL_COST_M");
   const saidas = soma("CASH_OUT_M");
   const parteVenda = saidas ? Math.round((100 * soma("CASH_IN_CUSTOMERS_M")) / saidas) : 0;
+  const plano = valorPlano({ cadastros: v("USERS_REGISTERED") ?? 0, compradores: v("APP_BUYERS") ?? 0, compras: v("APP_PAID_PURCHASES") ?? 0 });
 
   // O painel vivo: as linhas que entram no modelo, mês a mês.
   const PERIODOS = ["2026-08-01", "2026-09-01", "2026-10-01"];
@@ -100,22 +103,26 @@ export default async function Valuation() {
             {loc ? `${Math.round(loc / 1000)} mil linhas de código` : ""} · arremates de outubro (16 dias) {arrOut !== null && arrSet !== null && arrOut > arrSet ? "acima de setembro inteiro" : "em crescimento"} · série oficial desde 01/08/2026
           </p>
           <div className="mx-auto my-10 h-px max-w-3xl bg-white/20" />
-          <p className="font-display text-2xl font-light text-white">Valuation Corporativo</p>
-          <p className="num mt-4 font-display text-5xl font-bold tracking-tight text-accent sm:text-8xl">R$ 25.000.000</p>
-          <div className="mt-4"><SeloReferencia /></div>
+          <p className="font-display text-2xl font-light text-white">Valuation Corporativo · pelo plano de 12 meses</p>
+          <p className="num mt-4 font-display text-5xl font-bold tracking-tight text-accent sm:text-8xl">{brl(plano)}</p>
+          <div className="mt-4 flex flex-wrap justify-center gap-2"><SeloReferencia /><Etiqueta tipo="FORECAST" pequena /></div>
           <p className="mx-auto mt-6 max-w-3xl font-light text-texto">
-            É o valor que o fundador declara e que foi usado na venda de 1%. Abaixo, cada ativo que sustenta esse valor aparece ao lado do número que o sistema mede hoje — e, no fim, o método que vai gerar o valuation independente.
+            É o valor de hoje pela conta do plano: o que a empresa vende em 12 meses, quanto sobra e quanto um investidor de risco paga por isso — linha por linha, logo abaixo. A venda de 1%, em setembro, foi feita a R$ 25 milhões.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a href="#painel" className="rounded-md bg-accent px-5 py-3 font-semibold text-accent-ink hover:brightness-110">Ver o painel vivo</a>
+            <a href="#plano" className="rounded-md bg-accent px-5 py-3 font-semibold text-accent-ink hover:brightness-110">Ver a conta</a>
+            <a href="#painel" className="rounded-md border border-white/40 px-5 py-3 font-semibold text-white hover:bg-white/10">Ver o painel vivo</a>
             <a href="#metodologia" className="rounded-md border border-white/40 px-5 py-3 font-semibold text-white hover:bg-white/10">Ver a metodologia</a>
           </div>
         </Conteiner>
       </section>
 
-      {/* O QUE VALE R$ 25 MI — cada ativo com o dado de hoje */}
-      <Faixa id="ativos">
-        <Titulo tag="Ativos que sustentam o valuation">O Que Vale R$ 25.000.000</Titulo>
+      {/* A CONTA DO PLANO — A + B, lucro e valor */}
+      <ContaDoPlano v={v} clientes2026={soma("CASH_IN_CUSTOMERS_M")} meses2026={9.5} />
+
+      {/* O QUE JÁ EXISTE — cada ativo com o dado de hoje */}
+      <Faixa id="ativos" className="border-t border-white/10">
+        <Titulo tag="Ativos que sustentam o valuation">O Que Já Existe Hoje</Titulo>
         <p className="mt-4 max-w-4xl font-light text-texto">
           No site, os ativos aparecem como afirmação. Aqui, cada um traz o número medido no sistema, a etiqueta de qualidade e o link para a prova.
         </p>
@@ -151,7 +158,7 @@ export default async function Valuation() {
           </Cartao>
         </Grade>
         <Citacao className="mt-10 !font-light">
-          O valor de R$ 25.000.000 é a referência do fundador. O valuation independente reflete o que os dados sustentam — e mostra, ativo por ativo, o que falta para a faixa subir.
+          A conta do plano chega em {brl(plano)}. Os ativos acima são o que já existe para o plano acontecer. O valuation independente reflete o que os dados sustentam — e mostra, ativo por ativo, o que falta para a faixa subir.
         </Citacao>
       </Faixa>
 
@@ -303,9 +310,9 @@ export default async function Valuation() {
       <Faixa>
         <Grade colunas={2}>
           <Cartao tom="verde" titulo="Referência do fundador">
-            <p className="num font-display text-4xl font-semibold text-accent">R$ 25.000.000</p>
-            <div className="mt-2"><SeloReferencia /></div>
-            <p className="mt-3">Lacrada com impressão digital antes da primeira rodada, para que o cálculo não seja puxado por ela. Depois, comparada com o resultado, com a explicação de cada diferença.</p>
+            <p className="num font-display text-4xl font-semibold text-accent">{brl(plano)}</p>
+            <div className="mt-2 flex flex-wrap gap-2"><SeloReferencia /><Etiqueta tipo="FORECAST" pequena /></div>
+            <p className="mt-3">Pela <a href="#plano" className="text-pill underline underline-offset-2">conta do plano</a> (out/2026). A venda de 1% em set/2026 foi a R$ 25 milhões. Lacrada com impressão digital antes da primeira rodada, para que o cálculo não seja puxado por ela. Depois, comparada com o resultado, com a explicação de cada diferença.</p>
           </Cartao>
           <Cartao tom="azul" titulo="Valuation independente">
             <p className="font-display text-4xl font-light text-white">Não calculado</p>
@@ -463,7 +470,8 @@ export default async function Valuation() {
                 </thead>
                 <tbody>
                   {[
-                    ["R$ 25.000.000", "sites e documento oficial do app", "nenhum visível", "referência do fundador"],
+                    [brl(plano), "este portal (out/2026)", "faturamento do ano 1 do plano × 3 ÷ 2; conferido por 10× o EBITDA", "projeção: depende de 100 mil cadastros e 36 mil compradores no Recreio"],
+                    ["R$ 25.000.000", "sites, documento oficial do app e venda de 1% (set/2026)", "nenhum visível", "referência anterior do fundador"],
                     ["R$ 373.788 – R$ 747.576", "painel do Parceiro (código do app)", "3× a 6× o lucro anual “apurado” (R$ 124.596)", "ilustrativo; o próprio código diz “não é laudo”"],
                     ["R$ 7,97 mi – R$ 15,9 mi", "painel do Parceiro (código do app)", "mesmos múltiplos sobre lucro projetado com R$ 1 mi/mês", "cenário, não valor atual"],
                   ].map((l) => (
@@ -477,7 +485,10 @@ export default async function Valuation() {
                 conselho
                 itens={[
                   "Esta primeira rodada não pode ser cega: o R$ 25 mi já circulou. O modo cego (referência lacrada, aberta só depois) vale para as próximas rodadas e para qualquer terceiro.",
-                  "A distância entre os três valores que circulam (R$ 25 mi × R$ 0,37–0,75 mi × R$ 8–16 mi) é o primeiro ponto que um investidor levanta — por isso a ponte, não a defesa do número.",
+                  "A distância entre os valores que circulam (R$ 35 mi pelo plano × R$ 25 mi na venda de 1% × R$ 0,37–0,75 mi × R$ 8–16 mi no app × R$ 90 mi no documento de out/2026) é o primeiro ponto que um investidor levanta — por isso a conta aberta e a ponte, não a defesa do número.",
+                  "Sem os 100 mil cadastros, a conta do plano cai para o cenário conservador (cerca de R$ 8,5 mi) — perto da leitura ponderada que fizemos em 18/10 só para a Leilão NoZap (R$ 5 a 13 mi). Os 100 mil dependem da parceria de tráfego com uma plataforma de apostas: antes de assinar, parecer jurídico sobre publicidade de apostas e sobre a roleta (bônus grátis) e o Passaporte de Lances (crédito pago).",
+                  "Na esteira, um dos dois R$ 200 mil fechados (30/09) está como aporte de parceiro, mas o dinheiro que bate com ele no extrato é a compra de 1% (Itaú, 24 a 30/09). Conferir para não contar a mesma entrada duas vezes.",
+                  "Carteira como captação: o saldo é do cliente. Usar esse dinheiro para comprar mercadoria precisa de parecer sobre as regras do Banco Central para conta de pagamento antes de entrar no plano de caixa.",
                   "Retirados do site de valuation nesta versão: a seção que compara o produto a plataformas de aposta, “ROI elevado por ciclo”, “30% de comissão para licenciados” (o código mostra percentuais por papel), Livoo e “50% de ativação / ~40 ativos”.",
                 ]}
               />
