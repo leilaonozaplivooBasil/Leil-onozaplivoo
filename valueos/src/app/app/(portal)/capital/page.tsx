@@ -80,17 +80,51 @@ export default async function Capital() {
   const totalVendas = vendas.reduce((s, x) => s + (x.valor ?? 0), 0);
   const ateMaio = antes.filter((x) => x.periodo <= "2026-05-01").reduce((s, x) => s + (x.valor ?? 0), 0);
 
+  // O caixa de 2026, conciliado nos extratos: o que entrou, o que saiu e para onde foi.
+  const somaSerie = (id: string) => (serie.get(id) ?? []).reduce((s, x) => s + (x.valor ?? 0), 0);
+  const deClientes = somaSerie("CASH_IN_CUSTOMERS_M");
+  const deCapital = somaSerie("CASH_IN_CAPITAL_M");
+  const saidas = somaSerie("CASH_OUT_M");
+  const semNome = somaSerie("CASH_OUT_UNNAMED_M");
+  const mesesCaixa = (serie.get("CASH_OUT_M") ?? []).map((x) => x.periodo).sort();
+  const parteVenda = saidas ? Math.round((100 * deClientes) / saidas) : 0;
+  const recebido = (fundadores ?? 0) + deCapital;
+  const TRES = ["2026-08-01", "2026-09-01", "2026-10-01"];
+  const doMes = (id: string, iso: string) => mesDe(id, iso)?.valor ?? 0;
+  const nosTres = (id: string) => TRES.reduce((s, p) => s + doMes(id, p), 0);
+  const saidasTres = nosTres("CASH_OUT_M");
+  const gastos = [
+    { id: "CASH_OUT_CARDS_M", tipo: "Cartões usados pela empresa", oque: "faturas dos cartões de uma executiva e de um investidor" },
+    { id: "CASH_OUT_TEAM_M", tipo: "Time, vendas e comissões", oque: "pessoas da equipe, vendedores e comissão por venda" },
+    { id: "CASH_OUT_ADMIN_M", tipo: "Administração e sócios", oque: "repasses à administradora da operação e retiradas" },
+    { id: "CASH_OUT_RENT_M", tipo: "Galpão, escritório e aluguéis", oque: "galpão a R$ 23.036 por mês desde setembro" },
+    { id: "CASH_OUT_CAPITAL_M", tipo: "Rendimentos, consórcio e capitalização", oque: "o custo do capital de terceiros" },
+    { id: "CASH_OUT_STOCK_M", tipo: "Estoque, compras e frete", oque: "lotes e mercadoria para o leilão e a loja" },
+    { id: "CASH_OUT_TECH_M", tipo: "Plataformas e tecnologia", oque: "assinaturas, meios de pagamento e marketing pagos pela conta" },
+    { id: "CASH_OUT_OPS_M", tipo: "Operação e outras despesas", oque: "alimentação, transporte, contas, bancos e fornecedores menores" },
+  ].sort((a, b) => nosTres(b.id) - nosTres(a.id));
+  const cartoesMes = nosTres("CASH_OUT_CARDS_M") / 3;
+
+  // O lado social: o Conexão, medido no app do Vale do Recreio.
+  const encontros = v("SOCIAL_MEETINGS");
+  const pessoas = v("SOCIAL_PEOPLE");
+  const confirmacoes = v("SOCIAL_CONFIRMATIONS");
+  const chegadas = v("SOCIAL_CHECKINS");
+  const doacoes = v("SOCIAL_DONATIONS");
+  const n = (x: number | null) => (x === null ? "—" : inteiro(x));
+
   return (
     <div>
       {/* CAPA */}
       <Capitulo
-        numero="Livro do capital · atualizado em 17/10/2026"
+        numero="Livro do capital · atualizado em 18/10/2026"
         titulo="A História do Dinheiro"
         sub="De onde veio cada real, o que ele construiu e quanto custa manter a empresa de pé."
         imagem="/m/bilhoes-parados.jpg"
       >
         <p>
-          Este retrato junta os documentos dos fundadores, as planilhas de venda da operação, o financeiro e a carteira do aplicativo. Cada número diz de
+          Este retrato junta os documentos dos fundadores, as planilhas de venda da operação, os extratos do Itaú, do Santander e do Mercado Pago, o
+          financeiro e a carteira do aplicativo. Cada número diz de
           onde veio. O que já tem prova aparece como <strong>verificado</strong>; o que ainda depende de comprovante aparece como <strong>dado da administração</strong>.
         </p>
       </Capitulo>
@@ -220,15 +254,88 @@ export default async function Capital() {
           />
           <div className="mt-6">
           <Nota>
-            <strong>Aportes dos sócios em 2026:</strong> os documentos param em dez/2025. O fundador informa que seguiu colocando capital próprio — sala, galpão e
-            equipe. Esses valores entram aqui assim que cada um tiver data, valor e comprovante.
+            <strong>Aportes dos sócios em 2026:</strong> os documentos param em dez/2025, mas o extrato não. De janeiro a julho, a conta Santander recebeu
+            cerca de R$ 493 mil em valores grandes sem o nome de quem mandou — é aí que estão os aportes que o fundador seguiu fazendo para pagar sala,
+            galpão e equipe. O extrato com nome desse período separa quem colocou quanto.
           </Nota>
           </div>
         </Conteiner>
       </section>
 
-      {/* QUANTO CUSTA O DINHEIRO DE FORA */}
+      {/* PARA ONDE FOI O DINHEIRO */}
       <Faixa>
+        <Titulo tag="Conciliação dos extratos" sub="Itaú, Santander e Mercado Pago, de 01/01 a 16/10/2026, sem contar transferência entre contas da própria empresa">
+          Para Onde Foi o Dinheiro
+        </Titulo>
+        <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <NumeroGrande compacto valor={r(saidas)} rotulo="saíram das contas" sub="jan a 16/out/2026" etiqueta="VERIFIED" href="/app/prova/CASH_OUT_M" />
+          <NumeroGrande compacto valor={r(deClientes)} rotulo="vieram de clientes" sub="Pix, depósitos e vendas" etiqueta="VERIFIED" href="/app/prova/CASH_IN_CUSTOMERS_M" cor="verde" />
+          <NumeroGrande compacto valor={r(deCapital)} rotulo="vieram de aportes e capital" sub="sócios, investidores e parceiros" etiqueta="VERIFIED" href="/app/prova/CASH_IN_CAPITAL_M" />
+          <NumeroGrande compacto valor={`${parteVenda}%`} rotulo="dos gastos pagos com venda" sub="o restante veio de capital" etiqueta="VERIFIED" />
+        </div>
+        <Quadro
+          cabecalho={["Mês", "De clientes", "Aportes e capital", "Saíram", "Sobrou ou faltou"]}
+          minimo={820}
+          linhas={mesesCaixa.map((p) => {
+            const c = doMes("CASH_IN_CUSTOMERS_M", p);
+            const k = mesDe("CASH_IN_CAPITAL_M", p);
+            const s = doMes("CASH_OUT_M", p);
+            return [
+              p === "2026-10-01" ? `${rotuloMes(p)} (até 16)` : rotuloMes(p),
+              <Valor key="c">{r(c)}</Valor>,
+              <span key="k"><Valor>{r(k?.valor ?? 0)}</Valor>{k?.nota && <Obs>{k.nota}</Obs>}</span>,
+              <Valor key="s">{r(s)}</Valor>,
+              <Valor key="d">{r(c + (k?.valor ?? 0) - s)}</Valor>,
+            ];
+          })}
+          total={["Total", <Valor key="c">{r(deClientes)}</Valor>, <Valor key="k">{r(deCapital)}</Valor>, <Valor key="s">{r(saidas)}</Valor>, <Valor key="d">{r(deClientes + deCapital - saidas)}</Valor>]}
+        />
+        <p className="mt-4 text-sm font-light text-muted">
+          Pix e depósitos de até R$ 5 mil na conta Santander de jan a jul contam como cliente; acima disso, como aporte. O saldo que já estava nas contas em
+          01/01 não entra na conta. <Etiqueta tipo="VERIFIED" pequena />
+        </p>
+
+        <Titulo className="mt-16" sub="Agosto a outubro: os meses em que todas as contas mostram o nome de quem recebeu">
+          {`${r(saidasTres)} em Três Meses, por Tipo de Gasto`}
+        </Titulo>
+        <Quadro
+          cabecalho={["Tipo de gasto", "Ago", "Set", "Out (até 16)", "Total", "Parte"]}
+          minimo={860}
+          linhas={gastos.map((g) => [
+            <span key="t">{g.tipo}<Obs>{g.oque}</Obs></span>,
+            ...TRES.map((p) => <Valor key={p}>{r(doMes(g.id, p))}</Valor>),
+            <Valor key="t3">{r(nosTres(g.id))}</Valor>,
+            <Valor key="pc">{saidasTres ? `${Math.round((100 * nosTres(g.id)) / saidasTres)}%` : "—"}</Valor>,
+          ])}
+          total={["Total", ...TRES.map((p) => <Valor key={p}>{r(doMes("CASH_OUT_M", p))}</Valor>), <Valor key="t3">{r(saidasTres)}</Valor>, "100%"]}
+        />
+        <Grade colunas={2} className="mt-10">
+          <Cartao tom="lateral" titulo="Os cartões que a empresa usa">
+            A empresa usa dois cartões de pessoas físicas como cartões da empresa — o de uma executiva, que o deixou à disposição, e o de um investidor — e paga
+            as faturas todo mês: em média {r(cartoesMes)} de agosto a outubro. Pelos cartões passam o aluguel do escritório (R$ 10 mil), as plataformas e
+            sistemas (cerca de R$ 5 mil) e o consumo do dia a dia (R$ 5 a 10 mil), segundo o fundador <Etiqueta tipo="MANAGEMENT_DATA" pequena />. O
+            restante se separa com as faturas na mão.
+          </Cartao>
+          <Cartao tom="lateral" titulo="Tecnologia">
+            O aplicativo foi construído por um time de quatro desenvolvedores contratados por serviço. Nas contas com nome eles quase não aparecem, porque foram
+            pagos pela conta Santander de jan a jul e pelos cartões. O financeiro do app registra R$ 2.680 por mês de construção do aplicativo desde fev/2026, e
+            o fundador informa cerca de R$ 10 mil por mês em tecnologia, somando pessoas e plataformas <Etiqueta tipo="MANAGEMENT_DATA" pequena />.
+          </Cartao>
+          <Cartao tom="lateral" titulo="Janeiro a julho">
+            Até 19/07 a conta principal era a do Santander, e dela só há comprovantes diários, sem o nome de quem recebeu. Saíram por ali {r(semNome)}: é aí que
+            estão o time, a tecnologia, o estoque e os aluguéis do primeiro semestre. O valor é verificado; o destino de cada pagamento se fecha com o extrato com
+            nome do período.
+          </Cartao>
+          <Cartao tom="cheio" titulo="Quanto a empresa recebeu para chegar até aqui">
+            {r(fundadores)} declarados pelos fundadores até dez/2025 e {r(deCapital)} de capital que entrou nas contas em 2026: {r(recebido)}. Parte é dinheiro
+            de sócio, parte é capital de terceiros que paga rendimento todo mês e {r(compra1pct)} são compra de participação.
+          </Cartao>
+        </Grade>
+      </Faixa>
+
+      {/* QUANTO CUSTA O DINHEIRO DE FORA */}
+      <section className="border-y border-white/10 bg-surface py-16 sm:py-24">
+        <Conteiner>
         <Titulo tag="O custo do capital" sub="Dinheiro de terceiros que a empresa remunera todo mês — não é participação societária">
           {`${r(terceiros)} a ${r(custoCapital)} por Mês`}
         </Titulo>
@@ -252,11 +359,11 @@ export default async function Capital() {
             venda nova.
           </Cartao>
         </Grade>
-      </Faixa>
+        </Conteiner>
+      </section>
 
       {/* A CARTEIRA DO CLIENTE */}
-      <section className="border-y border-white/10 bg-surface py-16 sm:py-24">
-        <Conteiner>
+      <Faixa>
           <Titulo tag="O dinheiro do cliente" sub="Quem deposita para dar lance deixa metade guardada para o próximo leilão">
             Metade do Depósito Fica na Plataforma
           </Titulo>
@@ -276,11 +383,11 @@ export default async function Capital() {
               painel como obrigação, não como caixa.
             </Cartao>
           </Grade>
-        </Conteiner>
-      </section>
+      </Faixa>
 
       {/* QUANTO CUSTA MANTER A EMPRESA */}
-      <Faixa>
+      <section className="border-y border-white/10 bg-surface py-16 sm:py-24">
+        <Conteiner>
         <Titulo tag="Custo fixo" sub="O orçamento da diretoria, o que está cadastrado no app e o que foi pago de fato">Quanto Custa Manter a Empresa por Mês</Titulo>
         <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-3">
           <NumeroGrande compacto valor={r(orcamento)} rotulo="orçamento mensal" sub="aprovado em set/2026" etiqueta="MANAGEMENT_DATA" href="/app/prova/FIXED_COST_BUDGET_M" />
@@ -312,6 +419,45 @@ export default async function Capital() {
             financeiro do app virar prova.
           </Cartao>
         </Grade>
+        </Conteiner>
+      </section>
+
+      {/* O LADO SOCIAL */}
+      <Capitulo
+        id="social"
+        numero="O lado social"
+        titulo="Conexão: o Café de Toda Sexta"
+        sub="Toda sexta de manhã, a empresa abre a porta e serve café para quem quiser chegar."
+        imagem="/m/vale-recreio.jpg"
+        lado="esquerda"
+      >
+        <p>
+          O Conexão é a parte social da empresa. Toda sexta, das 9h às 13h, no Vale do Recreio, um café da manhã gratuito com o tema “Desconectar para
+          conectar” — e o Conexão Delas, feito por mulheres e para mulheres. São quase dois anos de encontros, e desde out/2025 cada um fica registrado no
+          aplicativo do Vale do Recreio, com quem confirmou e quem chegou.
+        </p>
+      </Capitulo>
+      <Faixa>
+        <Titulo tag="Medido no app do Vale do Recreio" sub="Registros de out/2025 a 16/10/2026; os encontros anteriores aconteceram antes de o app existir">
+          Um Ano de Encontros, Registrado
+        </Titulo>
+        <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
+          <NumeroGrande compacto valor={n(encontros)} rotulo="encontros" sub="quase todas as sextas" etiqueta="VERIFIED" href="/app/prova/SOCIAL_MEETINGS" />
+          <NumeroGrande compacto valor={n(pessoas)} rotulo="pessoas diferentes" sub="por e-mail ou telefone" etiqueta="VERIFIED" href="/app/prova/SOCIAL_PEOPLE" cor="verde" />
+          <NumeroGrande compacto valor={n(confirmacoes)} rotulo="confirmações" sub="feitas no app" etiqueta="VERIFIED" href="/app/prova/SOCIAL_CONFIRMATIONS" />
+          <NumeroGrande compacto valor={n(chegadas)} rotulo="chegadas na porta" sub="marcadas no dia" etiqueta="VERIFIED" href="/app/prova/SOCIAL_CHECKINS" />
+          <NumeroGrande compacto valor={doacoes === null ? "—" : `+ ${r(doacoes)}`} rotulo="em doações e café" sub="em quase dois anos" etiqueta="MANAGEMENT_DATA" href="/app/prova/SOCIAL_DONATIONS" />
+        </div>
+        <Grade colunas={2} className="mt-10">
+          <Cartao tom="lateral" titulo="Por que isso entra no livro do capital">
+            É dinheiro que a empresa tira do caixa sem esperar venda em troca. Uma comunidade que se encontra toda semana há quase dois anos, com presença
+            medida, é um ativo que não se copia comprando anúncio.
+          </Cartao>
+          <Cartao tom="lateral" titulo="O que falta provar">
+            Os encontros e as presenças vêm do banco do app do Vale <Etiqueta tipo="VERIFIED" pequena />. O valor das doações é informado pelo fundador e passa a
+            verificado com as notas e os Pix do café e das doações.
+          </Cartao>
+        </Grade>
       </Faixa>
 
       {/* SÓ CONSELHO: O QUE AJUSTAR ANTES DE MOSTRAR A UM INVESTIDOR */}
@@ -334,7 +480,9 @@ export default async function Capital() {
               </Cartao>
               <Cartao tom="escuro" titulo="4 · Despesas a separar da empresa">
                 No financeiro do app há, por mês: R$ 24,6 mil de restaurante do hotel e R$ 10,3 mil de dois aluguéis de moradia. As faturas do cartão emprestado (R$ 23
-                mil por mês, R$ 179 mil lançados até abr/2027) precisam das notas de cada compra. Classificar o que é da empresa e o que é pessoa física.
+                mil por mês, R$ 179 mil lançados até abr/2027) precisam das notas de cada compra. Nos extratos de set e out também saem da conta da empresa
+                gastos pessoais (restaurantes, lazer, loja de celular) e cerca de R$ 20 mil em parcelas a bancos e dívidas sem contrato no data room.
+                Classificar o que é da empresa e o que é pessoa física.
               </Cartao>
               <Cartao tom="escuro" titulo="5 · Lançamentos com erro">
                 Aluguel do escritório lançado duas vezes por mês (R$ 10 mil a mais). Título de capitalização de R$ 10 mil por mês, cuja descrição diz R$ 1 mil. O
@@ -365,6 +513,16 @@ export default async function Capital() {
                 empresa usa esse cartão e paga a fatura todo mês (R$ 20 a 23 mil). Funciona, mas compra em cartão de pessoa física é difícil de provar como despesa
                 da empresa: o caminho é migrar para cartão da empresa e documentar o carro como garantia.
               </Cartao>
+              <Cartao tom="escuro" titulo="11 · O investimento em tecnologia não aparece com nome">
+                O fundador informa que o aplicativo foi construído por Ávila, Elismar, Luiz Santana e Diogo Archanjo. Nas contas com nome aparecem só cerca de R$
+                2 mil pagos a eles (jul a set). O resto saiu pela conta Santander sem nome e pelos cartões. Sem esse número, o principal ativo do valuation — o
+                aplicativo — fica sem custo comprovado: contratos ou recibos de serviço de cada um resolvem.
+              </Cartao>
+              <Cartao tom="escuro" titulo={`12 · Só ${parteVenda}% dos gastos foram pagos com venda`}>
+                De jan a 16/out saíram {r(saidas)} das contas; os clientes trouxeram {r(deClientes)}. Os outros {r(saidas - deClientes)} vieram de capital — e
+                uma parte é capital de terceiros que cobra juros. O investidor vai ler isso como um gasto acima da venda de cerca de{" "}
+                {r((saidas - deClientes) / 9.5)} por mês. A resposta é a receita própria do app crescendo e o custo do capital caindo.
+              </Cartao>
             </Grade>
             <Titulo className="mt-16" sub="O que falta o fundador mandar para fechar a conta">A Lista de Pendências</Titulo>
             <ol className="mt-6 max-w-4xl list-decimal space-y-2 pl-6 text-[15px] font-light leading-relaxed text-texto">
@@ -376,6 +534,10 @@ export default async function Capital() {
               <li>Declarações do Simples de jun a set/2026 e a reconciliação do contador entre Simples, balancete e banco.</li>
               <li>Prova das vendas da fase leilaowhatsapp.com: extratos Pix, envios ou exportação do site.</li>
               <li>Confirmar se o orçamento de pessoas (R$ 182 mil) já é pago ou é meta; o fundador fala em R$ 200 a 250 mil de orçamento total por mês.</li>
+              <li>Extrato do Santander com nome de 15/01 a 19/07/2026: fecha {r(semNome)} de saídas e cerca de R$ 493 mil de entradas sem nome.</li>
+              <li>Faturas dos dois cartões de ago a out/2026, para separar escritório, plataformas, consumo e o que for pessoal.</li>
+              <li>Contratos ou recibos de serviço dos desenvolvedores do aplicativo.</li>
+              <li>Notas e Pix do café e das doações do Conexão.</li>
             </ol>
           </Conteiner>
         </section>
@@ -385,7 +547,8 @@ export default async function Capital() {
       <Faixa>
         <Citacao verde>
           Uma empresa que começou com 551 produtos e o último recurso do fundador, registrou mais de R$ 300 mil em vendas em onze meses, construiu um aplicativo próprio e hoje
-          tem clientes que deixam metade do depósito esperando o próximo leilão. O que falta não é história: é trocar o dinheiro caro e provar cada número.
+          tem clientes que deixam metade do depósito esperando o próximo leilão — e toda sexta abre a porta para a comunidade. O que falta não é história: é
+          trocar o dinheiro caro e provar cada número.
         </Citacao>
         <Texto className="mt-8">
           <p>

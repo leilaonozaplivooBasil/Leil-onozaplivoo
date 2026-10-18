@@ -52,6 +52,14 @@
 - **Capital:** investidor 1 (familiar de um diretor) entrou com um carro de R$ 50 mil, que lastreia uma carta de crédito, e R$ 20 mil de limite de cartão — a empresa usa o cartão e paga a fatura (os ~R$ 23 mil mensais para ele são fatura, não galpão); rende ~5% ao mês. Investidor 2 ~R$ 20 mil. Posição em 17/10: R$ 340 mil a R$ 14.600/mês. Os R$ 200 mil do Itaú (24–30/09) são a compra de 1% por um diretor (`EQUITY_SUBSCRIPTION`), com origem a documentar: R$ 130 mil de três pagadores e R$ 70 mil em espécie em 43 depósitos no mesmo dia.
 - **Galpão:** set e out pagos à imobiliária (`RENT_WAREHOUSE_PAID`, verificado); jun e jul por repasse, candidatos sem nome no extrato a confirmar.
 
+### Para onde foi o dinheiro e o lado social (18/10/2026)
+
+- **Pedido do CEO:** "vai organizando, vai conciliando e vai colocando no site" — sem perguntar item por item. Cartões de uma executiva e de um investidor são usados como cartões da empresa (pagam escritório, plataformas ~R$ 5 mil e consumo R$ 5–10 mil por mês); tecnologia foi feita por quatro desenvolvedores contratados; o Conexão (café de toda sexta) é a parte social, com mais de R$ 100 mil doados em quase dois anos.
+- **Razão único dos extratos** (3.715 lançamentos): Itaú 04/02–16/10, Santander comprovantes 15/01–19/07 e extrato com nome 20/07–05/10, Mercado Pago 02/07–16/10. Transferências entre contas da própria empresa saem da conta (casadas por valor e data). Regras de classificação no script da sessão; nenhum nome de pessoa no repositório.
+- **Métricas novas** (família "7. Capital e história", todas verificadas, 86 valores com evidência por conta e por categoria): `CASH_IN_CUSTOMERS_M` (R$ 473.060), `CASH_IN_CAPITAL_M` (R$ 1.011.907), `CASH_OUT_M` (R$ 1.447.921) e as saídas por tipo — `CASH_OUT_CARDS_M`, `_TEAM_`, `_ADMIN_`, `_RENT_`, `_STOCK_`, `_CAPITAL_`, `_TECH_`, `_OPS_` e `_UNNAMED_` (R$ 743.209 que saíram do Santander sem nome de jan a 19/07). Regra declarada na página: no Santander sem nome, Pix de até R$ 5 mil conta como cliente; acima, como aporte.
+- **Família nova "8. Impacto social"**, lida do banco do app do Vale do Recreio (projeto `rmhoaxbkvakqssifyoky`, somente leitura, só contagens): 50 encontros (out/2025 a 16/10/2026), 1.101 confirmações, 595 chegadas marcadas e 398 pessoas diferentes; doações de mais de R$ 100 mil como dado da administração até chegarem as notas.
+- **Página `/app/capital`:** seção "Para Onde Foi o Dinheiro" (entradas × saídas mês a mês; ago–out por tipo de gasto; cartões, tecnologia, jan–jul sem nome e quanto a empresa recebeu até aqui: R$ 1.231.000 declarados + R$ 1.011.907 de 2026) e capítulo "Conexão: o Café de Toda Sexta". Conselho ganhou os achados 11 (tecnologia sem nome nos extratos) e 12 (só 33% dos gastos pagos com venda) e quatro pendências novas.
+
 ## Próximos passos (ordem)
 
 1. ~~Login, convite, termo, acesso~~ — feito.
