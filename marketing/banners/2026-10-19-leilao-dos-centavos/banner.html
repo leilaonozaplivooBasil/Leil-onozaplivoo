@@ -1,0 +1,143 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- LEILÃO DOS CENTAVOS — 4 artes 1920x1080 na identidade do "QUEM DÁ MAIS?" (2026-10-08-quem-da-mais).
+     ?v=a1 moeda-halo · a2 moeda no ar · b1 placar · b2 escadinha do lance
+     Leiloeiro = leiloeiro.png oficial, sem alteração. Moeda = render 3D (moeda-3d.html, three.js). -->
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden;background:#050b1a}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:"Inter Display","Inter",sans-serif;
+    background:
+      radial-gradient(ellipse 900px 700px at 50% 42%, #0f3a5e 0%, rgba(10,32,64,.6) 40%, rgba(5,11,26,0) 75%),
+      radial-gradient(ellipse 1400px 900px at 50% 30%, #0a1d3b 0%, #060f22 60%, #040914 100%);}
+  .beam{position:absolute;top:-120px;width:420px;height:1000px;transform-origin:top center;
+    background:linear-gradient(180deg, rgba(120,180,255,.20), rgba(120,180,255,0) 80%);filter:blur(18px)}
+  .b1{left:420px;transform:rotate(18deg)} .b2{left:750px;transform:rotate(6deg);opacity:.7}
+  .b3{left:1080px;transform:rotate(-8deg);opacity:.7} .b4{left:1350px;transform:rotate(-18deg)}
+  .pillar{position:absolute;top:0;bottom:180px;width:90px;background:linear-gradient(90deg,#071226,#0c1c36 50%,#071226)}
+  .pillar::after{content:"";position:absolute;top:0;bottom:0;left:50%;width:6px;margin-left:-3px;
+    background:linear-gradient(180deg,rgba(255,206,110,.0),#ffd27a 20%,#ffcf6e 80%,rgba(255,206,110,0));
+    box-shadow:0 0 18px 4px rgba(255,200,100,.55),0 0 60px 10px rgba(255,190,80,.25)}
+  .p1{left:40px}.p2{right:40px}
+  .floor{position:absolute;left:0;right:0;bottom:0;height:250px;background:linear-gradient(180deg,#081631 0%,#050c1c 100%)}
+  .floor::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,rgba(61,255,138,.5),transparent)}
+  .leaf{position:absolute;border-radius:0 100% 0 100%;background:linear-gradient(135deg,#0f5a35,#06321f);filter:blur(2px);opacity:.85}
+  .halo{position:absolute;border-radius:50%;border:10px solid #3dff8a;
+    box-shadow:0 0 30px 6px rgba(61,255,138,.9),0 0 90px 30px rgba(32,220,110,.45),inset 0 0 40px 8px rgba(61,255,138,.6),inset 0 0 160px 40px rgba(20,180,90,.25)}
+  .glow{position:absolute;border-radius:50%;background:radial-gradient(circle, rgba(40,230,120,.18) 0%, rgba(40,230,120,0) 60%)}
+  .spark{position:absolute;border-radius:50%;background:#7dffb4;box-shadow:0 0 10px 3px rgba(61,255,138,.8)}
+  .spark.g{background:#ffe29a;box-shadow:0 0 10px 3px rgba(255,200,90,.85)}
+  .auct{position:absolute;z-index:3;bottom:-10px;height:868px;filter:drop-shadow(0 20px 40px rgba(0,0,0,.55))}
+  .coin{position:absolute;z-index:2;filter:brightness(1.12) saturate(1.08) drop-shadow(0 0 2px #3dff8a) drop-shadow(0 0 22px rgba(61,255,138,.85)) drop-shadow(0 0 70px rgba(61,255,138,.45)) drop-shadow(0 30px 40px rgba(0,0,0,.5))}
+  .logo{position:absolute;left:96px;top:70px;width:360px;z-index:5}
+  /* textos */
+  .col{position:absolute;z-index:5}
+  .kicker{font-weight:800;font-size:25px;letter-spacing:.24em;color:#7dffb4;text-transform:uppercase;margin-bottom:16px}
+  .h1{font-weight:900;font-size:112px;line-height:.92;letter-spacing:-.025em;color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.5)}
+  .h1 .g{display:block;background:linear-gradient(180deg,#b6ffd3 0%,#3dff8a 45%,#12c964 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px rgba(61,255,138,.45))}
+  .h1 .o{display:block;background:linear-gradient(180deg,#fff3c4 0%,#ffd36b 45%,#d99a22 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 18px rgba(255,200,90,.35))}
+  .rule{width:150px;height:6px;border-radius:3px;margin:30px 0 24px;background:linear-gradient(90deg,#3dff8a,rgba(61,255,138,0))}
+  .sub{font-weight:600;font-size:34px;line-height:1.22;color:#e8f1ff}
+  .sub b{color:#3dff8a;font-weight:800}
+  .chips{display:flex;flex-direction:column;gap:14px}
+  .chip{display:inline-flex;align-items:center;gap:14px;align-self:flex-start;padding:14px 24px;border-radius:16px;
+    background:rgba(8,30,56,.7);border:2px solid rgba(61,255,138,.45);color:#fff;font-weight:700;font-size:28px;white-space:nowrap}
+  .chip b{color:#ffd36b;font-weight:900}
+  .chip i{font-style:normal;color:#3dff8a;font-size:30px}
+  .cta{display:inline-flex;align-items:center;gap:16px;padding:24px 44px;border-radius:999px;
+    background:linear-gradient(180deg,#4dff95,#16c964);color:#04210f;font-weight:900;font-size:34px;letter-spacing:.04em;white-space:nowrap;
+    box-shadow:0 0 0 4px rgba(61,255,138,.25),0 0 40px 8px rgba(61,255,138,.45),0 14px 30px rgba(0,0,0,.4)}
+  .cta svg{width:36px;height:36px}
+  /* balão de fala do leiloeiro */
+  .bal{position:absolute;z-index:6;background:#fff;color:#0b2a1c;border-radius:30px;padding:22px 30px;font-weight:700;font-size:30px;line-height:1.25;
+    filter:drop-shadow(0 16px 30px rgba(0,0,0,.45))}
+  .bal b{color:#0f8a4a;font-weight:900}
+  .bal::after{content:"";position:absolute;width:0;height:0;border:22px solid transparent}
+  .bal.tl::after{left:-30px;bottom:26px;border-right:34px solid #fff;border-left:0}
+  .bal.tr::after{right:-30px;bottom:26px;border-left:34px solid #fff;border-right:0}
+  /* plaquinhas de relógio (placar) */
+  .placar{display:flex;align-items:center;gap:12px}
+  .rs{font-weight:900;font-size:64px;color:#fff;margin-right:6px;text-shadow:0 6px 24px rgba(0,0,0,.5)}
+  .tile{position:relative;height:160px;min-width:108px;padding:0 16px;border-radius:24px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg,#0f4d33 0%,#0b3a27 49.6%,#06261a 50.4%,#0a3423 100%);
+    box-shadow:0 0 0 3px rgba(61,255,138,.6),0 0 44px 10px rgba(61,255,138,.35),0 24px 40px rgba(0,0,0,.5),inset 0 2px 0 rgba(255,255,255,.12);
+    font-weight:900;font-size:124px;line-height:1}
+  .tile span{background:linear-gradient(180deg,#ffe7a6 0%,#f4c55e 45%,#d89a2c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;transform:translateY(-5px)}
+  .tile::after{content:"";position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;background:#041a11}
+  .virg{font-weight:900;font-size:124px;color:#f4c55e;margin:0 -4px;line-height:.8}
+  .placar.sm .tile{height:92px;min-width:64px;padding:0 10px;font-size:68px;border-radius:14px}
+  .placar.sm .virg{font-size:68px}
+  .placar.sm .rs{font-size:36px}
+  .placar.apag{opacity:.38;filter:saturate(.6)}
+  .mais{display:inline-flex;align-items:center;gap:10px;padding:10px 20px;border-radius:999px;background:#3dff8a;color:#04210f;font-weight:900;font-size:30px;
+    box-shadow:0 0 24px 4px rgba(61,255,138,.5)}
+  .seta{color:#3dff8a;font-weight:900;font-size:60px;text-shadow:0 0 18px rgba(61,255,138,.7)}
+  .trilha{position:absolute;z-index:1;pointer-events:none}
+</style></head>
+<body><div class="stage" id="st">
+  <div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div><div class="beam b4"></div>
+  <div class="pillar p1"></div><div class="pillar p2"></div>
+  <div class="leaf" style="left:120px;bottom:210px;width:150px;height:60px;transform:rotate(-35deg)"></div>
+  <div class="leaf" style="left:170px;bottom:240px;width:170px;height:56px;transform:rotate(-70deg)"></div>
+  <div class="leaf" style="right:120px;bottom:210px;width:150px;height:60px;transform:rotate(35deg) scaleX(-1)"></div>
+  <div class="leaf" style="right:170px;bottom:240px;width:170px;height:56px;transform:rotate(70deg) scaleX(-1)"></div>
+  <div class="floor"></div>
+  <div id="cena"></div>
+  <img class="logo" src="logo.png">
+</div>
+<script>
+const v=new URLSearchParams(location.search).get('v')||'a1';
+const CTA=`<div class="cta">DAR MEU LANCE <svg viewBox="0 0 24 24" fill="none" stroke="#04210f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>`;
+const TITULO=`<div class="h1">LEILÃO DOS<span class="g">CENTAVOS</span></div>`;
+const REGRA=`<div class="chips"><div class="chip"><i>●</i> 5 leilões todo dia · a partir de quarta</div><div class="chip">Começa em <b>R$ 0,10</b> · cada lance <b>+ R$ 0,10</b></div></div>`;
+const BAL=(cls,x,y)=>`<div class="bal ${cls}" style="left:${x}px;top:${y}px">Dou-lhe <b>10 centavos</b>…<br>dou-lhe <b>20</b>… quem dá <b>30?</b></div>`;
+const tiles=(v,cls='')=>{const [a,b]=v.split(',');return `<div class="placar ${cls}"><span class="rs">R$</span><div class="tile"><span>${a}</span></div><span class="virg">,</span><div class="tile"><span>${b[0]}</span></div><div class="tile"><span>${b[1]}</span></div></div>`};
+const sparks=(l)=>l.map(([x,y,s,g])=>`<div class="spark ${g?'g':''}" style="left:${x}px;top:${y}px;width:${s}px;height:${s}px"></div>`).join('');
+const A=document.getElementById('cena');
+if(v==='a1'){ // moeda gigante no lugar do halo, atrás do leiloeiro
+  A.innerHTML=`<div class="glow" style="left:416px;top:-60px;width:1100px;height:1100px"></div>
+  <img class="coin" src="moeda-c.png" style="left:630px;top:-190px;width:760px">
+  <img class="auct" src="leiloeiro.png" style="left:calc(50% + 50px);transform:translateX(-50%)">
+  ${sparks([[560,250,6],[1380,560,8,1],[1290,720,5],[640,720,7,1],[1460,120,5]])}
+  <div class="col" style="left:110px;top:300px;width:540px"><div class="kicker" style="font-size:22px;letter-spacing:.12em">O leilão que cabe no troco</div>${TITULO.replace('<div class="h1">','<div class="h1" style="font-size:96px">')}<div class="rule"></div><div class="sub" style="font-size:30px">Sabe aquela moedinha esquecida?<br><b>Aqui ela dá lance.</b></div></div>
+  ${BAL('tl',1300,330)}
+  <div class="col" style="left:1330px;top:530px;width:540px"><div class="chips"><div class="chip"><i>●</i> 5 leilões todo dia · a partir de quarta</div><div class="chip">Começa em <b>R$ 0,10</b></div><div class="chip">Cada lance: <b>+ R$ 0,10</b></div></div><div style="margin-top:30px">${CTA}</div></div>`;
+}
+if(v==='a2'){ // moeda no ar, jogada pelo leiloeiro
+  A.innerHTML=`<div class="glow" style="left:-60px;top:-60px;width:1100px;height:1100px"></div>
+  <svg class="trilha" style="left:0;top:0" width="1920" height="1080"><defs><linearGradient id="tr" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffe08a" stop-opacity="0"/><stop offset="1" stop-color="#ffe08a" stop-opacity=".9"/></linearGradient></defs>
+    <path d="M300 520 C 300 360, 340 250, 430 210" stroke="url(#tr)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="2 22"/>
+    <path d="M260 560 C 250 400, 290 280, 380 230" stroke="url(#tr)" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="2 26" opacity=".6"/></svg>
+  <img class="coin" src="moeda-b.png" style="left:360px;top:70px;width:470px;transform:rotate(-8deg)">
+  <img class="auct" src="leiloeiro.png" style="left:150px;height:820px">
+  ${sparks([[330,190,7,1],[860,170,6],[880,420,8,1],[420,60,5],[260,330,5,1]])}
+  ${BAL('tl',880,250)}
+  <div class="col" style="left:1080px;top:470px;width:780px"><div class="kicker">O leilão que cabe no troco</div>${TITULO.replace('<div class="h1">','<div class="h1" style="font-size:104px">')}<div class="rule"></div>
+    <div style="display:flex;gap:30px;align-items:flex-start"><div>${REGRA}</div></div>
+    <div style="margin-top:28px">${CTA}</div></div>`;
+  document.querySelector('.logo').style.left='1180px';document.querySelector('.logo').style.top='70px';
+}
+if(v==='b1'){ // placar de centavos
+  A.innerHTML=`<div class="halo" style="left:576px;top:150px;width:780px;height:780px"></div><div class="glow" style="left:416px;top:-10px;width:1100px;height:1100px"></div>
+  <img class="auct" src="leiloeiro.png" style="left:calc(50% + 6px);transform:translateX(-50%)">
+  ${sparks([[640,250,6],[1290,200,8,1],[1240,640,5],[690,700,7,1],[930,90,5]])}
+  <div class="col" style="left:110px;top:300px;width:520px"><div class="kicker" style="font-size:22px;letter-spacing:.12em">O leilão que cabe no troco</div>${TITULO.replace('<div class="h1">','<div class="h1" style="font-size:88px">')}<div class="rule"></div><div class="sub" style="font-size:30px">Sabe aquela moedinha esquecida?<br><b>Aqui ela dá lance.</b></div></div>
+  ${BAL('tl',1250,150)}
+  <div class="col" style="left:1350px;top:380px;width:520px">
+    <div class="kicker" style="margin-bottom:12px">Tudo começa em</div>${tiles('0,10')}
+    <div style="display:flex;gap:14px;align-items:center;margin-top:22px"><span class="mais">+ R$ 0,10</span><span style="color:#e8f1ff;font-weight:700;font-size:28px">a cada lance</span></div>
+    <div style="margin-top:20px;color:#b9c8e2;font-weight:600;font-size:25px">5 leilões todo dia<br>a partir de quarta</div>
+    <div style="margin-top:26px">${CTA}</div></div>`;
+}
+if(v==='b2'){ // escadinha do lance: 0,10 → 0,20 → 0,30
+  A.innerHTML=`<div class="halo" style="left:1076px;top:160px;width:760px;height:760px"></div><div class="glow" style="left:900px;top:-10px;width:1100px;height:1100px"></div>
+  <img class="auct" src="leiloeiro.png" style="left:1456px;transform:translateX(-50%)">
+  ${sparks([[1130,250,6],[1790,200,8,1],[1760,660,5,1],[1150,720,7],[1450,80,5]])}
+  ${BAL('tr',700,150)}
+  <div class="col" style="left:110px;top:300px;width:980px"><div class="kicker">O leilão que cabe no troco</div>${TITULO.replace('<span class="g">',' <span class="g" style="display:inline">')}
+    <div class="sub" style="margin-top:22px">Sabe aquela moedinha esquecida? <b>Aqui ela dá lance.</b></div>
+    <div style="display:flex;align-items:center;gap:16px;margin-top:44px">${tiles('0,10','sm apag')}<span class="seta">›</span>${tiles('0,20','sm apag')}<span class="seta">›</span>${tiles('0,30','sm')}</div>
+    <div style="display:flex;gap:16px;align-items:center;margin-top:24px"><span class="mais">+ R$ 0,10 a cada lance</span><span style="color:#b9c8e2;font-weight:600;font-size:26px">5 leilões todo dia · a partir de quarta</span></div>
+    <div style="margin-top:28px">${CTA}</div></div>`;
+}
+</script></body></html>

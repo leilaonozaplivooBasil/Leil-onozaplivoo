@@ -1,0 +1,47 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}</style>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script></head><body>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const q=new URLSearchParams(location.search);
+const W=1400,H=1400, rx=+(q.get('rx')??-28), ry=+(q.get('ry')??32), rz=+(q.get('rz')??-12), blur=+(q.get('blur')??0);
+// face da moeda: relevo desenhado em canvas (cor + mapa de relevo)
+const S=2048,c=S/2;
+function face(relevo,metal){
+  const cv=document.createElement('canvas');cv.width=cv.height=S;const g=cv.getContext('2d');
+  g.fillStyle=metal?'#ffffff':(relevo?'#606060':'#f0c255');g.fillRect(0,0,S,S);
+  const ring=(r,w,col)=>{g.beginPath();g.arc(c,c,r,0,7);g.lineWidth=w;g.strokeStyle=col;g.stroke();};
+  ring(c*0.93,60,relevo?'#fff':'#f7d36e'); ring(c*0.84,14,relevo?'#fff':'#fbe39a');
+  // serrilhado interno (pontinhos)
+  for(let i=0;i<90;i++){const a=i/90*Math.PI*2;g.beginPath();g.arc(c+Math.cos(a)*c*0.885,c+Math.sin(a)*c*0.885,9,0,7);g.fillStyle=relevo?'#e0e0e0':'#f7d36e';g.fill();}
+  g.textAlign='center';g.textBaseline='middle';
+  const f='"Inter Display","Inter",sans-serif';
+  g.fillStyle=metal?'#3a3a3a':(relevo?'#ffffff':'#ffe7a2');
+  g.font=`900 560px ${f}`;g.fillText('10',c,c-40);
+  g.font=`900 150px ${f}`;g.fillText('CENTAVOS',c,c+330);
+  g.font=`800 120px ${f}`;g.fillText('R$ 0,10',c,c-430);
+  if(false){g.globalCompositeOperation='multiply';const gr=g.createRadialGradient(c*0.7,c*0.6,50,c,c,c);gr.addColorStop(0,'#ffffff');gr.addColorStop(1,'#f6d886');g.fillStyle=gr;g.fillRect(0,0,S,S);}
+  return cv;
+}
+const r=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});r.setSize(W,H);r.setPixelRatio(1);
+r.outputColorSpace=THREE.SRGBColorSpace;r.toneMapping=THREE.AgXToneMapping;r.toneMappingExposure=1.5;document.body.appendChild(r.domElement);
+const sc=new THREE.Scene();sc.environment=new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(),0.03).texture;
+const cam=new THREE.PerspectiveCamera(28,1,0.1,100);cam.position.set(0,0,14);
+const mapa=new THREE.CanvasTexture(face(false));mapa.colorSpace=THREE.SRGBColorSpace;mapa.anisotropy=8;
+const bump=new THREE.CanvasTexture(face(true));
+const met=new THREE.CanvasTexture(face(false,true));
+for(const t of [mapa,bump,met]){t.center.set(.5,.5);t.rotation=+(q.get('tr')??Math.PI/2);}
+const faceMat=new THREE.MeshStandardMaterial({map:mapa,bumpMap:bump,bumpScale:18,metalnessMap:met,metalness:0.95,roughness:0.13,color:0xfff8e0});
+const bordaTex=document.createElement('canvas');bordaTex.width=2048;bordaTex.height=64;{const g=bordaTex.getContext('2d');for(let x=0;x<2048;x+=16){g.fillStyle='#f0c860';g.fillRect(x,0,8,64);g.fillStyle='#b98a2a';g.fillRect(x+8,0,8,64);}}
+const bt=new THREE.CanvasTexture(bordaTex);bt.colorSpace=THREE.SRGBColorSpace;
+const bordaMat=new THREE.MeshStandardMaterial({map:bt,metalness:1,roughness:0.3,color:0xffe0a0});
+const R=3.2,E=0.42;
+const moeda=new THREE.Mesh(new THREE.CylinderGeometry(R,R,E,160,1),[bordaMat,faceMat,faceMat]);
+moeda.rotation.x=Math.PI/2; // face para a câmera
+const grupo=new THREE.Group();grupo.add(moeda);sc.add(grupo);
+grupo.rotation.set(THREE.MathUtils.degToRad(rx),THREE.MathUtils.degToRad(ry),THREE.MathUtils.degToRad(rz));
+const k=new THREE.DirectionalLight(0xfff2d0,3.4);const k2=new THREE.PointLight(0xfff0c0,90,40);k2.position.set(3,4,7);sc.add(k2);k.position.set(-5,6,8);sc.add(k);
+const v=new THREE.DirectionalLight(0x6dffb0,1.4);v.position.set(6,-3,-2);sc.add(v);
+sc.add(new THREE.AmbientLight(0x707060,0.6));
+r.render(sc,cam);window.PRONTO=true;
+</script></body></html>
