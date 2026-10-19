@@ -140,4 +140,24 @@ if(v==='b2'){ // escadinha do lance: 0,10 → 0,20 → 0,30
     <div style="display:flex;gap:16px;align-items:center;margin-top:24px"><span class="mais">+ R$ 0,10 a cada lance</span><span style="color:#b9c8e2;font-weight:600;font-size:26px">5 leilões todo dia · a partir de quarta</span></div>
     <div style="margin-top:28px">${CTA}</div></div>`;
 }
+
+if(['j','c','m'].includes(v)){ // leiloeiro em ação (pose gerada a partir do leiloeiro oficial)
+  const P={j:{img:'lei-jogando.png',h:900,x:110,bal:[900,250]},
+           c:{img:'lei-contando.png',h:900,x:150,bal:[880,230]},
+           m:{img:'lei-martelo.png',h:860,x:80,bal:[930,170]}}[v];
+  const REGRA2=`<div class="chips"><div class="chip"><i>●</i> 5 leilões todo dia</div><div class="chip">Começa em <b>R$ 0,10</b> · cada lance <b>+ R$ 0,10</b></div></div>`;
+  A.innerHTML=`<div class="glow" style="left:-60px;top:-60px;width:1100px;height:1100px"></div>
+  <div class="halo" style="left:${P.x+60}px;top:150px;width:${v==='m'?720:700}px;height:${v==='m'?720:700}px;opacity:.55"></div>
+  <img class="auct" src="${P.img}" style="left:${P.x}px;height:${P.h}px;bottom:-6px">
+  ${v==='j'?`<svg class="trilha" style="left:0;top:0;z-index:4" width="1920" height="1080"><defs><linearGradient id="tj" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffe08a" stop-opacity="0"/><stop offset="1" stop-color="#ffe08a" stop-opacity=".95"/></linearGradient></defs>
+    <path d="M205 470 C 170 420, 165 380, 180 345" stroke="url(#tj)" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="2 16"/>
+    <path d="M250 465 C 285 420, 300 385, 292 350" stroke="url(#tj)" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="2 18" opacity=".7"/>
+    <path d="M150 250 A 110 110 0 0 1 200 190" stroke="#ffe08a" stroke-width="5" fill="none" stroke-linecap="round" opacity=".55"/>
+    <path d="M330 300 A 110 110 0 0 1 300 360" stroke="#ffe08a" stroke-width="5" fill="none" stroke-linecap="round" opacity=".55"/></svg>`:''}
+  ${sparks([[860,170,6],[880,420,8,1],[420,60,5],[200,380,5,1],[980,700,6]])}
+  ${BAL('tl',P.bal[0],P.bal[1])}
+  <div class="col" style="left:1080px;top:470px;width:780px"><div class="kicker">O leilão que cabe no troco</div>${TITULO.replace('<div class="h1">','<div class="h1" style="font-size:104px">')}<div class="rule"></div>
+    ${REGRA2}<div style="margin-top:28px">${CTA}</div></div>`;
+  document.querySelector('.logo').style.left='1180px';document.querySelector('.logo').style.top='70px';
+}
 </script></body></html>
