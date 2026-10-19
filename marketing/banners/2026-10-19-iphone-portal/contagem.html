@@ -61,7 +61,7 @@
   <div id="chips"></div>
   <div class="txt">
     <img class="logo" src="logo.png">
-    <div class="falta"><span class="fw">FALTAM</span><div class="tile3"><span>3</span></div><span class="fw">DIAS</span></div>
+    <div class="falta"><span class="fw" id="ff">FALTAM</span><div class="tile3"><span id="fn">3</span></div><span class="fw" id="fu">DIAS</span></div>
     <div class="para">para o leilão do nosso</div>
     <div class="prod">iPhone 17 Pro Max</div>
     <div class="regua"></div>
@@ -70,7 +70,7 @@
 </div>
 <script>
 const q=new URLSearchParams(location.search); const v=q.get('v')||'1';
-const st=document.getElementById('st'); st.classList.add(q.get('lado')||'esq'); if(q.get('col')) st.classList.add('col'); if(q.get('t')) st.style.setProperty('--t',q.get('t')+'px'); if(q.get('x')) document.querySelector('.txt').style.left=q.get('x')+'px';
+const st=document.getElementById('st'); st.classList.add(q.get('lado')||'esq'); if(q.get('n')){document.getElementById('fn').textContent=q.get('n');document.getElementById('ff').textContent=q.get('falta');document.getElementById('fu').textContent=q.get('unit');} if(q.get('col')) st.classList.add('col'); if(q.get('t')) st.style.setProperty('--t',q.get('t')+'px'); if(q.get('x')) document.querySelector('.txt').style.left=q.get('x')+'px';
 st.style.backgroundImage=`url(cena-v${v}${v==='1'?'-limpa':''}.jpg)`;
 const martelo='<svg viewBox="0 0 24 24" fill="none" stroke="#5a3a06" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6M12 6l6 6M4 20l8-8M11 7l6 6-3 3-6-6z"/></svg>';
 const seta='<svg viewBox="0 0 24 24" fill="none" stroke="#5a3a06" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>';
