@@ -1,0 +1,55 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- Banner 16:9 "Faltam 4 dias" — iPhone 17 Pro Max com o leiloeiro 3D (sem a Leila).
+     A cena (cena.jpg) é gerada com o leiloeiro e o iPhone oficiais como referência; todo texto é HTML.
+     Parâmetros: ?n=4  &cena=cena.jpg  &x=1080 (início do bloco de texto) -->
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden;background:#04150e}
+  .stage{position:relative;width:1920px;height:1080px;overflow:hidden;font-family:"Inter Display","Inter",sans-serif;
+    background-size:cover;background-position:center}
+  .veu{position:absolute;inset:0;background:linear-gradient(270deg,rgba(3,18,12,.9) 0%,rgba(3,18,12,.72) 30%,rgba(3,18,12,0) 50%)}
+  .txt{position:absolute;top:70px;left:var(--x,1100px);width:760px}
+  .logo{width:220px;display:block;margin-bottom:40px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.45))}
+  .selo{display:inline-flex;align-items:center;gap:12px;padding:10px 22px;border-radius:999px;
+    background:rgba(61,255,138,.12);box-shadow:inset 0 0 0 2px rgba(61,255,138,.7);
+    color:#7dffb4;font-weight:800;font-size:22px;letter-spacing:.16em}
+  .selo i{width:12px;height:12px;border-radius:50%;background:#3dff8a;box-shadow:0 0 12px #3dff8a;animation:none}
+  .conta{display:flex;align-items:center;gap:30px;margin-top:22px}
+  .tile{position:relative;width:236px;height:270px;border-radius:34px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg,#0f4d33 0%,#0b3a27 49.6%,#06261a 50.4%,#0a3423 100%);
+    box-shadow:0 0 0 4px rgba(61,255,138,.65),0 0 60px 14px rgba(61,255,138,.35),0 30px 50px rgba(0,0,0,.55),inset 0 2px 0 rgba(255,255,255,.12);
+    font-weight:900;font-size:220px;line-height:1}
+  .tile span{background:linear-gradient(180deg,#fff3c4 0%,#f4c55e 45%,#d89a2c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;transform:translateY(-6px)}
+  .tile::after{content:"";position:absolute;left:0;right:0;top:50%;height:5px;margin-top:-2.5px;background:#041a11}
+  .faltam{margin-top:28px;font-weight:900;font-size:92px;line-height:1;letter-spacing:-.03em;color:#fff;text-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .pal{display:flex;flex-direction:column;gap:6px}
+  .pal b{font-weight:900;font-size:130px;line-height:.92;letter-spacing:-.03em;color:#fff;text-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .pal b.g{background:linear-gradient(180deg,#b6ffd3 0%,#3dff8a 45%,#12c964 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px rgba(61,255,138,.4))}
+  .para{margin-top:34px;font-weight:600;font-size:42px;color:#eef6f0;text-shadow:0 4px 16px rgba(0,0,0,.5)}
+  .prod{font-weight:800;font-size:80px;letter-spacing:-.02em;line-height:1.05;white-space:nowrap;
+    background:linear-gradient(180deg,#fff3c4 0%,#f4c55e 50%,#d89a2c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 14px rgba(0,0,0,.4))}
+  .data{display:inline-flex;align-items:center;gap:14px;margin-top:34px;padding:20px 34px;border-radius:999px;
+    border:2px solid rgba(255,255,255,.35);background:rgba(3,22,14,.6);
+    color:#fff;font-weight:800;font-size:40px;letter-spacing:.02em;white-space:nowrap}
+  .data svg{width:40px;height:40px}
+  .data .dot{color:#3dff8a;margin:0 2px}
+</style></head>
+<body><div class="stage" id="st">
+  <div class="veu"></div>
+  <div class="txt">
+    <img class="logo" src="logo.png">
+    <div class="selo"><i></i>CONTAGEM REGRESSIVA</div>
+    <div class="faltam">FALTAM</div>
+    <div class="conta"><div class="tile"><span id="n">4</span></div><div class="pal"><b class="g" id="u">DIAS</b></div></div>
+    <div class="para">para o leilão do nosso</div>
+    <div class="prod">iPhone 17 Pro Max</div>
+    <div class="data"><svg viewBox="0 0 24 24" fill="none" stroke="#3dff8a" stroke-width="2.4" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>SÁB <span class="dot">•</span> 24/10 <span class="dot">•</span> ÀS 18H</div>
+  </div>
+</div>
+<script>
+const q=new URLSearchParams(location.search), st=document.getElementById('st');
+if(q.get('n')) document.getElementById('n').textContent=q.get('n');
+if(q.get('x')) st.style.setProperty('--x',q.get('x')+'px');
+st.style.backgroundImage=`url(${q.get('cena')||'cena.jpg'})`;
+</script></body></html>
