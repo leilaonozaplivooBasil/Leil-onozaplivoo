@@ -16,18 +16,18 @@
 </style></head>
 <body><div class="cards" id="cards"></div>
 <script>
-// Os 3 últimos arremates do Leilão dos Centavos (do banco). No site, esta lista vem ao vivo.
+// Os 3 arremates mais caros do Leilão dos Centavos (do banco, 22/10/2026; sem teste e sem a equipe).
 const ARREMATES = [
   { titulo: 'RELÓGIO EYT', valor: 20.2, foto: 'relogio.jpg' },
-  { titulo: 'Kit 2 Unidades Fone De Ouvido C/ Entrada P2 C/ Microfone Preto', valor: 0.75, foto: 'fone.webp' },
+  { titulo: '3 Velas Led Decorativas Sem Fogo Chama Tremulante Realista', valor: 8.6, foto: 'velas.jpg', cobrir: true },
   { titulo: 'Bandeja Higiênica Gato Prime Arco-black', valor: 0.4, foto: 'bandeja.webp' },
 ];
 const brl = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 document.getElementById('cards').innerHTML = ARREMATES.map((a) => `
-  <div class="card"><div class="foto" style="background-image:url(${a.foto})"></div><div class="nome">${a.titulo}</div>
+  <div class="card"><div class="foto" style="background-image:url(${a.foto})${a.cobrir ? ';background-size:cover' : ''}"></div><div class="nome">${a.titulo}</div>
   <div class="preco"><span>ARREMATADO POR</span><b>R$ ${brl(a.valor)}</b></div></div>`).join('');
 const cards = [...document.querySelectorAll('.card')];
-const ENTRA = [1.4, 2.0, 2.6], SAI = 7.1;
+const ENTRA = [1.4, 2.0, 2.6], SAI = 99;
 const mola = (p) => 1 - Math.pow(1 - p, 3) + Math.sin(p * Math.PI) * 0.12; // entra com um quique leve
 window.quadro = (t) => cards.forEach((c, i) => {
   const pe = Math.min(1, Math.max(0, (t - ENTRA[i]) / 0.45));
