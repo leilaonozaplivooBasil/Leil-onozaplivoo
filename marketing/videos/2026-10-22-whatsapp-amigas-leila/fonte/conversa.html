@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Conversa "Amigas" — WhatsApp do iPhone em português. Tela em 390x693 pontos (iPhone), gravada a 1080x1920.
+     window.quadro(t) desenha o instante t (segundos). Todo texto é HTML: nada é desenhado por IA. -->
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:390px;height:693px;overflow:hidden;background:#000;
+    font-family:"Inter",-apple-system,"Helvetica Neue",sans-serif;-webkit-font-smoothing:antialiased;color:#111b21}
+  .tela{position:relative;width:390px;height:693px;overflow:hidden;background:#efeae2}
+  /* papel de parede discreto do WhatsApp */
+  .fundo{position:absolute;inset:0;opacity:.035;background-size:96px 96px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round'><circle cx='18' cy='20' r='7'/><path d='M50 12l8 8-8 8M78 18h16v12H78zM98 58c6-8 14-8 18 0M20 64l10-6 10 6-10 6zM60 52a8 8 0 1 0 0.1 0M30 98h18M39 89v18M78 92l10 10M88 92l-10 10M104 100a6 6 0 1 0 0.1 0'/></svg>")}
+
+  /* barra de status do iPhone */
+  .status{position:absolute;top:0;left:0;right:0;height:50px;background:#f6f6f6;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 9px 46px;z-index:5}
+  .hora{font-weight:600;font-size:16.5px;letter-spacing:-.2px}
+  .ilha{position:absolute;left:50%;top:11px;width:122px;height:35px;margin-left:-61px;border-radius:20px;background:#000}
+  .icones{display:flex;gap:6px;align-items:center}
+
+  /* cabeçalho do grupo */
+  .topo{position:absolute;top:50px;left:0;right:0;height:56px;background:#f6f6f6;border-bottom:.5px solid #d1d1d1;display:flex;align-items:center;padding:0 12px 0 6px;z-index:5}
+  .voltar{width:24px;height:30px;display:flex;align-items:center}
+  .foto{width:36px;height:36px;border-radius:50%;background-size:cover;background-position:center;flex:none}
+  .grupo{margin-left:10px;flex:1;min-width:0}
+  .nome{font-weight:600;font-size:16.5px;line-height:20px}
+  .sub{font-size:12.5px;color:#667781;line-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sub.dig{color:#25a35a}
+  .acoes{display:flex;gap:22px;align-items:center;margin-left:8px}
+
+  /* conversa */
+  .conversa{position:absolute;top:106px;left:0;right:0;bottom:84px;padding:0 0 8px;display:flex;flex-direction:column;justify-content:flex-end;z-index:1}
+  .data{align-self:center;margin:0 0 auto;margin-top:12px;background:#fff;color:#54656f;font-size:12.5px;font-weight:500;padding:5px 12px;border-radius:8px;box-shadow:0 1px .5px rgba(11,20,26,.13)}
+  .linha{display:flex;align-items:flex-end;padding:0 10px;margin-top:4px;transform-origin:left bottom}
+  .linha.eu{justify-content:flex-end;transform-origin:right bottom;margin-top:10px}
+  .av{width:28px;height:28px;border-radius:50%;background-size:cover;background-position:center;margin-right:6px;flex:none}
+  .balao{position:relative;max-width:286px;padding:6px 8px 7px 9px;border-radius:8px;background:#fff;box-shadow:0 1px .5px rgba(11,20,26,.13);font-size:16.5px;line-height:21px}
+  .eu .balao{background:#d9fdd3}
+  .remetente{font-size:13px;font-weight:600;line-height:17px;margin-bottom:1px}
+  .meta{float:right;margin:7px 0 -5px 10px;font-size:11px;color:#667781;display:flex;align-items:center;gap:3px;line-height:14px}
+  .rabo{position:absolute;bottom:0;width:10px;height:13px}
+  .linha:not(.eu) .rabo{left:-7px}
+  .eu .rabo{right:-7px}
+
+  /* campo de digitação */
+  .base{position:absolute;left:0;right:0;bottom:0;min-height:84px;background:#f6f6f6;border-top:.5px solid #d1d1d1;display:flex;align-items:flex-end;padding:8px 10px 34px;gap:10px;z-index:5}
+  .mais{width:30px;height:34px;display:flex;align-items:center;justify-content:center;flex:none}
+  .campo{flex:1;min-height:34px;border-radius:18px;background:#fff;border:.5px solid #d1d1d1;display:flex;align-items:flex-end;padding:6px 8px 6px 12px;font-size:16.5px;line-height:21px}
+  .campo .txt{flex:1;white-space:pre-wrap;word-break:break-word}
+  .cursor{display:inline-block;width:2px;height:20px;margin-bottom:-4px;background:#25d366}
+  .direita{display:flex;gap:16px;align-items:center;height:34px;flex:none}
+  .enviar{width:34px;height:34px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center}
+  .barra-home{position:absolute;bottom:8px;left:50%;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:#000;z-index:6}
+</style></head>
+<body><div class="tela" id="tela">
+  <div class="fundo"></div>
+
+  <div class="status">
+    <span class="hora">19:42</span>
+    <div class="ilha"></div>
+    <div class="icones">
+      <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+      <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 2.6c2.3 0 4.4.9 6 2.4l1.2-1.3A10.4 10.4 0 0 0 8 .8 10.4 10.4 0 0 0 .8 3.7L2 5c1.6-1.5 3.7-2.4 6-2.4zm0 3.5c1.3 0 2.5.5 3.5 1.3l1.2-1.3A7 7 0 0 0 8 4.3a7 7 0 0 0-4.7 1.8l1.2 1.3c1-.8 2.2-1.3 3.5-1.3zm0 3.4c.4 0 .9.2 1.2.4L8 11.2 6.8 9.9c.3-.2.8-.4 1.2-.4z"/></svg>
+      <svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="#000" opacity=".4"/><rect x="2" y="2" width="17" height="9" rx="2"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" opacity=".45"/></svg>
+    </div>
+  </div>
+
+  <div class="topo">
+    <div class="voltar"><svg width="13" height="22" viewBox="0 0 13 22" fill="none" stroke="#111b21" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2L2 11l9 9"/></svg></div>
+    <div class="foto" style="background-image:url(grupo.jpg)"></div>
+    <div class="grupo"><div class="nome">Amigas</div><div class="sub" id="sub">Ana, Maria, Você</div></div>
+    <div class="acoes">
+      <svg width="26" height="18" viewBox="0 0 26 18" fill="none" stroke="#111b21" stroke-width="1.9" stroke-linejoin="round"><rect x="1" y="2" width="16" height="14" rx="3.5"/><path d="M17 7.2l7-4.2v12l-7-4.2"/></svg>
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#111b21" stroke-width="1.9" stroke-linejoin="round"><path d="M5.2 2.5h3.1l1.6 4.4-2.1 1.5a12 12 0 0 0 7.8 7.8l1.5-2.1 4.4 1.6v3.1a2 2 0 0 1-2.2 2A18.3 18.3 0 0 1 3.2 4.7a2 2 0 0 1 2-2.2z"/></svg>
+    </div>
+  </div>
+
+  <div class="conversa" id="conversa">
+    <div class="data">Hoje</div>
+
+    <div class="linha" id="m1" style="opacity:0">
+      <div class="av" style="background-image:url(ana.jpg)"></div>
+      <div class="balao">
+        <svg class="rabo" viewBox="0 0 10 13"><path d="M10 0v13H0c3-1 7-4 10-13z" fill="#fff"/></svg>
+        <div class="remetente" style="color:#c2185b">Ana</div>
+        Já tô aqui!<span class="meta">19:41</span>
+      </div>
+    </div>
+
+    <div class="linha" id="m2" style="opacity:0">
+      <div class="av" style="background-image:url(maria.jpg)"></div>
+      <div class="balao">
+        <svg class="rabo" viewBox="0 0 10 13"><path d="M10 0v13H0c3-1 7-4 10-13z" fill="#fff"/></svg>
+        <div class="remetente" style="color:#1e88a8">Maria</div>
+        Já tô chegando!<span class="meta">19:41</span>
+      </div>
+    </div>
+
+    <div class="linha eu" id="m3" style="opacity:0">
+      <div class="balao">
+        <svg class="rabo" viewBox="0 0 10 13"><path d="M0 0v13h10C7 12 3 9 0 0z" fill="#d9fdd3"/></svg>
+        <span id="texto-leila"></span><span class="meta">19:42 <svg width="16" height="11" viewBox="0 0 16 11" fill="none" id="tique" stroke="#8696a0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6l3 3 6-7M6.5 8.5l.7.6 6-7"/></svg></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="base">
+    <div class="mais"><svg width="22" height="22" viewBox="0 0 22 22" stroke="#111b21" stroke-width="2" stroke-linecap="round"><path d="M11 2v18M2 11h18"/></svg></div>
+    <div class="campo"><span class="txt"><span id="campo"></span><span class="cursor" id="cursor" style="opacity:0"></span></span>
+      <svg id="figurinha" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111b21" stroke-width="1.7" style="margin-left:6px;flex:none"><path d="M20.5 12.5V7a3.5 3.5 0 0 0-3.5-3.5H7A3.5 3.5 0 0 0 3.5 7v10A3.5 3.5 0 0 0 7 20.5h5.5zM20.5 12.5a8 8 0 0 1-8 8M20.5 12.5h-4a4 4 0 0 0-4 4v4"/></svg>
+    </div>
+    <div class="direita" id="dir-normal">
+      <svg width="24" height="22" viewBox="0 0 24 22" fill="none" stroke="#111b21" stroke-width="1.8" stroke-linejoin="round"><path d="M2 7.5A2.5 2.5 0 0 1 4.5 5h3l2-3h5l2 3h3A2.5 2.5 0 0 1 22 7.5v10a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 17.5z"/><circle cx="12" cy="12" r="4"/></svg>
+      <svg width="18" height="24" viewBox="0 0 18 24" fill="none" stroke="#111b21" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="1.5" width="8" height="14" rx="4"/><path d="M1.5 11a7.5 7.5 0 0 0 15 0M9 18.5V22"/></svg>
+    </div>
+    <div class="direita" id="dir-enviar" style="display:none">
+      <div class="enviar"><svg width="16" height="16" viewBox="0 0 16 16" fill="#fff"><path d="M1.5 1.6l13.2 6.1c.3.2.3.6 0 .7L1.5 14.4c-.3.2-.7-.1-.6-.5L2.4 9 9 8 2.4 7 .9 2.1c-.1-.4.3-.7.6-.5z"/></svg></div>
+    </div>
+  </div>
+  <div class="barra-home"></div>
+</div>
+<script>
+// Textos fixos, exatamente como o dono mandou (sem corrigir "nao", "leilao", "iPhone 17 pro max").
+const LEILA = 'Gente, nao vou sair mais, tem um leilao de um iPhone 17 pro max com um lance atual de R$600, tenho que aproveitar!';
+document.getElementById('texto-leila').textContent = LEILA;
+
+// Linha do tempo (segundos)
+const T = { anaDig: 0.9, ana: 2.1, mariaDig: 2.9, maria: 4.1, digita: 5.0, envia: 9.0, leu: 9.9 };
+const $ = (id) => document.getElementById(id);
+const surge = (el, t0, t) => {
+  const p = Math.min(1, Math.max(0, (t - t0) / 0.22));
+  const e = 1 - Math.pow(1 - p, 3);
+  el.style.opacity = p > 0 ? e : 0;
+  el.style.transform = `scale(${0.92 + 0.08 * e}) translateY(${(1 - e) * 8}px)`;
+  el.style.display = t >= t0 ? '' : 'none';
+};
+window.quadro = (t) => {
+  // quem está digitando aparece no cabeçalho só antes da própria mensagem
+  const sub = $('sub');
+  if (t >= T.anaDig && t < T.ana) { sub.textContent = 'Ana está digitando…'; sub.className = 'sub dig'; }
+  else if (t >= T.mariaDig && t < T.maria) { sub.textContent = 'Maria está digitando…'; sub.className = 'sub dig'; }
+  else { sub.textContent = 'Ana, Maria, Você'; sub.className = 'sub'; }
+
+  surge($('m1'), T.ana, t);
+  surge($('m2'), T.maria, t);
+  surge($('m3'), T.envia, t);
+
+  // Leila digita no campo (o texto já é o final, só vai aparecendo) e envia
+  const digitando = t >= T.digita && t < T.envia;
+  const n = digitando ? Math.min(LEILA.length, Math.floor((t - T.digita) / ((T.envia - 0.35 - T.digita) / LEILA.length))) : 0;
+  $('campo').textContent = LEILA.slice(0, n);
+  $('cursor').style.opacity = (t >= T.digita - 0.4 && t < T.envia) && (digitando || Math.floor(t * 2) % 2 === 0) ? 1 : 0;
+  const temTexto = n > 0;
+  $('dir-normal').style.display = temTexto ? 'none' : 'flex';
+  $('dir-enviar').style.display = temTexto ? 'flex' : 'none';
+  $('figurinha').style.display = temTexto ? 'none' : '';
+  // tiques: cinza ao enviar, azul quando as amigas leem
+  document.getElementById('conversa').style.bottom = document.querySelector('.base').offsetHeight + 'px';
+  $('tique').setAttribute('stroke', t >= T.leu ? '#53bdeb' : '#8696a0');
+};
+window.quadro(0);
+</script></body></html>
