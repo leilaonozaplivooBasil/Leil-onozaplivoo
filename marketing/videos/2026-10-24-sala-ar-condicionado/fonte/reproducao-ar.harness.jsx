@@ -3,7 +3,7 @@
  * A sala REAL (src/pages/AuctionRoom.jsx) tocando os 27 lances reais do leilão do Ar-condicionado Split Philco 12.000 BTUs
  * (02/10 → 07/10/2026, fim 18:05:08). O relógio da página é o do Playwright (page.clock); a gravação chama
  * window.__emitirAte(ms) a cada quadro e os lances entram no tempo real em que entraram, com a mesma regra do servidor:
- * lance nos últimos 142 s soma 22 s ao fim. Nomes escondidos (sem autorização de quem deu lance).
+ * lance nos últimos 142 s soma 22 s ao fim. Nomes escondidos: só as 2 primeiras letras do nome real e a inicial do sobrenome.
  */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
@@ -23,7 +23,7 @@ const LANCES = [
   ['2026-10-07T18:01:17', 2250, 'g'], ['2026-10-07T18:02:27', 2300, 'i'], ['2026-10-07T18:02:34', 2350, 'g'], ['2026-10-07T18:03:32', 2400, 'i'],
   ['2026-10-07T18:03:39', 2500, 'g'], ['2026-10-07T18:04:20', 2550, 'j'], ['2026-10-07T18:04:26', 2650, 'g'],
 ].map(([q, v, p]) => ({ em: BRT(q), valor: v, quem: p }));
-const NOMES = { a: 'Ro••••• A.', b: 'Ma••• C.', c: 'Jo•• P.', d: 'An•• L.', e: 'Fe••••• S.', f: 'Ca•••• M.', g: 'He••••• M.', h: 'Lu••• R.', i: 'Di••• F.', j: 'Pa••• T.' };
+const NOMES = { a: 'Ge••• A.', b: 'Ra••• F.', c: 'Li••• L.', d: 'Al•••', e: 'Lo••• V.', f: 'Yu••• V.', g: 'He••• M.', h: 'Vi••• M.', i: 'Vi••• D.', j: 'Ga••• M.' }; // nome real, só as 2 primeiras letras + a inicial do sobrenome
 const FIM_ORIGINAL = BRT('2026-10-07T18:00:00');
 const CONTAGEM = 142; const ACRESCIMO = 22;
 
