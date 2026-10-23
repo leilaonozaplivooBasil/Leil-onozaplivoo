@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Reels "iPhone 17 Pro Max: loja × Leilão NoZap" — 1080x1920, 16 s. Sem IA: fotos reais do anúncio + texto.
+     window.quadro(t) desenha o instante t. ?lance=800 -->
+<link rel="stylesheet" href="fontes/fontes.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1920px;overflow:hidden;font-family:Barlow,sans-serif}
+  .slab{font-family:"Roboto Slab",serif}
+  #cena{position:relative;width:1080px;height:1920px;overflow:hidden;background:radial-gradient(90% 60% at 50% 55%,#FFFFFF 0%,#F6F5F1 55%,#E9E6DE 100%)}
+  .camada{position:absolute;inset:0}
+  .pilula{position:absolute;top:110px;left:50%;transform:translateX(-50%);padding:16px 34px;border-radius:999px;background:linear-gradient(160deg,#019049,#016A37);box-shadow:0 14px 30px rgba(1,106,55,.3)}
+  .pilula img{display:block;width:210px}
+
+  /* 1 — revelação */
+  #topo{position:absolute;top:300px;left:0;right:0;text-align:center;color:#00180D}
+  #topo p{font-weight:700;font-size:46px;letter-spacing:.02em;color:#5C6B62}
+  #topo b{display:block;font-family:"Roboto Slab",serif;font-weight:800;font-size:150px;line-height:1;letter-spacing:-.03em;margin-top:6px}
+  #topo b span{font-size:70px;margin-right:12px}
+  #palco{position:absolute;left:50%;top:1240px;width:620px;height:0}
+  #fone{position:absolute;left:-290px;bottom:-150px;width:580px;height:700px;background:#fff url(iphone-1.png) center/contain no-repeat;border-radius:30px;box-shadow:0 30px 60px rgba(0,24,13,.14)}
+  #base{position:absolute;left:-330px;top:-260px;width:660px;height:420px;border-radius:0 0 46px 46px;background:linear-gradient(180deg,#FFFFFF,#F1EFEA);
+        box-shadow:0 40px 70px rgba(0,24,13,.18),inset 0 2px 0 rgba(255,255,255,.9)}
+  #base::before{content:"";position:absolute;left:0;right:0;top:0;height:26px;background:linear-gradient(180deg,#E3E0D8,#F6F5F1)}
+  #tampa{position:absolute;left:-340px;top:-580px;width:680px;height:350px;border-radius:46px 46px 10px 10px;background:linear-gradient(180deg,#FFFFFF,#F3F1EC);
+        box-shadow:0 30px 60px rgba(0,24,13,.16)}
+  #sombra{position:absolute;left:-360px;top:150px;width:720px;height:60px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,24,13,.22),transparent)}
+  #nome{position:absolute;top:1480px;left:0;right:0;text-align:center;color:#00180D}
+  #nome b{display:block;font-weight:800;font-size:64px;letter-spacing:-.01em}
+  #nome span{display:block;margin-top:6px;font-weight:600;font-size:36px;color:#5C6B62}
+
+  /* 2 — câmeras de perto */
+  #perto{background:#fff}
+  #perto .img{position:absolute;inset:0;background:#fff url(iphone-2.png) center 45%/115% no-repeat}
+  #perto .etq{position:absolute;left:60px;bottom:250px;padding:18px 30px;border-radius:20px;background:#00180D;color:#fff;font-weight:800;font-size:40px;letter-spacing:.06em}
+  #perto .etq em{font-style:normal;color:#FFE08A}
+
+  /* 3 — comparação */
+  #comp{background:linear-gradient(165deg,#019049 0%,#017a3f 50%,#016A37 100%);color:#fff}
+  #comp h2{position:absolute;top:340px;left:0;right:0;text-align:center;font-family:"Roboto Slab",serif;font-weight:800;font-size:92px;line-height:1.02;letter-spacing:-.02em}
+  #comp h2 em{font-style:normal;color:#FFE08A}
+  #cab{position:absolute;top:640px;left:50px;right:50px;display:grid;grid-template-columns:1fr 1fr;gap:22px;text-align:center;font-weight:800;font-size:32px;letter-spacing:.12em}
+  #cab span{padding:14px 0;border-radius:16px}
+  #cab .l{background:rgba(0,0,0,.22);color:rgba(255,255,255,.85)}
+  #cab .z{background:#FFE08A;color:#0A2A18}
+  .linha{position:absolute;left:50px;right:50px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .linha small{position:absolute;left:0;right:0;top:-40px;text-align:center;font-weight:700;font-size:28px;letter-spacing:.14em;color:rgba(255,255,255,.75)}
+  .cel{display:flex;align-items:center;gap:16px;min-height:200px;padding:22px 26px;border-radius:26px;font-weight:700;font-size:44px;line-height:1.15}
+  .cel i{flex:none;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:900;font-size:36px}
+  .cel.l{background:rgba(0,0,0,.25);color:rgba(255,255,255,.8)}
+  .cel.l i{background:rgba(255,255,255,.14);color:#FF9C8A}
+  .cel.z{background:#fff;color:#00180D;box-shadow:0 18px 36px rgba(0,0,0,.22)}
+  .cel.z i{background:#019049;color:#fff}
+
+  /* 4 — fecho */
+  #fim{background:radial-gradient(90% 60% at 50% 45%,#0a5a39 0%,#06402a 45%,#00180d 100%);color:#fff}
+  #fim .foto{position:absolute;left:50%;top:330px;width:560px;height:680px;margin-left:-280px;border-radius:40px;background:#fff url(iphone-1.png) center/88% no-repeat;box-shadow:0 0 0 6px #FFE08A,0 40px 80px rgba(0,0,0,.5)}
+  #fim .lance{position:absolute;top:1080px;left:0;right:0;text-align:center}
+  #fim .lance small{display:inline-flex;align-items:center;gap:14px;padding:10px 26px;border-radius:999px;background:rgba(61,255,138,.12);box-shadow:inset 0 0 0 2px rgba(61,255,138,.75);color:#7dffb4;font-weight:800;font-size:32px;letter-spacing:.16em}
+  #fim .lance small i{width:14px;height:14px;border-radius:50%;background:#3dff8a;box-shadow:0 0 12px #3dff8a}
+  #fim .lance b{display:block;margin-top:14px;font-family:"Roboto Slab",serif;font-weight:800;font-size:170px;line-height:1;letter-spacing:-.03em;color:#FFE08A}
+  #fim .lance b span{font-size:80px;margin-right:12px}
+  #fim .quando{position:absolute;top:1330px;left:0;right:0;text-align:center;font-weight:800;font-size:46px}
+  #fim .quando span{color:#FFE08A}
+  #fim .cta{position:absolute;top:1450px;left:110px;right:110px;padding:30px 0;border-radius:999px;text-align:center;background:#3dff8a;color:#03200f;font-weight:900;font-size:48px;box-shadow:0 0 50px rgba(61,255,138,.45)}
+  #fim .pe{position:absolute;top:1600px;left:0;right:0;text-align:center;font-weight:600;font-size:30px;color:rgba(255,255,255,.7)}
+  #fim .logo{position:absolute;top:120px;left:50%;width:250px;margin-left:-125px}
+  #brilho{position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);background-size:300% 100%}
+</style></head>
+<body><div id="cena">
+  <div class="camada" id="c1">
+    <div class="pilula"><img src="logo-escuro.png" alt=""></div>
+    <div id="topo"><p>Na loja, ele custa em média</p><b><span>R$</span>8.404</b></div>
+    <div id="palco"><div id="sombra"></div><div id="fone"></div><div id="base"></div><div id="tampa"></div></div>
+    <div id="nome"><b>iPhone 17 Pro Max</b><span>256 GB · Silver</span></div>
+  </div>
+  <div class="camada" id="perto"><div class="img" id="pertoImg"></div><div class="etq" id="pertoEtq">Câmeras de 48 MP · <em>zoom de 8x</em></div></div>
+  <div class="camada" id="comp">
+    <h2>Na loja <em>×</em><br>no Leilão NoZap</h2>
+    <div id="cab"><span class="l">NA LOJA</span><span class="z">NO LEILÃO</span></div>
+    <div class="linha" id="r1" style="top:830px"><div class="cel l"><i>✕</i>R$&nbsp;8.404 de etiqueta</div><div class="cel z"><i>✓</i>Começou em R$&nbsp;297</div></div>
+    <div class="linha" id="r2" style="top:1080px"><div class="cel l"><i>✕</i>A loja decide o preço</div><div class="cel z"><i>✓</i>Você decide o seu lance</div></div>
+    <div class="linha" id="r3" style="top:1330px"><div class="cel l"><i>✕</i>Preço cheio para todo mundo</div><div class="cel z"><i>✓</i>Leva quem der o maior lance</div></div>
+  </div>
+  <div class="camada" id="fim">
+    <img class="logo" src="logo-escuro.png" alt="">
+    <div class="foto" id="fimFoto"></div>
+    <div class="lance" id="fimLance"><small><i></i>LANCE ATUAL</small><b><span>R$</span><em id="valor" style="font-style:normal"></em></b></div>
+    <p class="quando" id="fimQuando">Termina <span>sábado, 24/10, às 18h</span></p>
+    <p class="cta" id="fimCta">Dê seu lance · link na bio</p>
+    <p class="pe">Leva quem der o maior lance até o martelo bater</p>
+  </div>
+  <div id="brilho"></div>
+</div>
+<script>
+const q = new URLSearchParams(location.search);
+document.getElementById('valor').textContent = q.get('lance') || '800';
+const $ = (id) => document.getElementById(id);
+const cl = (x) => Math.min(1, Math.max(0, x));
+const sai = (x) => 1 - Math.pow(1 - cl(x), 3);              // desacelera
+const mola = (x) => { x = cl(x); return 1 - Math.pow(1 - x, 3) * Math.cos(x * Math.PI * 1.2); };
+const entra = (el, p, dy = 60) => { el.style.opacity = sai(p); el.style.transform = `translateY(${(1 - sai(p)) * dy}px)`; };
+const CENAS = [['c1', 0, 4.4], ['perto', 4.4, 7.2], ['comp', 7.2, 12.9], ['fim', 12.9, 99]];
+window.quadro = (t) => {
+  // qual cena aparece (com 0,3 s de fusão na entrada)
+  for (const [id, a, b] of CENAS) {
+    const el = $(id); const vis = t >= a - 0.001 && t < b + 0.3;
+    el.style.display = vis ? 'block' : 'none';
+    el.style.opacity = a === 0 ? 1 : sai((t - a) / 0.3);
+    el.style.zIndex = String(Math.round(a * 10));
+  }
+  // 1 — preço da loja entra, a tampa sobe e o iPhone sai da caixa
+  entra($('topo'), (t - 0.15) / 0.5);
+  const pt = sai((t - 0.9) / 0.8);
+  $('tampa').style.transform = `translateY(${-pt * 900}px) rotate(${-pt * 8}deg)`;
+  $('tampa').style.opacity = 1 - cl((t - 1.4) / 0.4);
+  const pf = sai((t - 1.3) / 1.1);
+  $('fone').style.transform = `translateY(${-pf * 140}px) scale(${0.94 + pf * 0.06})`;
+  $('base').style.transform = `translateY(${pf * 120}px)`;
+  $('base').style.opacity = 1 - cl((t - 2.0) / 0.5);
+  $('sombra').style.opacity = 1 - cl((t - 2.0) / 0.5);
+  entra($('nome'), (t - 2.5) / 0.5, 40);
+  $('brilho').style.opacity = t > 2.4 && t < 3.6 ? 1 : 0;
+  $('brilho').style.backgroundPosition = `${100 - cl((t - 2.4) / 1.2) * 100}% 0`;
+  // 2 — câmeras de perto, aproximando devagar
+  const pz = cl((t - 4.4) / 2.8);
+  $('pertoImg').style.transform = `scale(${1 + pz * 0.12})`;
+  entra($('pertoEtq'), (t - 4.9) / 0.4, 40);
+  // 3 — a comparação, linha por linha
+  [['r1', 7.8], ['r2', 9.2], ['r3', 10.6]].forEach(([id, a]) => {
+    const p = (t - a) / 0.45;
+    const el = $(id); el.style.opacity = sai(p);
+    el.style.transform = `translateX(${(1 - mola(p)) * 120}px)`;
+  });
+  // 4 — fecho
+  const pi = sai((t - 13.0) / 0.6);
+  $('fimFoto').style.transform = `scale(${0.85 + pi * 0.15}) rotate(${(1 - pi) * -4}deg)`;
+  entra($('fimLance'), (t - 13.4) / 0.4, 40);
+  const pulso = t > 14 ? Math.max(0, Math.sin((t - 14) * Math.PI * 1.5)) * 0.04 : 0;
+  $('valor').parentElement.style.transform = `scale(${1 + pulso})`;
+  entra($('fimQuando'), (t - 13.8) / 0.4, 30);
+  entra($('fimCta'), (t - 14.2) / 0.4, 30);
+};
+window.quadro(0);
+</script></body></html>
