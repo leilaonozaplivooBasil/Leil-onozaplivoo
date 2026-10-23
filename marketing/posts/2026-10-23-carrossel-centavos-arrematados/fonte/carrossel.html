@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Carrossel "Arrematados no Leilão dos Centavos" — 1080x1350 (4:5), cor Vivo da Duda (verde natural). ?s=1..4 -->
+<link rel="stylesheet" href="fontes/fontes.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1350px;overflow:hidden;font-family:Barlow,sans-serif;color:#fff}
+  .s{position:relative;width:1080px;height:1350px;overflow:hidden;display:none;
+     background:linear-gradient(160deg,#019049 0%,#017a3f 50%,#016A37 100%)}
+  .s::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 45% at 50% 42%,rgba(255,255,255,.13),transparent 70%)}
+  .slab{font-family:"Roboto Slab",serif}
+  .ouro{color:#FFE08A}
+  .logo{position:absolute;top:56px;left:50%;width:250px;margin-left:-125px}
+  .pag{position:absolute;top:70px;right:60px;font-weight:700;font-size:26px;color:rgba(255,255,255,.7)}
+  .rodape{position:absolute;left:0;right:0;bottom:52px;text-align:center;font-weight:700;font-size:30px;letter-spacing:.04em;color:rgba(255,255,255,.92)}
+  .rodape b{color:#FFE08A}
+
+  /* capa */
+  #s1 .selo{position:absolute;top:220px;left:0;right:0;text-align:center}
+  #s1 .selo span{display:inline-block;padding:12px 30px;border-radius:999px;background:rgba(0,0,0,.18);box-shadow:inset 0 0 0 2px #FFE08A;
+     color:#FFE08A;font-weight:800;font-size:30px;letter-spacing:.16em}
+  #s1 h1{position:absolute;top:310px;left:60px;right:60px;text-align:center;font-family:"Roboto Slab",serif;font-weight:800;font-size:88px;line-height:1.02;letter-spacing:-.02em;text-shadow:0 6px 24px rgba(0,0,0,.25)}
+  #s1 h1 em{font-style:normal;color:#FFE08A}
+  #s1 .leil{position:absolute;left:8px;bottom:110px;width:540px;filter:drop-shadow(0 30px 30px rgba(0,0,0,.35))}
+  #s1 .mini{position:absolute;right:56px;bottom:190px;display:flex;flex-direction:column;gap:22px}
+  #s1 .mini div{width:440px;height:132px;border-radius:24px;background:#fff;display:flex;align-items:center;gap:20px;padding:0 22px 0 14px;box-shadow:0 18px 36px rgba(0,0,0,.28)}
+  #s1 .mini i{width:104px;height:104px;border-radius:16px;background:#fff center/contain no-repeat;flex:none}
+  #s1 .mini p{color:#0b2a1c;font-weight:700;font-size:24px;line-height:1.15}
+  #s1 .mini p b{display:block;font-family:"Roboto Slab",serif;font-weight:800;font-size:40px;color:#016A37;margin-top:2px}
+  #s1 .arraste{position:absolute;right:56px;bottom:110px;width:440px;text-align:center;font-weight:800;font-size:30px;color:#FFE08A;letter-spacing:.04em}
+
+  /* produto */
+  .p .card{position:absolute;left:70px;right:70px;top:190px;height:690px;border-radius:40px;background:#fff center/72% no-repeat;box-shadow:0 30px 60px rgba(0,0,0,.3)}
+  .p .faixa{position:absolute;left:50%;top:850px;transform:translateX(-50%) rotate(-3deg);padding:14px 44px;border-radius:14px;white-space:nowrap;
+     background:linear-gradient(180deg,#FFF0B8,#FFE08A 55%,#E8BE55);color:#0A2A18;font-family:"Roboto Slab",serif;font-weight:800;font-size:44px;letter-spacing:.12em;box-shadow:0 14px 30px rgba(0,0,0,.3)}
+  .p .nome{position:absolute;left:70px;right:70px;top:960px;text-align:center;font-weight:700;font-size:40px;line-height:1.15}
+  .p .valores{position:absolute;left:70px;right:70px;top:1045px;display:flex;gap:24px}
+  .p .bx{flex:1;border-radius:28px;padding:22px 10px 24px;text-align:center}
+  .p .bx small{display:block;font-weight:800;font-size:24px;letter-spacing:.12em}
+  .p .arr{background:#0A2A18;box-shadow:inset 0 0 0 3px #FFE08A}
+  .p .arr small{color:#FFE08A}
+  .p .arr b{display:block;margin-top:6px;font-family:"Roboto Slab",serif;font-weight:800;font-size:84px;line-height:1;color:#fff;white-space:nowrap}
+  .p .arr b span{font-size:40px;margin-right:8px}
+  .p .mer{background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
+  .p .mer small{color:rgba(255,255,255,.85)}
+  .p .mer b{display:block;margin-top:6px;font-family:"Roboto Slab",serif;font-weight:700;font-size:64px;line-height:1.3;color:#fff;white-space:nowrap}
+  .p .mer b i{position:relative;font-style:normal;display:inline-block}
+  .p .mer b i::after{content:"";position:absolute;left:-6px;right:-6px;top:52%;height:6px;border-radius:3px;background:#FFE08A;transform:rotate(-6deg)}
+  .p .mer b span{font-size:34px;margin-right:6px}
+  .p .off{position:absolute;right:40px;top:150px;width:170px;height:170px;border-radius:50%;background:#FFE08A;color:#0A2A18;display:flex;flex-direction:column;align-items:center;justify-content:center;
+     transform:rotate(10deg);box-shadow:0 14px 30px rgba(0,0,0,.3)}
+  .p .off b{font-family:"Roboto Slab",serif;font-weight:800;font-size:58px;line-height:1}
+  .p .off small{font-weight:800;font-size:20px;letter-spacing:.06em;margin-top:2px;text-align:center;line-height:1.1}
+</style></head>
+<body>
+<div class="s" id="s1">
+  <img class="logo" src="logo-escuro.png" alt="">
+  <div class="selo"><span>LEILÃO DOS CENTAVOS</span></div>
+  <h1>Arrematados por valores <em>surpreendentes</em></h1>
+  <img class="leil" src="leiloeiro-aponta-moeda-recorte.png" alt="">
+  <div class="mini">
+    <div><i style="background-image:url(estufa-thumb.jpg)"></i><p>Estufa de salgados<b>R$ 28,47</b></p></div>
+    <div><i style="background-image:url(rastreador-tag.jpg)"></i><p>Rastreador GPS<b>R$ 28,40</b></p></div>
+    <div><i style="background-image:url(relogio.jpg)"></i><p>Relógio EYT<b>R$ 20,20</b></p></div>
+  </div>
+  <p class="arraste">Arrasta pro lado →</p>
+  <p class="rodape">Produtos originais · entrega para todo o Brasil</p>
+</div>
+<div id="produtos"></div>
+<script>
+const P = [
+  { nome: 'Estufa para Salgados 5 Bandejas', foto: 'estufa-a.jpg', valor: '28,47', mercado: '670', pct: 96 },
+  { nome: 'Rastreador GPS Smart Tag', foto: 'rastreador-tag.jpg', fundo: '#F7F7F7', valor: '28,40', mercado: '145', pct: 80 },
+  { nome: 'Relógio EYT', foto: 'relogio.jpg', valor: '20,20', mercado: '197', pct: 90 },
+];
+document.getElementById('produtos').outerHTML = P.map((p, i) => `
+<div class="s p" id="s${i + 2}">
+  <img class="logo" src="logo-escuro.png" alt=""><span class="pag">${i + 2}/4</span>
+  <div class="card" style="background-image:url(${p.foto});${p.fundo ? 'background-color:' + p.fundo : ''}"></div>
+  <div class="off"><b>${p.pct}%</b><small>ABAIXO DO<br>MERCADO</small></div>
+  <div class="faixa">✓ ARREMATADO</div>
+  <p class="nome">${p.nome}</p>
+  <div class="valores">
+    <div class="bx arr"><small>ARREMATADO POR</small><b><span>R$</span>${p.valor}</b></div>
+    <div class="bx mer"><small>VALOR DE MERCADO</small><b><i><span>R$</span>${p.mercado}</i></b></div>
+  </div>
+  <p class="rodape">${i === 2 ? 'O próximo pode ser seu · <b>link na bio</b>' : 'Leilão dos Centavos · <b>leilaonozap.net</b>'}</p>
+</div>`).join('');
+document.getElementById('s' + (new URLSearchParams(location.search).get('s') || '1')).style.display = 'block';
+</script>
+</body></html>
