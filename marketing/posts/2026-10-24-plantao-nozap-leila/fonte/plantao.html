@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Arte "Plantão NoZap · Ao vivo" — Leila oficial (recorte do banner do influenciador, sem IA). ?f=feed (1080x1350) | story (1080x1920) &lance=1210 -->
+<link rel="stylesheet" href="fontes/fontes.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Barlow,sans-serif;color:#fff;overflow:hidden}
+  .s{position:relative;width:1080px;overflow:hidden;background:radial-gradient(80% 55% at 45% 55%,#0b5a3a 0%,#05331f 45%,#00140b 100%)}
+  .feed{height:1350px} .story{height:1920px}
+  .grade{position:absolute;inset:0;opacity:.08;background-image:linear-gradient(#3dff8a 1px,transparent 1px),linear-gradient(90deg,#3dff8a 1px,transparent 1px);background-size:60px 60px;-webkit-mask:radial-gradient(70% 60% at 50% 50%,#000,transparent);mask:radial-gradient(70% 60% at 50% 50%,#000,transparent)}
+  .aro{position:absolute;border-radius:50%;box-shadow:0 0 0 6px #3dff8a,0 0 60px 18px rgba(61,255,138,.55),inset 0 0 50px rgba(61,255,138,.35)}
+  /* barra do plantão */
+  .barra{position:absolute;left:0;right:0;display:flex;align-items:stretch;height:96px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .barra .vivo{display:flex;align-items:center;gap:14px;padding:0 30px;background:#E11D2E;font-weight:900;font-size:38px;letter-spacing:.08em}
+  .barra .vivo i{width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 0 0 6px rgba(255,255,255,.3)}
+  .barra .nome{flex:1;display:flex;align-items:center;padding:0 28px;background:linear-gradient(90deg,#019049,#016A37);font-family:"Roboto Slab",serif;font-weight:800;font-size:42px;letter-spacing:.02em}
+  .barra .hora{display:flex;align-items:center;padding:0 28px;background:#FFE08A;color:#0A2A18;font-weight:900;font-size:36px;letter-spacing:.06em}
+  .logo{position:absolute;width:200px}
+  /* telão */
+  .telao{position:absolute;border-radius:28px;background:linear-gradient(160deg,#0a2a1b,#04170e);box-shadow:0 0 0 4px #FFE08A,0 30px 60px rgba(0,0,0,.55);overflow:hidden}
+  .telao .tit{position:absolute;left:0;right:0;top:0;padding:12px 0;text-align:center;background:rgba(255,224,138,.12);color:#FFE08A;font-weight:800;font-size:24px;letter-spacing:.14em}
+  .telao .ft{position:absolute;left:50%;transform:translateX(-50%);background:#fff url(iphone-1.png) center/88% no-repeat;border-radius:18px}
+  .telao .rot{position:absolute;left:0;right:0;text-align:center;font-weight:800;font-size:22px;letter-spacing:.14em;color:#7dffb4}
+  .telao .val{position:absolute;left:0;right:0;text-align:center;font-family:"Roboto Slab",serif;font-weight:800;color:#FFE08A;line-height:1}
+  .telao .val span{font-size:.45em;margin-right:6px}
+  .leila{position:absolute;filter:drop-shadow(0 30px 40px rgba(0,0,0,.55))}
+  /* faixa de baixo (GC) */
+  .gc{position:absolute;left:40px;right:40px}
+  .gc .t1{display:inline-block;padding:10px 22px;background:#E11D2E;font-weight:900;font-size:28px;letter-spacing:.1em}
+  .gc .t2{padding:20px 26px 22px;background:linear-gradient(90deg,#FFFFFF,#F2F0EA);color:#00180D;font-family:"Roboto Slab",serif;font-weight:800;line-height:1.05;box-shadow:0 20px 40px rgba(0,0,0,.45)}
+  .gc .t2 em{font-style:normal;color:#016A37}
+  .gc .t3{display:flex;background:#00180D;color:#fff;font-weight:700;font-size:26px}
+  .gc .t3 span{padding:12px 22px;border-right:1px solid rgba(255,255,255,.15);white-space:nowrap}
+  .gc .t3 b{color:#FFE08A}
+  .gc .t3 s{color:rgba(255,255,255,.75);text-decoration-color:#FFE08A;text-decoration-thickness:3px}
+  .letreiro{position:absolute;left:0;right:0;height:62px;background:#FFE08A;color:#0A2A18;display:flex;align-items:center;white-space:nowrap;overflow:hidden;font-weight:900;font-size:28px;letter-spacing:.06em}
+  .letreiro span{padding-left:24px}
+  .vaga{position:absolute;left:0;right:0;text-align:center;color:rgba(255,255,255,.0)}
+</style></head>
+<body>
+<div class="s" id="tela">
+  <div class="grade"></div>
+  <div class="aro" id="aro"></div>
+  <div class="barra" id="barra"><div class="vivo"><i></i>AO VIVO</div><div class="nome">PLANTÃO NOZAP</div><div class="hora">HOJE · 18H</div></div>
+  <img class="logo" id="logo" src="logo-escuro.png" alt="">
+  <div class="telao" id="telao"><div class="tit">NO TELÃO AGORA</div><div class="ft" id="ft"></div><div class="rot" id="rot">LANCE ATUAL</div><div class="val" id="val"></div></div>
+  <img class="leila" id="leila" src="leila.png" alt="">
+  <div class="gc" id="gc">
+    <div class="t1">ÚLTIMA HORA</div>
+    <div class="t2" id="t2">Hoje às 18h o martelo bate no <em>iPhone 17 Pro Max</em></div>
+    <div class="t3"><span>Loja <s>R$ 8.404</s></span><span>Começou em <b>R$ 297</b></span><span>Lance agora <b id="lance2"></b></span></div>
+  </div>
+  <div class="letreiro" id="letreiro"><span id="letreiroTxt"></span></div>
+</div>
+<script>
+const q = new URLSearchParams(location.search);
+const f = q.get('f') || 'feed';
+const lance = Number(q.get('lance') || 1210).toLocaleString('pt-BR');
+const $ = (id) => document.getElementById(id);
+const tela = $('tela'); tela.classList.add(f);
+$('val').innerHTML = `<span>R$</span>${lance}`; $('lance2').textContent = `R$ ${lance}`;
+$('letreiroTxt').textContent = ('LEILÃO NOZAP • IPHONE 17 PRO MAX • HOJE ÀS 18H • LANCE AGORA R$ ' + lance + ' • LINK NA BIO • ').repeat(3);
+const P = f === 'feed'
+  ? { barra: 40, logo: [40, 165], aro: [80, 300, 620], telao: [640, 175, 400, 500], ft: [62, 250, 270], rot: 350, val: [386, 76], leila: [-10, 392, 700], gc: [1000, 52], letreiro: 1288 }
+  : { barra: 150, logo: [440, 52], aro: [100, 560, 760], telao: [600, 290, 440, 560], ft: [64, 270, 310], rot: 400, val: [438, 86], leila: [-20, 640, 800], gc: [1340, 60], letreiro: 1650 };
+$('barra').style.top = P.barra + 'px';
+Object.assign($('logo').style, { left: P.logo[0] + 'px', top: P.logo[1] + 'px' });
+Object.assign($('aro').style, { left: P.aro[0] + 'px', top: P.aro[1] + 'px', width: P.aro[2] + 'px', height: P.aro[2] + 'px' });
+Object.assign($('telao').style, { left: P.telao[0] + 'px', top: P.telao[1] + 'px', width: P.telao[2] + 'px', height: P.telao[3] + 'px' });
+Object.assign($('ft').style, { top: P.ft[0] + 'px', width: P.ft[1] + 'px', height: P.ft[2] + 'px' });
+$('rot').style.top = P.rot + 'px';
+Object.assign($('val').style, { top: P.val[0] + 'px', fontSize: P.val[1] + 'px' });
+Object.assign($('leila').style, { left: P.leila[0] + 'px', top: P.leila[1] + 'px', width: P.leila[2] + 'px' });
+Object.assign($('gc').style, { top: P.gc[0] + 'px' });
+$('t2').style.fontSize = P.gc[1] + 'px';
+$('letreiro').style.top = P.letreiro + 'px';
+</script></body></html>
