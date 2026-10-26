@@ -96,8 +96,8 @@ def compor(fr,ov,x,y,alpha=1.0):
     o=ov[y0-y:y1-y,x0-x:x1-x].astype(np.float32); a=o[...,3:4]/255.0*alpha
     reg=fr[y0:y1,x0:x1].astype(np.float32); fr[y0:y1,x0:x1]=(reg*(1-a)+o[...,:3]*a).astype(np.uint8)
 
-dec=subprocess.Popen(['ffmpeg','-v','error','-i','../video.mp4','-an','-vf','scale=1080:1920,fps=30','-f','rawvideo','-pix_fmt','rgb24','-'],stdout=subprocess.PIPE)
-enc=subprocess.Popen(['ffmpeg','-v','error','-y','-f','rawvideo','-pix_fmt','rgb24','-s',f'{W}x{H}','-r',str(FPS),'-i','-','-c:v','libx264','-preset','medium','-crf','20','-pix_fmt','yuv420p','video-sem-som.mp4'],stdin=subprocess.PIPE)
+dec=subprocess.Popen(['ffmpeg','-v','error','-i','../video.mp4','-an','-vf','zscale=t=linear:npl=203,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p,eq=saturation=1.08:contrast=1.03,scale=1080:1920:flags=lanczos,fps=30','-f','rawvideo','-pix_fmt','rgb24','-'],stdout=subprocess.PIPE)
+enc=subprocess.Popen(['ffmpeg','-v','error','-y','-f','rawvideo','-pix_fmt','rgb24','-s',f'{W}x{H}','-r',str(FPS),'-i','-','-c:v','libx264','-preset','slow','-crf','16','-pix_fmt','yuv420p','-colorspace','bt709','-color_primaries','bt709','-color_trc','bt709','-color_range','tv','video-sem-som.mp4'],stdin=subprocess.PIPE)
 i=0; tam=W*H*3
 while True:
     buf=dec.stdout.read(tam)
