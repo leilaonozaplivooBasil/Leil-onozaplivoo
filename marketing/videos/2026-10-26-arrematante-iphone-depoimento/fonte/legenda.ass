@@ -1,0 +1,58 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Leg,Inter ExtraBold,66,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,6,2,2,70,70,430,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:01.74,Leg,,0,0,0,,{\fad(60,60)}Eu estou aqui com o Mu•••,
+Dialogue: 0,0:00:01.78,0:00:03.60,Leg,,0,0,0,,{\fad(60,60)}o {\c&H7ED03F&}arrematante{\c&HFFFFFF&} do iPhone
+Dialogue: 0,0:00:03.72,0:00:05.85,Leg,,0,0,0,,{\fad(60,60)}do nosso leilão do sábado.
+Dialogue: 0,0:00:05.94,0:00:08.40,Leg,,0,0,0,,{\fad(60,60)}Então, está aqui: esse é o iPhone.
+Dialogue: 0,0:00:09.40,0:00:11.45,Leg,,0,0,0,,{\fad(60,60)}Então, pra gente fazer algumas perguntinhas:
+Dialogue: 0,0:00:11.50,0:00:13.10,Leg,,0,0,0,,{\fad(60,60)}como que foi no começo?
+Dialogue: 0,0:00:13.14,0:00:15.30,Leg,,0,0,0,,{\fad(60,60)}Ficou desconfiado? Teve medo do leilão?
+Dialogue: 0,0:00:16.20,0:00:16.95,Leg,,0,0,0,,{\fad(60,60)}Conta pra nós.
+Dialogue: 0,0:00:17.04,0:00:19.80,Leg,,0,0,0,,{\fad(60,60)}No início, eu fiquei um pouco desconfiado,
+Dialogue: 0,0:00:19.82,0:00:21.74,Leg,,0,0,0,,{\fad(60,60)}porque é uma quantia alta
+Dialogue: 0,0:00:21.76,0:00:23.22,Leg,,0,0,0,,{\fad(60,60)}pra gente colocar na carteira.
+Dialogue: 0,0:00:23.24,0:00:26.40,Leg,,0,0,0,,{\fad(60,60)}Aí eu fiquei meio desconfiado,
+Dialogue: 0,0:00:26.42,0:00:27.95,Leg,,0,0,0,,{\fad(60,60)}mas depois, quando eu vi todo mundo
+Dialogue: 0,0:00:28.00,0:00:29.15,Leg,,0,0,0,,{\fad(60,60)}dando lance, dando lance,
+Dialogue: 0,0:00:29.18,0:00:30.20,Leg,,0,0,0,,{\fad(60,60)}eu fiquei indo pra trás.
+Dialogue: 0,0:00:30.24,0:00:31.85,Leg,,0,0,0,,{\fad(60,60)}Falei: não, vou ter que ir com tudo.
+Dialogue: 0,0:00:31.94,0:00:34.10,Leg,,0,0,0,,{\fad(60,60)}E qual foi a sensação durante o leilão,
+Dialogue: 0,0:00:34.14,0:00:36.70,Leg,,0,0,0,,{\fad(60,60)}que você sentiu ali, dando lance?
+Dialogue: 0,0:00:36.80,0:00:38.44,Leg,,0,0,0,,{\fad(60,60)}Vou te confessar:
+Dialogue: 0,0:00:38.46,0:00:39.98,Leg,,0,0,0,,{\fad(60,60)}eu nunca fiquei tão {\c&H7ED03F&}nervoso{\c&HFFFFFF&},
+Dialogue: 0,0:00:40.00,0:00:41.85,Leg,,0,0,0,,{\fad(60,60)}porque eu estava suando em todo momento,
+Dialogue: 0,0:00:41.90,0:00:43.60,Leg,,0,0,0,,{\fad(60,60)}suando, suando, suando.
+Dialogue: 0,0:00:43.74,0:00:45.24,Leg,,0,0,0,,{\fad(60,60)}Aí tinha um camarada lá dando mais lance,
+Dialogue: 0,0:00:45.26,0:00:47.90,Leg,,0,0,0,,{\fad(60,60)}eu falei: vou pegar ele agora, no lance.
+Dialogue: 0,0:00:48.44,0:00:49.70,Leg,,0,0,0,,{\fad(60,60)}Aí deixei por último.
+Dialogue: 0,0:00:49.72,0:00:50.66,Leg,,0,0,0,,{\fad(60,60)}Quando deixei por último,
+Dialogue: 0,0:00:50.68,0:00:52.10,Leg,,0,0,0,,{\fad(60,60)}eu fui e dei o último lance.
+Dialogue: 0,0:00:52.16,0:00:54.10,Leg,,0,0,0,,{\fad(60,60)}Aí falei: agora é meu, agora é meu,
+Dialogue: 0,0:00:54.12,0:00:56.55,Leg,,0,0,0,,{\fad(60,60)}cruzando os dedos, cruzando os dedos,
+Dialogue: 0,0:00:56.62,0:00:57.40,Leg,,0,0,0,,{\fad(60,60)}daqui a pouco:
+Dialogue: 0,0:00:57.42,0:00:59.35,Leg,,0,0,0,,{\fad(60,60)}dou-lhe uma, dou-lhe duas, dou-lhe três...
+Dialogue: 0,0:00:59.40,0:01:01.40,Leg,,0,0,0,,{\fad(60,60)}{\c&H7ED03F&}ARREMATADO! ARREMATADO!{\c&HFFFFFF&}
+Dialogue: 0,0:01:01.98,0:01:04.10,Leg,,0,0,0,,{\fad(60,60)}Só não vou abrir, pessoal, porque é presente.
+Dialogue: 0,0:01:04.36,0:01:06.98,Leg,,0,0,0,,{\fad(60,60)}De repente, quando eu chegar em casa,
+Dialogue: 0,0:01:07.00,0:01:09.36,Leg,,0,0,0,,{\fad(60,60)}faço um videozinho, gravo e mando pra vocês.
+Dialogue: 0,0:01:09.42,0:01:12.30,Leg,,0,0,0,,{\fad(60,60)}Já tô indicando o {\c&H7ED03F&}Leilão No Zap{\c&HFFFFFF&} pros meus amigos,
+Dialogue: 0,0:01:12.32,0:01:15.45,Leg,,0,0,0,,{\fad(60,60)}porque isso daqui foi {\c&H7ED03F&}surreal, surreal{\c&HFFFFFF&}.
+Dialogue: 0,0:01:15.50,0:01:17.02,Leg,,0,0,0,,{\fad(60,60)}O preço que eu paguei no {\c&H7ED03F&}Leilão No Zap{\c&HFFFFFF&}
+Dialogue: 0,0:01:17.04,0:01:18.50,Leg,,0,0,0,,{\fad(60,60)}foi {\c&H7ED03F&}surreal{\c&HFFFFFF&} mesmo, bem bacana.
+Dialogue: 0,0:01:18.58,0:01:19.78,Leg,,0,0,0,,{\fad(60,60)}E aí, tá tudo certinho, né?
+Dialogue: 0,0:01:19.80,0:01:21.70,Leg,,0,0,0,,{\fad(60,60)}Tudo certinho, tudo {\c&H7ED03F&}lacrado{\c&HFFFFFF&}.
+Dialogue: 0,0:01:21.84,0:01:23.95,Leg,,0,0,0,,{\fad(60,60)}Tudo {\c&H7ED03F&}lacrado{\c&HFFFFFF&}, gente, tudo certinho.
+Dialogue: 0,0:01:24.98,0:01:26.40,Leg,,0,0,0,,{\fad(60,60)}E foi o {\c&H7ED03F&}17 Pro Max{\c&HFFFFFF&}!
+Dialogue: 0,0:01:26.70,0:01:27.90,Leg,,0,0,0,,{\fad(60,60)}Show de bola. É isso.
+Dialogue: 0,0:01:28.60,0:01:29.70,Leg,,0,0,0,,{\fad(60,60)}Obrigada!
