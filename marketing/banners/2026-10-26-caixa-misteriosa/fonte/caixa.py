@@ -255,6 +255,19 @@ def titulo(canvas, texto, y, tam, cor=(255, 255, 255), sub=None):
     d.text((W // 2, y), texto, font=f, anchor='mm', fill=cor)
 
 
+def selo(canvas, cx, cy, r):
+    """selo dourado redondo: 11 PRODUTOS."""
+    cx, cy, r = cx * S, cy * S, r * S
+    sombra_chao(canvas, cx, cy + r * .12, r, r, alfa=150)
+    m = Image.new('L', canvas.size, 0); ImageDraw.Draw(m).ellipse([cx - r, cy - r, cx + r, cy + r], fill=255)
+    g = Image.new('RGB', canvas.size, OURO[1]); gg = ouro(int(2 * r), int(2 * r)); g.paste(gg, (int(cx - r), int(cy - r)))
+    canvas.paste(g, (0, 0), m)
+    d = ImageDraw.Draw(canvas)
+    d.ellipse([cx - r * .88, cy - r * .88, cx + r * .88, cy + r * .88], outline=(150, 100, 20), width=max(2, int(r * .04)))
+    d.text((cx, cy - r * .16), '11', font=ImageFont.truetype(FONTE, int(r * .95)), anchor='mm', fill=(10, 70, 38))
+    d.text((cx, cy + r * .5), 'PRODUTOS', font=ImageFont.truetype(FONTE, int(r * .25)), anchor='mm', fill=(10, 70, 38))
+
+
 # ---------- montagem da caixa ----------
 TEX_F = face_frente(1000, 800)
 TEX_F_ABERTA = face_frente(1000, 800, faixa_tampa=False, fita=False)
@@ -389,6 +402,7 @@ def arte_leiloeiro(aberta, nome):
             rr = lay.convert('RGBA'); rr.putalpha(mk); can.alpha_composite(rr, pos)
     else:
         brilhos(can, 18, (60 * S, 120 * S, W - 60 * S, W - 200 * S), 5, tam=(4, 12))
+    selo(can, 180, 170, 105)
     can.convert('RGB').resize((1080, 1080), Image.LANCZOS).save(f'{OUT}/{nome}', quality=93)
 
 
@@ -407,14 +421,15 @@ def arte_caixa(nome, yaw, pitch, escala, centro, texto, sub, seed):
     if texto:
         titulo(can, texto, 96 * S, 74)
     if sub:
-        d = ImageDraw.Draw(can); f = ImageFont.truetype(FONTE_B, 40 * S)
+        d = ImageDraw.Draw(can); f = ImageFont.truetype(FONTE_B, 38 * S)
         d.text((W // 2, W - 78 * S), sub, font=f, anchor='mm', fill=(245, 196, 81))
+    selo(can, 905, 290, 92)
     can.convert('RGB').resize((1080, 1080), Image.LANCZOS).save(f'{OUT}/{nome}', quality=93)
 
 
 if __name__ == '__main__':
     qual = sys.argv[2] if len(sys.argv) > 2 else 'todas'
     if qual in ('1', 'todas'): arte_leiloeiro(False, '1-leiloeiro-segurando.jpg')
-    if qual in ('2', 'todas'): arte_caixa('2-caixa.jpg', -0.55, 0.42, 470 * S, (W // 2, 590 * S), 'CAIXA MISTERIOSA', 'Um produto surpresa para quem arrematar', 21)
-    if qual in ('3', 'todas'): arte_caixa('3-caixa.jpg', 0.5, 0.3, 520 * S, (W // 2, 600 * S), 'O QUE TEM DENTRO?', 'Só quem arrematar vai saber', 31)
+    if qual in ('2', 'todas'): arte_caixa('2-caixa.jpg', -0.55, 0.42, 470 * S, (W // 2, 590 * S), 'CAIXA MISTERIOSA', '11 produtos surpresa em uma caixa só', 21)
+    if qual in ('3', 'todas'): arte_caixa('3-caixa.jpg', 0.5, 0.3, 520 * S, (W // 2, 600 * S), 'O QUE TEM DENTRO?', 'São 11 produtos. Só quem arrematar vai saber', 31)
     if qual in ('4', 'todas'): arte_leiloeiro(True, '4-leiloeiro-abrindo.jpg')
