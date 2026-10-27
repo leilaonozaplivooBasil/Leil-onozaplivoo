@@ -114,8 +114,10 @@ def faixa(base, titulo, sub=None, caixa=FAIXA, opaco=235, tam=74):
     d.rounded_rectangle((x0 + 40, y0, x1 - 40, y0 + 8), radius=4, fill=DOURADO + (255,))
     base.alpha_composite(camada)
     d = ImageDraw.Draw(base)
-    f, fs = fonte('Black', tam), fonte('Bold', 40)
     larg = x1 - x0 - 90
+    while tam > 56 and len(_linhas(ImageDraw.Draw(base), titulo.upper(), fonte('Black', tam), larg)) > 2:
+        tam -= 6
+    f, fs = fonte('Black', tam), fonte('Bold', 40)
     alt_t = len(_linhas(d, titulo.upper(), f, larg)) * tam * 1.12
     alt_s = len(_linhas(d, sub, fs, larg)) * 40 * 1.25 + 26 if sub else 0
     topo = (y0 + y1) / 2 - (alt_t + alt_s) / 2 + 6

@@ -108,12 +108,15 @@ pre {{ white-space:pre-wrap; font-family:inherit; background:#f2f8f4; padding:8p
 {"".join(blocos)}'''
 
 
-if __name__ == '__main__':
-    dia = sys.argv[1]
+def gerar(dia):
     destino = os.path.join(AQUI, '..', DIAS[dia]['pasta'], f'ROTEIRO-{DIAS[dia]["pasta"]}.pdf')
     h = os.path.join(AQUI, '..', DIAS[dia]['pasta'], '.roteiro.html')
     open(h, 'w').write(html(dia))
     js = f"const {{chromium}}=require('playwright');(async()=>{{const b=await chromium.launch();const p=await b.newPage();await p.goto('file://{os.path.abspath(h)}');await p.pdf({{path:'{os.path.abspath(destino)}',format:'A4',printBackground:true}});await b.close();}})()"
     subprocess.run(['node', '-e', js], check=True)
     os.remove(h)
-    print(destino)
+    return destino
+
+
+if __name__ == '__main__':
+    print(gerar(sys.argv[1]))
