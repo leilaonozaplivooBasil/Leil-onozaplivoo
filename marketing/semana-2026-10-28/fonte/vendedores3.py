@@ -158,7 +158,7 @@ if __name__ == '__main__':
     arte(float(sys.argv[1]), sys.argv[2], sys.argv[3], sys.argv[4])
 
 
-def arte_simples(lance, numero, unidade, saida, cta='NÃO DEIXA PRA DEPOIS!'):
+def arte_simples(lance, numero, unidade, saida, cta='NÃO DEIXA PRA DEPOIS!', leiloeiro_pose=None):
     """Versão enxuta (pedido da Natália, 28/10): só o tempo que falta, a máquina grande no centro, o modelo e o lance atual."""
     b = fundo_facetado()
     _logo(b, y=45, largura=250)
@@ -170,8 +170,14 @@ def arte_simples(lance, numero, unidade, saida, cta='NÃO DEIXA PRA DEPOIS!'):
     while tam > 140 and ImageDraw.Draw(b).textlength(txt, font=F('Black', tam)) > 990:
         tam -= 10
     colar_centro(b, camada_texto(txt, F('Black', tam), ((235, 255, 150), LIMA_ESC), relevo=16, brilho=LIMA), 540, 430)
-    # a máquina, grande e no centro
-    produto(b, FOTO, 540, 1275, 690, ang=0)
+    # a máquina, grande e no centro (ou à direita, com o Leiloeiro apresentando)
+    if leiloeiro_pose:
+        produto(b, FOTO, 690, 1275, 670, ang=0)
+        from kit import leiloeiro as _lei, sombra as _sombra
+        p = _lei(leiloeiro_pose, 700)
+        _sombra(p, b, (10, 1290 - p.height), raio=24, forca=120)
+    else:
+        produto(b, FOTO, 540, 1275, 690, ang=0)
     # nome do modelo
     d = ImageDraw.Draw(b)
     nome = 'Máquina de lavar Panasonic 15 kg'
