@@ -132,7 +132,7 @@ if __name__ == '__main__':
 
 def peca_desejo(produto_nome, desc, linha1, linha2, lance, lances, pessoas, foto, saida,
                 sonho=('Imagina essa máquina', '*na* *sua* *casa?*'), prova_foto='murilo-iphone-rosto.jpg',
-                prova=('O Murilo arrematou', 'o iPhone e já', 'está com ele.'), cta='Aproveite antes do encerramento!'):
+                prova=None, cta='Aproveite antes do encerramento!'):
     """Versão 'desejo' (28/10): sem valor de mercado nem %, destaca o leilão (tempo + lance + disputa), o sonho e a prova real."""
     b = fundo()
     _logo(b, y=48, largura=210)
@@ -147,28 +147,30 @@ def peca_desejo(produto_nome, desc, linha1, linha2, lance, lances, pessoas, foto
     d.text((315, 1390), desc, font=F('Bold', 29), fill=(200, 230, 210), anchor='mm')
     x0, x1 = 640, 1030
     # lance atual (o destaque) + a disputa real
-    bloco(b, (x0, 700, x1, 920), LIMA + (255,))
+    dy = 0 if prova else 150  # sem o cartão de prova, o lance desce para o meio da coluna
+    bloco(b, (x0, 700 + dy, x1, 920 + dy), LIMA + (255,))
     d = ImageDraw.Draw(b)
-    d.text((x0 + 32, 752), 'LANCE ATUAL', font=F('Black', 32), fill=ESCURO, anchor='lm')
+    d.text((x0 + 32, 752 + dy), 'LANCE ATUAL', font=F('Black', 32), fill=ESCURO, anchor='lm')
     fv = F('Black', 112)
     while d.textlength(real(lance), font=fv) > x1 - x0 - 60:
         fv = F('Black', fv.size - 4)
-    d.text((x0 + 30, 846), real(lance), font=fv, fill=ESCURO, anchor='lm')
-    d.ellipse((x0 + 8, 968, x0 + 24, 984), fill=LIMA)
-    d.text((x0 + 36, 976), f'{lances} lances · {pessoas} pessoas disputando', font=F('Bold', 24), fill=BRANCO, anchor='lm')
-    # prova real: foto + frase curta
-    bloco(b, (x0, 1040, x1, 1250), (4, 46, 22, 235), borda=(60, 120, 80))
-    ft = Image.open(f'{AQUI}/{prova_foto}').convert('RGB').resize((150, 150), Image.LANCZOS)
-    m = Image.new('L', (150, 150), 0)
-    ImageDraw.Draw(m).ellipse((0, 0, 149, 149), fill=255)
-    ft = ft.convert('RGBA')
-    ft.putalpha(m)
-    b.alpha_composite(ft, (x0 + 22, 1070))
-    d = ImageDraw.Draw(b)
-    d.ellipse((x0 + 20, 1068, x0 + 174, 1222), outline=DOURADO, width=3)
-    d.text((x0 + 192, 1084), 'QUEM ARREMATA, LEVA', font=F('Black', 19), fill=DOURADO, anchor='lm')
-    for i, t in enumerate(prova):
-        d.text((x0 + 192, 1124 + i * 34), t, font=F('Bold', 23), fill=BRANCO, anchor='lm')
+    d.text((x0 + 30, 846 + dy), real(lance), font=fv, fill=ESCURO, anchor='lm')
+    d.ellipse((x0 + 8, 968 + dy, x0 + 24, 984 + dy), fill=LIMA)
+    d.text((x0 + 36, 976 + dy), f'{lances} lances · {pessoas} pessoas disputando', font=F('Bold', 24), fill=BRANCO, anchor='lm')
+    # prova real: foto + frase curta (opcional)
+    if prova:
+      bloco(b, (x0, 1040, x1, 1250), (4, 46, 22, 235), borda=(60, 120, 80))
+      ft = Image.open(f'{AQUI}/{prova_foto}').convert('RGB').resize((150, 150), Image.LANCZOS)
+      m = Image.new('L', (150, 150), 0)
+      ImageDraw.Draw(m).ellipse((0, 0, 149, 149), fill=255)
+      ft = ft.convert('RGBA')
+      ft.putalpha(m)
+      b.alpha_composite(ft, (x0 + 22, 1070))
+      d = ImageDraw.Draw(b)
+      d.ellipse((x0 + 20, 1068, x0 + 174, 1222), outline=DOURADO, width=3)
+      d.text((x0 + 192, 1084), 'QUEM ARREMATA, LEVA', font=F('Black', 19), fill=DOURADO, anchor='lm')
+      for i, t in enumerate(prova):
+          d.text((x0 + 192, 1124 + i * 34), t, font=F('Bold', 23), fill=BRANCO, anchor='lm')
     # o sonho
     f = F('Black', 46)
     linha_a, linha_b = sonho
