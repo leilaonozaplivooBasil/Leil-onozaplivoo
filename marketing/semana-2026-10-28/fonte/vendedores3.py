@@ -156,3 +156,45 @@ def arte(lance, numero, unidade, saida, topo='FALTA MENOS DE', linha='UMA MÁQUI
 
 if __name__ == '__main__':
     arte(float(sys.argv[1]), sys.argv[2], sys.argv[3], sys.argv[4])
+
+
+def arte_simples(lance, numero, unidade, saida, cta='NÃO DEIXA PRA DEPOIS!'):
+    """Versão enxuta (pedido da Natália, 28/10): só o tempo que falta, a máquina grande no centro, o modelo e o lance atual."""
+    b = fundo_facetado()
+    _logo(b, y=45, largura=250)
+    d = ImageDraw.Draw(b)
+    ic_cronometro(d, 118, 265, 58, LIMA)
+    colar_centro(b, camada_texto('FALTA MENOS DE', F('Black', 86), BRANCO, relevo=6), 600, 265)
+    txt = f'{numero} {unidade}'
+    tam = 270
+    while tam > 140 and ImageDraw.Draw(b).textlength(txt, font=F('Black', tam)) > 990:
+        tam -= 10
+    colar_centro(b, camada_texto(txt, F('Black', tam), ((235, 255, 150), LIMA_ESC), relevo=16, brilho=LIMA), 540, 430)
+    # a máquina, grande e no centro
+    produto(b, FOTO, 540, 1275, 690, ang=0)
+    # nome do modelo
+    d = ImageDraw.Draw(b)
+    nome = 'Máquina de lavar Panasonic 15 kg'
+    f = F('Black', 44)
+    w = d.textlength(nome, font=f)
+    vidro(b, (540 - w / 2 - 50, 1300, 540 + w / 2 + 50, 1390), borda=LIMA, raio=45)
+    d = ImageDraw.Draw(b)
+    d.text((540, 1345), nome, font=f, fill=BRANCO, anchor='mm')
+    # lance atual
+    f1, f2 = F('Black', 40), F('Black', 92)
+    v = real(lance)
+    w1, w2 = d.textlength('LANCE ATUAL', font=f1), d.textlength(v, font=f2)
+    larg = w1 + w2 + 150
+    x0 = 540 - larg / 2
+    vidro(b, (x0, 1410, x0 + larg, 1535), borda=LIMA, raio=40)
+    d = ImageDraw.Draw(b)
+    ic_martelo(d, x0 + 30, 1447, 50, CREME)
+    d.text((x0 + 100, 1472), 'LANCE ATUAL', font=f1, fill=CREME, anchor='lm')
+    d.rounded_rectangle((x0 + 120 + w1, 1422, x0 + larg - 12, 1523), radius=30, fill=LIMA)
+    d.text((x0 + 120 + w1 + (larg - 132 - w1) / 2, 1472), v, font=f2, fill=FUNDO_ESC, anchor='mm')
+    # chamada
+    f = F('Black', 46)
+    w = d.textlength(cta, font=f)
+    ic_fogo(b, 540 - w / 2 - 22, 1580, 27)
+    d.text((540 + 22, 1580), cta, font=f, fill=LIMA, anchor='mm')
+    b.convert('RGB').save(saida, quality=95)
