@@ -223,8 +223,8 @@ def arte_prompt(lance, topo, grande, barra1, saida, foto=None, linha='UM PRODUTO
     d = ImageDraw.Draw(b)
     seta_curva(d, (900, 700), (1000, 740), (955, 810), LIMA)
     produto(b, foto or FOTO, 320, 1300, 540, ang=-6)
-    etiqueta(b, 60, 1225)
-    cartao_preco(b, (610, 780, 1030, 985), ic_etiqueta, 'VALOR MÉDIO', 'DO PRODUTO', real(LOJA))
+    etiqueta(b, 60, 1268)
+    cartao_preco(b, (610, 780, 1030, 985), ic_etiqueta, 'VALOR MÉDIO', 'DO PRODUTO', real(int(LOJA)))
     cartao_preco(b, (610, 1005, 1030, 1210), ic_martelo, 'LANCE ATUAL', 'DO LEILÃO', real(lance), destaque=True)
     d = ImageDraw.Draw(b)
     seta_curva(d, (1042, 1215), (1055, 1250), (1000, 1268), LIMA)
@@ -233,7 +233,7 @@ def arte_prompt(lance, topo, grande, barra1, saida, foto=None, linha='UM PRODUTO
     vidro(b, (40, 1405, 1040, 1530), borda=LIMA, raio=62)
     d = ImageDraw.Draw(b)
     itens = [(lambda x, y: ic_relogio(d, x, y, 26, CREME), barra1[0], barra1[1]),
-             (lambda x, y: ic_raio(d, x, y, 56, CREME), 'PRODUTOS', 'ORIGINAIS'),
+             (lambda x, y: ic_raio(d, x, y, 56, CREME), 'PRODUTOS ORIGINAIS', 'E COM GARANTIA'),
              (lambda x, y: ic_escudo(d, x, y, 56, CREME), 'LANCES SEGUROS', 'E TRANSPARENTES')]
     for k, (ic, a, c) in enumerate(itens):
         x = 40 + k * 333
