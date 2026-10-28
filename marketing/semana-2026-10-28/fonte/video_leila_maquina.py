@@ -46,7 +46,20 @@ L3D = '/home/user/Leil-onozaplivoo/marketing/marca/leila-3d-proposta'
 ARQ3D = {'surpresa': 'leila3d-surpresa-original.jpg', 'apresenta': 'leila3d-apresenta-original.jpg', 'piscada': 'leila3d-piscada-joinha-original.jpg'}
 
 
+PERSONA = os.environ.get('PERSONA', 'leila')
+POSE_LEILOEIRO = {'surpresa': 'b-comemora', 'apresenta': 'a-apresenta', 'piscada': 'banner-centavos'}
+
+
 def leila(nome, altura):
+    """Leila em 3D (ou o Leiloeiro oficial, com PERSONA=leiloeiro)."""
+    if PERSONA == 'leiloeiro':
+        im = Image.open(f'{SITE}/leiloeiro/{POSE_LEILOEIRO[nome]}.webp').convert('RGBA')
+        im = im.crop(im.getbbox())
+        return im.resize((int(im.width * altura / im.height), altura), Image.LANCZOS)
+    return _leila3d(nome, altura)
+
+
+def _leila3d(nome, altura):
     """Leila em 3D (proposta de 28/10): recorta o fundo branco e tira o contorno claro da borda."""
     import numpy as np
     im = Image.open(f'{L3D}/{ARQ3D[nome]}').convert('RGB')
@@ -157,9 +170,12 @@ def montar(lance, saida, previa=None):
     fundo = fundo_facetado()
     _logo(fundo, y=60, largura=250)
     # peças prontas
-    surpresa = leila('surpresa', 1120)
-    apresenta = leila('apresenta', 1080)
-    piscada = leila('piscada', 1100)
+    lei = PERSONA == 'leiloeiro'
+    surpresa = leila('surpresa', 1000 if lei else 1120)
+    apresenta = leila('apresenta', 820 if lei else 1080)
+    piscada = leila('piscada', 1000 if lei else 1100)
+    x_uau = 230 if lei else 860
+    dx_apr = -120 if lei else -60
     maq = recortar(FOTO)
     maq_g = realista(maq.resize((int(maq.width * 880 / maq.height), 880), Image.LANCZOS))
     brilho = Image.new('RGBA', (maq_g.width + 300, maq_g.height + 300), LIMA + (0,))
@@ -195,7 +211,7 @@ def montar(lance, saida, previa=None):
             b.alpha_composite(img, (int(540 - img.width / 2), int(H - img.height + (1 - a) * 300)))
             ae = janela(t, 0.35, 1.9, ent=0.15, sai=0.2)
             if ae:
-                colar(b, uau, 860, 820, (0.6 + 0.4 * ease((t - 0.35) / 0.2)) * (1 + 0.04 * math.sin(t * 14)), ae)
+                colar(b, uau, x_uau, 820, (0.6 + 0.4 * ease((t - 0.35) / 0.2)) * (1 + 0.04 * math.sin(t * 14)), ae)
         colar(b, gancho, 540, 470, 1.0, janela(t, 0.05, 1.75, ent=0.3, sai=0.25))
         # máquina: entra no centro (2.0) e vai para a direita (4.0)
         if t >= 2.0:
@@ -213,7 +229,7 @@ def montar(lance, saida, previa=None):
         # cena 3 (4–12): Leila apresentando à esquerda + benefícios + lance
         a = janela(t, 4.1, 11.9, ent=0.35, sai=0.3)
         if a:
-            colar(b, apresenta, apresenta.width / 2 - 60 - (1 - a) * 500, H - apresenta.height / 2, 1.0, 1)
+            colar(b, apresenta, apresenta.width / 2 + dx_apr - (1 - a) * 500, H - apresenta.height / 2, 1.0, 1)
         colar(b, titulo_b, 540, 255, 1.0, janela(t, 4.2, 8.9, ent=0.3, sai=0.3))
         for i, p in enumerate(beneficios):
             ini = 4.7 + i * 1.0
