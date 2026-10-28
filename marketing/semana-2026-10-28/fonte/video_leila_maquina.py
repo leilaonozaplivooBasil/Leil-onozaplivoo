@@ -2,6 +2,7 @@
 # Mesmo verde tom sobre tom das artes do grupo. Benefícios da descrição do produto no site; lance atual lido na hora.
 # Uso: python3 video_leila_maquina.py <lance_agora> <saida.mp4> [<pasta_quadros_previa>]
 import math, os, subprocess, sys, tempfile
+import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 import vendedores3 as v3
 v3.H = 1920  # o fundo facetado em 9:16
@@ -41,9 +42,24 @@ def com_alfa(img, a):
     return r
 
 
+L3D = '/home/user/Leil-onozaplivoo/marketing/marca/leila-3d-proposta'
+ARQ3D = {'surpresa': 'leila3d-surpresa-original.jpg', 'apresenta': 'leila3d-apresenta-original.jpg', 'piscada': 'leila3d-piscada-joinha-original.jpg'}
+
+
 def leila(nome, altura):
-    im = Image.open(f'{SITE}/leila-recorte/{nome}.webp').convert('RGBA')
-    im.putalpha(im.split()[-1].filter(ImageFilter.MinFilter(7)).filter(ImageFilter.GaussianBlur(1.2)))  # tira o contorno branco
+    """Leila em 3D (proposta de 28/10): recorta o fundo branco e tira o contorno claro da borda."""
+    import numpy as np
+    im = Image.open(f'{L3D}/{ARQ3D[nome]}').convert('RGB')
+    base = im.copy()
+    for xy in [(0, 0), (im.width - 1, 0), (0, im.height - 1), (im.width - 1, im.height - 1), (im.width // 2, 0),
+               (5, im.height // 2), (im.width - 6, im.height // 2)]:
+        ImageDraw.floodfill(base, xy, (255, 0, 255), thresh=28)
+    a = np.array(base)
+    m = ~((a[:, :, 0] == 255) & (a[:, :, 1] == 0) & (a[:, :, 2] == 255))
+    al = Image.fromarray((m * 255).astype('uint8')).filter(ImageFilter.MinFilter(13)).filter(ImageFilter.GaussianBlur(1.4))
+    im = im.convert('RGBA')
+    im.putalpha(al)
+    im = im.crop(im.getbbox())
     return im.resize((int(im.width * altura / im.height), altura), Image.LANCZOS)
 
 
@@ -88,19 +104,69 @@ def colar(base, img, cx, cy, escala=1.0, a=1.0):
     base.alpha_composite(com_alfa(img, a), (int(cx - img.width / 2), int(cy - img.height / 2)))
 
 
+def realista(m):
+    """Reflexo suave no chão, sombra de contato e um leve brilho nas bordas: cara de foto de catálogo."""
+    w, h = m.size
+    out = Image.new('RGBA', (w + 80, int(h * 1.32)), (0, 0, 0, 0))
+    sh = Image.new('RGBA', out.size, (0, 0, 0, 0))
+    ImageDraw.Draw(sh).ellipse((40 + w * 0.05, h - 22, 40 + w * 0.95, h + 34), fill=(0, 18, 6, 190))
+    out.alpha_composite(sh.filter(ImageFilter.GaussianBlur(16)))
+    ref = m.transpose(Image.FLIP_TOP_BOTTOM).crop((0, 0, w, int(h * 0.3)))
+    grad = Image.linear_gradient('L').resize(ref.size).point(lambda v: int((255 - v) * 0.32))
+    ref.putalpha(Image.composite(ref.split()[-1], Image.new('L', ref.size, 0), grad).point(lambda v: v))
+    ref.putalpha(Image.fromarray(np.minimum(np.array(ref.split()[-1]), np.array(grad))))
+    out.alpha_composite(ref, (40, h + 6))
+    out.alpha_composite(m, (40, 0))
+    return out
+
+
+def bolhas(b, t, cx, cy, esc, a):
+    """Bolhas de sabão subindo da máquina (o toque de desenho animado)."""
+    if a <= 0:
+        return
+    c = Image.new('RGBA', b.size, (0, 0, 0, 0))
+    d = ImageDraw.Draw(c)
+    for i in range(14):
+        fase = (t * 0.55 + i * 0.137) % 1
+        x = cx + math.sin(i * 2.3 + t * 2) * 260 * esc
+        y = cy - 380 * esc - fase * 520
+        r = (10 + (i % 5) * 7) * (0.6 + fase * 0.6)
+        al = int(200 * a * (1 - fase))
+        d.ellipse((x - r, y - r, x + r, y + r), outline=(255, 255, 255, al), width=3, fill=(220, 255, 240, al // 4))
+        d.ellipse((x - r * 0.45, y - r * 0.55, x - r * 0.1, y - r * 0.2), fill=(255, 255, 255, al))
+    b.alpha_composite(c)
+
+
+def estouro(texto, r=170):
+    """Balão de gibi em forma de estrela com o texto (\"UAU!\")."""
+    im = Image.new('RGBA', (r * 2 + 40, r * 2 + 40), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    c = r + 20
+    pts = []
+    for i in range(24):
+        rr = r if i % 2 == 0 else r * 0.72
+        a = i * math.pi / 12
+        pts.append((c + rr * math.cos(a), c + rr * math.sin(a)))
+    d.polygon([(x + 8, y + 10) for x, y in pts], fill=(4, 52, 24, 200))
+    d.polygon(pts, fill=CREME, outline=FUNDO_ESC)
+    d.text((c, c), texto, font=F('Black', int(r * 0.52)), fill=FUNDO_ESC, anchor='mm')
+    return im
+
+
 def montar(lance, saida, previa=None):
     fundo = fundo_facetado()
     _logo(fundo, y=60, largura=250)
     # peças prontas
-    surpresa = leila('surpresa', 1000)
-    apresenta = leila('apresenta', 980)
-    piscada = leila('piscada', 900)
+    surpresa = leila('surpresa', 1120)
+    apresenta = leila('apresenta', 1080)
+    piscada = leila('piscada', 1100)
     maq = recortar(FOTO)
-    maq_g = maq.resize((int(maq.width * 760 / maq.height), 760), Image.LANCZOS)
+    maq_g = realista(maq.resize((int(maq.width * 880 / maq.height), 880), Image.LANCZOS))
     brilho = Image.new('RGBA', (maq_g.width + 300, maq_g.height + 300), LIMA + (0,))
     m = Image.new('L', brilho.size, 0)
     m.paste(maq_g.split()[-1].point(lambda v: 210 if v > 20 else 0), (150, 150))
     brilho.putalpha(m.filter(ImageFilter.GaussianBlur(55)))
+    uau = estouro('UAU!')
     gancho = bloco_texto(['Quando você descobre', 'quanto tá a *máquina*', '*de* *lavar* hoje…'], 74)
     nome = bloco_texto(['Máquina de lavar *Panasonic* *15* *kg*'], 50, larg=900)
     titulo_b = camada_texto('OLHA O QUE ELA FAZ', F('Black', 76), BRANCO, relevo=6)
@@ -124,24 +190,31 @@ def montar(lance, saida, previa=None):
         a = janela(t, 0.0, 2.0, ent=0.18, sai=0.3)
         if a:
             esc = 0.86 + 0.14 * ease(t / 0.3) + 0.02 * max(0, t - 0.3)
-            colar(b, surpresa, 540, H - surpresa.height * esc / 2 + (1 - a) * 300, esc, 1)
-        colar(b, gancho, 540, 470, 1.0, janela(t, 0.05, 3.8, ent=0.3, sai=0.3))
+            sq = 1 + 0.07 * math.sin(min(1, max(0, (t - 0.25) / 0.35)) * math.pi)  # estica e encolhe ao "pousar"
+            img = surpresa.resize((int(surpresa.width * esc * sq), int(surpresa.height * esc / sq)), Image.BILINEAR)
+            b.alpha_composite(img, (int(540 - img.width / 2), int(H - img.height + (1 - a) * 300)))
+            ae = janela(t, 0.35, 1.9, ent=0.15, sai=0.2)
+            if ae:
+                colar(b, uau, 860, 820, (0.6 + 0.4 * ease((t - 0.35) / 0.2)) * (1 + 0.04 * math.sin(t * 14)), ae)
+        colar(b, gancho, 540, 470, 1.0, janela(t, 0.05, 1.75, ent=0.3, sai=0.25))
         # máquina: entra no centro (2.0) e vai para a direita (4.0)
         if t >= 2.0:
             k = ease((t - 2.0) / 0.45)
             mv = ease((t - 4.0) / 0.5) if t >= 4.0 else 0
-            esc = (0.55 + 0.45 * k) * (1 - 0.22 * mv)
+            esc = (0.55 + 0.45 * k) * (1 - 0.30 * mv)
             cx = 540 + 220 * mv
-            cy = 1150 - 390 * mv
+            cy = 1100 - 310 * mv
             a_m = 1 - janela(t, 12.0, 14.5, ent=0.3, sai=0.1) if t >= 12.0 else 1
             colar(b, brilho, cx, cy, esc, a_m * k)
-            colar(b, maq_g, cx, cy + 4 * math.sin(t * 3), esc, a_m * k)
+            bolhas(b, t, cx, cy + 180 * esc, esc, a_m * k * (1 if t > 2.4 else 0))
+            treme = 3 * math.sin(t * 40) if 2.45 < t < 2.9 else 0  # "chacoalha" ao chegar, como se estivesse lavando
+            colar(b, maq_g, cx + treme, cy + 4 * math.sin(t * 3), esc * (1 + 0.06 * math.sin(min(1, (t - 2.0) / 0.5) * math.pi)), a_m * k)
         colar(b, nome, 540, 1620, 1.0, janela(t, 2.4, 3.9, ent=0.25, sai=0.25))
         # cena 3 (4–12): Leila apresentando à esquerda + benefícios + lance
         a = janela(t, 4.1, 11.9, ent=0.35, sai=0.3)
         if a:
             colar(b, apresenta, apresenta.width / 2 - 60 - (1 - a) * 500, H - apresenta.height / 2, 1.0, 1)
-        colar(b, titulo_b, 540, 300, 1.0, janela(t, 4.2, 8.9, ent=0.3, sai=0.3))
+        colar(b, titulo_b, 540, 255, 1.0, janela(t, 4.2, 8.9, ent=0.3, sai=0.3))
         for i, p in enumerate(beneficios):
             ini = 4.7 + i * 1.0
             aa = janela(t, ini, 8.9, ent=0.3, sai=0.3)
