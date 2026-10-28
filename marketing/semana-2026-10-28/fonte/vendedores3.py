@@ -204,3 +204,49 @@ def arte_simples(lance, numero, unidade, saida, cta='NÃO DEIXA PRA DEPOIS!', le
     ic_fogo(b, 540 - w / 2 - 22, 1580, 27)
     d.text((540 + 22, 1580), cta, font=f, fill=LIMA, anchor='mm')
     b.convert('RGB').save(saida, quality=95)
+
+
+def arte_prompt(lance, topo, grande, barra1, saida, foto=None, linha='UM PRODUTO QUE CUSTA EM MÉDIA', cta='NÃO DEIXA PRA DEPOIS!'):
+    """Fiel ao prompt da Natália (28/10, 13h30): valor médio, lance atual, selo 'ATÉ -X% DE DIFERENÇA' e barra de 3 ícones."""
+    b = fundo_facetado()
+    _logo(b, y=50, largura=270)
+    d = ImageDraw.Draw(b)
+    ic_cronometro(d, 118, 300, 58, LIMA)
+    colar_centro(b, camada_texto(topo, F('Black', 86), BRANCO, relevo=6), 600, 300)
+    tam = 270
+    while tam > 140 and ImageDraw.Draw(b).textlength(grande, font=F('Black', tam)) > 990:
+        tam -= 10
+    colar_centro(b, camada_texto(grande, F('Black', tam), ((235, 255, 150), LIMA_ESC), relevo=16, brilho=LIMA), 540, 470)
+    faixa_curva(b, 540, 600, 2200, 0.30, 92, FUNDO_ESC + (215,), LIMA)
+    texto_em_arco(b, 'PRA VOCÊ ARREMATAR', F('Black', 46), CREME, 540, 600, 2200, esp=7)
+    texto_em_arco(b, linha, F('Black', 30), BRANCO, 540, 690, 2600, esp=6)
+    d = ImageDraw.Draw(b)
+    seta_curva(d, (900, 700), (1000, 740), (955, 810), LIMA)
+    produto(b, foto or FOTO, 320, 1300, 540, ang=-6)
+    etiqueta(b, 60, 1225)
+    cartao_preco(b, (610, 780, 1030, 985), ic_etiqueta, 'VALOR MÉDIO', 'DO PRODUTO', real(LOJA))
+    cartao_preco(b, (610, 1005, 1030, 1210), ic_martelo, 'LANCE ATUAL', 'DO LEILÃO', real(lance), destaque=True)
+    d = ImageDraw.Draw(b)
+    seta_curva(d, (1042, 1215), (1055, 1250), (1000, 1268), LIMA)
+    off = round(100 * (1 - lance / LOJA))
+    selo(b, 860, 1298, 88, ['ATÉ', f'-{off}%', 'DE DIFERENÇA'])
+    vidro(b, (40, 1405, 1040, 1530), borda=LIMA, raio=62)
+    d = ImageDraw.Draw(b)
+    itens = [(lambda x, y: ic_relogio(d, x, y, 26, CREME), barra1[0], barra1[1]),
+             (lambda x, y: ic_raio(d, x, y, 56, CREME), 'PRODUTOS', 'ORIGINAIS'),
+             (lambda x, y: ic_escudo(d, x, y, 56, CREME), 'LANCES SEGUROS', 'E TRANSPARENTES')]
+    for k, (ic, a, c) in enumerate(itens):
+        x = 40 + k * 333
+        ic(x + 52, 1467)
+        d.text((x + 94, 1450), a, font=F('Bold', 22), fill=(225, 245, 230), anchor='lm')
+        fc = F('Black', 25)
+        while d.textlength(c, font=fc) > 225:
+            fc = F('Black', fc.size - 1)
+        d.text((x + 94, 1486), c, font=fc, fill=BRANCO, anchor='lm')
+        if k:
+            d.line((x, 1430, x, 1505), fill=(150, 225, 160), width=2)
+    f = F('Black', 48)
+    w = d.textlength(cta, font=f)
+    ic_fogo(b, 540 - w / 2 - 22, 1578, 28)
+    d.text((540 + 22, 1578), cta, font=f, fill=LIMA, anchor='mm')
+    b.convert('RGB').save(saida, quality=95)
