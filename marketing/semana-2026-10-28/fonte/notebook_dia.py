@@ -101,7 +101,7 @@ def modelo3(lance, mercado, prefixo, tempo, saida):
 DIAS = [  # (pasta, arquivo, modelo, prefixo, tempo)
     ('quinta-29-10', '1-quinta-faltam-2-dias', modelo1, 'FALTAM', '2 DIAS'),
     ('sexta-30-10', '2-sexta-falta-1-dia', modelo2, 'FALTA', '1 DIA'),
-    ('sabado-31-10', '3-sabado-hoje-as-20h', modelo3, 'É HOJE', 'ÀS 20H'),
+    ('sabado-31-10', '3-sabado-hoje-as-18h', modelo3, 'É HOJE', 'ÀS 18H'),
     ('sabado-31-10', '4-sabado-faltam-3-horas', modelo1, 'FALTAM', '3 HORAS'),
 ]
 
