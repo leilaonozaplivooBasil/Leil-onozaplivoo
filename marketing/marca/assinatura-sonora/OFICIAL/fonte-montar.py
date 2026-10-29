@@ -1,4 +1,4 @@
-# Assinatura sonora v3 do Leilão NoZap (28/10/2026): POC POC + "Leilão no Zap!" (voz oficial do Leiloeiro, vídeo da roleta).
+# Assinatura sonora v7 (29/10/2026, Natália: 'o atual é o melhor, só uma batida a mais'): igual à v3 + 3ª batida no mesmo ritmo. Base v3 (28/10/2026): POC POC + "Leilão no Zap!" (voz oficial do Leiloeiro, vídeo da roleta).
 # Melhorias: martelada encorpada (madeira + grave + estalo), 2ª batida mais grave e mais forte (sensação de "fechou"),
 # mini-melodia de 4 notas casada com as sílabas Lei-lão-no-Zap (vira a "melodia da marca"), cauda curta de ambiente,
 # volume no padrão do Instagram (-14 LUFS). Gera 4 cortes: completa, sem melodia, só POC POC e instrumental.
@@ -82,16 +82,16 @@ def salvar(nome, x):
                     '-ar', '48000', '-ac', '2', '-b:a', '256k', f'{AQ}/{nome}.mp3'], check=True)
 
 
-P1, P2, V0 = 0.0, 0.15, 0.38           # 1ª batida, 2ª batida, início da voz (o ritmo já aprovado)
+P1, P2, P3, V0 = 0.0, 0.15, 0.30, 0.53           # 1ª batida, 2ª batida, início da voz (o ritmo já aprovado)
 # sílabas na voz acelerada (do reconhecimento de voz: Lei 0,00 · lão ~0,22 · no 0,43 · Zap 0,57 s, divididos por 1,25)
 SIL = [V0 + s / VEL for s in (0.0, 0.22, 0.43, 0.57)]
 MEL = [523.25, 659.25, 783.99, 1046.5]  # dó-mi-sol-dó (sobe e "abre", sensação de conquista)
 dur = V0 + len(voz) / SR + 0.30
-pocpoc = [(P1, martelo(1.0, 0.85)), (P2, martelo(0.92, 1.0))]
+pocpoc = [(P1, martelo(1.0, 0.82)), (P2, martelo(0.96, 0.9)), (P3, martelo(0.92, 1.0))]
 melodia = [(t0, nota(f, 0.55 if i < 3 else 0.9)) for i, (t0, f) in enumerate(zip(SIL, MEL))]
 
 salvar('1-ASSINATURA-COMPLETA-pocpoc-leilao-no-zap-com-melodia', mix(pocpoc + [(V0, voz * 0.95)] + melodia, dur))
 salvar('2-assinatura-sem-melodia', mix(pocpoc + [(V0, voz)], dur))
-salvar('3-so-pocpoc-transicao', mix(pocpoc, 0.6))
+salvar('3-so-pocpoc-transicao', mix(pocpoc, 0.75))
 salvar('4-instrumental-pocpoc-e-melodia-sem-voz', mix(pocpoc + [(t0, nota(f, 0.6 if i < 3 else 1.0, 0.5)) for i, (t0, f) in enumerate(zip(SIL, MEL))], dur + 0.2))
 print('ok', round(dur, 2))

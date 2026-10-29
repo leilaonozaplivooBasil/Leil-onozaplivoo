@@ -1,10 +1,10 @@
 # 🔨 Assinatura sonora OFICIAL do Leilão NoZap
 
-**Aprovada pela Natália (responsável pelas mídias) em 28/10/2026.** Não alterar sem a aprovação dela.
+**Versão atual aprovada pela Natália (responsável pelas mídias) em 29/10/2026**, a pedido do Luiz: a de 28/10 com **uma batida a mais** (três). Não alterar sem a aprovação dela. A anterior (2 batidas) está em `anterior-v3-2-batidas/`.
 
 ## O que é
-**POC! POC! + "Leilão no Zap!"** — 1,6 segundo.
-- Duas marteladas (a 2ª um pouco mais grave e mais forte: "fechou").
+**POC! POC! POC! + "Leilão no Zap!"** — 1,75 segundo.
+- Três marteladas no mesmo ritmo (cada uma um pouco mais grave e mais forte; a 3ª "fecha").
 - A voz **oficial do Leiloeiro** (recortada do vídeo de boas-vindas da roleta do site, `public/leilao20/video1-v2-leve.mp4`, 2,85–3,95 s), 25% mais rápida.
 - Uma melodia de 4 notas (dó-mi-sol-dó) casada com as sílabas **Lei-lão-no-Zap**.
 
