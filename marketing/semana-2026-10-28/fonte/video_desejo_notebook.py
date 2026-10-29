@@ -21,7 +21,7 @@ QUANDO = {'quinta': 'Martelo *sábado* *às* *18h*', 'sexta': 'Martelo *amanhã*
 # (arquivo, início, fim, zoom de/para, foco y) — fotos com zoom lento, trocando com fusão
 TOMADAS = [('cena-002.jpg', 0.0, 4.2, (1.00, 1.10), 0.45), ('cena-000.jpg', 3.8, 7.9, (1.08, 1.00), 0.40),
            ('cena-001.jpg', 7.5, 11.4, (1.00, 1.09), 0.55)]
-FRASES = [(['Imagina abrir o *seu*', '*notebook* aqui…'], 0.4, 3.7), (['de frente pro *mar*,', 'com água de coco'], 4.2, 7.4),
+FRASES = [(['Imagina o *seu* *notebook*', 'te esperando *aqui*…'], 0.4, 3.7), (['de frente pro *mar*,', 'com água de coco'], 4.2, 7.4),
           (['ou no seu *café*', '*favorito*'], 7.9, 10.9)]
 
 
@@ -101,8 +101,8 @@ def montar(lance, saida, previa=None):
                     quadro.save(f'{previa}/q{nq}.jpg', quality=88)
     proc.stdin.close()
     proc.wait()
-    filtro = (f'[1:a]atrim=0:{DUR},volume=0.9,afade=t=in:d=0.5,afade=t=out:st=12.4:d=1.0[tr];'
-              f'[2:a]adelay=13200|13200,volume=2.2[as];[tr][as]amix=inputs=2:normalize=0:duration=first,atrim=0:{DUR},'
+    filtro = (f'[1:a]atrim=0:{DUR},volume=0.9,afade=t=in:d=0.5,afade=t=out:st=11.8:d=0.9,apad=whole_dur={DUR}[tr];'
+              f'[2:a]adelay=12700|12700,volume=2.2,apad=pad_dur=1[as];[tr][as]amix=inputs=2:normalize=0:duration=first,atrim=0:{DUR},'
               f'loudnorm=I=-13:TP=-1.2:LRA=9,aresample=48000[ao]')
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', f'{tmp}/v.mp4', '-i', TRILHA, '-i', ASSINATURA, '-filter_complex', filtro,
                     '-map', '0:v', '-map', '[ao]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-t', str(DUR),
