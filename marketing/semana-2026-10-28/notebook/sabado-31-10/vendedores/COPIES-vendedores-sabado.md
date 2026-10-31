@@ -11,7 +11,7 @@ Antes de postar: conferir o lance no link (a arte é atualizada pela Duda antes 
 
 💻 **Notebook Dell Core i3 · 8GB · SSD 512GB · Tela Full HD**
 
-🔥 Lance atual: **R$ 267,60**
+🔥 Lance atual: **R$ 300,00**
 
 👉 Dá seu lance aqui: https://leilaonozap.net/l/ea97c6608ca690bf3d76dfb4
 
@@ -25,7 +25,7 @@ Antes de postar: conferir o lance no link (a arte é atualizada pela Duda antes 
 
 💻 Notebook Dell Core i3, 8GB, SSD 512GB, Windows 11
 
-🔥 Lance atual: **R$ 267,60** · ainda dá tempo!
+🔥 Lance atual: **R$ 300,00** · ainda dá tempo!
 
 👉 https://leilaonozap.net/l/ea97c6608ca690bf3d76dfb4
 
@@ -39,7 +39,7 @@ Antes de postar: conferir o lance no link (a arte é atualizada pela Duda antes 
 
 💻 Notebook Dell Core i3 · 8GB · SSD 512GB
 
-🔥 Lance atual: **R$ 267,60**
+🔥 Lance atual: **R$ 300,00**
 
 Quem der o maior lance até as 18h leva! 👇
 https://leilaonozap.net/l/ea97c6608ca690bf3d76dfb4
