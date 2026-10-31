@@ -1,6 +1,6 @@
 # Contagem regressiva do sábado 31/10 com UM VISUAL DIFERENTE por horário (sugestão do time de vendas: arte repetida
 # vira "a mesma de antes" e ninguém para). Mesmo texto e mesma marca (verde, lima, logo, notebook real), layouts distintos:
-# 15h clássico · 16h número gigante no escuro · 17h fundo lima invertido · 17h30 barra do tempo · 17h50 fita de alerta.
+# 15h relógio (o arco 15h→18h aceso) · 16h número gigante no escuro · 17h fundo lima invertido · 17h30 barra do tempo · 17h50 fita de alerta.
 # Uso: python3 contagem_variada.py <lance> <n_lances> <saida_dir>
 import math, os, sys
 import numpy as np
@@ -133,10 +133,38 @@ def fita_alerta(lance, n, saida):  # 17h50
     b.convert('RGB').save(saida, quality=95)
 
 
+def relogio(lance, n, saida):  # 15h — mostrador com o trecho das 15h às 18h aceso (pedido da Natália: a clássica ficou igual)
+    b = fundo_escuro(); _logo(b, y=110, largura=220)
+    d = ImageDraw.Draw(b)
+    d.text((540, 310), 'O MARTELO BATE ÀS 18H', font=F('Black', 46), fill=LIMA, anchor='mm')
+    cx, cy, r = 540, 730, 320
+    halo = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+    ImageDraw.Draw(halo).arc((cx - r, cy - r, cx + r, cy + r), start=0, end=90, fill=LIMA + (200,), width=70)
+    b.alpha_composite(halo.filter(ImageFilter.GaussianBlur(28)))
+    d = ImageDraw.Draw(b)
+    d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=(6, 30, 15), outline=(40, 90, 55), width=6)
+    d.arc((cx - r + 18, cy - r + 18, cx + r - 18, cy + r - 18), start=0, end=90, fill=LIMA, width=44)  # 15h (3) → 18h (6)
+    for h in range(12):
+        a = math.radians(h * 30 - 90)
+        r1, r2 = (r - 70, r - 30) if h % 3 == 0 else (r - 55, r - 35)
+        d.line((cx + r1 * math.cos(a), cy + r1 * math.sin(a), cx + r2 * math.cos(a), cy + r2 * math.sin(a)), fill=BRANCO if h % 3 == 0 else (120, 160, 130), width=10 if h % 3 == 0 else 5)
+    for h, txt in ((3, '15h'), (6, '18h')):
+        a = math.radians(h * 30 - 90)
+        d.text((cx + (r + 70) * math.cos(a), cy + (r + 55) * math.sin(a)), txt, font=F('Black', 46), fill=LIMA, anchor='mm')
+    d.text((cx, cy - 90), 'FALTAM', font=F('Black', 64), fill=BRANCO, anchor='mm')
+    d.text((cx, cy + 15), '3', font=F('Black', 210), fill=LIMA, anchor='mm')
+    d.text((cx, cy + 140), 'HORAS', font=F('Black', 64), fill=BRANCO, anchor='mm')
+    produto(b, FOTO, 540, 1465, 250)
+    d = ImageDraw.Draw(b)
+    linha_lance(d, lance, n, 1530)
+    cta(d, 1655)
+    b.convert('RGB').save(saida, quality=95)
+
+
 if __name__ == '__main__':
     lance, n, out = float(sys.argv[1]), int(sys.argv[2]), sys.argv[3]
     os.makedirs(out, exist_ok=True)
-    peca(lance, n, 'FALTAM', '3 HORAS', 'O MARTELO BATE ÀS 18H', f'{out}/CONTAGEM-15h-faltam-3-horas.jpg')
+    relogio(lance, n, f'{out}/CONTAGEM-15h-faltam-3-horas.jpg')
     numero_gigante(lance, n, f'{out}/CONTAGEM-16h-faltam-2-horas.jpg')
     invertido(lance, n, f'{out}/CONTAGEM-17h-falta-1-hora.jpg')
     barra_do_tempo(lance, n, f'{out}/CONTAGEM-17h30-faltam-30-minutos.jpg')
