@@ -16,6 +16,14 @@ PECAS = [  # (arquivo, linha branca, linha lima, faixa de cima)
     ('VENDEDORES-17h30-ultima-chamada', 'ÚLTIMA', 'CHAMADA', 'FECHA ÀS 18H EM PONTO'),
 ]
 
+CONTAGEM = [  # pedido da Natália (31/10): contagem regressiva de hora em hora a partir das 15h
+    ('CONTAGEM-15h-faltam-3-horas', 'FALTAM', '3 HORAS', 'O MARTELO BATE ÀS 18H'),
+    ('CONTAGEM-16h-faltam-2-horas', 'FALTAM', '2 HORAS', 'O MARTELO BATE ÀS 18H'),
+    ('CONTAGEM-17h-falta-1-hora', 'FALTA', '1 HORA', 'ÚLTIMA HORA PARA DAR LANCE'),
+    ('CONTAGEM-17h30-faltam-30-minutos', 'FALTAM', '30 MINUTOS', 'FECHA ÀS 18H EM PONTO'),
+    ('CONTAGEM-17h50-faltam-10-minutos', 'FALTAM', '10 MINUTOS', 'ÚLTIMA CHAMADA'),
+]
+
 
 def faixa(d, texto, y, cor):
     f = F('Black', 34)
@@ -48,6 +56,6 @@ def peca(lance, n_lances, linha1, linha2, topo, saida):
 if __name__ == '__main__':
     lance, n, out = float(sys.argv[1]), int(sys.argv[2]), sys.argv[3]
     os.makedirs(out, exist_ok=True)
-    for nome, l1, l2, topo in PECAS:
+    for nome, l1, l2, topo in (CONTAGEM if 'contagem' in sys.argv[4:] else PECAS):
         peca(lance, n, l1, l2, topo, f'{out}/{nome}.jpg')
         print(f'{out}/{nome}.jpg')
