@@ -6,13 +6,15 @@ F = lambda p, t: ImageFont.truetype('/usr/share/fonts/opentype/inter/InterDispla
 W, H = 1080, 1920
 VERDE, OURO, NOITE, FLORESTA, BRANCO = (27,122,72), (245,196,81), (10,20,16), (0,45,27), (255,255,255)
 # arquivo, início, fim, legendas [(ini, fim, texto, destaque)] em tempo do clipe
-CLIPES = [  # arquivo, início, fim (com folga depois da última palavra), legendas, volume medido (LUFS)
-  ('v1', 0.35, 4.75, [(0.64, 2.05, 'Sabe quem posta tudo', None), (2.05, 4.4, 'que aparece aqui no', 'Instagram?')], -31.0),
-  ('v2', 0.55, 2.70, [(0.95, 2.35, 'Eu sou o', 'João')], -21.7),
-  ('v3', 0.35, 4.25, [(0.72, 1.9, 'E eu sou a Natália', None), (1.9, 3.9, 'do marketing do', 'Leilão no Zap')], -28.2),
-  ('v6', 2.00, 8.30, [(2.42, 3.7, 'Esse é o nosso escritório', None), (3.7, 5.4, 'bem em frente pra', 'praia')], -19.8),
-  ('v4', 0.25, 6.35, [(0.63, 3.2, 'Daqui a gente acompanha cada leilão', None), (3.3, 6.0, 'e cada entrega que chega na', 'casa de vocês')], -33.4),
-  ('v5', 0.45, 5.00, [(0.85, 2.2, 'Tem alguma', 'dúvida?'), (2.2, 4.65, 'Comenta aqui que a gente', 'responde')], -28.0),
+CLIPES = [  # arquivo, início, fim, legendas, volume medido (LUFS; None = só som ambiente baixinho), recorte (meio corpo pra cima / vista), rótulo
+  ('v1', 0.35, 4.75, [(0.64, 2.05, 'Sabe quem posta tudo', None), (2.05, 4.4, 'que aparece aqui no', 'Instagram?')], -31.0, '720:1280:220:446', None),
+  ('v2', 0.55, 2.70, [(0.95, 2.35, 'Eu sou o', 'João')], -21.7, '568:1010:337:486', None),
+  ('v3', 0.35, 4.25, [(0.72, 1.9, 'E eu sou a Natália', None), (1.9, 3.9, 'do marketing do', 'Leilão no Zap')], -28.2, '770:1370:211:304', None),
+  ('v6', 2.00, 5.55, [(2.42, 3.7, 'Esse é o nosso escritório', None), (3.7, 5.3, 'bem em frente pra', 'praia')], -19.8, '634:1128:202:566', None),
+  ('v6', 7.00, 10.2, [], None, '540:960:300:360', 'Recreio · Rio de Janeiro'),
+  ('esc', 0.30, 1.95, [], None, None, None),
+  ('v4', 0.25, 6.35, [(0.63, 3.2, 'Daqui a gente acompanha cada leilão', None), (3.3, 6.0, 'e cada entrega que chega na', 'casa de vocês')], -33.4, '674:1200:211:281', None),
+  ('v5', 0.45, 5.00, [(0.85, 2.2, 'Tem alguma', 'dúvida?'), (2.2, 4.65, 'Comenta aqui que a gente', 'responde')], -28.0, '720:1280:149:36', None),
 ]
 ALVO = -16.0
 T = 0.35  # transição suave entre um corte e outro (imagem e som se misturam)
@@ -37,6 +39,10 @@ def legenda(txt, dest, nome):
         d.text((W / 2, y), t, font=fd, fill=(10,60,32), anchor='mm')
     sh = im.copy().split()[3].filter(ImageFilter.GaussianBlur(14)); sombra = Image.new('RGBA', (W, H), (0,0,0,0)); sombra.putalpha(sh.point(lambda a: a * 0.45))
     out = Image.alpha_composite(sombra, im); out.save(f'{S}/{nome}.png')
+def rotulo_img(txt, nome):
+    im = Image.new('RGBA', (W, H), (0,0,0,0)); d = ImageDraw.Draw(im); f = F('ExtraBold', 46); w = d.textlength('📍 ' + txt, font=f)
+    t = txt; w = d.textlength(t, font=f); x0 = (W - w) / 2 - 36
+    d.rounded_rectangle((x0, 1560, x0 + w + 72, 1650), 45, fill=(10,20,16,170)); d.text((W / 2, 1605), t, font=f, fill=BRANCO, anchor='mm'); im.save(f'{S}/{nome}.png')
 def selo():
     im = Image.new('RGBA', (W, H), (0,0,0,0)); d = ImageDraw.Draw(im)
     logo = Image.open(f'{MK}/marca/logo-horizontal-transparente.png').convert('RGBA'); logo.thumbnail((300, 110))
@@ -55,17 +61,19 @@ def fecho():
     im.convert('RGB').save(f'{S}/fecho.png')
 selo(); fecho()
 partes = []; t_total = 0
-for k, (arq, ini, fim, legs, lufs) in enumerate(CLIPES):
+for k, (arq, ini, fim, legs, lufs, recorte, rotulo) in enumerate(CLIPES):
     dur = round(fim - ini, 3); ovs = []
     for j, (a, b, txt, dest) in enumerate(legs):
         nome = f'leg{k}_{j}'; legenda(txt, dest, nome); ovs.append((nome, max(0, a - ini), min(dur, b - ini)))
-    hdr = 'zscale=t=linear:npl=203,format=gbrpf32le,zscale=p=bt709,tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p,eq=gamma=1.18:saturation=1.1,' if arq == 'v6' else ''
-    fc = f"[0:v]{hdr}scale=1080:1920:force_original_aspect_ratio=increase:flags=lanczos,crop=1080:1920,setsar=1,fps=30,eq=saturation=1.06[b0];[b0][1:v]overlay=0:0[b1]"
+    hdr = 'zscale=t=linear:npl=203,format=gbrpf32le,zscale=p=bt709,tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p,eq=gamma=1.18:saturation=1.1,' if arq in ('v6', 'esc') else ''
+    rec = f",crop={recorte},scale=1080:1920:flags=lanczos" if recorte else ""
+    if rotulo: rotulo_img(rotulo, f"rot{k}"); ovs.append((f"rot{k}", 0.3, dur))
+    fc = f"[0:v]{hdr}scale=1080:1920:force_original_aspect_ratio=increase:flags=lanczos,crop=1080:1920{rec},setsar=1,fps=30,eq=saturation=1.06[b0];[b0][1:v]overlay=0:0[b1]"
     entradas = ['-ss', str(ini), '-t', str(dur), '-i', f'{S}/{arq}.mov', '-loop', '1', '-t', str(dur), '-i', f'{S}/selo.png']
     for n, (nome, a, b) in enumerate(ovs):
         entradas += ['-loop', '1', '-t', str(dur), '-i', f'{S}/{nome}.png']
         fc += f";[b{n+1}][{n+2}:v]overlay=0:0:enable='between(t,{a:.2f},{b:.2f})'[b{n+2}]"
-    fc += f";[b{len(ovs)+1}]null[v];[0:a]aresample=48000,aformat=channel_layouts=stereo,highpass=f=80,volume={ALVO-lufs:.1f}dB,acompressor=threshold=-18dB:ratio=3:attack=8:release=200:makeup=1,afade=t=in:d=0.03,afade=t=out:st={dur-0.05:.2f}:d=0.05[a]"
+    fc += f";[b{len(ovs)+1}]null[v];[0:a]aresample=48000,aformat=channel_layouts=stereo,highpass=f=80,volume={(str(round(ALVO-lufs,1))+'dB') if lufs is not None else '0.15'},acompressor=threshold=-18dB:ratio=3:attack=8:release=200:makeup=1,afade=t=in:d=0.03,afade=t=out:st={dur-0.05:.2f}:d=0.05[a]"
     out = f'{S}/p{k}.mp4'
     run(['ffmpeg', '-v', 'error', '-y'] + entradas + ['-filter_complex', fc, '-map', '[v]', '-map', '[a]', '-t', str(dur), '-c:v', 'libx264', '-crf', '18', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', out])
     partes.append(out); t_total += dur
