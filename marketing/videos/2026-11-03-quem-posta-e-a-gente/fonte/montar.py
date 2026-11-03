@@ -6,15 +6,16 @@ F = lambda p, t: ImageFont.truetype('/usr/share/fonts/opentype/inter/InterDispla
 W, H = 1080, 1920
 VERDE, OURO, NOITE, FLORESTA, BRANCO = (27,122,72), (245,196,81), (10,20,16), (0,45,27), (255,255,255)
 # arquivo, início, fim, legendas [(ini, fim, texto, destaque)] em tempo do clipe
-CLIPES = [  # arquivo, início, fim, legendas, volume medido (LUFS) → cada fala vai para o mesmo nível
-  ('v1', 0.55, 4.30, [(0.7, 2.05, 'Sabe quem posta tudo', None), (2.05, 4.3, 'que aparece aqui no', 'Instagram?')], -31.0),
-  ('v2', 0.80, 2.10, [(0.9, 2.1, 'Eu sou o', 'João')], -21.7),
-  ('v3', 0.60, 3.65, [(0.7, 1.9, 'E eu sou a Natália', None), (1.9, 3.65, 'do marketing do', 'Leilão no Zap')], -28.2),
-  ('v6', 2.25, 8.30, [(2.4, 3.7, 'Esse é o nosso escritório', None), (3.7, 5.2, 'bem em frente pra', 'praia')], -19.8),
-  ('v4', 0.45, 5.80, [(0.6, 3.2, 'Daqui a gente acompanha cada leilão', None), (3.3, 5.8, 'e cada entrega que chega na', 'casa de vocês')], -33.4),
-  ('v5', 0.70, 4.70, [(0.86, 2.2, 'Tem alguma', 'dúvida?'), (2.2, 4.7, 'Comenta aqui que a gente', 'responde')], -28.0),
+CLIPES = [  # arquivo, início, fim (com folga depois da última palavra), legendas, volume medido (LUFS)
+  ('v1', 0.35, 4.75, [(0.64, 2.05, 'Sabe quem posta tudo', None), (2.05, 4.4, 'que aparece aqui no', 'Instagram?')], -31.0),
+  ('v2', 0.55, 2.70, [(0.95, 2.35, 'Eu sou o', 'João')], -21.7),
+  ('v3', 0.35, 4.25, [(0.72, 1.9, 'E eu sou a Natália', None), (1.9, 3.9, 'do marketing do', 'Leilão no Zap')], -28.2),
+  ('v6', 2.00, 8.30, [(2.42, 3.7, 'Esse é o nosso escritório', None), (3.7, 5.4, 'bem em frente pra', 'praia')], -19.8),
+  ('v4', 0.25, 6.35, [(0.63, 3.2, 'Daqui a gente acompanha cada leilão', None), (3.3, 6.0, 'e cada entrega que chega na', 'casa de vocês')], -33.4),
+  ('v5', 0.45, 5.00, [(0.85, 2.2, 'Tem alguma', 'dúvida?'), (2.2, 4.65, 'Comenta aqui que a gente', 'responde')], -28.0),
 ]
 ALVO = -16.0
+T = 0.35  # transição suave entre um corte e outro (imagem e som se misturam)
 def run(c): subprocess.run(c, check=True)
 def quebra(d, txt, f, larg):
     linhas, atual = [], ''
@@ -64,16 +65,24 @@ for k, (arq, ini, fim, legs, lufs) in enumerate(CLIPES):
     for n, (nome, a, b) in enumerate(ovs):
         entradas += ['-loop', '1', '-t', str(dur), '-i', f'{S}/{nome}.png']
         fc += f";[b{n+1}][{n+2}:v]overlay=0:0:enable='between(t,{a:.2f},{b:.2f})'[b{n+2}]"
-    fc += f";[b{len(ovs)+1}]null[v];[0:a]aresample=48000,aformat=channel_layouts=stereo,highpass=f=80,volume={ALVO-lufs:.1f}dB,acompressor=threshold=-18dB:ratio=3:attack=8:release=200:makeup=1,afade=t=in:d=0.06,afade=t=out:st={dur-0.18:.2f}:d=0.18[a]"
+    fc += f";[b{len(ovs)+1}]null[v];[0:a]aresample=48000,aformat=channel_layouts=stereo,highpass=f=80,volume={ALVO-lufs:.1f}dB,acompressor=threshold=-18dB:ratio=3:attack=8:release=200:makeup=1,afade=t=in:d=0.03,afade=t=out:st={dur-0.05:.2f}:d=0.05[a]"
     out = f'{S}/p{k}.mp4'
     run(['ffmpeg', '-v', 'error', '-y'] + entradas + ['-filter_complex', fc, '-map', '[v]', '-map', '[a]', '-t', str(dur), '-c:v', 'libx264', '-crf', '18', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', out])
     partes.append(out); t_total += dur
 FECHO = 2.6
 run(['ffmpeg', '-v', 'error', '-y', '-loop', '1', '-t', str(FECHO), '-i', f'{S}/fecho.png', '-f', 'lavfi', '-t', str(FECHO), '-i', 'anullsrc=r=48000:cl=stereo',
      '-vf', 'fps=30,format=yuv420p,fade=t=in:d=0.25', '-c:v', 'libx264', '-crf', '18', '-c:a', 'aac', '-shortest', f'{S}/pfim.mp4'])
-with open(f'{S}/lista.txt', 'w') as l:
-    for p in partes + [f'{S}/pfim.mp4']: l.write(f"file '{p}'\n")
-run(['ffmpeg', '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', f'{S}/lista.txt', '-c', 'copy', f'{S}/junto.mp4'])
+todos = partes + [f'{S}/pfim.mp4']; durs = [round(c[2] - c[1], 3) for c in CLIPES] + [FECHO]
+ent = sum([['-i', p] for p in todos], []); fc = []; ac = []; acc = durs[0]; v_ant, a_ant = '[0:v]', '[0:a]'
+for n in range(1, len(todos)):
+    off = acc - T
+    efeito = 'fade' if n < len(todos) - 1 else 'fadeblack'
+    fc.append(f"{v_ant}[{n}:v]xfade=transition={efeito}:duration={T}:offset={off:.3f}[vx{n}]")
+    ac.append(f"{a_ant}[{n}:a]acrossfade=d={T}:c1=tri:c2=tri[ax{n}]")
+    v_ant, a_ant = f'[vx{n}]', f'[ax{n}]'; acc = off + durs[n]
+run(['ffmpeg', '-v', 'error', '-y'] + ent + ['-filter_complex', ';'.join(fc + ac), '-map', v_ant, '-map', a_ant,
+     '-c:v', 'libx264', '-crf', '18', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', f'{S}/junto.mp4'])
+t_total = acc - FECHO
 total = t_total + FECHO; tj = t_total + 0.3
 jingle = f'{MK}/marca/assinatura-sonora/OFICIAL/assinatura-sonora-leilao-no-zap-OFICIAL.mp3'
 musica = f'{S}/musica.mp3'
