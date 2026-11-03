@@ -17,11 +17,24 @@ def sombra_texto(d, xy, txt, f, cor, anchor='mm', s=6):
         for dy in range(-s, s+1, 2):
             d.text((xy[0]+dx, xy[1]+dy), txt, font=f, fill=(0,0,0,170), anchor=anchor)
     d.text(xy, txt, font=f, fill=cor, anchor=anchor)
-def pilula(txt, nome):
+def pilula(txt, nome, y=1650):
     im = Image.new('RGBA', (W, H), (0,0,0,0)); d = ImageDraw.Draw(im); f = F('Bold', 52)
     w = d.textlength(txt, font=f); x0 = (W-w)/2-40
-    d.rounded_rectangle((x0, 1600, x0+w+80, 1700), 50, fill=VIVO+(240,))
-    d.text((W/2, 1650), txt, font=f, fill=BRANCO, anchor='mm'); im.save(f'{S}/{nome}.png')
+    d.rounded_rectangle((x0, y-50, x0+w+80, y+50), 50, fill=VIVO+(240,))
+    d.text((W/2, y), txt, font=f, fill=BRANCO, anchor='mm'); im.save(f'{S}/{nome}.png')
+def legenda_murilo(l1, l2, destaque, nome):
+    im = Image.new('RGBA', (W, H), (0,0,0,0)); d = ImageDraw.Draw(im)
+    d.rounded_rectangle((-40, 1395, W+40, 1800), 34, fill=(63,200,120,255))
+    f = F('Black', 72); y = 1530 if l2 else 1597
+    for i, linha in enumerate([l1] + ([l2] if l2 else [])):
+        yy = y + i*130; w = d.textlength(linha, font=f); x = (W-w)/2
+        if destaque in linha:
+            a = linha.index(destaque); xa = x + d.textlength(linha[:a], font=f); wa = d.textlength(destaque, font=f)
+            d.rounded_rectangle((xa-12, yy-52, xa+wa+12, yy+52), 14, fill=(20,20,20))
+            d.text((x, yy), linha[:a], font=f, fill=(15,15,15), anchor='lm'); d.text((xa, yy), destaque, font=f, fill=(245,196,81), anchor='lm')
+            d.text((xa+wa, yy), linha[a+len(destaque):], font=f, fill=(15,15,15), anchor='lm')
+        else: d.text((x, yy), linha, font=f, fill=(15,15,15), anchor='lm')
+    im.save(f'{S}/{nome}.png')
 def gancho():
     im = Image.new('RGBA', (W, H), (0,0,0,0)); d = ImageDraw.Draw(im)
     d.rectangle((0, 0, W, 760), fill=(0,0,0,0))
@@ -55,15 +68,17 @@ def fecho(etapa):
         d.text((W/2, 925), '@leilaonozapoficial', font=F('SemiBold', 44), fill=BRANCO, anchor='mm')
     im.convert('RGB').save(f'{S}/fecho{etapa}.png')
 def run(c): subprocess.run(c, check=True)
-gancho(); [pilula(r, f'pil{i}') for i, (_, _, _, r) in enumerate(CLIPES)]; [fecho(e) for e in (1, 2, 3)]
+gancho(); [pilula(r, f'pil{i}', 1290 if a.startswith('murilo') else 1650) for i, (a, _, _, r) in enumerate(CLIPES)]
+legenda_murilo('Tudo lacrado, gente,', 'tudo certinho.', 'lacrado,', 'leg1'); legenda_murilo('E foi o 17 Pro Max!', '', '17 Pro Max!', 'leg2'); [fecho(e) for e in (1, 2, 3)]
 # 1) cortes, cada um em 1080x1920, 30 fps, com leve zoom de entrada
 partes = []
 for i, (arq, ini, dur, _) in enumerate(CLIPES):
-    out = f'{S}/c{i}.mp4'; ov = [f'{S}/pil{i}.png'] + ([f'{S}/gancho.png'] if i == 0 else [])
-    pre = "[0:v]scale=1080:1920,setsar=1,split[o][r];[r]crop=360:780:720:500,boxblur=40:4[bl];[o][bl]overlay=720:500," if arq.startswith('murilo') else "[0:v]scale=1080:1920,setsar=1,"
+    out = f'{S}/c{i}.mp4'; ov = [f'{S}/pil{i}.png'] + ([f'{S}/gancho.png'] if i == 0 else []) + ([f'{S}/leg1.png', f'{S}/leg2.png'] if arq.startswith('murilo') else [])
+    pre = "[0:v]scale=1080:1920,crop=720:1280:30:400,scale=1080:1920:flags=lanczos,setsar=1," if arq.startswith('murilo') else "[0:v]scale=1080:1920,setsar=1,"
     vf = (pre + f"fps=30,zoompan=z='1.06-0.06*on/({dur}*30)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps=30[b];"
           f"[b][1:v]overlay=0:0:enable='gte(t,0.25)'[v1]")
     if i == 0: vf += ";[v1][2:v]overlay=0:0[v]"
+    elif arq.startswith('murilo'): vf += ";[v1][2:v]overlay=0:0:enable='lt(t,2.15)'[v2];[v2][3:v]overlay=0:0:enable='gte(t,2.15)'[v]"
     else: vf = vf.replace('[v1]', '[v]')
     cmd = ['ffmpeg', '-v', 'error', '-y', '-ss', str(ini), '-t', str(dur), '-i', f'{PROVAS}/{arq}.mp4'] + sum([['-loop', '1', '-t', str(dur), '-i', o] for o in ov], [])
     cmd += ['-filter_complex', vf, '-map', '[v]', '-map', '0:a?', '-c:v', 'libx264', '-preset', 'medium', '-crf', '19', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-ar', '48000', '-ac', '2', '-shortest', out]
