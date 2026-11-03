@@ -6,14 +6,15 @@ F = lambda p, t: ImageFont.truetype('/usr/share/fonts/opentype/inter/InterDispla
 W, H = 1080, 1920
 VERDE, OURO, NOITE, FLORESTA, BRANCO = (27,122,72), (245,196,81), (10,20,16), (0,45,27), (255,255,255)
 # arquivo, início, fim, legendas [(ini, fim, texto, destaque)] em tempo do clipe
-CLIPES = [
-  ('v1', 0.55, 4.15, [(0.7, 2.05, 'Sabe quem posta tudo', None), (2.05, 4.1, 'que aparece aqui no', 'Instagram?')]),
-  ('v2', 0.80, 1.95, [(0.9, 1.95, 'Eu sou o', 'João')]),
-  ('v3', 0.60, 3.50, [(0.7, 1.9, 'E eu sou a Natália', None), (1.9, 3.5, 'do marketing do', 'Leilão no Zap')]),
-  ('v6', 2.25, 8.30, [(2.4, 3.7, 'Esse é o nosso escritório', None), (3.7, 5.2, 'bem em frente pra', 'praia')]),
-  ('v4', 0.50, 5.35, [(0.6, 3.2, 'Daqui a gente acompanha cada leilão', None), (3.3, 5.35, 'e cada entrega que chega na', 'casa de vocês')]),
-  ('v5', 0.70, 4.25, [(0.86, 2.2, 'Tem alguma', 'dúvida?'), (2.2, 4.25, 'Comenta aqui que a gente', 'responde')]),
+CLIPES = [  # arquivo, início, fim, legendas, volume medido (LUFS) → cada fala vai para o mesmo nível
+  ('v1', 0.55, 4.30, [(0.7, 2.05, 'Sabe quem posta tudo', None), (2.05, 4.3, 'que aparece aqui no', 'Instagram?')], -31.0),
+  ('v2', 0.80, 2.10, [(0.9, 2.1, 'Eu sou o', 'João')], -21.7),
+  ('v3', 0.60, 3.65, [(0.7, 1.9, 'E eu sou a Natália', None), (1.9, 3.65, 'do marketing do', 'Leilão no Zap')], -28.2),
+  ('v6', 2.25, 8.30, [(2.4, 3.7, 'Esse é o nosso escritório', None), (3.7, 5.2, 'bem em frente pra', 'praia')], -19.8),
+  ('v4', 0.45, 5.80, [(0.6, 3.2, 'Daqui a gente acompanha cada leilão', None), (3.3, 5.8, 'e cada entrega que chega na', 'casa de vocês')], -33.4),
+  ('v5', 0.70, 4.70, [(0.86, 2.2, 'Tem alguma', 'dúvida?'), (2.2, 4.7, 'Comenta aqui que a gente', 'responde')], -28.0),
 ]
+ALVO = -16.0
 def run(c): subprocess.run(c, check=True)
 def quebra(d, txt, f, larg):
     linhas, atual = [], ''
@@ -53,7 +54,7 @@ def fecho():
     im.convert('RGB').save(f'{S}/fecho.png')
 selo(); fecho()
 partes = []; t_total = 0
-for k, (arq, ini, fim, legs) in enumerate(CLIPES):
+for k, (arq, ini, fim, legs, lufs) in enumerate(CLIPES):
     dur = round(fim - ini, 3); ovs = []
     for j, (a, b, txt, dest) in enumerate(legs):
         nome = f'leg{k}_{j}'; legenda(txt, dest, nome); ovs.append((nome, max(0, a - ini), min(dur, b - ini)))
@@ -63,7 +64,7 @@ for k, (arq, ini, fim, legs) in enumerate(CLIPES):
     for n, (nome, a, b) in enumerate(ovs):
         entradas += ['-loop', '1', '-t', str(dur), '-i', f'{S}/{nome}.png']
         fc += f";[b{n+1}][{n+2}:v]overlay=0:0:enable='between(t,{a:.2f},{b:.2f})'[b{n+2}]"
-    fc += f";[b{len(ovs)+1}]null[v];[0:a]aresample=48000,aformat=channel_layouts=stereo,highpass=f=80,afade=t=in:d=0.05,afade=t=out:st={dur-0.08}:d=0.08[a]"
+    fc += f";[b{len(ovs)+1}]null[v];[0:a]aresample=48000,aformat=channel_layouts=stereo,highpass=f=80,volume={ALVO-lufs:.1f}dB,acompressor=threshold=-18dB:ratio=3:attack=8:release=200:makeup=1,afade=t=in:d=0.06,afade=t=out:st={dur-0.18:.2f}:d=0.18[a]"
     out = f'{S}/p{k}.mp4'
     run(['ffmpeg', '-v', 'error', '-y'] + entradas + ['-filter_complex', fc, '-map', '[v]', '-map', '[a]', '-t', str(dur), '-c:v', 'libx264', '-crf', '18', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', out])
     partes.append(out); t_total += dur
@@ -76,8 +77,8 @@ run(['ffmpeg', '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', f'{S}/li
 total = t_total + FECHO; tj = t_total + 0.3
 jingle = f'{MK}/marca/assinatura-sonora/OFICIAL/assinatura-sonora-leilao-no-zap-OFICIAL.mp3'
 musica = f'{S}/musica.mp3'
-af = (f"[0:a]volume=1.25,loudnorm=I=-15:TP=-1.5:LRA=9[voz];[1:a]atrim=0:{t_total},volume=0.13,afade=t=in:d=0.4,afade=t=out:st={t_total-0.6}:d=0.6[m];"
-      f"[2:a]volume=1.0,adelay={int(tj*1000)}|{int(tj*1000)}[j];[voz][m][j]amix=inputs=3:normalize=0:duration=first,alimiter=limit=0.95[a]")
+af = (f"[0:a]anull[voz];[1:a]atrim=0:{t_total},volume=0.13,afade=t=in:d=0.4,afade=t=out:st={t_total-0.6}:d=0.6[m];"
+      f"[2:a]volume=1.0,adelay={int(tj*1000)}|{int(tj*1000)}[j];[voz][m][j]amix=inputs=3:normalize=0:duration=first,volume=4dB,alimiter=limit=0.93[a]")
 run(['ffmpeg', '-v', 'error', '-y', '-i', f'{S}/junto.mp4', '-i', musica, '-i', jingle, '-filter_complex', af, '-map', '0:v', '-map', '[a]',
      '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-t', str(total), '-movflags', '+faststart', f'{S}/REELS-quem-posta-e-a-gente.mp4'])
 print('ok', round(total, 2))
