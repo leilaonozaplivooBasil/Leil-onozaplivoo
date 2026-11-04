@@ -64,9 +64,10 @@ for n in range(1, len(todos)):
     va, aa = f'[vx{n}]', f'[ax{n}]'; acc = off + durs[n]
 run(['ffmpeg','-v','error','-y'] + ent + ['-filter_complex', ';'.join(fc + ac), '-map', va, '-map', aa, '-c:v','libx264','-crf','18','-preset','medium','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k', f'{S}/junto.mp4'])
 total = acc; tj = total - FECHO + 0.25
-musica = '/tmp/claude-0/-home-user/0ed67ded-c847-5a23-a4f2-d97436f79693/scratchpad/encontrou/musica.mp3'
+import os
+musica = os.environ.get('MUSICA', '/tmp/claude-0/-home-user/0ed67ded-c847-5a23-a4f2-d97436f79693/scratchpad/encontrou/musica.mp3'); SAIDA = os.environ.get('SAIDA', 'REELS-encontrou-dono-v2.mp4')
 jingle = f'{MK}/marca/assinatura-sonora/OFICIAL/assinatura-sonora-leilao-no-zap-OFICIAL.mp3'
-af = (f"[0:a]asplit[voz][vsc];[1:a]aloop=loop=1:size=1200000,atrim=0:{tj},volume=0.45,afade=t=in:d=0.3,afade=t=out:st={tj-0.6}:d=0.6[m0];[m0][vsc]sidechaincompress=threshold=0.02:ratio=6:attack=15:release=350[m];"
+af = (f"[0:a]asplit[voz][vsc];[1:a]aloop=loop=1:size=1200000,atrim=0:{tj},volume=0.55,afade=t=in:d=0.3,afade=t=out:st={tj-0.6}:d=0.6[m0];[m0][vsc]sidechaincompress=threshold=0.02:ratio=6:attack=15:release=350[m];"
       f"[2:a]adelay={int(tj*1000)}|{int(tj*1000)}[j];[voz][m][j]amix=inputs=3:normalize=0:duration=first,volume=3dB,alimiter=limit=0.93[a]")
-run(['ffmpeg','-v','error','-y','-i',f'{S}/junto.mp4','-i',musica,'-i',jingle,'-filter_complex',af,'-map','0:v','-map','[a]','-c:v','copy','-c:a','aac','-b:a','192k','-t',f'{total:.2f}','-movflags','+faststart',f'{S}/REELS-encontrou-dono-v2.mp4'])
+run(['ffmpeg','-v','error','-y','-i',f'{S}/junto.mp4','-i',musica,'-i',jingle,'-filter_complex',af,'-map','0:v','-map','[a]','-c:v','copy','-c:a','aac','-b:a','192k','-t',f'{total:.2f}','-movflags','+faststart',f'{S}/{SAIDA}'])
 print('ok', round(total, 2))
