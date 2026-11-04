@@ -8,9 +8,9 @@ T = 0.3
 # arquivo, início, fim, recorte, volume (LUFS medido → -16; None = som ambiente baixo), legendas [(ini,fim,texto,destaque)], rótulo de produto
 PARTES = [
   (f'{S}/ini-limpo.mov', 0.55, 5.00, '800:1422:187:380', -29.2, [(0.8, 2.75, 'Sabe o que esses produtos', 'têm em comum?'), (2.9, 4.9, 'Todos já encontraram', 'dono')], None),
-  (f'{P}/cliente-full.mp4', 5.5, 8.5, '928:1650:76:0', None, [], 'Mais um entregue'),
-  (f'{P}/herbert-full.mp4', 8.5, 11.5, None, None, [], 'Ar-condicionado'),
-  (f'{P}/matheus-video-full.mp4', 13.0, 16.0, None, None, [], 'PlayStation 5'),
+  (f'{P}/cliente-full.mp4', 6.6, 11.4, '928:1650:76:0', 'mudo', [(6.7, 9.0, 'Produto de boa', 'qualidade'), (9.0, 11.4, 'O atendimento aqui', 'também é ótimo')], None),
+  (f'{P}/herbert-full.mp4', 5.0, 10.5, None, 'mudo', [(5.0, 7.45, 'Chegou meu ar-condicionado,', 'bem embaladinho'), (7.5, 10.5, 'Olha que coisa', 'linda!')], None),
+  (f'{P}/matheus-video-full.mp4', 13.0, 16.0, None, 'mudo', [], 'PlayStation 5'),
   (f'{P}/lucas-full.mp4', 4.8, 7.0, None, 'mudo', [], 'Scooter elétrica'),
   (f'{P}/murilo-full.mp4', 82.5, 86.5, '568:1010:90:320', 'mudo', [(82.6, 84.6, 'Tudo lacrado, tudo', 'certinho'), (84.6, 86.5, 'E foi o', 'iPhone 17 Pro Max')], None),
   (f'{S}/ini-limpo.mov', 7.35, 11.75, '800:1422:187:380', -29.3, [(7.55, 9.35, 'E amanhã chega', 'mais um'), (9.45, 11.6, 'Alguém arrematou', 'no sábado')], None),
