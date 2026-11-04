@@ -8,3 +8,12 @@ Regra oficial para TODOS os vídeos de leilão a partir de 04/11/2026.
 5. Preço e verdade: sempre o preço FINAL pago ao lado do preço de loja, comprovável; nada de carteira, depósito, rendimento, aposta ou sorteio.
 Formatos: Encontrou dono · Unboxing no escritório · Embalando pedidos · Vem comigo · 5h da manhã · Chuta o preço · Últimos segundos · É golpe?
 Checklist antes de entregar e entregáveis (vídeo, capa, legenda, linha de formato/teste): ver o texto completo enviado pela Natália em 04/11.
+
+## Conferência de áudio OBRIGATÓRIA antes de entregar ou agendar (lição de 04/11, ep. 01)
+O ep. 01 subiu com a música alta demais: fala da Natália a -16 LUFS e música sozinha a -18,6 LUFS (só 2 dB de diferença).
+Regra, medida com `ffmpeg -af ebur128` em cada trecho do arquivo FINAL (o mesmo que vai para o Instagram):
+- Fala: -16 LUFS.
+- Música por baixo da fala: pelo menos 20 dB abaixo da fala (é o "5% a 10%").
+- Trechos só com música (sem ninguém falando): no máximo -24 LUFS, ou seja, 8 dB abaixo da fala.
+- Se não passar, não entrega e não agenda. Ajusta e mede de novo.
+- Junto com o vídeo, mandar para a Natália os números medidos e pedir que ela ouça COM FONE antes do ok.
