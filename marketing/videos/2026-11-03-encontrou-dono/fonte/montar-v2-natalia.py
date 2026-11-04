@@ -13,8 +13,8 @@ PARTES = [
   (f'{P}/matheus-video-full.mp4', 13.0, 16.0, None, 'mudo', [], 'PlayStation 5'),
   (f'{P}/lucas-full.mp4', 4.8, 7.0, None, 'mudo', [], 'Scooter elétrica'),
   (f'{P}/murilo-full.mp4', 82.5, 86.5, '568:1010:90:320', 'mudo', [(82.6, 84.6, 'Tudo lacrado, tudo', 'certinho'), (84.6, 86.5, 'E foi o', 'iPhone 17 Pro Max')], None),
-  (f'{S}/ini-limpo.mov', 7.35, 11.75, '800:1422:187:380', -29.3, [(7.55, 9.35, 'E amanhã chega', 'mais um'), (9.45, 11.6, 'Alguém arrematou', 'no sábado')], None),
-  (f'{S}/fim-limpo.mov', 0.55, 5.75, None, -33.1, [(0.7, 2.3, 'Quer saber', 'quem foi?'), (2.6, 5.6, 'Segue a gente que amanhã', 'eu te mostro')], None),
+  (f'{S}/ini-limpo.mov', 7.35, 12.55, '800:1422:187:380', -29.3, [(7.55, 9.35, 'E amanhã chega', 'mais um'), (9.45, 11.3, 'Alguém arrematou', 'no sábado'), (11.4, 12.5, 'Quer saber', 'quem foi?')], None),
+  (f'{S}/ini-limpo.mov', 13.15, 16.45, '740:1316:217:420', -31.3, [(13.4, 16.3, 'Segue a gente que amanhã', 'eu te mostro')], None),
 ]
 def run(c): subprocess.run(c, check=True)
 def quebra(d, txt, f, larg):
