@@ -95,7 +95,7 @@ total = t_total + FECHO; tj = t_total + 0.3
 jingle = f'{MK}/marca/assinatura-sonora/OFICIAL/assinatura-sonora-leilao-no-zap-OFICIAL.mp3'
 import os
 musica = os.environ.get('MUSICA', f'{S}/musica.mp3'); SAIDA = os.environ.get('SAIDA', 'REELS-quem-posta-e-a-gente.mp4')
-af = (f"[0:a]asplit[voz][vsc];[1:a]atrim=0:{t_total+0.2},volume=0.32,afade=t=in:d=0.5,afade=t=out:st={t_total-0.5}:d=0.7[m0];[m0][vsc]sidechaincompress=threshold=0.02:ratio=5:attack=20:release=400[m];"
+af = (f"[0:a]asplit[voz][vsc];[1:a]atrim=0:{t_total+0.2},volume={os.environ.get('MUSVOL','0.32')},afade=t=in:d=0.3,afade=t=out:st={t_total-0.5}:d=0.7[m0];[m0][vsc]sidechaincompress=threshold={os.environ.get('LIMIAR','0.02')}:ratio={os.environ.get('RAZAO','5')}:attack=20:release=300[m];"
       f"[2:a]volume=1.0,adelay={int(tj*1000)}|{int(tj*1000)}[j];[voz][m][j]amix=inputs=3:normalize=0:duration=first,volume=4dB,alimiter=limit=0.93[a]")
 run(['ffmpeg', '-v', 'error', '-y', '-i', f'{S}/junto.mp4', '-i', musica, '-i', jingle, '-filter_complex', af, '-map', '0:v', '-map', '[a]',
      '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-t', str(total), '-movflags', '+faststart', f'{S}/{SAIDA}'])

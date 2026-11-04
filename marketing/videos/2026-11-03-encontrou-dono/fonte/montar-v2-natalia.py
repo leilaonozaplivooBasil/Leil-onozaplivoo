@@ -7,14 +7,14 @@ W, H = 1080, 1920; VERDE, OURO, NOITE, FLORESTA, BRANCO = (27,122,72), (245,196,
 T = 0.3
 # arquivo, início, fim, recorte, volume (LUFS medido → -16; None = som ambiente baixo), legendas [(ini,fim,texto,destaque)], rótulo de produto
 PARTES = [
-  (f'{S}/ini.mov', 0.55, 5.00, '800:1422:187:380', -28.4, [(0.8, 2.75, 'Sabe o que esses produtos', 'têm em comum?'), (2.9, 4.9, 'Todos já encontraram', 'dono')], None),
+  (f'{S}/ini-limpo.mov', 0.55, 5.00, '800:1422:187:380', -29.2, [(0.8, 2.75, 'Sabe o que esses produtos', 'têm em comum?'), (2.9, 4.9, 'Todos já encontraram', 'dono')], None),
   (f'{P}/cliente-full.mp4', 5.5, 8.5, '928:1650:76:0', None, [], 'Mais um entregue'),
   (f'{P}/herbert-full.mp4', 8.5, 11.5, None, None, [], 'Ar-condicionado'),
   (f'{P}/matheus-video-full.mp4', 13.0, 16.0, None, None, [], 'PlayStation 5'),
-  (f'{P}/lucas-full.mp4', 4.8, 7.0, None, None, [], 'Scooter elétrica'),
-  (f'{P}/murilo-full.mp4', 82.5, 86.5, '568:1010:90:320', -24.0, [(82.6, 84.6, 'Tudo lacrado, tudo', 'certinho'), (84.6, 86.5, 'E foi o', 'iPhone 17 Pro Max')], None),
-  (f'{S}/ini.mov', 7.35, 11.75, '800:1422:187:380', -28.4, [(7.55, 9.35, 'E amanhã chega', 'mais um'), (9.45, 11.6, 'Alguém arrematou', 'no sábado')], None),
-  (f'{S}/fim.mov', 0.55, 5.75, None, -32.0, [(0.7, 2.3, 'Quer saber', 'quem foi?'), (2.6, 5.6, 'Segue a gente que amanhã', 'eu te mostro')], None),
+  (f'{P}/lucas-full.mp4', 4.8, 7.0, None, 'mudo', [], 'Scooter elétrica'),
+  (f'{P}/murilo-full.mp4', 82.5, 86.5, '568:1010:90:320', 'mudo', [(82.6, 84.6, 'Tudo lacrado, tudo', 'certinho'), (84.6, 86.5, 'E foi o', 'iPhone 17 Pro Max')], None),
+  (f'{S}/ini-limpo.mov', 7.35, 11.75, '800:1422:187:380', -29.3, [(7.55, 9.35, 'E amanhã chega', 'mais um'), (9.45, 11.6, 'Alguém arrematou', 'no sábado')], None),
+  (f'{S}/fim-limpo.mov', 0.55, 5.75, None, -33.1, [(0.7, 2.3, 'Quer saber', 'quem foi?'), (2.6, 5.6, 'Segue a gente que amanhã', 'eu te mostro')], None),
 ]
 def run(c): subprocess.run(c, check=True)
 def quebra(d, txt, f, larg):
@@ -50,7 +50,7 @@ for k, (arq, ini, fim, rec, lufs, legs, rot) in enumerate(PARTES):
         nome = o if isinstance(o, str) else o[0]; ent += ['-loop', '1', '-t', str(dur), '-i', f'{S}/{nome}.png']
         cond = '' if isinstance(o, str) else f":enable='between(t,{o[1]:.2f},{o[2]:.2f})'"
         vf += f";[b{n}][{n+1}:v]overlay=0:0{cond}[b{n+1}]"
-    vol = f"volume={-16 - lufs:.1f}dB,acompressor=threshold=-18dB:ratio=3:attack=8:release=200" if lufs is not None else "volume=0.25"
+    vol = "volume=0" if lufs == "mudo" else (f"volume={-16 - lufs:.1f}dB,acompressor=threshold=-18dB:ratio=3:attack=8:release=200" if lufs is not None else "volume=0.25")
     vf += f";[b{len(ovs)}]null[v];[0:a]aresample=48000,aformat=channel_layouts=stereo,highpass=f=80,{vol}[a]"
     out = f'{S}/p{k}.mp4'; run(['ffmpeg','-v','error','-y'] + ent + ['-filter_complex', vf, '-map','[v]','-map','[a]','-t',str(dur),'-c:v','libx264','-crf','18','-preset','medium','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k', out])
     partes.append(out); durs.append(dur)
@@ -67,7 +67,7 @@ total = acc; tj = total - FECHO + 0.25
 import os
 musica = os.environ.get('MUSICA', '/tmp/claude-0/-home-user/0ed67ded-c847-5a23-a4f2-d97436f79693/scratchpad/encontrou/musica.mp3'); SAIDA = os.environ.get('SAIDA', 'REELS-encontrou-dono-v2.mp4')
 jingle = f'{MK}/marca/assinatura-sonora/OFICIAL/assinatura-sonora-leilao-no-zap-OFICIAL.mp3'
-af = (f"[0:a]asplit[voz][vsc];[1:a]aloop=loop=1:size=1200000,atrim=0:{tj},volume=0.55,afade=t=in:d=0.3,afade=t=out:st={tj-0.6}:d=0.6[m0];[m0][vsc]sidechaincompress=threshold=0.02:ratio=6:attack=15:release=350[m];"
+af = (f"[0:a]asplit[voz][vsc];[1:a]aloop=loop=1:size=1200000,atrim=0:{tj},volume={os.environ.get('MUSVOL','0.55')},afade=t=in:d=0.3,afade=t=out:st={tj-0.6}:d=0.6[m0];[m0][vsc]sidechaincompress=threshold={os.environ.get('LIMIAR','0.02')}:ratio={os.environ.get('RAZAO','6')}:attack=15:release=300[m];"
       f"[2:a]adelay={int(tj*1000)}|{int(tj*1000)}[j];[voz][m][j]amix=inputs=3:normalize=0:duration=first,volume=3dB,alimiter=limit=0.93[a]")
 run(['ffmpeg','-v','error','-y','-i',f'{S}/junto.mp4','-i',musica,'-i',jingle,'-filter_complex',af,'-map','0:v','-map','[a]','-c:v','copy','-c:a','aac','-b:a','192k','-t',f'{total:.2f}','-movflags','+faststart',f'{S}/{SAIDA}'])
 print('ok', round(total, 2))
