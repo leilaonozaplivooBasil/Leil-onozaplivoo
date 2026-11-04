@@ -1,0 +1,389 @@
+<title>Plano Leilão no Zap · Novembro</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600;700;800&display=swap">
+<style>
+/* Layout: uma coluna; abas no topo (Cronograma · Roteiros · Perfil); cada dia é uma linha da grade com faixa da cor do pilar */
+:root{
+  --noite:#0A1410; --noite2:#15231C; --noite3:#1C2E25; --linha:#2B3B32; --texto:#E8EFEA; --suave:#A9B8AF;
+  --verde:#1B7A48; --neon:#3FD07E; --fogo:#F35B12; --ouro:#F5C451; --menta:#B7E3CB; --azul:#7CC4F5; --rosa:#F28DB2;
+  --slab:"Roboto Slab", Georgia, serif; --corpo:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:dark;
+}
+body{background:var(--noite);color:var(--texto);font-family:var(--corpo);font-size:16px;line-height:1.55}
+.pag{max-width:960px;margin:0 auto;padding-block:32px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--slab);margin:0;line-height:1.2;text-wrap:balance}
+h1{font-size:clamp(28px,5.5vw,40px);font-weight:800} h2{font-size:22px} h3{font-size:17px}
+p{margin:0} .suave{color:var(--suave)} .olho{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--neon);font-weight:700}
+.abas{display:flex;gap:8px;flex-wrap:wrap;position:sticky;top:env(safe-area-inset-top,0px);background:var(--noite);padding-block:10px;z-index:5;border-bottom:1px solid var(--linha)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--noite);z-index:10}
+.abas button{font:inherit;font-weight:700;font-size:14px;color:var(--texto);background:var(--noite2);border:1px solid var(--linha);border-radius:999px;padding:8px 16px;cursor:pointer}
+.abas button[aria-selected="true"]{background:var(--verde);border-color:var(--verde)}
+button:focus-visible{outline:2px solid var(--neon);outline-offset:2px}
+.alerta{border:1px solid rgba(243,91,18,.55);background:rgba(243,91,18,.10);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.alerta b{color:var(--fogo)}
+.semana{display:flex;flex-direction:column;gap:10px}
+.semana-tit{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px}
+.semana-tit span{font-size:13px;color:var(--suave)}
+.dia{display:grid;grid-template-columns:92px 1fr;gap:4px 14px;background:var(--noite2);border:1px solid var(--linha);border-left:4px solid var(--cor,var(--verde));border-radius:10px;padding:12px 14px}
+.dia .data{font-family:var(--slab);font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
+.dia .data small{display:block;font-family:var(--corpo);font-weight:600;font-size:12px;color:var(--suave)}
+.dia .corpo{min-width:0;display:flex;flex-direction:column;gap:4px}
+.dia .reel{font-weight:700} .dia .stories{font-size:14px;color:var(--suave)}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--cor,var(--neon));margin-right:6px}
+.pronto{color:var(--neon);font-size:12px;font-weight:700}
+.gravar{color:var(--ouro);font-size:12px;font-weight:700}
+.legenda-pilar{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:13px;color:var(--suave)}
+.legenda-pilar i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.roteiro{background:var(--noite2);border:1px solid var(--linha);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.roteiro-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:center}
+.cena{font-size:13px;color:var(--ouro);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+.fala{font-size:19px;line-height:1.5}
+.fala b{color:var(--neon)}
+.dica{font-size:13px;color:var(--suave);border-left:2px solid var(--linha);padding-left:10px}
+.copiar{font:inherit;font-size:13px;font-weight:700;color:#fff;background:var(--verde);border:0;border-radius:8px;padding:7px 12px;cursor:pointer}
+.post{background:var(--noite3);border-radius:8px;padding:12px;white-space:pre-wrap;font-size:14px}
+.tele{white-space:pre-wrap;display:none}
+.perfil{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.cel{background:#000;border-radius:28px;padding:18px 14px;border:1px solid var(--linha);max-width:380px;width:100%;justify-self:center}
+.cel .topo{display:flex;gap:14px;align-items:center}
+.cel .foto{width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#2a8d58,#0d3b24);display:grid;place-items:center;font-family:var(--slab);font-weight:800;font-size:13px;text-align:center;line-height:1.1;flex:none}
+.cel .nums{display:flex;gap:14px;font-size:13px;text-align:center}
+.cel .nums b{display:block;font-size:16px}
+.cel .nome{font-weight:700;margin-top:10px;font-size:14px}
+.cel .cat{color:var(--suave);font-size:13px}
+.cel .bio{font-size:14px;white-space:pre-wrap;margin-top:2px}
+.dest{display:flex;gap:10px;overflow-x:auto;margin-top:14px;padding-bottom:4px}
+.dest div{flex:none;width:62px;text-align:center;font-size:11px}
+.dest span{display:grid;place-items:center;width:58px;height:58px;border-radius:50%;border:2px solid #3a3a3a;background:var(--verde);font-size:22px;margin:0 auto 4px}
+.grade{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:14px}
+.grade div{aspect-ratio:4/5;display:flex;align-items:flex-end;padding:6px;font-size:10px;font-weight:700;line-height:1.2;color:#fff}
+.textos{display:flex;flex-direction:column;gap:12px;min-width:0}
+.caixa{background:var(--noite2);border:1px solid var(--linha);border-radius:10px;padding:14px}
+.caixa pre{margin:8px 0 0;white-space:pre-wrap;font-family:var(--corpo);font-size:14px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+@media (max-width:480px){.dia{grid-template-columns:1fr}}
+</style>
+
+<div class="pag">
+<header>
+  <div class="olho">Leilão no Zap · Marketing de alta performance</div>
+  <h1>Novembro em 4 semanas: cronograma, roteiros e perfil</h1>
+  <p class="suave" style="margin-top:10px;max-width:64ch">Feito a partir do plano da Natália: 1 Reels por dia, 5 a 8 stories, a série "Quem faz a Leilão no Zap" e o high ticket de sábado. Semana 1 começa amanhã, quinta 05/11, e a semana 4 fecha com a Black Friday.</p>
+</header>
+
+<div class="alerta" role="note">
+  <p><b>Três ajustes antes de publicar:</b></p>
+  <p>1) <b>Horário do sábado:</b> o plano diz encerramento às 18h, mas no sistema o iPhone 17 Pro Max fecha às <b>20h</b> deste sábado (07/11). Usei 20h. Se a regra nova é 18h, o horário do leilão precisa mudar no sistema antes de divulgar.</p>
+  <p>2) <b>20% da loja virtual:</b> até 29/11 a conta está restrita. Então nada de selo de % na arte e nada de link. O desconto entra só falado e com as condições confirmadas pela diretoria. Preciso que me passem a regra: prazo, produtos participantes e como usar.</p>
+  <p>3) <b>"Lei do WhatsApp":</b> como o próprio plano avisa, o vídeo de regras fala das regras da Leilão no Zap, sem citar lei.</p>
+</div>
+
+<nav class="abas" role="tablist" aria-label="Seções">
+  <button role="tab" aria-selected="true" aria-controls="aba-cronograma" id="t-cronograma">📅 Cronograma</button>
+  <button role="tab" aria-selected="false" aria-controls="aba-roteiros" id="t-roteiros">🎬 Roteiros para gravar</button>
+  <button role="tab" aria-selected="false" aria-controls="aba-perfil" id="t-perfil">📱 Perfil novo</button>
+</nav>
+
+<!-- ───────── CRONOGRAMA ───────── -->
+<section id="aba-cronograma" role="tabpanel" aria-labelledby="t-cronograma" style="display:flex;flex-direction:column;gap:26px">
+  <div class="legenda-pilar">
+    <span><i style="background:var(--neon)"></i>Leilões diários</span>
+    <span><i style="background:var(--ouro)"></i>Sábado high ticket</span>
+    <span><i style="background:var(--rosa)"></i>Confiança e prova social</span>
+    <span><i style="background:var(--menta)"></i>Marca e educação</span>
+    <span><i style="background:var(--azul)"></i>Loja e Compara Aqui</span>
+    <span><i style="background:var(--fogo)"></i>Recrutamento</span>
+  </div>
+  <p class="suave" style="font-size:14px">Reels no feed às <b>12h</b>. No sábado, teaser às 10h e cobertura até o martelo. Stories todo dia: manhã (oportunidades), tarde (dúvidas e enquete) e noite (lembrete do próximo leilão). <span class="pronto">● pronto</span> já está feito · <span class="gravar">● gravar</span> roteiro na aba ao lado.</p>
+
+  <div class="semana">
+    <div class="semana-tit"><h2>Semana 1 · Posicionamento e confiança</h2><span>05/11 a 11/11</span></div>
+    <div class="dia" style="--cor:var(--rosa)"><div class="data">Qui 05/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Equipe</span>"Quem posta é a gente": Natália e João, versão com mais energia <span class="gravar">● gravar hoje</span></p><p class="stories">Stories: caixa de pergunta "Qual sua dúvida sobre os leilões?" · produtos do dia · teaser do iPhone de sábado</p></div></div>
+    <div class="dia" style="--cor:var(--rosa)"><div class="data">Sex 06/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Prova social</span>"Encontrou dono": 5 entregas reais <span class="pronto">● pronto</span></p><p class="stories">Stories: contagem regressiva do iPhone · "Faltam 1 dia" · respostas da caixa de pergunta</p></div></div>
+    <div class="dia" style="--cor:var(--ouro)"><div class="data">Sáb 07/11<small>10h · até 20h</small></div><div class="corpo"><p class="reel"><span class="tag">High ticket</span>iPhone 17 Pro Max com a voz do Leiloeiro <span class="pronto">● pronto</span></p><p class="stories">Stories: "Hoje às 20h" · faltam 3h · 1h · última chamada · "Martelo batido" com o valor final (sem nome de quem levou)</p></div></div>
+    <div class="dia" style="--cor:var(--menta)"><div class="data">Dom 08/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Bastidores</span>"De onde sai cada entrega": Natália no galpão <span class="gravar">● gravar hoje</span></p><p class="stories">Stories: recap do sábado · prévia da semana · enquete "Qual produto você quer ver em leilão?"</p></div></div>
+    <div class="dia" style="--cor:var(--menta)"><div class="data">Seg 09/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Institucional</span>"Como funciona a Leilão no Zap" em 30 segundos <span class="gravar">● gravar</span></p><p class="stories">Stories: oportunidades do dia · enquete · teaser do próximo sábado</p></div></div>
+    <div class="dia" style="--cor:var(--menta)"><div class="data">Ter 10/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Educativo</span>"As regras do leilão e como a gente atende no WhatsApp" <span class="gravar">● gravar</span></p><p class="stories">Stories: produtos do dia · perguntas e respostas</p></div></div>
+    <div class="dia" style="--cor:var(--fogo)"><div class="data">Qua 11/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Quem faz</span>Entrevista 1 com um vendedor da equipe <span class="gravar">● gravar</span></p><p class="stories">Stories: tutorial de compra na loja · lembretes dos leilões</p></div></div>
+  </div>
+
+  <div class="semana">
+    <div class="semana-tit"><h2>Semana 2 · Conversão e loja</h2><span>12/11 a 18/11</span></div>
+    <div class="dia" style="--cor:var(--azul)"><div class="data">Qui 12/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Compara Aqui</span>Tela gravada: pesquisar, comparar e decidir</p><p class="stories">Stories: 3 produtos comparados · dúvidas · teaser do high ticket</p></div></div>
+    <div class="dia" style="--cor:var(--rosa)"><div class="data">Sex 13/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Prova social</span>Depoimento de cliente real, com autorização</p><p class="stories">Stories: contagem regressiva · apresentação do produto de sábado</p></div></div>
+    <div class="dia" style="--cor:var(--ouro)"><div class="data">Sáb 14/11<small>10h · fechamento</small></div><div class="corpo"><p class="reel"><span class="tag">High ticket</span>Vídeo do produto do sábado (produto a definir no sistema)</p><p class="stories">Stories: contagem 3h · 1h · última chamada · resultado confirmado</p></div></div>
+    <div class="dia" style="--cor:var(--menta)"><div class="data">Dom 15/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Melhores momentos</span>Corte dos melhores trechos da semana</p><p class="stories">Stories: depoimento · prévia da semana</p></div></div>
+    <div class="dia" style="--cor:var(--azul)"><div class="data">Seg 16/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Loja virtual</span>Como comprar na loja, passo a passo (desconto só falado e com regra confirmada)</p><p class="stories">Stories: oportunidades · enquete</p></div></div>
+    <div class="dia" style="--cor:var(--fogo)"><div class="data">Ter 17/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Quem faz</span>Entrevista 2 com alguém da equipe</p><p class="stories">Stories: produtos do dia · perguntas e respostas</p></div></div>
+    <div class="dia" style="--cor:var(--neon)"><div class="data">Qua 18/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Leilão do dia</span>Corte curto do produto mais disputado da semana</p><p class="stories">Stories: tutorial de compra · lembretes</p></div></div>
+  </div>
+
+  <div class="semana">
+    <div class="semana-tit"><h2>Semana 3 · Recrutamento e prova social</h2><span>19/11 a 25/11</span></div>
+    <div class="dia" style="--cor:var(--azul)"><div class="data">Qui 19/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Compara Aqui</span>"Achei mais barato?": comparação ao vivo de 1 produto</p><p class="stories">Stories: produtos comparados · teaser high ticket</p></div></div>
+    <div class="dia" style="--cor:var(--fogo)"><div class="data">Sex 20/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Quem faz</span>Entrevista 3 + cliente real no mesmo vídeo</p><p class="stories">Stories: contagem regressiva · produto de sábado</p></div></div>
+    <div class="dia" style="--cor:var(--ouro)"><div class="data">Sáb 21/11<small>10h · fechamento</small></div><div class="corpo"><p class="reel"><span class="tag">High ticket</span>Vídeo do produto + cobertura do encerramento</p><p class="stories">Stories durante o dia · resultado confirmado</p></div></div>
+    <div class="dia" style="--cor:var(--fogo)"><div class="data">Dom 22/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Compilado</span>"Quem faz a Leilão no Zap": todos os depoimentos da equipe</p><p class="stories">Stories: chamada de inscrição de vendedores</p></div></div>
+    <div class="dia" style="--cor:var(--rosa)"><div class="data">Seg 23/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Bastidores</span>Um dia no galpão: do leilão à entrega</p><p class="stories">Stories: oportunidades · enquete</p></div></div>
+    <div class="dia" style="--cor:var(--fogo)"><div class="data">Ter 24/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Quem faz</span>Entrevista 4</p><p class="stories">Stories: perguntas e respostas</p></div></div>
+    <div class="dia" style="--cor:var(--ouro)"><div class="data">Qua 25/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Esquenta</span>"A Black Friday aqui começa no lance": teaser da semana</p><p class="stories">Stories: contagem para a Black Friday</p></div></div>
+  </div>
+
+  <div class="semana">
+    <div class="semana-tit"><h2>Semana 4 · Otimização, escala e Black Friday</h2><span>26/11 a 02/12</span></div>
+    <div class="dia" style="--cor:var(--ouro)"><div class="data">Qui 26/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Reedição</span>O vídeo que mais performou nas 3 semanas, reeditado para a Black Friday</p><p class="stories">Stories: "amanhã é Black Friday"</p></div></div>
+    <div class="dia" style="--cor:var(--ouro)"><div class="data">Sex 27/11<small>10h · 12h · 18h</small></div><div class="corpo"><p class="reel"><span class="tag">Black Friday</span>3 publicações no dia (ainda sem % e sem link: a restrição vai até 29/11)</p><p class="stories">Stories o dia todo</p></div></div>
+    <div class="dia" style="--cor:var(--ouro)"><div class="data">Sáb 28/11<small>10h · fechamento</small></div><div class="corpo"><p class="reel"><span class="tag">High ticket</span>Sábado especial da Black Friday</p><p class="stories">Contagem · cobertura · resultado</p></div></div>
+    <div class="dia" style="--cor:var(--menta)"><div class="data">Dom 29/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Institucional curto</span>Novo institucional de 15s (fim da restrição: links e selos voltam a partir daqui)</p><p class="stories">Stories: recap da Black Friday</p></div></div>
+    <div class="dia" style="--cor:var(--fogo)"><div class="data">Seg 30/11<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Inscrições</span>Campanha "Seja vendedor": entrevista 5</p><p class="stories">Stories: como se inscrever</p></div></div>
+    <div class="dia" style="--cor:var(--azul)"><div class="data">Ter 01/12<small>12h</small></div><div class="corpo"><p class="reel"><span class="tag">Loja</span>Oferta da loja, agora com o selo e o link liberados</p><p class="stories">Stories: produtos do dia</p></div></div>
+    <div class="dia" style="--cor:var(--menta)"><div class="data">Qua 02/12<small>—</small></div><div class="corpo"><p class="reel"><span class="tag">Relatório</span>Relatório mensal para a Diretoria de Operações: alcance, cadastros e inscrições</p><p class="stories">Stories: normal</p></div></div>
+  </div>
+</section>
+
+<!-- ───────── ROTEIROS ───────── -->
+<section id="aba-roteiros" role="tabpanel" aria-labelledby="t-roteiros" hidden style="display:flex;flex-direction:column;gap:18px">
+  <p class="suave">Cada roteiro tem as falas no tamanho certo para o teleprompter. O botão copia só as falas, sem as indicações de cena. Regras de gravação do Luiz para todos: <b>meio corpo para cima</b>, <b>sorrindo e com energia</b>, celular em pé na altura dos olhos e 1 segundo de silêncio antes e depois de cada fala.</p>
+
+  <article class="roteiro">
+    <div class="roteiro-top"><div><div class="olho">Qui 05/11 · gravar hoje · ~30s</div><h3>1. "Quem posta é a gente" (Natália e João)</h3></div><button class="copiar" data-alvo="r1">Copiar falas</button></div>
+    <div class="cena">Cena 1 · varanda, mar atrás · Natália</div>
+    <p class="fala">"Sabe quem posta tudo que aparece aqui no Instagram?"</p>
+    <div class="cena">Cena 2 · varanda · João entra rindo no quadro</div>
+    <p class="fala">"A gente! Prazer, eu sou o João…"</p>
+    <div class="cena">Cena 3 · os dois juntos</div>
+    <p class="fala">"…e eu sou a Natália. A gente é o marketing da <b>Leilão no Zap</b>!"</p>
+    <div class="cena">Cena 4 · João aponta e a câmera gira devagar para a vista</div>
+    <p class="fala">"E olha o nosso escritório: bem aqui, de frente pro mar do Recreio."</p>
+    <p class="dica">Câmera parada 3 segundos só na vista, sem pegar a grade, o chão nem os carros. Depois, 3 segundos do escritório por dentro.</p>
+    <div class="cena">Cena 5 · Natália no escritório</div>
+    <p class="fala">"Daqui a gente acompanha cada leilão e cada entrega que chega na casa de vocês."</p>
+    <div class="cena">Cena 6 · João, sorrindo</div>
+    <p class="fala">"Ficou com dúvida? Comenta aqui que é a gente mesmo que responde!"</p>
+    <div class="cena">Cena 7 · os dois</div>
+    <p class="fala">"Bora dar lance!"</p>
+    <div class="post">Legenda do post:
+Sabe quem está por trás de tudo que aparece aqui? 👀
+
+Prazer, somos a Natália e o João, do marketing da Leilão no Zap 💚
+De frente pro mar do Recreio, a gente acompanha cada leilão e cada entrega que chega na casa de vocês 🌊📦
+
+Tem dúvida sobre os leilões? Comenta aqui que a gente mesmo responde 👇
+
+#leilaonozap #leilao #bastidores #riodejaneiro</div>
+    <div class="tele" id="r1">Sabe quem posta tudo que aparece aqui no Instagram?
+
+A gente! Prazer, eu sou o João…
+
+…e eu sou a Natália. A gente é o marketing da Leilão no Zap!
+
+E olha o nosso escritório: bem aqui, de frente pro mar do Recreio.
+
+Daqui a gente acompanha cada leilão e cada entrega que chega na casa de vocês.
+
+Ficou com dúvida? Comenta aqui que é a gente mesmo que responde!
+
+Bora dar lance!</div>
+  </article>
+
+  <article class="roteiro">
+    <div class="roteiro-top"><div><div class="olho">Dom 08/11 · gravar hoje no galpão · ~40s</div><h3>2. "De onde sai cada entrega" (Natália no galpão)</h3></div><button class="copiar" data-alvo="r2">Copiar falas</button></div>
+    <div class="cena">Cena 1 · entrada do galpão, Natália andando para a câmera</div>
+    <p class="fala">"Você já se perguntou de onde sai o produto que você arremata aqui? Vem comigo!"</p>
+    <div class="cena">Cena 2 · prateleiras · mostrar 2 ou 3 produtos de perto</div>
+    <p class="fala">"Esse é o nosso galpão. Cada produto que entra em leilão passa por aqui antes."</p>
+    <div class="cena">Cena 3 · bancada de embalagem</div>
+    <p class="fala">"Quando o martelo bate, a equipe separa, confere e embala com cuidado."</p>
+    <div class="cena">Cena 4 · caixa fechada com a etiqueta, sem mostrar nome nem endereço</div>
+    <p class="fala">"E daqui ele vai pra casa de quem deu o lance certo, em qualquer lugar do Brasil."</p>
+    <div class="cena">Cena 5 · Natália de frente, sorrindo</div>
+    <p class="fala">"Produto original, entrega de verdade. Quer ser o próximo? Comenta QUERO!"</p>
+    <p class="dica">Cuidado: nenhuma etiqueta com nome, telefone ou endereço de cliente pode aparecer legível.</p>
+    <div class="post">Legenda do post:
+De onde sai o produto que você arremata? 📦
+
+Vem conhecer o nosso galpão: cada produto passa por aqui, é conferido e embalado com cuidado antes de ir pra casa de quem deu o lance certo 💚
+
+Quer ser o próximo? Comenta QUERO 👇
+
+#leilaonozap #bastidores #leilao #entrega</div>
+    <div class="tele" id="r2">Você já se perguntou de onde sai o produto que você arremata aqui? Vem comigo!
+
+Esse é o nosso galpão. Cada produto que entra em leilão passa por aqui antes.
+
+Quando o martelo bate, a equipe separa, confere e embala com cuidado.
+
+E daqui ele vai pra casa de quem deu o lance certo, em qualquer lugar do Brasil.
+
+Produto original, entrega de verdade. Quer ser o próximo? Comenta QUERO!</div>
+  </article>
+
+  <article class="roteiro">
+    <div class="roteiro-top"><div><div class="olho">Seg 09/11 · ~30s</div><h3>3. "Como funciona a Leilão no Zap"</h3></div><button class="copiar" data-alvo="r3">Copiar falas</button></div>
+    <div class="cena">Cena 1 · Natália ou João, meio corpo</div>
+    <p class="fala">"Nunca deu lance num leilão? Em 30 segundos eu te explico."</p>
+    <div class="cena">Cena 2 · tela do celular mostrando o site (gravar a tela)</div>
+    <p class="fala">"Primeiro: você faz o seu cadastro, rapidinho."</p>
+    <p class="fala">"Depois escolhe o leilão. Tem todo dia, e no sábado tem o leilão especial."</p>
+    <p class="fala">"Cada leilão tem um lance inicial, e cada novo lance sobe um valor fixo, que aparece na tela."</p>
+    <div class="cena">Cena 3 · volta para a pessoa</div>
+    <p class="fala">"Quando o tempo acaba, o martelo bate: quem deu o maior lance leva!"</p>
+    <p class="fala">"Ficou alguma dúvida? Comenta aqui que eu te respondo."</p>
+    <p class="dica">Antes de gravar: confirmar com a diretoria os horários atuais dos leilões e como o lance é pago, para não falar nada diferente do sistema.</p>
+    <div class="post">Legenda do post:
+Como funciona a Leilão no Zap? 🔨
+
+1️⃣ Faz o cadastro
+2️⃣ Escolhe o leilão (tem todo dia, e no sábado tem o especial)
+3️⃣ Dá o seu lance
+4️⃣ O martelo bate: o maior lance leva!
+
+Ficou com dúvida? Comenta aqui 👇
+
+#leilaonozap #comofunciona #leilao</div>
+    <div class="tele" id="r3">Nunca deu lance num leilão? Em 30 segundos eu te explico.
+
+Primeiro: você faz o seu cadastro, rapidinho.
+
+Depois escolhe o leilão. Tem todo dia, e no sábado tem o leilão especial.
+
+Cada leilão tem um lance inicial, e cada novo lance sobe um valor fixo, que aparece na tela.
+
+Quando o tempo acaba, o martelo bate: quem deu o maior lance leva!
+
+Ficou alguma dúvida? Comenta aqui que eu te respondo.</div>
+  </article>
+
+  <article class="roteiro">
+    <div class="roteiro-top"><div><div class="olho">Ter 10/11 · ~30s</div><h3>4. "As regras do leilão e o atendimento no WhatsApp"</h3></div><button class="copiar" data-alvo="r4">Copiar falas</button></div>
+    <div class="cena">Cena única · João no escritório</div>
+    <p class="fala">"Três coisas que você precisa saber antes de dar o seu lance aqui."</p>
+    <p class="fala">"Um: o preço que aparece no leilão é real e muda a cada lance, na hora."</p>
+    <p class="fala">"Dois: o atendimento é pelo nosso WhatsApp oficial. Desconfie de qualquer número que não seja o nosso."</p>
+    <p class="fala">"Três: quando o martelo bate, a gente te chama pra combinar a entrega."</p>
+    <p class="fala">"Simples, seguro e transparente. Bora?"</p>
+    <p class="dica">Como pede o plano, não citar "lei do WhatsApp". Mostrar na tela qual é o número oficial só se a diretoria aprovar.</p>
+    <div class="post">Legenda do post:
+Antes de dar o seu lance, 3 coisas que você precisa saber 👇
+
+✅ O preço é real e muda a cada lance
+✅ O atendimento é só pelo nosso WhatsApp oficial
+✅ Quando o martelo bate, a gente te chama pra combinar a entrega
+
+Dúvida? Comenta aqui que a gente responde 💚
+
+#leilaonozap #regras #leilao</div>
+    <div class="tele" id="r4">Três coisas que você precisa saber antes de dar o seu lance aqui.
+
+Um: o preço que aparece no leilão é real e muda a cada lance, na hora.
+
+Dois: o atendimento é pelo nosso WhatsApp oficial. Desconfie de qualquer número que não seja o nosso.
+
+Três: quando o martelo bate, a gente te chama pra combinar a entrega.
+
+Simples, seguro e transparente. Bora?</div>
+  </article>
+
+  <article class="roteiro">
+    <div class="roteiro-top"><div><div class="olho">Qua 11/11 · ~45s · série "Quem faz a Leilão no Zap"</div><h3>5. Entrevista com vendedor (roteiro de perguntas)</h3></div><button class="copiar" data-alvo="r5">Copiar perguntas</button></div>
+    <p class="dica">Aqui não tem fala decorada: quem entrevista lê a pergunta e o vendedor responde do jeito dele, de verdade. Antes de gravar, pegue a autorização de imagem. Ninguém promete quanto vai ganhar.</p>
+    <div class="cena">Quem entrevista lê (atrás da câmera)</div>
+    <p class="fala">"Como você conheceu a Leilão no Zap?"</p>
+    <p class="fala">"O que você mais gosta no seu trabalho?"</p>
+    <p class="fala">"Como são os treinamentos e o suporte?"</p>
+    <p class="fala">"Que habilidade você desenvolveu aqui?"</p>
+    <p class="fala">"Que conselho você daria pra quem pensa em se inscrever?"</p>
+    <div class="cena">Fecho · o vendedor olha para a câmera</div>
+    <p class="fala">"Quer fazer parte da equipe? Chama a gente e confira as condições de inscrição."</p>
+    <div class="post">Legenda do post:
+Quem faz a Leilão no Zap 💚 [nome do vendedor] conta como é trabalhar com a gente.
+
+Quer conhecer as oportunidades para fazer parte da equipe? Comenta EQUIPE que a gente te explica as condições de inscrição 👇
+
+#leilaonozap #trabalheconosco #vendas</div>
+    <div class="tele" id="r5">Como você conheceu a Leilão no Zap?
+
+O que você mais gosta no seu trabalho?
+
+Como são os treinamentos e o suporte?
+
+Que habilidade você desenvolveu aqui?
+
+Que conselho você daria pra quem pensa em se inscrever?
+
+Quer fazer parte da equipe? Chama a gente e confira as condições de inscrição.</div>
+  </article>
+</section>
+
+<!-- ───────── PERFIL ───────── -->
+<section id="aba-perfil" role="tabpanel" aria-labelledby="t-perfil" hidden>
+  <div class="perfil">
+    <div class="cel" aria-label="Prévia do perfil no Instagram">
+      <div class="topo">
+        <div class="foto">LEILÃO<br>NO ZAP</div>
+        <div class="nums"><div><b>—</b>posts</div><div><b>—</b>seguidores</div><div><b>—</b>seguindo</div></div>
+      </div>
+      <p class="nome">Leilão no Zap | Leilões e Loja</p>
+      <p class="cat">Loja de compras e varejo</p>
+      <p class="bio">🔨 Leilões todo dia + especial de sábado
+🛒 Loja virtual com Compara Aqui
+📦 Produto original, entrega pra todo o Brasil
+💚 Feito por gente de verdade, do Rio
+👇 Comenta QUERO e a gente te explica</p>
+      <div class="dest">
+        <div><span>🔨</span>Como funciona</div>
+        <div><span>⭐</span>Sábado</div>
+        <div><span>📦</span>Entregas</div>
+        <div><span>🔍</span>Compara Aqui</div>
+        <div><span>💚</span>Equipe</div>
+        <div><span>❓</span>Dúvidas</div>
+        <div><span>🤝</span>Seja vendedor</div>
+      </div>
+      <div class="grade" aria-label="Próximos 9 posts">
+        <div style="background:linear-gradient(160deg,#0f5a35,#0a1410)">Regras do leilão</div>
+        <div style="background:linear-gradient(160deg,#1b7a48,#0a1410)">Como funciona</div>
+        <div style="background:linear-gradient(160deg,#3a2f12,#0a1410)">Entrevista 1</div>
+        <div style="background:linear-gradient(160deg,#1b4d6b,#0a1410)">De onde sai cada entrega</div>
+        <div style="background:linear-gradient(160deg,#6b5a17,#0a1410)">iPhone 17 Pro Max · sáb 20h</div>
+        <div style="background:linear-gradient(160deg,#5a1d36,#0a1410)">Encontrou dono</div>
+        <div style="background:linear-gradient(160deg,#0f5a35,#0a1410)">Quem posta é a gente</div>
+        <div style="background:#1c2e25">post antigo</div>
+        <div style="background:#1c2e25">post antigo</div>
+      </div>
+    </div>
+    <div class="textos">
+      <div class="caixa"><h3>Nome (campo "Nome" do perfil)</h3><pre id="p-nome">Leilão no Zap | Leilões e Loja</pre><button class="copiar" data-alvo="p-nome" style="margin-top:8px">Copiar</button></div>
+      <div class="caixa"><h3>Bio (149 caracteres)</h3><pre id="p-bio">🔨 Leilões todo dia + especial de sábado
+🛒 Loja virtual com Compara Aqui
+📦 Produto original, entrega pra todo o Brasil
+💚 Feito por gente de verdade, do Rio
+👇 Comenta QUERO e a gente te explica</pre><button class="copiar" data-alvo="p-bio" style="margin-top:8px">Copiar</button></div>
+      <div class="caixa"><h3>Destaques (nesta ordem)</h3><pre>1. Como funciona · tutorial e regras
+2. Sábado · teasers e "martelo batido"
+3. Entregas · "Encontrou dono" e depoimentos
+4. Compara Aqui · comparações de preço
+5. Equipe · "Quem faz a Leilão no Zap"
+6. Dúvidas · respostas da caixa de pergunta
+7. Seja vendedor · como se inscrever</pre></div>
+      <div class="caixa"><h3>Como trocar (2 minutos no celular)</h3><pre>Perfil → Editar perfil → cole o Nome e a Bio.
+Destaques: abra um story antigo → Destacar → crie com o nome acima.
+O link da bio fica como está até 29/11.</pre></div>
+      <p class="suave" style="font-size:13px">O Instagram não deixa nenhum sistema trocar a bio nem o nome sozinho. Quem faz isso é você, pelo app. As capas dos destaques eu faço quando você aprovar os nomes.</p>
+    </div>
+  </div>
+</section>
+
+<p class="suave" style="font-size:13px;border-top:1px solid var(--linha);padding-top:14px">Baseado no "Plano de Marketing de Alta Performance" (Natália, Diretoria de Operações) e nos dados do sistema de 04/11/2026. Nada aqui foi publicado: tudo depende da sua aprovação.</p>
+</div>
+
+<script>
+const abas=[...document.querySelectorAll('[role=tab]')];
+function abrir(id){abas.forEach(b=>{const on=b.getAttribute('aria-controls')===id;b.setAttribute('aria-selected',on);document.getElementById(b.getAttribute('aria-controls')).hidden=!on;});try{localStorage.setItem('aba',id)}catch(e){}}
+abas.forEach(b=>b.addEventListener('click',()=>abrir(b.getAttribute('aria-controls'))));
+try{const s=localStorage.getItem('aba');if(s&&document.getElementById(s))abrir(s)}catch(e){}
+document.querySelectorAll('.copiar').forEach(b=>b.addEventListener('click',()=>{
+  const t=document.getElementById(b.dataset.alvo).textContent.trim();const antes=b.textContent;
+  const ok=()=>{b.textContent='Copiado ✓';setTimeout(()=>b.textContent=antes,1600)};
+  navigator.clipboard.writeText(t).then(ok).catch(()=>{const r=document.createRange();const el=document.getElementById(b.dataset.alvo);el.style.display='block';r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selecionado: copie';});
+}));
+</script>
