@@ -30,3 +30,16 @@ Legenda (feed):
 ele desconfiou no começo… e levou um iPhone 17 Pro Max por R$ 4.640 🔨
 sábado tem outro, às 20h. comenta IPHONE 👇
 #leilaonozap #iphone17promax #leilao #encontroudono
+
+---
+## Série "JÁ ENCONTROU O DONO" · EP. 01 — legenda final do feed (04/11)
+Capa: CAPA-ja-encontrou-o-dono-ep01.jpg
+
+JÁ ENCONTROU O DONO · ep. 01 🔨
+ele desconfiou no começo… viu todo mundo dando lance e foi com tudo.
+resultado: iPhone 17 Pro Max por R$ 4.640 (na loja, R$ 8.404) 📦
+
+e sábado tem outro, às 20h 👀
+comenta IPHONE que a gente te explica como dar lance 👇
+
+#leilaonozap #jaencontrouodono #iphone17promax #leilao
