@@ -83,7 +83,7 @@ def a3():
 
 def a4():
     b = cena('s-pet.png'); poe_produto(b, 'c-tapete.png', 540, 965, 520, brilho=(255, 255, 255)); logo_topo(b, pilula=True)
-    y = titulo(b, [('SEU PET', BRANCO), ('AGRADECE!', 'grad')], 175, 116); sub(b, '60 unidades · 60 x 60 cm', y + 6, 40)
+    y = titulo(b, [('SEU PET', BRANCO), ('AGRADECE!', 'grad')], 175, 116); sub(b, '30 unidades · 60 x 60 cm', y + 6, 40)
     painel(b, 'Tapete higiênico pet', 68.71, 7.97); salvar(b, f'{OUT}/04-tapete-pet.jpg')
 
 def a5():
@@ -97,5 +97,6 @@ def a6():
     painel(b, 'iPhone 17 Pro Max 256GB', 9464.78, 197, rotulo='Lance inicial:', rodape=f'Na loja {real(9464.78)}  ·  martelo sábado às 20h')
     salvar(b, f'{OUT}/06-sabado-iphone.jpg')
 
-for f in (a1, a2, a3, a4, a5, a6): f()
+for f, h in ((a1, '12H'), (a2, '14H'), (a3, '16H'), (a4, '18H'), (a5, '20H'), (a6, '')):
+    HORA = h; f()
 print('ok')
