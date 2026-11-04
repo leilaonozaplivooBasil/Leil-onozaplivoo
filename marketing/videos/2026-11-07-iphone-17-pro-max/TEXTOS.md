@@ -20,3 +20,13 @@ Na loja: mais de R$ 9 mil
 No leilão: começou em R$ 197 🔨
 Sábado, 20h, o martelo bate!
 Me chama que eu te explico como dar seu lance 💚
+
+---
+## Versão "natural" (prompt mestre de 04/11) — REELS-iphone-natural-*.mp4
+Formato: ENCONTROU DONO. Testado de novo: 100% gravação real, voz real do arrematante, preço FINAL (R$ 4.640 vs R$ 8.404 na loja, leilão de 24/10, 61 lances).
+Capa: **esse iphone encontrou dono**
+
+Legenda (feed):
+ele desconfiou no começo… e levou um iPhone 17 Pro Max por R$ 4.640 🔨
+sábado tem outro, às 20h. comenta IPHONE 👇
+#leilaonozap #iphone17promax #leilao #encontroudono
