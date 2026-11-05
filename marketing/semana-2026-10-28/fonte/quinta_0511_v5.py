@@ -1,0 +1,131 @@
+# Quinta 05/11 v4 (suave, pedido da Natália): cena com menos contraste, título sem contorno pesado, painel de vidro claro.
+# Base v3: visual "anúncio 3D" (referência da Natália): cenário com pódio neon + produto REAL recortado,
+# título grande com contorno e painel de lance embaixo. Cenários feitos por IA sem produto; o produto é a foto original.
+import sys
+from PIL import Image, ImageDraw, ImageFilter, ImageChops, ImageEnhance
+from kit import logo, fonte, salvar, DOURADO, VERDE_ESCURO, BRANCO
+from pecas import real
+I = '/tmp/claude-0/-home-user/0ed67ded-c847-5a23-a4f2-d97436f79693/scratchpad/artes-0511/img'
+OUT = '/home/user/Leil-onozaplivoo/marketing/semana-2026-11-05/quinta-05-11/kit-vendedores-05-11-v5'
+W, H = 1080, 1350
+HORA = sys.argv[1] if len(sys.argv) > 1 else '8H'
+LIMA = (150, 240, 90); NEON = (60, 220, 110)
+
+def cena(nome):
+    im = Image.open(f'{I}/{nome}').convert('RGB').resize((W, H), Image.LANCZOS)
+    im = ImageEnhance.Contrast(im).enhance(0.92); im = ImageEnhance.Brightness(im).enhance(1.07); im = ImageEnhance.Color(im).enhance(0.92)
+    im = Image.blend(im, Image.new('RGB', (W, H), (236, 242, 236)), 0.05)
+    borr = im.filter(ImageFilter.GaussianBlur(9))          # desfoque de fundo: forte em cima, some perto do pódio
+    m = Image.new('L', (W, H), 0); md = ImageDraw.Draw(m)
+    for y in range(H): md.line((0, y, W, y), fill=255 if y < 640 else max(0, int(255 * (1 - (y - 640) / 300))))
+    im = Image.composite(borr, im, m)
+    return im.convert('RGBA')
+
+def poe_produto(b, nome, cx, base_y, alt, brilho=NEON):
+    p = Image.open(f'{I}/{nome}').convert('RGBA'); bb = p.getbbox(); p = p.crop(bb)
+    p = p.resize((int(p.width * alt / p.height), alt), Image.LANCZOS)
+    x, y = int(cx - p.width / 2), int(base_y - p.height)
+    a = p.split()[-1]
+    g = Image.new('RGBA', (W, H)); gl = Image.new('RGBA', p.size, brilho + (255,)); gl.putalpha(a)
+    g.alpha_composite(gl, (x, y)); g = g.filter(ImageFilter.GaussianBlur(28))
+    g.putalpha(g.split()[-1].point(lambda v: int(v * 0.45)))
+    b.alpha_composite(g)
+    s = Image.new('RGBA', (W, H)); ImageDraw.Draw(s).ellipse((cx - p.width * .42, base_y - 12, cx + p.width * .42, base_y + 12), fill=(0, 0, 0, 170))
+    b.alpha_composite(s.filter(ImageFilter.GaussianBlur(10)))
+    s2 = Image.new('RGBA', (W, H)); ImageDraw.Draw(s2).ellipse((cx - p.width * .3, base_y - 5, cx + p.width * .3, base_y + 5), fill=(0, 0, 0, 200))
+    b.alpha_composite(s2.filter(ImageFilter.GaussianBlur(4)))
+    b.alpha_composite(p, (x, y))
+
+CLARO = False
+def titulo(b, linhas, y, tam=104, larg=1000):
+    d = ImageDraw.Draw(b)
+    for txt, cor in linhas:
+        f = fonte('Black', tam)
+        while d.textlength(txt, font=f) > larg: tam -= 4; f = fonte('Black', tam)
+        sh = Image.new('RGBA', (W, H)); ImageDraw.Draw(sh).text((W / 2, y + 6), txt, font=f, fill=(255, 255, 255, 150) if CLARO else (0, 30, 15, 110), anchor='mt')
+        b.alpha_composite(sh.filter(ImageFilter.GaussianBlur(14)))
+        d = ImageDraw.Draw(b)
+        if CLARO: cor = (27, 122, 72) if cor == 'grad' else (16, 64, 42)
+        if cor == 'grad':
+            m = Image.new('L', (W, H)); ImageDraw.Draw(m).text((W / 2, y), txt, font=f, fill=255, anchor='mt', stroke_width=0)
+            gr = Image.new('RGBA', (W, H))
+            gd = ImageDraw.Draw(gr)
+            for yy in range(y, y + tam + 20):
+                t = (yy - y) / (tam + 20); gd.line((0, yy, W, yy), fill=tuple(int(a + (c - a) * t) for a, c in zip((236, 224, 178), (205, 230, 205))) + (255,))
+            b.alpha_composite(Image.composite(gr, Image.new('RGBA', (W, H), (0, 0, 0, 0)), m))
+        else:
+            d.text((W / 2, y), txt, font=f, fill=cor, anchor='mt')
+        y += int(tam * 1.0)
+    return y
+
+def sub(b, txt, y, tam=42, cor=BRANCO):
+    if CLARO: cor = (16, 64, 42)
+    sh = Image.new('RGBA', (W, H)); ImageDraw.Draw(sh).text((W / 2, y + 3), txt, font=fonte('Bold', tam), fill=(0, 30, 15, 120), anchor='mt')
+    b.alpha_composite(sh.filter(ImageFilter.GaussianBlur(8))); d = ImageDraw.Draw(b); d.text((W / 2, y), txt, font=fonte('Bold', tam), fill=cor, anchor='mt')
+
+def painel(b, nome, loja, lance, rotulo='Lance:', rodape=None, y0=1070):
+    cx = (50, y0, W - 50, H - 40)
+    base_crop = b.crop(cx)
+    vidro = base_crop.filter(ImageFilter.GaussianBlur(14))
+    vidro = Image.alpha_composite(vidro, Image.new('RGBA', vidro.size, (250, 252, 248, 128)))
+    m = Image.new('L', vidro.size, 0); ImageDraw.Draw(m).rounded_rectangle((0, 0, vidro.width - 1, vidro.height - 1), 36, fill=255)
+    sh = Image.new('RGBA', (W, H)); ImageDraw.Draw(sh).rounded_rectangle((cx[0], cx[1] + 12, cx[2], cx[3] + 12), 36, fill=(0, 30, 15, 70))
+    b.alpha_composite(sh.filter(ImageFilter.GaussianBlur(22))); b.paste(vidro, cx[:2], m)
+    d = ImageDraw.Draw(b); d.rounded_rectangle(cx, 36, outline=(255, 255, 255, 230), width=2)
+    from PIL import ImageStat
+    lum = sum(ImageStat.Stat(vidro.convert('L')).mean) / 1
+    if lum >= 178: ESC = (16, 64, 42); MEIO = (27, 122, 72); SUAVE = (80, 104, 90); LIN = (200, 215, 205)
+    else: ESC = (255, 255, 255); MEIO = (176, 236, 196); SUAVE = (226, 238, 230); LIN = (255, 255, 255, 90)
+    if lum < 178:   # vidro fumê: mesmo desfoque, véu escuro leve para o texto claro ler bem
+        vidro2 = Image.alpha_composite(base_crop.filter(ImageFilter.GaussianBlur(14)), Image.new('RGBA', vidro.size, (12, 36, 24, 110)))
+        b.paste(vidro2, cx[:2], m); d = ImageDraw.Draw(b); d.rounded_rectangle(cx, 36, outline=(255, 255, 255, 120), width=2)
+    d.text((92, y0 + 50), nome, font=fonte('SemiBold', 36), fill=ESC, anchor='lm')
+    d.text((92, y0 + 104), rotulo, font=fonte('Medium', 46), fill=SUAVE)
+    x = 92 + d.textlength(rotulo + ' ', font=fonte('Medium', 46))
+    d.text((x, y0 + 84), real(lance), font=fonte('Bold', 84), fill=MEIO)
+    d.line((92, y0 + 185, W - 92, y0 + 185), fill=LIN, width=2)
+    d.text((92, y0 + 198), rodape or f'na loja {real(loja)}  ·  martelo hoje às {HORA.lower()}', font=fonte('Medium', 32), fill=SUAVE)
+
+def logo_topo(b, y=36, pilula=False):
+    if pilula:
+        s_ = Image.new('RGBA', (W, H)); ImageDraw.Draw(s_).rounded_rectangle((395, y - 12, 685, y + 122), 34, fill=(6, 40, 20, 235)); b.alpha_composite(s_)
+    logo(b, y=y, largura=250)
+
+def a1():
+    b = cena('s-luxo.png'); poe_produto(b, 'c-relogio.png', 540, 1022, 540, brilho=(235, 190, 90)); logo_topo(b)
+    y = titulo(b, [('ELEGÂNCIA', BRANCO), ('NO PULSO', 'grad')], 175, 112); sub(b, 'achadinho do dia', y + 6, 40, DOURADO)
+    painel(b, 'Relógio EYT ouro rosa', 108.75, 7.97); salvar(b, f'{OUT}/4-18h-relogio.jpg')
+
+def a2():
+    global CLARO; CLARO = True
+    b = cena('s-saude.png'); poe_produto(b, 'c-pressao2.png', 540, 1048, 430); logo_topo(b, pilula=True)
+    y = titulo(b, [('CUIDE DE QUEM', BRANCO), ('VOCÊ AMA', 'grad')], 175, 104); sub(b, 'pressão medida em casa, sem fila', y + 6, 40)
+    CLARO = False
+    painel(b, 'Medidor de pressão de pulso', 56.21, 7.97); salvar(b, f'{OUT}/1-12h-medidor-pressao.jpg')
+
+def a3():
+    b = cena('s-verde3.png'); poe_produto(b, 'c-camera.png', 540, 1032, 560); logo_topo(b)
+    y = titulo(b, [('ENXERGA ONDE', BRANCO), ('A MÃO NÃO ALCANÇA', 'grad')], 175, 100); sub(b, 'motor · ralo · parede', y + 6, 40, DOURADO)
+    painel(b, 'Câmera endoscópica com LED', 96.84, 7.97); salvar(b, f'{OUT}/5-20h-camera-endoscopica.jpg')
+
+def a4():
+    global CLARO; CLARO = True
+    b = cena('s-pet.png'); poe_produto(b, 'c-tapete.png', 540, 1005, 520, brilho=(255, 255, 255)); logo_topo(b, pilula=True)
+    y = titulo(b, [('SEU PET', BRANCO), ('AGRADECE!', 'grad')], 175, 116); sub(b, '30 unidades · 60 x 60 cm', y + 6, 40)
+    CLARO = False
+    painel(b, 'Tapete higiênico pet', 68.71, 7.97); salvar(b, f'{OUT}/2-14h-tapete-pet.jpg')
+
+def a5():
+    b = cena('s-gamer.png'); poe_produto(b, 'c-headset.png', 540, 998, 560, brilho=(230, 60, 60)); logo_topo(b)
+    y = titulo(b, [('QUANTO VOCÊ', BRANCO), ('DARIA NELE?', 'grad')], 175, 112); sub(b, 'comenta seu lance aqui embaixo', y + 6, 40, DOURADO)
+    painel(b, 'Headset gamer Flakes', 99.96, 7.97); salvar(b, f'{OUT}/3-16h-headset-gamer.jpg')
+
+def a6():
+    b = cena('s-verde1.png'); poe_produto(b, 'c-iphone.png', 545, 1046, 560); logo_topo(b)
+    y = titulo(b, [('SÁBADO TEM', BRANCO), ('iPHONE!', 'grad')], 175, 112); sub(b, 'o último saiu por R$ 4.640 no leilão de 24/10', y + 6, 36, DOURADO)
+    painel(b, 'iPhone 17 Pro Max 256GB', 9464.78, 197, rotulo='Lance inicial:', rodape=f'na loja {real(9464.78)}  ·  martelo sábado às 20h')
+    salvar(b, f'{OUT}/6-sabado-20h-iphone.jpg')
+
+for f, h in ((a2, '12H'), (a4, '14H'), (a5, '16H'), (a1, '18H'), (a3, '20H'), (a6, '')):  # horários do sistema (schedule_meta)
+    HORA = h; f()
+print('ok')
