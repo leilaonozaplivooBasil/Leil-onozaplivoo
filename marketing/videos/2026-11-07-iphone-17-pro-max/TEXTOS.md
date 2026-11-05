@@ -43,3 +43,10 @@ e sábado tem outro, às 20h 👀
 comenta IPHONE que a gente te explica como dar lance 👇
 
 #leilaonozap #jaencontrouodono #iphone17promax #leilao
+
+## 05/11 — legenda do feed (chamada do leilão de sábado; NÃO é episódio da série)
+Sábado tem leilão de iPhone 17 Pro Max! 📱🔨
+O último saiu por R$ 4.640 (na loja, R$ 8.404).
+Sábado, 07/11, às 20h, o martelo bate de novo: lance inicial R$ 197.
+Comenta IPHONE que a gente te explica como dar lance 👇
+#leilaonozap #iphone17promax #leilao #sabadotemiphone

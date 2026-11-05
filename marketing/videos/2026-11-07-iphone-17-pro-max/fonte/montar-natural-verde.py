@@ -8,7 +8,7 @@ W, H = 1080, 1920; OURO = (245,196,81); VERDE = (27,122,72); NOITE = (10,20,16)
 T = 0.25
 # trecho do vídeo do Murilo (início, fim), legendas da fala [(ini, fim, texto, palavra em dourado)], textos de cima [(ini, fim, texto)]
 CENAS = [
-  (84.75, 86.75, [(84.9, 86.6, 'e foi o 17 pro max!', '17 pro max!')], [(84.75, 86.75, 'esse iphone encontrou dono')]),
+  (84.75, 86.75, [(84.9, 86.6, 'e foi o 17 pro max!', '17 pro max!')], [(84.75, 86.75, 'sábado tem leilão de iphone')]),
   (24.9, 31.8, [(25.0, 26.4, 'fiquei meio desconfiado...', None), (26.4, 28.0, 'mas quando vi todo mundo', None), (28.0, 29.2, 'dando lance, dando lance', None), (30.0, 31.7, 'falei: não, vou com tudo', 'com tudo')], [(24.9, 27.5, 'no começo ele desconfiou')]),
   (51.95, 61.1, [(52.0, 53.35, 'aí eu falei:', None), (53.35, 54.5, 'agora é meu, agora é meu', None), (54.5, 56.5, 'cruzando os dedos...', None), (56.6, 59.2, 'dou-lhe uma, duas, três...', None), (59.3, 61.0, 'arrematado!', 'arrematado!')], []),
   (79.85, 84.95, [(79.9, 81.8, 'tudo certinho, tudo lacrado', 'lacrado'), (83.1, 84.9, 'tudo certinho, tá?', None)], [(79.85, 84.95, '__preco__')]),
