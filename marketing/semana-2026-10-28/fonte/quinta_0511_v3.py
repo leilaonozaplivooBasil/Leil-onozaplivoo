@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageChops
 from kit import logo, fonte, salvar, DOURADO, VERDE_ESCURO, BRANCO
 from pecas import real
 I = '/tmp/claude-0/-home-user/0ed67ded-c847-5a23-a4f2-d97436f79693/scratchpad/artes-0511/img'
-OUT = '/home/user/Leil-onozaplivoo/marketing/semana-2026-11-05/quinta-05-11/feed-v3'
+OUT = '/home/user/Leil-onozaplivoo/marketing/semana-2026-11-05/quinta-05-11/kit-vendedores-05-11'
 W, H = 1080, 1350
 HORA = sys.argv[1] if len(sys.argv) > 1 else '8H'
 LIMA = (150, 240, 90); NEON = (60, 220, 110)
@@ -69,34 +69,34 @@ def logo_topo(b, y=36, pilula=False):
 def a1():
     b = cena('s-luxo.png'); poe_produto(b, 'c-relogio.png', 540, 1010, 540, brilho=(235, 190, 90)); logo_topo(b)
     y = titulo(b, [('ELEGÂNCIA', BRANCO), ('NO PULSO', 'grad')], 175, 112); sub(b, 'achadinho do dia', y + 6, 40, DOURADO)
-    painel(b, 'Relógio EYT ouro rosa', 108.75, 7.97); salvar(b, f'{OUT}/01-relogio.jpg')
+    painel(b, 'Relógio EYT ouro rosa', 108.75, 7.97); salvar(b, f'{OUT}/4-18h-relogio.jpg')
 
 def a2():
     b = cena('s-saude.png'); poe_produto(b, 'c-pressao2.png', 540, 1010, 430); logo_topo(b, pilula=True)
     y = titulo(b, [('CUIDE DE QUEM', BRANCO), ('VOCÊ AMA', 'grad')], 175, 104); sub(b, 'pressão medida em casa, sem fila', y + 6, 40)
-    painel(b, 'Medidor de pressão de pulso', 56.21, 7.97); salvar(b, f'{OUT}/02-medidor-pressao.jpg')
+    painel(b, 'Medidor de pressão de pulso', 56.21, 7.97); salvar(b, f'{OUT}/1-12h-medidor-pressao.jpg')
 
 def a3():
     b = cena('s-verde3.png'); poe_produto(b, 'c-camera.png', 540, 990, 560); logo_topo(b)
     y = titulo(b, [('ENXERGA ONDE', BRANCO), ('A MÃO NÃO ALCANÇA', 'grad')], 175, 100); sub(b, 'motor · ralo · parede', y + 6, 40, DOURADO)
-    painel(b, 'Câmera endoscópica com LED', 96.84, 7.97); salvar(b, f'{OUT}/03-camera-endoscopica.jpg')
+    painel(b, 'Câmera endoscópica com LED', 96.84, 7.97); salvar(b, f'{OUT}/5-20h-camera-endoscopica.jpg')
 
 def a4():
     b = cena('s-pet.png'); poe_produto(b, 'c-tapete.png', 540, 965, 520, brilho=(255, 255, 255)); logo_topo(b, pilula=True)
     y = titulo(b, [('SEU PET', BRANCO), ('AGRADECE!', 'grad')], 175, 116); sub(b, '30 unidades · 60 x 60 cm', y + 6, 40)
-    painel(b, 'Tapete higiênico pet', 68.71, 7.97); salvar(b, f'{OUT}/04-tapete-pet.jpg')
+    painel(b, 'Tapete higiênico pet', 68.71, 7.97); salvar(b, f'{OUT}/2-14h-tapete-pet.jpg')
 
 def a5():
     b = cena('s-gamer.png'); poe_produto(b, 'c-headset.png', 540, 975, 560, brilho=(230, 60, 60)); logo_topo(b)
     y = titulo(b, [('QUANTO VOCÊ', BRANCO), ('DARIA NELE?', 'grad')], 175, 112); sub(b, 'comenta seu lance aqui embaixo', y + 6, 40, DOURADO)
-    painel(b, 'Headset gamer Flakes', 99.96, 7.97); salvar(b, f'{OUT}/05-headset-gamer.jpg')
+    painel(b, 'Headset gamer Flakes', 99.96, 7.97); salvar(b, f'{OUT}/3-16h-headset-gamer.jpg')
 
 def a6():
     b = cena('s-verde1.png'); poe_produto(b, 'c-iphone.png', 560, 1010, 560); logo_topo(b)
     y = titulo(b, [('SÁBADO TEM', BRANCO), ('iPHONE!', 'grad')], 175, 112); sub(b, 'o último saiu por R$ 4.640 no leilão de 24/10', y + 6, 36, DOURADO)
     painel(b, 'iPhone 17 Pro Max 256GB', 9464.78, 197, rotulo='Lance inicial:', rodape=f'Na loja {real(9464.78)}  ·  martelo sábado às 20h')
-    salvar(b, f'{OUT}/06-sabado-iphone.jpg')
+    salvar(b, f'{OUT}/6-sabado-20h-iphone.jpg')
 
-for f, h in ((a1, '12H'), (a2, '14H'), (a3, '16H'), (a4, '18H'), (a5, '20H'), (a6, '')):
+for f, h in ((a2, '12H'), (a4, '14H'), (a5, '16H'), (a1, '18H'), (a3, '20H'), (a6, '')):  # horários do sistema (schedule_meta)
     HORA = h; f()
 print('ok')
