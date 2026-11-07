@@ -129,8 +129,8 @@ def s4():
     e = Image.new('RGBA', (430, 230)); d = ImageDraw.Draw(e); d.rounded_rectangle((0, 0, 429, 229), 30, fill=OURO); d.ellipse((30, 95, 70, 135), fill=AREIA)
     d.text((245, 80), 'R$', font=F('Black', 54), fill=FLOR, anchor='mm'); d.text((245, 160), '???', font=F('Black', 110), fill=FLOR, anchor='mm')
     e = e.rotate(-14, expand=True, resample=Image.BICUBIC); s = Image.new('RGBA', e.size); s.putalpha(e.split()[-1].point(lambda v: 90 if v else 0))
-    b.alpha_composite(s.filter(ImageFilter.GaussianBlur(14)), (600, 880)); b.alpha_composite(e, (590, 860))
-    d = ImageDraw.Draw(b); d.line((560, 760, 650, 960), fill=(120, 100, 60), width=5)
+    b.alpha_composite(s.filter(ImageFilter.GaussianBlur(14)), (530, 880)); b.alpha_composite(e, (520, 860))
+    d = ImageDraw.Draw(b); d.line((520, 760, 585, 960), fill=(120, 100, 60), width=5)
     riscar(b, (W / 2, 1600), f'na loja {LJ}', F('Black', 56), (110, 110, 100))
     T(b, (W / 2, 1690), 'aqui, o preço quem escreve é você', F('Bold', 46), FLOR, somb=0); sv(b, 'S04-14h-quanto-voce-pagaria')
 
