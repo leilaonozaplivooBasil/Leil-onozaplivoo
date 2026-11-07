@@ -195,7 +195,7 @@ def s10():
         d.line((540 + r1 * math.cos(a), 710 + r1 * math.sin(a), 540 + r2 * math.cos(a), 710 + r2 * math.sin(a)), fill=(60, 110, 80), width=3)
     luz(b, 540, 760, 240, NEON, 90); poe(b, iph(560), 540, 1020, NEON, forca=120)
     T(b, (W / 2, 1290), '10:00', F('Black', 250), BR); T(b, (W / 2, 1440), 'MINUTOS PRO MARTELO', F('Black', 60), NEON)
-    pil(b, W / 2, 1600, 'é agora ou só no próximo', F('Bold', 46), (20, 60, 40), BR); sv(b, 'S10-19h50-faltam-10-minutos')
+    lance_card(b, W / 2, 1500, w=760, rot='PRA LEVAR, SUPERE'); sv(b, 'S10-19h50-faltam-10-minutos')
 
 # 11 · contagem — espaço para a figurinha de CONTAGEM REGRESSIVA do Instagram
 def s11():
