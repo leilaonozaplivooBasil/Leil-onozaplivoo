@@ -21,11 +21,11 @@ def selo():
     f = F('Black', 34); t = 'IPHONE · MARTELO 20H'; w = d.textlength(t, font=f)
     d.rounded_rectangle((W - 60 - w - 56, 270, W - 60, 340), 35, fill=(243,91,18,240)); d.text((W - 60 - (w + 56) / 2, 305), t, font=f, fill=BR, anchor='mm'); im.save(f'{S}/selo.png')
 VIDEOS = {
- 'IMG_4931': dict(A=1.4, B=16.95, musica='03-piano-house', saida='STORY-VENDEDORES-1-voce-acredita-falta-1-hora', LEG=[
+ 'IMG_4931': dict(A=1.4, B=17.45, musica='03-piano-house', saida='STORY-VENDEDORES-1-voce-acredita-falta-1-hora', LEG=[
    (1.4, 3.2, 'Natália, você acredita', None), (3.2, 5.4, 'que falta 1 hora pro', 'leilão do iPhone?'),
    (5.4, 6.85, 'ai, meu Deus, sério?', None), (6.85, 8.9, 'menos de', '1 hora!'), (8.9, 10.55, 'como você está se sentindo?', None),
    (10.55, 12.0, 'nossa, eu estou', 'muito ansiosa'), (12.0, 12.75, 'e vocês?', None),
-   (12.75, 14.1, 'ansiosa pra saber', None), (14.1, 16.4, 'quem vai ser o arrematante', 'dessa noite'), (16.4, 16.95, None, 'muita emoção!')]),
+   (12.75, 14.1, 'ansiosa pra saber', None), (14.1, 16.4, 'quem vai ser o arrematante', 'dessa noite'), (16.4, 17.45, None, 'muita emoção!')]),
  'IMG_4932': dict(A=0.6, B=25.4, musica='04-funky-soul-house', saida='STORY-VENDEDORES-2-o-que-falta-clica-no-link', LEG=[
    (0.6, 2.6, 'Iara, você não vai', 'acreditar'), (2.6, 3.85, 'pleno sábado,', None), (3.85, 5.8, 'menos de 1 hora pra', 'acabar o leilão'),
    (5.8, 8.2, 'galera inteira', 'trabalhando'), (8.2, 9.4, 'atendendo todo mundo', None), (9.4, 10.7, 'o que que falta?', None),
@@ -36,7 +36,9 @@ VIDEOS = {
 }
 TM = "zscale=t=linear:npl=203,format=gbrpf32le,zscale=p=bt709,tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p"
 selo(); OUT = sys.argv[2]
+SO = sys.argv[3:] or list(VIDEOS)
 for v, c in VIDEOS.items():
+    if v not in SO: continue
     A, B = c['A'], c['B']; dur = round(B - A, 2)
     subprocess.run(['ffmpeg','-v','error','-y','-ss',str(A),'-to',str(B),'-i',f'{S}/in/{v}.mov','-an','-vf',f'{TM},scale=1080:1920:flags=lanczos,fps=30,eq=saturation=1.05','-c:v','libx264','-crf','16','-preset','fast','-pix_fmt','yuv420p',f'{S}/{v}-base.mp4'], check=True)
     # voz já tratada num wav separado (regra: nada de loudnorm junto com amix)
