@@ -17,3 +17,4 @@ Regra, medida com `ffmpeg -af ebur128` em cada trecho do arquivo FINAL (o mesmo 
 - Trechos só com música (sem ninguém falando): no máximo -24 LUFS, ou seja, 8 dB abaixo da fala.
 - Se não passar, não entrega e não agenda. Ajusta e mede de novo.
 - Junto com o vídeo, mandar para a Natália os números medidos e pedir que ela ouça COM FONE antes do ok.
+- (07/11) Nunca usar `loudnorm` no mesmo filtro com `amix duration=first`/sidechain: o atraso de ~3 s dele corta o fim do áudio. Tratar a voz num arquivo à parte, misturar depois, e conferir que a duração do áudio = duração do vídeo (ffprobe) antes de entregar.
