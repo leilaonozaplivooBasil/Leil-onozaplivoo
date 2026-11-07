@@ -23,15 +23,16 @@ Comenta IPHONE que a gente te manda o link no direct 👇
 #leilaonozap #iphone17promax #leilao #sabadotemiphone
 
 ## Vendedores (status e grupos do WhatsApp) — arte + copy
-| Hora | Arquivo |
-|---|---|
-| 08h00 | vendedores/VENDEDORES-08h-e-hoje.jpg |
-| 15h00 | vendedores/VENDEDORES-15h-faltam-5-horas.jpg |
-| 17h00 | vendedores/CONTAGEM-17h-faltam-3-horas.jpg |
-| 18h00 | vendedores/CONTAGEM-18h-faltam-2-horas.jpg |
-| 19h00 | vendedores/CONTAGEM-19h-falta-1-hora.jpg |
-| 19h30 | vendedores/VENDEDORES-19h30-ultima-chamada.jpg (ou CONTAGEM-19h30-faltam-30-minutos.jpg) |
-| 19h50 | vendedores/CONTAGEM-19h50-faltam-10-minutos.jpg |
+| Hora | Arquivo | Ideia da arte |
+|---|---|---|
+| 08h00 | vendedores/1-08h-e-hoje.jpg | manhã na praia, "É HOJE" |
+| 15h00 | vendedores/2-15h-faltam-5-horas.jpg | vitrine dourada, número 5 gigante |
+| 17h00 | vendedores/3-17h-faltam-3-horas.jpg | pódio neon com moedas e martelo |
+| 18h00 | vendedores/4-18h-faltam-2-horas.jpg | choque de preço: loja riscada x último arremate |
+| 19h00 | vendedores/5-19h-falta-1-hora.jpg | Leiloeiro apresentando o iPhone |
+| 19h30 | vendedores/6-19h30-ultima-chamada.jpg | noite e fogo, urgência |
+| 19h30 (opção) | vendedores/7-19h30-faltam-30-minutos.jpg | pôr do sol no Dois Irmãos |
+| 19h50 | vendedores/8-19h50-faltam-10-minutos.jpg | cronômetro 10:00 |
 
 ### 08h
 🚨 *É HOJE! O MARTELO BATE ÀS 20H!* 🚨
