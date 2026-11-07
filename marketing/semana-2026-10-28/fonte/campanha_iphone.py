@@ -170,9 +170,10 @@ def s7():
 def s8():
     b = radial(W, H, (30, 140, 80), (6, 50, 28), cy=.55); raios(b, W / 2, 1150, 18, (255, 220, 120), 45, 6); logo_(b)
     T(b, (W / 2, 330), 'FALTA', F('Black', 130), BR); T(b, (W / 2, 470), '1 HORA', F('Black', 170), OURO)
-    p = leiloeiro('a-relogio', 880); sombra(p, b, (-80, 1560 - p.height))
-    luz(b, 770, 1150, 260, OURO, 120); poe(b, iph(600, -8), 790, 1450, (255, 230, 140), forca=160)
-    pil(b, W / 2, 1640, 'o martelo bate às 20h em ponto', F('Bold', 44), FLOR, BR); sv(b, 'S08-19h-falta-1-hora')
+    lance_card(b, W / 2, 600, w=760)
+    p = leiloeiro('a-relogio', 820); sombra(p, b, (-70, 1610 - p.height))
+    luz(b, 780, 1220, 250, OURO, 120); poe(b, iph(560, -8), 800, 1510, (255, 230, 140), forca=160)
+    pil(b, W / 2, 1690, 'o martelo bate às 20h em ponto', F('Bold', 44), FLOR, BR); sv(b, 'S08-19h-falta-1-hora')
 
 # 9 · 19h30 — ÚLTIMA CHAMADA: noite, fogo, rastro de velocidade atrás do iPhone
 def s9():
