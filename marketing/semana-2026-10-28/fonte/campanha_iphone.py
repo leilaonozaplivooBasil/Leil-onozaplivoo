@@ -153,17 +153,18 @@ def s6():
 
 # 7 · 18h — O ÚLTIMO SAIU POR R$ 4.640 (a única com a foto real do arremate), em duotone verde
 def s7():
-    f = Image.open(f'{AQ}/iphone-ultimo-arremate.jpg').convert('L'); e = max(W / f.width, H / f.height); f = f.resize((round(f.width * e), round(f.height * e)), Image.LANCZOS)
-    x = (f.width - W) // 2; f = f.crop((x, 0, x + W, H))
-    cor = Image.open(f'{AQ}/iphone-ultimo-arremate.jpg').convert('RGB'); cor = cor.resize((round(cor.width * e), round(cor.height * e)), Image.LANCZOS).crop((x, 0, x + W, H))
+    f = Image.open(f'{AQ}/iphone-ultimo-arremate.jpg').convert('L'); e = max(W / f.width, H / f.height) * 1.16; f = f.resize((round(f.width * e), round(f.height * e)), Image.LANCZOS)
+    x = (f.width - W) // 2; yy = min(f.height - H, 440)   # sobe a foto: a caixa do iPhone fica acima do texto
+    cor = Image.open(f'{AQ}/iphone-ultimo-arremate.jpg').convert('RGB'); cor = cor.resize((round(cor.width * e), round(cor.height * e)), Image.LANCZOS).crop((x, yy, x + W, yy + H))
     cor = ImageEnhance.Color(cor).enhance(0.75); cor = ImageEnhance.Brightness(cor).enhance(1.08)
     b = Image.blend(cor, Image.new('RGB', (W, H), (27, 122, 72)), 0.18).convert('RGBA'); g = Image.new('RGBA', b.size); gd = ImageDraw.Draw(g)
     for y in range(H): gd.line((0, y, W, y), fill=(4, 30, 16, int(245 * max(0, (y - 820) / 1100) ** .7)))
     b.alpha_composite(g); logo_(b)
     pil(b, W / 2, 330, 'FALTAM 2 HORAS', F('Black', 44), FOGO, BR)
-    T(b, (W / 2, 1180), 'O ÚLTIMO SAIU POR', F('Black', 64), MENTA); T(b, (W / 2, 1330), 'R$ 4.640', F('Black', 210), OURO)
-    riscar(b, (W / 2, 1470), 'na loja ele custava R$ 8.404', F('Black', 46), BR)
-    T(b, (W / 2, 1600), 'hoje é a vez de quem?', F('Black', 72), LIMA); sv(b, 'S07-18h-o-ultimo-saiu-por')
+    T(b, (W / 2, 1110), 'O ÚLTIMO SAIU POR', F('Black', 60), MENTA); T(b, (W / 2, 1235), 'R$ 4.640', F('Black', 180), OURO)
+    pil(b, W / 2, 1375, 'na loja, ele custava R$ 8.404', F('Bold', 40), (8, 40, 22, 235), BR)
+    lance_card(b, W / 2, 1450, w=760, rot='HOJE ESTÁ EM')
+    T(b, (W / 2, 1735), 'é a sua vez?', F('Black', 64), LIMA); sv(b, 'S07-18h-o-ultimo-saiu-por')
 
 # 8 · 19h — FALTA 1 HORA: Leiloeiro de relógio na mão + iPhone, raios dourados
 def s8():
