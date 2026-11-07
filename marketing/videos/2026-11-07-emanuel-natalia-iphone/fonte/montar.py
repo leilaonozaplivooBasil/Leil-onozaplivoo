@@ -1,7 +1,7 @@
 # Vídeo Emanuel + Natália (IMG_7327) — feed do Insta e versão vendedores
 import subprocess, sys
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
-S = sys.argv[1]; MK = '/home/user/Leil-onozaplivoo/marketing'; A, B = 4.5, 40.2; dur = round(B - A, 2)
+S = sys.argv[1]; MK = '/home/user/Leil-onozaplivoo/marketing'; A, B = 6.02, 40.2; dur = round(B - A, 2)
 F = lambda p, t: ImageFont.truetype('/usr/share/fonts/opentype/inter/InterDisplay-%s.otf' % p, t)
 W, H = 1080, 1920; VERDE, OURO, NOITE, BR = (27,122,72), (245,196,81), (10,20,16), (255,255,255)
 PROB = []
