@@ -1,0 +1,107 @@
+item	custo_lista_hoje	mercado_ml_ref_04-11	preco_site_-10%	lucro_por_unidade	margem_sobre_custo_%	mercado_minimo_para_nao_ter_prejuizo	status
+iPhone 13  512GB (CPO) preto	3100					3445	Fora do site, sem referência de mercado
+iPhone 13 Pro  128GB (CPO) branco	3100					3445	Fora do site, sem referência de mercado
+iPhone 13 Pro  128GB (CPO) gold	3100					3445	Fora do site, sem referência de mercado
+iPhone 13 Pro  128GB (CPO) preto	3100					3445	Fora do site, sem referência de mercado
+iPhone 13 Pro  256GB (CPO) preto	3300					3667	Fora do site, sem referência de mercado
+iPhone 14 Pro  128GB (CPO) roxo	3700					4112	Fora do site, sem referência de mercado
+iPhone 14 Pro  128GB (CPO) preto	3700					4112	Fora do site, sem referência de mercado
+iPhone 14 Pro  256GB (CPO) preto	3900					4334	Fora do site, sem referência de mercado
+iPhone 14 Pro Max  128GB (CPO) preto	4150					4612	Fora do site, sem referência de mercado
+iPhone 14 Pro Max  128GB (CPO) roxo	4150					4612	Fora do site, sem referência de mercado
+iPhone 14 Pro Max  128GB (CPO) gold	4150					4612	Fora do site, sem referência de mercado
+iPhone 14 Pro Max  128GB (CPO) branco	4150					4612	Fora do site, sem referência de mercado
+iPhone 14 Pro Max  256GB (CPO) preto	4300					4778	Fora do site, sem referência de mercado
+iPhone 15  128GB azul	3800	3800	3420	-380	-10.0	4223	Fora do site: PREJUÍZO a -10%
+iPhone 15  128GB preto	3800	3800	3420	-380	-10.0	4223	Fora do site: PREJUÍZO a -10%
+iPhone 15  128GB rosa	3900	3800	3420	-480	-12.3	4334	Fora do site: PREJUÍZO a -10%
+iPhone 15 Plus   256GB rosa	4300	6350	5715	1415	32.9	4778	No site, dando lucro
+iPhone 16E  128GB (CPO) preto	3050	3700	3330	280	9.2	3389	No site, dando lucro
+iPhone 16E  128GB (CPO) branco	3050	3700	3330	280	9.2	3389	No site, dando lucro
+iPhone 16 128GB (CPO) verde	4050	4700	4230	180	4.4	4500	Fora do site: DÁ LUCRO, pode subir
+iPhone 16 128GB (CPO) rosa	4100	4700	4230	130	3.2	4556	No site, dando lucro
+iPhone 16 128GB (CPO) preto	4100	4700	4230	130	3.2	4556	Fora do site: DÁ LUCRO, pode subir
+iPhone 16  128GB verde	4300	4700	4230	-70	-1.6	4778	Fora do site: PREJUÍZO a -10%
+iPhone 16  128GB azul	4300	4700	4230	-70	-1.6	4778	Fora do site: PREJUÍZO a -10%
+iPhone 16  128GB preto	4350	4700	4230	-120	-2.8	4834	Fora do site: PREJUÍZO a -10%
+iPhone 16  128GB branco	4350	4700	4230	-120	-2.8	4834	Fora do site: PREJUÍZO a -10%
+iPhone 16  Plus  128GB azul	4900	6200	5580	680	13.9	5445	No site, dando lucro
+iPhone 16  Plus  128GB verde	4900	6200	5580	680	13.9	5445	No site, dando lucro
+iPhone 16  Plus  128GB preto	4900	6200	5580	680	13.9	5445	No site, dando lucro
+iPhone 16 Pro Max  256GB desert	6450					7167	Fora do site, sem referência de mercado
+iPhone 17e  256GB branco	3800	4499	4049	249	6.6	4223	No site, dando lucro
+iPhone 17e  256GB preto	3850	4499	4049	199	5.2	4278	No site, dando lucro
+iPhone 17  256GB verde	5300	5273	4745	-555	-10.5	5889	Fora do site: PREJUÍZO a -10%
+iPhone 17  256GB azul	5300	5273	4745	-555	-10.5	5889	Fora do site: PREJUÍZO a -10%
+iPhone 17  256GB lavanda	5350	5273	4745	-605	-11.3	5945	Fora do site: PREJUÍZO a -10%
+iPhone 17  256GB preto	5350	5273	4745	-605	-11.3	5945	Fora do site: PREJUÍZO a -10%
+iPhone 17  256GB branco	5350	5273	4745	-605	-11.3	5945	Fora do site: PREJUÍZO a -10%
+iPhone Air   256GB azul	5300	6590	5931	631	11.9	5889	No site, dando lucro
+iPhone Air   256GB gold	5300	6590	5931	631	11.9	5889	No site, dando lucro
+iPhone Air   256GB preto	5300	6590	5931	631	11.9	5889	No site, dando lucro
+iPhone 17 Pro  256GB laranja	6900	8078	7270	370	5.4	7667	No site, dando lucro
+iPhone 17 Pro  256GB azul	7100	8078	7270	170	2.4	7889	No site, lucro apertado (<3%)
+iPhone 17 Pro  256GB silver	7150	8078	7270	120	1.7	7945	Fora do site: lucro apertado (<3%)
+iPhone 17 Pro  512GB laranja	8300	9850	8865	565	6.8	9223	No site, dando lucro
+iPhone 17 Pro  512GB azul	8500	9850	8865	365	4.3	9445	Fora do site: DÁ LUCRO, pode subir
+iPhone 17 Pro  512GB silver	8500	9850	8865	365	4.3	9445	Fora do site: DÁ LUCRO, pode subir
+iPhone 17 Pro Max  256GB laranja	7200	8781	7902	702	9.8	8000	Fora do site: DÁ LUCRO, pode subir
+iPhone 17 Pro Max  256GB azul	7200	8781	7902	702	9.8	8000	No site, dando lucro
+iPhone 17 Pro Max  256GB silver	7500	8781	7902	402	5.4	8334	No site, dando lucro
+iPhone 17 Pro Max  512GB laranja	8700					9667	Fora do site, sem referência de mercado
+iPhone 17 Pro Max  512GB silver	9000					10000	Fora do site, sem referência de mercado
+iPhone 18 Pro  256GB azul	7700	10799	9719	2019	26.2	8556	No site, dando lucro
+iPhone 18 Pro  256GB bordo	7700	10799	9719	2019	26.2	8556	No site, dando lucro
+iPhone 18 Pro  256GB silver	7850	10799	9719	1869	23.8	8723	No site, dando lucro
+iPhone 18 Pro  256GB preto	7850	10799	9719	1869	23.8	8723	No site, dando lucro
+iPhone 18 Pro  512GB bordo	8800	12149	10934	2134	24.2	9778	No site, dando lucro
+iPhone 18 Pro  512GB glacial	8900	12149	10934	2034	22.9	9889	No site, dando lucro
+iPhone 18 Pro  512GB preto	8900	12149	10934	2034	22.9	9889	No site, dando lucro
+iPhone 18 Pro Max  256GB silver	8700	11654	10488	1788	20.6	9667	No site, dando lucro
+iPhone 18 Pro Max  256GB preto	8800	11654	10488	1688	19.2	9778	Fora do site: DÁ LUCRO, pode subir
+iPhone 18 Pro Max  256GB azul	8850	11654	10488	1638	18.5	9834	Fora do site: DÁ LUCRO, pode subir
+iPhone 18 Pro Max  256GB bordo	8900	11654	10488	1588	17.8	9889	No site, dando lucro
+iPhone 18 Pro Max  512GB preto	10600	13049	11744	1144	10.8	11778	No site, dando lucro
+iPhone 18 Pro Max  512GB glacial	10700	13049	11744	1044	9.8	11889	No site, dando lucro
+iPhone 18 Pro Max  512GB silver	10800	13049	11744	944	8.7	12000	Fora do site: DÁ LUCRO, pode subir
+iPhone 18 Pro Max  512GB bordo	10800	13049	11744	944	8.7	12000	No site, dando lucro
+iPhone 18 Pro Max  1TB glacial	13000	15749	14174	1174	9.0	14445	No site, dando lucro
+iPhone 18 Pro Max  1TB silver	13100	15749	14174	1074	8.2	14556	No site, dando lucro
+iPhone 18 Pro Max  1TB preto	13100	15749	14174	1074	8.2	14556	Fora do site: DÁ LUCRO, pode subir
+iPhone 18 Pro Max  1TB bordo	13400	15749	14174	774	5.8	14889	Fora do site: DÁ LUCRO, pode subir
+iPhone 18 Pro Max  2TB glacial	18500					20556	Fora do site, sem referência de mercado
+iPhone 18 Pro Max  2TB silver	18500					20556	Fora do site, sem referência de mercado
+iPhone DUO  256GB night sky	14900					16556	Fora do site, sem referência de mercado
+iPhone DUO  256GB star white	14900					16556	Fora do site, sem referência de mercado
+iPhone DUO  512GB night sky	16000					17778	Fora do site, sem referência de mercado
+iPhone DUO  512GB star white	16000					17778	Fora do site, sem referência de mercado
+iPhone DUO  1TB star white	22000					24445	Fora do site, sem referência de mercado
+iPad 11  128GB azul	2900	3329	2996	96	3.3	3223	Fora do site: DÁ LUCRO, pode subir
+iPad 11  128GB silver	2950	3329	2996	46	1.6	3278	Fora do site: lucro apertado (<3%)
+iPad Air m4 11  128GB azul	4500	5500	4950	450	10.0	5000	No site, dando lucro
+iPad Air m4 11  128GB space gray	4500	5500	4950	450	10.0	5000	No site, dando lucro
+AirTag (Pack 4 unid.)	580	719	647	67	11.6	645	Fora do site: DÁ LUCRO, pode subir
+AirPods 4 - Sem cancelamento de ruído	800	1199	1079	279	34.9	889	No site, dando lucro
+AirPods 4 - COM cancelamento de ruído	1200	1574	1416	216	18.0	1334	No site, dando lucro
+AirPods Pro 3ª geração - Tradutor	1500	1799	1619	119	7.9	1667	No site, dando lucro
+AirPods Max USB-C preto	3000	4199	3779	779	26.0	3334	No site, dando lucro
+AirPods Max 2 preto	3100	4199	3779	679	21.9	3445	No site, dando lucro
+Playstation 5 slim 825GB Digital branco	3700					4112	Fora do site, sem referência de mercado
+Series 2  44mm preto	1400	1698	1528	128	9.1	1556	No site, dando lucro
+Series 3  40mm preto	1600	2228	2005	405	25.3	1778	No site, dando lucro
+Series 3  40mm starlight	1650	2228	2005	355	21.5	1834	No site, dando lucro
+Series 3  44mm preto	1800	2606	2345	545	30.3	2000	No site, dando lucro
+Series 11  42mm preto	2250	3560	3204	954	42.4	2500	No site, dando lucro
+Series 11  42mm rosa	2200	3560	3204	1004	45.6	2445	No site, dando lucro
+Series 11  46mm space gray	2350	3039	2735	385	16.4	2612	No site, dando lucro
+Series 11  46mm rosa	2350	3039	2735	385	16.4	2612	No site, dando lucro
+Series 11  46mm preto	2350	3039	2735	385	16.4	2612	No site, dando lucro
+Series 12  46mm preto	2950	4200	3780	830	28.1	3278	No site, dando lucro
+Ultra 4  49mm preto	5200					5778	Fora do site, sem referência de mercado
+Ultra 4  49mm natural	5350					5945	Fora do site, sem referência de mercado
+MacBook NEO 8/512GB (13) citrus	5400	7500	6750	1350	25.0	6000	No site, dando lucro
+MacBook NEO 8/512GB (13) blush	5500	7500	6750	1250	22.7	6112	Fora do site: DÁ LUCRO, pode subir
+MacBook Air M5 16/512GB (13) preto	8000	9999	8999	999	12.5	8889	No site, dando lucro
+MacBook Air M5 16/512GB (13) sky blue	8000	9999	8999	999	12.5	8889	No site, dando lucro
+MacBook Air M5 16/512GB (13) starlight	8000	9999	8999	999	12.5	8889	No site, dando lucro
+MacBook Air M5 16/512GB (13) silver	8000	9999	8999	999	12.5	8889	No site, dando lucro
