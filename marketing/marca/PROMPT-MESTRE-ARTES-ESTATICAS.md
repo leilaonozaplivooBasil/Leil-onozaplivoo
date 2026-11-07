@@ -33,3 +33,8 @@ Depois da IA: o texto, o preço e o logo são colocados por cima com o molde (`f
 ## Checklist antes de entregar
 - [ ] Fundo de uma cor? [ ] Produto é a foto original? [ ] Até 2 frases? [ ] Preço é o maior texto?
 - [ ] Preço e horário batem com o sistema? [ ] Sem %, sem link, sem nome de cliente? [ ] 1/3 vazio?
+
+## Conferência OBRIGATÓRIA antes de publicar ou entregar (lição de 07/11, card "Comenta IPHONE" vazando da caixa)
+- Todo texto dentro de caixa/cartão/pílula é medido pelo molde (`cabe()` em `fonte/campanha_iphone.py`): se não couber, a letra diminui; se nem assim couber, a arte NÃO é salva e o molde para com erro.
+- Antes de subir qualquer arte no Instagram: abrir CADA arte em tamanho cheio (não só a prévia em miniatura) e conferir: texto saindo da caixa, texto encostando na borda, texto em cima do produto, letra cortada, número errado.
+- Se a prévia mostrar QUALQUER encostado, corrige antes. "Quase cabe" = não cabe.

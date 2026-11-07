@@ -75,6 +75,13 @@ def logo_(b, y=110, larg=220, placa=False):
     if placa:
         s = Image.new('RGBA', b.size); ImageDraw.Draw(s).rounded_rectangle((b.width / 2 - 145, y - 14, b.width / 2 + 145, y + 100), 34, fill=(10, 44, 26, 230)); b.alpha_composite(s)
     logo(b, y=y, largura=larg)
+PROBLEMAS = []
+def cabe(d, xy, t, fonte_nome, tam, limite_x, cor, anchor='lm', minimo=24):
+    f = F(fonte_nome, tam)
+    while d.textbbox(xy, t, font=f, anchor=anchor)[2] > limite_x - 4 and tam > minimo:
+        tam -= 2; f = F(fonte_nome, tam)
+    if d.textbbox(xy, t, font=f, anchor=anchor)[2] > limite_x - 4: PROBLEMAS.append(f'texto "{t}" não cabe na caixa')
+    d.text(xy, t, font=f, fill=cor, anchor=anchor)
 def sv(b, nome):
     os.makedirs(OUT, exist_ok=True); b.convert('RGB').save(f'{OUT}/{nome}.jpg', quality=94); print(nome)
 W, H = 1080, 1920
@@ -214,7 +221,7 @@ def f2():
     for k, (a, c) in enumerate([('Comenta IPHONE', 'aqui embaixo'), ('Recebe o link', 'no seu direct'), ('Dá o seu lance', 'até as 20h')]):
         y = 500 + k * 230; vidro(b, (70, y, 600, y + 190)); d = ImageDraw.Draw(b)
         d.ellipse((110, y + 45, 210, y + 145), fill=LIMA); d.text((160, y + 95), str(k + 1), font=F('Black', 60), fill=FLOR, anchor='mm')
-        d.text((240, y + 70), a, font=F('Black', 46), fill=BR, anchor='lm'); d.text((240, y + 128), c, font=F('Medium', 38), fill=MENTA, anchor='lm')
+        cabe(d, (240, y + 70), a, 'Black', 46, 600 - 24, BR); cabe(d, (240, y + 128), c, 'Medium', 38, 600 - 24, MENTA)
     luz(b, 870, 900, 220, (120, 255, 150), 110); poe(b, iph(560, 8), 870, 1250, (120, 255, 150)); sv(b, 'F02-12h-card2-como-levar')
 def f3():
     b = tela(1080, 1350, AREIA); logo_(b, y=50, larg=190, placa=True)
@@ -223,3 +230,4 @@ def f3():
     poe(b, iph(560, -6), 540, 1270, forca=100); pil(b, 540, 1290, 'martelo hoje às 20h', F('Black', 40), FLOR, BR, h=86); sv(b, 'F03-loja-x-lance')
 
 for fn in (s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, f1, f2, f3): fn()
+if PROBLEMAS: print('PROBLEMAS:', PROBLEMAS); sys.exit(1)
