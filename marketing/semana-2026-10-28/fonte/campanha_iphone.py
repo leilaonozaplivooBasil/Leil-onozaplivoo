@@ -137,7 +137,7 @@ def s4():
 # 5 · 15h — FALTAM 5 HORAS: diagonal verde/floresta, "5" vazado gigante, iPhone rompendo a moldura
 def s5():
     b = tela(W, H, FLOR); d = ImageDraw.Draw(b); d.polygon([(0, 0), (W, 0), (W, 760), (0, 1260)], fill=VERDE)
-    vazado(b, (760, 1050), '5', F('Black', 1200), LIMA, 7, alfa=120); logo_(b)
+    luz(b, 700, 1000, 380, (120, 255, 150), 70); brilhos(b, 45, (220, 255, 200), (80, 650, 1000, 1500)); logo_(b)
     T(b, (90, 330), 'FALTAM', F('Black', 120), BR, 'lm'); T(b, (90, 460), '5 HORAS', F('Black', 120), LIMA, 'lm')
     T(b, (90, 570), 'pro martelo bater', F('Medium', 48), MENTA, 'lm', somb=0)
     poe(b, iph(860, 14), 620, 1560, (150, 255, 140), forca=170)
