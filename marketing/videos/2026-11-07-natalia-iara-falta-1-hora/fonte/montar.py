@@ -34,13 +34,14 @@ VIDEOS = {
    (18.95, 21.8, 'se tiver dúvida,', 'chama no direct'), (21.8, 23.2, 'entendeu, Iara?', None), (23.2, 23.7, 'entendi!', None),
    (23.7, 25.4, 'então tá bom,', 'vamos lá, pessoal!')]),
 }
+# zoom de 18% preso no topo: o bolo de fio preto do chão (sempre abaixo da linha 1700) sai do quadro (pedido da Natália)
 TM = "zscale=t=linear:npl=203,format=gbrpf32le,zscale=p=bt709,tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p"
 selo(); OUT = sys.argv[2]
 SO = sys.argv[3:] or list(VIDEOS)
 for v, c in VIDEOS.items():
     if v not in SO: continue
     A, B = c['A'], c['B']; dur = round(B - A, 2)
-    subprocess.run(['ffmpeg','-v','error','-y','-ss',str(A),'-to',str(B),'-i',f'{S}/in/{v}.mov','-an','-vf',f'{TM},scale=1080:1920:flags=lanczos,fps=30,eq=saturation=1.05','-c:v','libx264','-crf','16','-preset','fast','-pix_fmt','yuv420p',f'{S}/{v}-base.mp4'], check=True)
+    subprocess.run(['ffmpeg','-v','error','-y','-ss',str(A),'-to',str(B),'-i',f'{S}/in/{v}.mov','-an','-vf',f'{TM},scale=1276:2266:flags=lanczos,crop=1080:1920:98:0,fps=30,eq=saturation=1.05','-c:v','libx264','-crf','16','-preset','fast','-pix_fmt','yuv420p',f'{S}/{v}-base.mp4'], check=True)
     # voz já tratada num wav separado (regra: nada de loudnorm junto com amix)
     subprocess.run(['ffmpeg','-v','error','-y','-ss',str(A),'-to',str(B),'-i',f'{S}/{v}-voz_ok.wav','-af','afade=t=in:d=0.04',f'{S}/{v}-voz_c.wav'], check=True)
     m = f'{MK}/marca/trilhas-base/pegada-orla/{c["musica"]}.mp3'
@@ -51,7 +52,7 @@ for v, c in VIDEOS.items():
     ent = ['-i', f'{S}/{v}-base.mp4', '-loop', '1', '-t', f'{dur}', '-i', f'{S}/selo.png']; vf = "[0:v][1:v]overlay=0:0[b0]"
     for j, (a, b, t, dd) in enumerate(c['LEG']):
         legenda(t, dd, f'{v}-l{j}'); ent += ['-loop', '1', '-t', f'{dur}', '-i', f'{S}/{v}-l{j}.png']
-        vf += f";[b{j}][{2+j}:v]overlay=0:0:enable='between(t,{round(a-A,2)},{round(b-A,2)})'[b{j+1}]"
+        vf += f";[b{j}][{2+j}:v]overlay=0:0:enable='between(t,{round(a-A,2)},{round(b-A-0.04,2)})'[b{j+1}]"
     n = len(c['LEG'])
     subprocess.run(['ffmpeg','-v','error','-y'] + ent + ['-i', f'{S}/{v}-audio.wav', '-filter_complex', vf, '-map', f'[b{n}]', '-map', f'{n+2}:a', '-t', f'{dur}',
         '-c:v','libx264','-crf','18','-preset','medium','-profile:v','high','-pix_fmt','yuv420p','-r','30','-c:a','aac','-b:a','192k','-movflags','+faststart', f'{OUT}/{c["saida"]}.mp4'], check=True)
