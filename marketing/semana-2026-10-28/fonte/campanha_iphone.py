@@ -6,6 +6,7 @@ from kit import logo, leiloeiro, sombra
 AQ = os.path.dirname(os.path.abspath(__file__)); IMG = '/tmp/claude-0/-home-user/0ed67ded-c847-5a23-a4f2-d97436f79693/scratchpad/artes-0511/img'
 OUT = os.path.join(AQ, '..', '..', 'semana-2026-11-05', 'sabado-07-11', 'campanha')
 LANCE = float(sys.argv[1]) if len(sys.argv) > 1 else 463.80
+LANCES = [float(v) for v in sys.argv[2].split(',')] if len(sys.argv) > 2 else [197, 253.80, 353.80, 363.80, LANCE]
 F = lambda p, t: ImageFont.truetype(f'/usr/share/fonts/opentype/inter/InterDisplay-{p}.otf', t)
 VERDE = (27, 122, 72); NEON = (63, 208, 126); FOGO = (243, 91, 18); OURO = (245, 196, 81); NOITE = (10, 20, 16)
 FLOR = (12, 66, 40); MENTA = (226, 242, 232); AREIA = (246, 239, 226); BR = (255, 255, 255); LIMA = (190, 245, 90)
@@ -101,15 +102,16 @@ def s3():
     b = radial(W, H, (16, 40, 30), NOITE, cy=.6); logo_(b)
     T(b, (W / 2, 320), 'A ESCADA', F('Black', 120), BR); T(b, (W / 2, 445), 'DOS LANCES', F('Black', 120), NEON)
     T(b, (W / 2, 545), 'cada degrau é um lance de verdade', F('Medium', 44), MENTA, somb=0)
-    vals = [197, 253.80, 353.80, 363.80, LANCE]; base = 1640; x0 = 110; lw = 150; gap = 22
+    vals = LANCES; n = len(vals); base = 1640; x0 = 90; gap = 14; lw = (W - 2 * x0 - gap * (n - 1)) / n
     d = ImageDraw.Draw(b)
     for k, v in enumerate(vals):
-        h = 140 + (v - 197) / (max(vals) - 197) * 520; x = x0 + k * (lw + gap)
-        cor = NEON if k == len(vals) - 1 else (36, 110, 74)
-        d.rounded_rectangle((x, base - h, x + lw, base), 18, fill=cor)
-        d.text((x + lw / 2, base - h - 34), real(v).replace('R$ ', ''), font=F('Black', 34), fill=BR if k < 4 else LIMA, anchor='mm')
-    xt = x0 + 4 * (lw + gap) + lw / 2; luz(b, xt, base - 700, 200, NEON, 110); poe(b, iph(360, 8), xt - 40, base - 690, NEON, forca=0)
-    d = ImageDraw.Draw(b); d.text((x0, base + 40), 'R$ 197 → ' + real(LANCE) + ' em 5 lances', font=F('Bold', 40), fill=MENTA)
+        h = 120 + (v - vals[0]) / (max(vals) - vals[0]) * 560; x = x0 + k * (lw + gap)
+        cor = NEON if k == n - 1 else (36, 110, 74)
+        d.rounded_rectangle((x, base - h, x + lw, base), 14, fill=cor)
+        rot = f'{v:,.0f}'.replace(',', '.') if v != int(v) or True else str(int(v))
+        d.text((x + lw / 2, base - h - 30), rot, font=F('Black', 30 if n > 6 else 34), fill=BR if k < n - 1 else LIMA, anchor='mm')
+    xt = x0 + (n - 1) * (lw + gap) + lw / 2; luz(b, xt - 60, base - 760, 200, NEON, 110); poe(b, iph(330, 8), xt - 70, base - 740, NEON, forca=0)
+    d = ImageDraw.Draw(b); d.text((x0, base + 40), f'R$ 197 → {real(LANCE)} em {len(LANCES)} lances', font=F('Bold', 40), fill=MENTA)
     pil(b, W / 2, 1790, 'E O MARTELO SÓ BATE ÀS 20H', F('Black', 40), NEON, NOITE, h=96); sv(b, 'S03-12h-escada-dos-lances')
 
 # 4 · 14h — QUANTO VOCÊ PAGARIA?: areia, etiqueta de preço pendurada no iPhone
