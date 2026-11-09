@@ -36,7 +36,7 @@ open(f'{S}/lista.txt','w').write(''.join(f"file '{p}'\n" for p in partes))
 run(['-f','concat','-safe','0','-i',f'{S}/lista.txt','-c','copy',f'{S}/base.mp4'])
 # --- vozes: só trechos SEM nome de cliente (nomes falados ficam de fora) ---
 VOZES = [(f'{S}/in/vEFB9.mp4', 1.4, 3.05, inicio[1]+0.1), (f'{S}/in/vEFB9.mp4', 10.15, 12.72, inicio[2]+0.05),
-         (f'{S}/in/vEFB9.mp4', 17.1, 18.4, inicio[3]+0.1), (f'{S}/in/v7CE9.mp4', 7.0, 10.95, inicio[4]),
+         (f'{S}/in/vEFB9.mp4', 17.1, 18.4, inicio[3]+0.1),
          (f'{S}/in/v4947.mov', 0.0, 3.46, inicio[5]), (f'{S}/in/v4951.mov', 1.75, 8.4, inicio[6]+1.75)]   # sem o "tem gente com dinheiro, não vai não" (pedido 09/11)
 ent, fc, lbl = [], '', []
 for j, (src, a, b, at) in enumerate(VOZES):
@@ -85,7 +85,7 @@ CAM = [  # (início, fim, nome, linhas)
  (I[1], I[2], 'c2', [('v', 1500, 'tudo ao vivo, sem corte'), ('o', 1606, 'o lance subindo…')]),
  (I[2], I[3], 'c3', [('v', 1500, 'pegando'), ('o', 1606, 'fogo!')]),
  (I[3], I[4], 'c4', [('o', 1606, 'guerra de lances!')]),
- (I[4], I[5], 'c5', [('v', 1500, 'será que'), ('o', 1606, 'ninguém mais quer?')]),
+ (I[4], I[5], 'c5', [('v', 1500, 'e aí,'), ('o', 1606, 'quem dá mais?')]),
  (I[5], I[6], 'c6', [('v', 1500, 'chegou em'), ('o', 1606, 'R$ 4.720!')]),
  (I[6], I[6]+3.0, 'c7', [('f', 1500, 'contagem ao vivo, na tela da TV')]),   # o 3-2-1 é o do próprio site, sem número por cima
  (I[6]+3.0, I[8], 'c8', [('o', 1606, 'fechou!')]),
