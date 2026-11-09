@@ -1,4 +1,4 @@
-# "Como foi sábado" — leilão do iPhone 17 Pro Max (07/11) até o martelo. Nomes de clientes: borrados na tela e cortados do áudio.
+# "Como foi sábado" — leilão do iPhone 17 Pro Max (07/11) até o martelo. Imagens da TV sem borrar (pedido da Natália, 09/11); áudio só com trechos sem nome.
 import subprocess, sys, pillow_heif
 from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageOps
 pillow_heif.register_heif_opener()
@@ -20,11 +20,11 @@ def corte(src, a, b, dst, crop=None, extra=None):
     run(['-ss',str(a),'-to',str(b),'-i',src,'-an','-vf',f'{c}scale={W}:{H}:flags=lanczos{x},fps=30,format=yuv420p','-c:v','libx264','-crf','16','-preset','fast',dst])
 # --- vídeo (sem áudio) ---
 V = [('foto', f'{S}/in/f4913.jpg', 1.8),
-     ('clip', f'{S}/efb_b.mp4', 1.3, 3.1, '956:1700:0:0'), ('clip', f'{S}/efb_b.mp4', 10.1, 12.7, '788:1400:50:0'),
-     ('clip', f'{S}/efb_b.mp4', 17.0, 18.5, '788:1400:150:0'), ('clip', f'{S}/efb_b.mp4', 20.9, 24.6, '788:1400:250:0'),
-     ('clip', f'{S}/c47_b.mp4', 0.0, 3.5, '900:1600:100:0'),
-     ('clip', f'{S}/arr_b.mp4', 0.0, 3.2, '500:889:170:400', 'gblur=sigma=9'), ('clip', f'{S}/arr_b.mp4', 3.2, 8.4, '480:853:80:560', 'gblur=sigma=9'),
-     ('clip', f'{S}/arr_b.mp4', 8.4, 12.4, '900:1600:0:100'), ('foto', f'{S}/in/f4916.jpg', 3.2)]
+     ('clip', f'{S}/efb_n.mp4', 1.3, 3.1, '956:1700:0:0'), ('clip', f'{S}/efb_n.mp4', 10.1, 12.7, '788:1400:50:0'),
+     ('clip', f'{S}/efb_n.mp4', 17.0, 18.5, '788:1400:150:0'), ('clip', f'{S}/efb_n.mp4', 20.9, 24.6, '788:1400:250:0'),
+     ('clip', f'{S}/v4947_sdr.mp4', 0.0, 3.5, '900:1600:100:0'),
+     ('clip', f'{S}/v4951_sdr.mp4', 0.0, 3.2, '500:889:170:400'), ('clip', f'{S}/v4951_sdr.mp4', 3.2, 8.4, '480:853:80:560'),
+     ('clip', f'{S}/v4951_sdr.mp4', 8.4, 12.4, '900:1600:0:100'), ('foto', f'{S}/in/f4916.jpg', 3.2)]
 partes, t, inicio = [], 0.0, []
 for i, v in enumerate(V):
     dst = f'{S}/p{i}.mp4'
