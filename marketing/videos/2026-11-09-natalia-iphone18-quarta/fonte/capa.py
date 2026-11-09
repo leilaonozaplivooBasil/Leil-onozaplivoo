@@ -8,7 +8,7 @@ IPH = '/home/user/Leil-onozaplivoo/marketing/semana-2026-11-09/quarta-11-11-ipho
 F = lambda p, t: ImageFont.truetype(f'/usr/share/fonts/opentype/inter/InterDisplay-{p}.otf', t)
 W, H = 1080, 1920; OURO=(245,196,81); FOGO=(243,91,18); BR=(255,255,255); PROB = []
 fr = Image.open(QUADRO).convert('RGB').resize((W, H))
-DESCE = 300                                                  # abaixa a Natália para o texto caber sem cobrir o rosto
+DESCE = int(sys.argv[3]) if len(sys.argv) > 3 else 300   # abaixa a pessoa para o texto caber sem cobrir o rosto
 im = Image.new('RGB', (W, H)); im.paste(fr, (0, DESCE))
 topo = fr.crop((0, 0, W, DESCE)).transpose(Image.FLIP_TOP_BOTTOM).filter(ImageFilter.GaussianBlur(18)); im.paste(topo, (0, 0))
 im = im.convert('RGBA'); g = Image.new('RGBA', (W, H)); gd = ImageDraw.Draw(g)
@@ -33,4 +33,4 @@ b2 = txt((60, 748), 'iPhone 18 Pro Max · lacrado', F('Bold', 40), BR)
 im.convert('RGB').save(f'{OUT}/CAPA-reel-iphone18-quarta.jpg', quality=93)
 im.convert('RGB').crop((0, 240, 1080, 1680)).resize((540, 720)).save(f'{OUT}/fonte/previa-capa-grid.jpg')
 if PROB: print('PROBLEMAS', PROB); sys.exit(1)
-print('ok; texto até', b2[3], '; rosto começa ~', 480+30+DESCE)
+print('ok; texto até', b2[3])
