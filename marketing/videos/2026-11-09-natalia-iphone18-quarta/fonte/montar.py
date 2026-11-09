@@ -7,7 +7,7 @@ BANNER = sys.argv[3]
 F = lambda p, t: ImageFont.truetype('/usr/share/fonts/opentype/inter/InterDisplay-%s.otf' % p, t)
 W, H = 1080, 1920; VERDE, OURO, NOITE, BR = (27,122,72), (245,196,81), (10,20,16), (255,255,255)
 PROB = []
-SEGS = [(0.0, 19.4), (24.2, 33.95), (36.3, 54.1)]              # pausas longas cortadas (19,4→24,2 e 33,95→36,3)
+SEGS = [(0.0, 12.94), (13.42, 19.4), (24.2, 33.95), (36.3, 54.1)]  # pausas cortadas (19,4→24,2 e 33,95→36,3) + o "hoje" (12,94→13,42): o leilão é quarta
 def saida(t):                                                  # tempo do copy_50722 → tempo do vídeo final
     acc = 0.0
     for a, b in SEGS:
@@ -49,7 +49,7 @@ LEG = [(saida(a), saida(b), t, d) for a, b, t, d in LA] + [(DA + a, DA + b, t, d
 dur = round(DA + DB, 3)
 # 1) base: os 3 pedaços da fala + o final, mesma voz tratada (wav separado, sem loudnorm junto com mix)
 partes = ''.join(f"[0:v]trim={a}:{b},setpts=PTS-STARTPTS[v{i}];[2:a]atrim={a}:{b},asetpts=PTS-STARTPTS,afade=t=in:d=0.03,afade=t=out:st={round(b-a-0.04,3)}:d=0.04[a{i}];" for i, (a, b) in enumerate(SEGS))
-fc = partes + f"[1:v]trim=0:{DB},setpts=PTS-STARTPTS[v3];[3:a]atrim=0:{DB},asetpts=PTS-STARTPTS[a3];" + "[v0][a0][v1][a1][v2][a2][v3][a3]concat=n=4:v=1:a=1[v][a]"
+fc = partes + f"[1:v]trim=0:{DB},setpts=PTS-STARTPTS[v4];[3:a]atrim=0:{DB},asetpts=PTS-STARTPTS[a4];" + "[v0][a0][v1][a1][v2][a2][v3][a3][v4][a4]concat=n=5:v=1:a=1[v][a]"
 subprocess.run(['ffmpeg','-v','error','-y','-i',f'{S}/in/A.mov','-i',f'{S}/in/B.mov','-i',f'{S}/A-voz_ok.wav','-i',f'{S}/B-voz_ok.wav','-filter_complex',fc,'-map','[v]','-map','[a]','-r','30','-c:v','libx264','-crf','16','-preset','fast','-pix_fmt','yuv420p','-c:a','pcm_s16le',f'{S}/base.mov'], check=True)
 subprocess.run(['ffmpeg','-v','error','-y','-i',f'{S}/base.mov','-vn','-ac','1','-ar','48000',f'{S}/voz_final.wav'], check=True)
 # 2) música baixinha embaixo da fala
