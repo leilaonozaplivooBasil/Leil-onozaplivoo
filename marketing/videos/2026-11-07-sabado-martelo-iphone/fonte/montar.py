@@ -19,7 +19,7 @@ def corte(src, a, b, dst, crop=None, extra=None):
     x = f',{extra}' if extra else ''              # trecho de longe ampliado: desfoque p/ nenhum nome de cliente ficar legível
     run(['-ss',str(a),'-to',str(b),'-i',src,'-an','-vf',f'{c}scale={W}:{H}:flags=lanczos{x},fps=30,format=yuv420p','-c:v','libx264','-crf','16','-preset','fast',dst])
 # --- vídeo (sem áudio) ---
-V = [('foto', f'{S}/in/f4913.jpg', 1.8),
+V = [('clip', f'{S}/v4934_sdr.mp4', 0.0, 2.6), ('clip', f'{S}/v4934_sdr.mp4', 5.7, 6.9),   # a equipe na mesa atendendo (IMG_4934, no lugar da 1ª foto)
      ('clip', f'{S}/efb_n.mp4', 1.3, 4.6, '956:1700:0:0'), ('clip', f'{S}/efb_n.mp4', 10.1, 13.4, '788:1400:50:0'),
      ('clip', f'{S}/efb_n.mp4', 17.0, 18.5, '788:1400:150:0'), ('clip', f'{S}/efb_n.mp4', 20.9, 24.6, '788:1400:250:0'),
      ('clip', f'{S}/v4947_sdr.mp4', 0.0, 3.5, '900:1600:100:0'),
@@ -35,9 +35,9 @@ DUR = t
 open(f'{S}/lista.txt','w').write(''.join(f"file '{p}'\n" for p in partes))
 run(['-f','concat','-safe','0','-i',f'{S}/lista.txt','-c','copy',f'{S}/base.mp4'])
 # --- vozes: só trechos SEM nome de cliente (nomes falados ficam de fora) ---
-VOZES = [(f'{S}/in/vEFB9.mp4', 1.4, 3.05, inicio[1]+0.1), (f'{S}/in/vEFB9.mp4', 10.15, 12.72, inicio[2]+0.05),
-         (f'{S}/in/vEFB9.mp4', 17.1, 18.4, inicio[3]+0.1),
-         (f'{S}/in/v4947.mov', 0.0, 3.46, inicio[5]), (f'{S}/in/v4951.mov', 1.75, 8.4, inicio[6]+1.75)]   # sem o "tem gente com dinheiro, não vai não" (pedido 09/11)
+VOZES = [(f'{S}/in/vEFB9.mp4', 1.4, 3.05, inicio[2]+0.1), (f'{S}/in/vEFB9.mp4', 10.15, 12.72, inicio[3]+0.05),
+         (f'{S}/in/vEFB9.mp4', 17.1, 18.4, inicio[4]+0.1),
+         (f'{S}/in/v4947.mov', 0.0, 3.46, inicio[6]), (f'{S}/in/v4951.mov', 1.75, 8.4, inicio[7]+1.75)]   # sem o "tem gente com dinheiro, não vai não" (pedido 09/11)
 ent, fc, lbl = [], '', []
 for j, (src, a, b, at) in enumerate(VOZES):
     ent += ['-ss', str(a), '-to', str(b), '-i', src]
@@ -81,18 +81,18 @@ lg = Image.open(f'{MK}/marca/logo-horizontal-transparente.png').convert('RGBA');
 s = Image.new('RGBA', (W, H)); ds = ImageDraw.Draw(s); ds.rounded_rectangle((40, 250, 80+lg.width, 278+lg.height), 30, fill=NOITE+(150,)); s.alpha_composite(lg, (60, 264)); s.save(f'{S}/selo.png')
 I = inicio
 CAM = [  # (início, fim, nome, linhas)
- (0.0, I[1], 'c0', [('f', 1390, 'sábado · 07/11'), ('v', 1500, 'o dia do leilão do'), ('o', 1606, 'iPhone 17 Pro Max')]),
- (I[1], I[2], 'c2', [('v', 1500, 'tudo ao vivo, sem corte'), ('o', 1606, 'o lance subindo…')]),
- (I[2], I[3], 'c3', [('v', 1500, 'pegando'), ('o', 1606, 'fogo!')]),
- (I[3], I[4], 'c4', [('o', 1606, 'guerra de lances!')]),
- (I[4], I[5], 'c5', [('v', 1500, 'e aí,'), ('o', 1606, 'quem dá mais?')]),
- (I[5], I[6], 'c6', [('v', 1500, 'chegou em'), ('o', 1606, 'R$ 4.720!')]),
- (I[6], I[6]+3.0, 'c7', [('f', 1500, 'contagem ao vivo, na tela da TV')]),   # o 3-2-1 é o do próprio site, sem número por cima
- (I[6]+3.0, I[8], 'c8', [('o', 1606, 'fechou!')]),
- (I[8]+2.2, I[9], 'c9', [('arr', 1040, 'R$ 6.370')]),
- (I[9], DUR, 'c10', [('v', 1430, 'obrigado, galera!'), ('f', 1540, 'quarta tem iPhone 18 Pro Max'), ('o', 1650, 'quarta · 20h')]),
+ (0.0, I[2], 'c0', [('f', 1390, 'sábado de leilão'), ('v', 1500, 'a galera atendendo'), ('o', 1606, 'até as 21h!')]),
+ (I[2], I[3], 'c2', [('v', 1500, 'tudo ao vivo, sem corte'), ('o', 1606, 'o lance subindo…')]),
+ (I[3], I[4], 'c3', [('v', 1500, 'pegando'), ('o', 1606, 'fogo!')]),
+ (I[4], I[5], 'c4', [('o', 1606, 'guerra de lances!')]),
+ (I[5], I[6], 'c5', [('v', 1500, 'e aí,'), ('o', 1606, 'quem dá mais?')]),
+ (I[6], I[7], 'c6', [('v', 1500, 'chegou em'), ('o', 1606, 'R$ 4.720!')]),
+ (I[7], I[7]+3.0, 'c7', [('f', 1500, 'contagem ao vivo, na tela da TV')]),   # o 3-2-1 é o do próprio site, sem número por cima
+ (I[7]+3.0, I[9], 'c8', [('o', 1606, 'fechou!')]),
+ (I[9]+2.2, I[10], 'c9', [('arr', 1040, 'R$ 6.370')]),
+ (I[10], DUR, 'c10', [('v', 1430, 'obrigado, galera!'), ('f', 1540, 'quarta tem iPhone 18 Pro Max'), ('o', 1650, 'quarta · 20h')]),
 ]
-ent = ['-i', f'{S}/base.mp4', '-loop', '1', '-t', str(DUR), '-i', f'{S}/selo.png']; vf = f"[0:v][1:v]overlay=0:0:enable='between(t,0,{I[9]-0.04})'[b0]"   # a foto final já tem a logo do site
+ent = ['-i', f'{S}/base.mp4', '-loop', '1', '-t', str(DUR), '-i', f'{S}/selo.png']; vf = f"[0:v][1:v]overlay=0:0:enable='between(t,0,{I[10]-0.04})'[b0]"   # a foto final já tem a logo do site
 for j, (a, b, nome, linhas) in enumerate(CAM):
     camada(nome, linhas); ent += ['-loop', '1', '-t', str(DUR), '-i', f'{S}/{nome}.png']
     vf += f";[b{j}][{2+j}:v]overlay=0:0:enable='between(t,{round(a,3)},{round(b-0.04,3)})'[b{j+1}]"
