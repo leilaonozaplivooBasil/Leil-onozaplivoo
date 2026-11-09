@@ -20,7 +20,7 @@ def corte(src, a, b, dst, crop=None, extra=None):
     run(['-ss',str(a),'-to',str(b),'-i',src,'-an','-vf',f'{c}scale={W}:{H}:flags=lanczos{x},fps=30,format=yuv420p','-c:v','libx264','-crf','16','-preset','fast',dst])
 # --- vídeo (sem áudio) ---
 V = [('foto', f'{S}/in/f4913.jpg', 1.8),
-     ('clip', f'{S}/efb_n.mp4', 1.3, 3.1, '956:1700:0:0'), ('clip', f'{S}/efb_n.mp4', 10.1, 12.7, '788:1400:50:0'),
+     ('clip', f'{S}/efb_n.mp4', 1.3, 4.6, '956:1700:0:0'), ('clip', f'{S}/efb_n.mp4', 10.1, 13.4, '788:1400:50:0'),
      ('clip', f'{S}/efb_n.mp4', 17.0, 18.5, '788:1400:150:0'), ('clip', f'{S}/efb_n.mp4', 20.9, 24.6, '788:1400:250:0'),
      ('clip', f'{S}/v4947_sdr.mp4', 0.0, 3.5, '900:1600:100:0'),
      ('clip', f'{S}/v4951_sdr.mp4', 0.0, 3.2, '500:889:170:400'), ('clip', f'{S}/v4951_sdr.mp4', 3.2, 8.4, '480:853:80:560'),
@@ -37,14 +37,15 @@ run(['-f','concat','-safe','0','-i',f'{S}/lista.txt','-c','copy',f'{S}/base.mp4'
 # --- vozes: só trechos SEM nome de cliente (nomes falados ficam de fora) ---
 VOZES = [(f'{S}/in/vEFB9.mp4', 1.4, 3.05, inicio[1]+0.1), (f'{S}/in/vEFB9.mp4', 10.15, 12.72, inicio[2]+0.05),
          (f'{S}/in/vEFB9.mp4', 17.1, 18.4, inicio[3]+0.1), (f'{S}/in/v7CE9.mp4', 7.0, 10.95, inicio[4]),
-         (f'{S}/in/v4947.mov', 0.0, 3.46, inicio[5]), (f'{S}/in/v4951.mov', 0.0, 8.4, inicio[6])]
+         (f'{S}/in/v4947.mov', 0.0, 3.46, inicio[5]), (f'{S}/in/v4951.mov', 1.75, 8.4, inicio[6]+1.75)]   # sem o "tem gente com dinheiro, não vai não" (pedido 09/11)
 ent, fc, lbl = [], '', []
 for j, (src, a, b, at) in enumerate(VOZES):
     ent += ['-ss', str(a), '-to', str(b), '-i', src]
-    fc += (f"[{j}:a]aformat=sample_rates=48000:channel_layouts=mono,highpass=f=90,lowpass=f=10500,equalizer=f=3200:t=q:w=1.4:g=-3,"
+    fc += (f"[{j}:a]asetpts=N/SR/TB,aformat=sample_rates=48000:channel_layouts=mono,highpass=f=90,lowpass=f=10500,equalizer=f=3200:t=q:w=1.4:g=-3,"
            f"deesser=i=0.5,acompressor=threshold=-22dB:ratio=2.5:attack=10:release=180:makeup=2,afade=t=in:d=0.05,afade=t=out:st={round(b-a-0.08,3)}:d=0.08,adelay={int(at*1000)}[v{j}];")
     lbl.append(f'[v{j}]')
-fc += ''.join(lbl) + f"amix=inputs={len(lbl)}:normalize=0,apad=whole_dur={DUR},atrim=0:{DUR}[vz]"
+ent += ['-f', 'lavfi', '-t', str(DUR), '-i', 'anullsrc=r=48000:cl=mono']; lbl.append(f'[{len(VOZES)}:a]')   # silêncio desde o 0: segura cada voz no tempo certo
+fc += ''.join(lbl) + f"amix=inputs={len(lbl)}:normalize=0,asetpts=N/SR/TB,apad=whole_dur={DUR},atrim=0:{DUR}[vz]"
 run(ent + ['-filter_complex', fc, '-map', '[vz]', '-ar', '48000', f'{S}/vozes_raw.wav'])
 run(['-i', f'{S}/vozes_raw.wav', '-af', 'loudnorm=I=-17:TP=-3:LRA=10', '-ar', '48000', f'{S}/vozes_n.wav'])   # wav separado (regra)
 run(['-i', f'{S}/vozes_n.wav', '-af', f'apad=whole_dur={DUR},atrim=0:{DUR}', '-ar', '48000', f'{S}/vozes.wav'])   # completa com silêncio até o fim do vídeo
@@ -81,15 +82,14 @@ s = Image.new('RGBA', (W, H)); ds = ImageDraw.Draw(s); ds.rounded_rectangle((40,
 I = inicio
 CAM = [  # (início, fim, nome, linhas)
  (0.0, I[1], 'c0', [('f', 1390, 'sábado · 07/11'), ('v', 1500, 'o dia do leilão do'), ('o', 1606, 'iPhone 17 Pro Max')]),
- (I[1], I[2], 'c2', [('v', 1500, 'e o lance'), ('o', 1606, 'aumentando…')]),
+ (I[1], I[2], 'c2', [('v', 1500, 'tudo ao vivo, sem corte'), ('o', 1606, 'o lance subindo…')]),
  (I[2], I[3], 'c3', [('v', 1500, 'pegando'), ('o', 1606, 'fogo!')]),
  (I[3], I[4], 'c4', [('o', 1606, 'guerra de lances!')]),
  (I[4], I[5], 'c5', [('v', 1500, 'será que'), ('o', 1606, 'ninguém mais quer?')]),
  (I[5], I[6], 'c6', [('v', 1500, 'chegou em'), ('o', 1606, 'R$ 4.720!')]),
- (I[6], I[6]+4.5, 'c7', [('f', 1500, 'os últimos segundos…')]),
- (I[6]+4.6, I[6]+5.4, 'n3', [('big', 960, '3')]), (I[6]+5.4, I[6]+6.2, 'n2', [('big', 960, '2')]), (I[6]+6.2, I[6]+7.0, 'n1', [('big', 960, '1')]),
- (I[6]+7.0, I[8], 'c8', [('o', 1606, 'fechou!')]),
- (I[8]+0.2, I[9], 'c9', [('arr', 1040, 'R$ 6.370')]),
+ (I[6], I[6]+3.0, 'c7', [('f', 1500, 'contagem ao vivo, na tela da TV')]),   # o 3-2-1 é o do próprio site, sem número por cima
+ (I[6]+3.0, I[8], 'c8', [('o', 1606, 'fechou!')]),
+ (I[8]+2.2, I[9], 'c9', [('arr', 1040, 'R$ 6.370')]),
  (I[9], DUR, 'c10', [('v', 1430, 'obrigado, galera!'), ('f', 1540, 'quarta tem iPhone 18 Pro Max'), ('o', 1650, 'quarta · 20h')]),
 ]
 ent = ['-i', f'{S}/base.mp4', '-loop', '1', '-t', str(DUR), '-i', f'{S}/selo.png']; vf = f"[0:v][1:v]overlay=0:0:enable='between(t,0,{I[9]-0.04})'[b0]"   # a foto final já tem a logo do site
