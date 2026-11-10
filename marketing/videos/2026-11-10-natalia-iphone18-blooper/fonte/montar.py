@@ -1,6 +1,7 @@
 # Vídeo da Natália "ESPERA, ESPERA…" — iPhone 18 Pro Max, quarta 11/11 às 20h.
 # Pausas cortadas, o tropeço ("você pode ser o…") sai do meio e volta no final como ERROS DE GRAVAÇÃO (preto e branco).
 # 10/11: tirado o barulho de boca (25,2→25,8) antes do "você pode ser o próximo".
+# 10/11: tirado também o estalo de língua depois do "iPhone 18" (22,47→22,53).
 # Transições estilo CapCut: zoom-punch + flash nas viradas de assunto, zoom alternado nos cortes, glitch na entrada do blooper.
 import subprocess, sys
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
@@ -13,7 +14,7 @@ def run(a): subprocess.run(['ffmpeg', '-v', 'error', '-y'] + a, check=True)
 # (início, fim, zoom, punch) no tempo do vídeo original. punch = virada de assunto (zoom rápido + flash + whoosh)
 SEGS = [(0.30, 6.92, 1.00, True), (7.12, 8.96, 1.08, False), (9.26, 11.34, 1.00, True), (11.54, 12.68, 1.00, False),
         (12.94, 13.94, 1.00, True), (14.10, 16.78, 1.10, True), (17.00, 18.82, 1.00, False), (18.96, 20.84, 1.08, False),
-        (21.00, 22.60, 1.00, True), (26.56, 35.38, 1.08, False), (35.84, 39.06, 1.00, True),
+        (21.00, 22.43, 1.00, True), (26.56, 35.38, 1.08, False), (35.84, 39.06, 1.00, True),
         (39.58, 44.58, 1.00, True)]
 BLOOP = (22.80, 28.00)      # o tropeço inteiro, pro final
 def saida(t):
@@ -74,7 +75,7 @@ def selo():
 LA = [(0.30, 2.40, 'espera, espera…', 'para tudo!'), (2.40, 4.05, None, 'não é possível'), (4.05, 6.92, 'você não vai acreditar', 'no que vai acontecer'),
       (7.12, 8.96, 'nessa', 'quarta-feira'), (9.26, 11.34, 'um', 'iPhone 18 Pro Max'), (11.54, 12.68, 'vai pro', 'leilão'),
       (12.94, 14.80, 'e o lance…', 'vocês não vão crer'), (14.80, 16.78, None, 'R$ 197,00'), (17.00, 18.82, 'é isso mesmo', 'que você ouviu'),
-      (18.96, 20.84, 'na', 'quarta-feira'), (21.00, 22.60, 'olha só:', 'iPhone 18'), (26.56, 28.10, 'você pode ser', 'o próximo'),
+      (18.96, 20.84, 'na', 'quarta-feira'), (21.00, 22.43, 'olha só:', 'iPhone 18'), (26.56, 28.10, 'você pode ser', 'o próximo'),
       (28.10, 30.60, 'a arrematar', 'essa máquina'), (30.60, 33.05, 'já imaginou sair na quarta', 'com o iPhone 18'), (33.05, 35.38, None, 'arrematado?'),
       (35.84, 37.30, 'mas', 'atenção'), (37.30, 39.06, 'o relógio', 'está correndo'), (39.58, 42.10, 'escreva IPHONE', 'aqui embaixo'),
       (42.10, 44.58, 'que eu te envio', 'o link agora')]
