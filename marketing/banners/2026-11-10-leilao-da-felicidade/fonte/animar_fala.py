@@ -14,10 +14,10 @@ def cabe(d, t, f, maxw):
     return f
 X, MAXW = 1020, 820
 # fundo grande (para o zoom) + sombra do lado do texto
-_c = Image.open(cena).convert('RGB').resize((W, H), Image.LANCZOS)
-_dir = _c.crop((W//2, 0, W, H))                               # metade direita: palco sem o leiloeiro da imagem
-_palco = Image.new('RGB', (W, H)); _palco.paste(_dir.transpose(Image.FLIP_LEFT_RIGHT), (0, 0)); _palco.paste(_dir, (W//2, 0))
-base = _palco.resize((round(W*1.08), round(H*1.08)), Image.LANCZOS)
+_c = Image.open(cena).convert('RGB'); CW, CH = _c.size              # resolução original (2752x1536): o fundo fica nítido
+_dir = _c.crop((CW//2, 0, CW, CH))                               # metade direita: palco sem o leiloeiro da imagem
+_palco = Image.new('RGB', (CW, CH)); _palco.paste(_dir.transpose(Image.FLIP_LEFT_RIGHT), (0, 0)); _palco.paste(_dir, (CW//2, 0))
+base = _palco
 g = Image.new('L', (W, 1)); [g.putpixel((x, 0), int(125*min(1, max(0, (x-880)/420))**1.3)) for x in range(W)]
 sombra = Image.new('RGBA', (W, H), (6,14,12,0)); sombra.putalpha(g.resize((W, H)))
 # camadas
@@ -57,7 +57,7 @@ def escala(img, s, cx, cy):
     big = camada(); big.paste(r, (ox, oy), r) if True else None
     return big
 tmp = tempfile.mkdtemp(); fdir = tempfile.mkdtemp()
-subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', fala, '-vf', f'fps={FPS},crop=548:624:0:0,scale=-2:{H}:flags=lanczos', f'{fdir}/q%04d.png'], check=True)
+subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', fala, '-vf', f'fps={FPS},crop=548:624:0:0,scale=-2:{H}:flags=lanczos,unsharp=5:5:1.1:5:5:0.0,hqdn3d=1.5:1.5:3:3,unsharp=3:3:0.5:3:3:0.0', f'{fdir}/q%04d.png'], check=True)
 NQ = len(os.listdir(fdir))
 mq = Image.new('L', (Image.open(f'{fdir}/q0001.png').width, H), 255); dq = ImageDraw.Draw(mq)
 for x in range(mq.width - 120, mq.width): dq.line((x, 0, x, H), fill=int(255 * (mq.width - x) / 120))
@@ -88,9 +88,9 @@ for n in range(int(DUR*FPS)):
     if t >= 2.4:
         s = pop((t-2.4)/0.4) * ((1 + 0.05*max(0, math.sin((t-4.6)*6.0))) if t > 4.6 else 1)
         fr.alpha_composite(escala(bot, s, (BX[0]+BX[2])/2, (BX[1]+BX[3])/2))
-    fr.convert('RGB').save(f'{tmp}/f{n:04d}.jpg', quality=92)
+    fr.convert('RGB').save(f'{tmp}/f{n:04d}.jpg', quality=97, subsampling=0)
 # áudio: o som original do vídeo do site (voz oficial + trilha), no mesmo quadro da boca
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', str(FPS), '-i', f'{tmp}/f%04d.jpg', '-i', fala, '-filter_complex',
     f"[1:a]aformat=sample_rates=48000:channel_layouts=stereo,apad=whole_dur={DUR},atrim=0:{DUR},afade=t=out:st={DUR-0.6}:d=0.6[a]",
-    '-map', '0:v', '-map', '[a]', '-t', str(DUR), '-c:v', 'libx264', '-crf', '20', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', out], check=True)
+    '-map', '0:v', '-map', '[a]', '-t', str(DUR), '-c:v', 'libx264', '-crf', '16', '-preset', 'slow', '-tune', 'animation', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', out], check=True)
 print('ok', NQ)
