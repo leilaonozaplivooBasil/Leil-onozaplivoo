@@ -164,14 +164,20 @@ for tit, sub, dest in [('Deu lance?', 'o valor fica GUARDADO', False), ('Alguém
 T(b, (W/2, 1180), 'Sem saldo, o lance não entra.', F('Black', 46), BR)
 S.append(b)
 
-# 7 — quando o tempo acaba
-b = fundo('podio'); topo(b, 7, TOT)
-T(b, (W/2, 210), 'QUANDO O TEMPO ACABA…', F('Black', 74), BR)
-OUROT(b, (W/2, 400), 'TOC!', F('Black', 260))
-T(b, (W/2, 590), 'O martelo bate.', F('Black', 70), BR)
-T(b, (W/2, 672), 'Quem deu o lance MAIS ALTO, leva.', F('Black', 54), OURO)
-pil(b, W/2, 800, 'O PS5 FECHA SÁBADO (14/11) ÀS 20H', F('Black', 40))
-c = caixa.copy(); c.thumbnail((380, 250)); base = int(PODIO_TOPO*H) + 8; luz(b, W/2, base - c.height*0.5, 200); poe(b, c, W/2, base)
+# 7 — 20h não é o fim: lance nos últimos 2min22s dá +22 segundos (submitAtomicBid: COUNTDOWN_DURATION 142, BID_EXTENSION_SECONDS 22)
+b = fundo('texto'); topo(b, 7, TOT)
+T(b, (W/2, 200), '20H NÃO É', F('Black', 120), BR)
+OUROT(b, (W/2, 330), 'O FIM!', F('Black', 170))
+T(b, (W/2, 470), 'Se alguém dá lance no finalzinho,', F('Bold', 50), BR)
+T(b, (W/2, 532), 'o relógio GANHA MAIS TEMPO:', F('Bold', 50), BR)
+card(b, (150, 590, W-150, 790), True)
+OUROT(b, (W/2, 670), '+22 SEGUNDOS', F('Black', 96))
+T(b, (W/2, 750), 'a cada lance nos últimos 2 minutos', F('Bold', 36), CINZA, somb=0)
+T(b, (W/2, 870), 'Sábado, o iPhone 17 só fechou às 20h38!', F('Black', 48), OURO)   # banco: fim 20:38:30, último lance 20:38:07
+T(b, (W/2, 930), 'Às 20h é quando pega fogo.', F('Bold', 46), BR)
+card(b, (90, 1000, W-90, 1210))
+T(b, (W/2, 1055), 'Só acaba quando NINGUÉM mais dá lance.', F('Black', 44), BR, somb=0)
+OUROT(b, (W/2, 1140), 'TOC! QUEM DEU MAIS, LEVA', F('Black', 64))
 S.append(b)
 
 # 8 — como dar seu lance
@@ -191,7 +197,7 @@ S.append(b)
 b = fundo('texto'); topo(b, 9, TOT, seta=False)
 OUROT(b, (W/2, 230), 'RESUMINDO', F('Black', 160))
 y = 340
-for t in ['Leilão = quem dá mais, leva', 'R$ 197 é só o 1º lance', 'O preço sobe a cada lance', 'Precisa ter saldo pra dar lance', 'O martelo bate na hora marcada']:
+for t in ['Leilão = quem dá mais, leva', 'R$ 197 é só o 1º lance', 'O preço sobe a cada lance', 'Precisa ter saldo pra dar lance', 'Lance no final dá +22 segundos']:
     card(b, (90, y, W-90, y+104)); d = ImageDraw.Draw(b); d.ellipse((128, y+34, 164, y+70), fill=OURO)
     T(b, (190, y+52), t, F('Bold', 48), BR, anchor='lm', maxw=W-300, somb=0); y += 116
 T(b, (W/2, y+30), 'Às vezes sai bem abaixo do preço da loja.', F('Medium', 38), CINZA, somb=0)
