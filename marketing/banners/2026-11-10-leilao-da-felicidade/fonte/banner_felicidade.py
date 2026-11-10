@@ -4,7 +4,11 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 cena, out = sys.argv[1:3]; MK = '/home/user/Leil-onozaplivoo/marketing'
 W, H = 1920, 1080; BR, OURO, NEON, ESC = (255,255,255), (245,196,81), (61,220,132), (8,30,24)
 F = lambda p, t: ImageFont.truetype('/usr/share/fonts/opentype/inter/InterDisplay-%s.otf' % p, t)
-im = Image.open(cena).convert('RGB').resize((W, H), Image.LANCZOS).convert('RGBA'); d = ImageDraw.Draw(im)
+im = Image.open(cena).convert('RGB').resize((W, H), Image.LANCZOS).convert('RGBA')
+# sombra suave do lado do texto (o palco continua por trás, só fica mais escuro)
+g = Image.new('L', (W, 1)); [g.putpixel((x, 0), int(125*min(1, max(0, (x-880)/420))**1.3)) for x in range(W)]
+sb = Image.new('RGBA', (W, H), (6,14,12,0)); sb.putalpha(g.resize((W, H))); im.alpha_composite(sb)
+d = ImageDraw.Draw(im)
 PROB = []
 def cabe(t, f, maxw):
     while d.textlength(t, font=f) > maxw: f = ImageFont.truetype(f.path, f.size-2)
