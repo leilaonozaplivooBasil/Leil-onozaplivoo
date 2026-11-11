@@ -21,12 +21,12 @@ dur = round(sum(b - a for _, a, b, *_ in SEGS), 3)
 for x in ('A', 'B'):
     # A (microfone caiu): voz abafada/"oca" — tira o embolado dos médios e devolve a presença e o brilho (medido contra o B)
     eqv = ('highpass=f=95,equalizer=f=320:t=o:w=1.2:g=-3.5,equalizer=f=750:t=o:w=1:g=-2,equalizer=f=1800:t=o:w=0.8:g=1.5,'
-           'equalizer=f=3200:t=o:w=1.4:g=6,equalizer=f=6000:t=o:w=1:g=2.5,highshelf=f=9000:g=2,') if x == 'A' else 'highpass=f=80,'
+           'equalizer=f=3200:t=o:w=1.4:g=4,equalizer=f=6000:t=o:w=1:g=1.5,highshelf=f=9000:g=1,') if x == 'A' else 'highpass=f=80,'
     if FORTE and x == 'A':  # opção 2: mais clara — corta mais o "oco" e realça mais a presença
         eqv = ('highpass=f=110,equalizer=f=280:t=o:w=1.2:g=-5,equalizer=f=600:t=o:w=1:g=-3,equalizer=f=1800:t=o:w=0.8:g=2,'
                'equalizer=f=3200:t=o:w=1.4:g=8,equalizer=f=6000:t=o:w=1:g=3.5,highshelf=f=9000:g=3,')
-    run(['-i', f'{S}/{x}.mov', '-vn', '-ac', '1', '-ar', '48000', '-af', eqv + 'afftdn=nf=-25,deesser=i=0.5,acompressor=threshold=-20dB:ratio=3:attack=10:release=200:makeup=2', f'{S}/{x}-voz.wav'])
-    run(['-i', f'{S}/{x}-voz.wav', '-af', 'loudnorm=I=-16:TP=-2:LRA=9', '-ar', '48000', f'{S}/{x}-voz_ok.wav'])
+    run(['-i', f'{S}/{x}.mov', '-vn', '-ac', '1', '-ar', '48000', '-af', eqv + 'afftdn=nf=-25,deesser=i=0.6,acompressor=threshold=-26dB:ratio=4:attack=8:release=180:knee=6:makeup=3,alimiter=limit=0.7:attack=3:release=60:level=false', f'{S}/{x}-voz.wav'])
+    run(['-i', f'{S}/{x}-voz.wav', '-af', 'loudnorm=I=-17:TP=-3:LRA=6', '-ar', '48000', f'{S}/{x}-voz_ok.wav'])
 ent = ['-i', f'{S}/A.mov', '-i', f'{S}/B.mov', '-i', f'{S}/A-voz_ok.wav', '-i', f'{S}/B-voz_ok.wav']; fc = ''; cat = ''
 for i, (x, a, b, z, p) in enumerate(SEGS):
     vi, ai = (0, 2) if x == 'A' else (1, 3)
@@ -42,7 +42,8 @@ m = f'{MK}/marca/trilhas-base/pegada-orla/04-funky-soul-house.mp3'
 run(['-stream_loop', '-1', '-i', m, '-i', f'{S}/voz_final.wav', '-filter_complex',
      f"[0:a]atrim=0:{dur},asetpts=N/SR/TB,aformat=sample_rates=48000:channel_layouts=stereo,volume=0.22,afade=t=in:d=0.6,afade=t=out:st={dur-1.5}:d=1.5[m];"
      "[1:a]aformat=sample_rates=48000:channel_layouts=stereo,asplit[v][sc];[m][sc]sidechaincompress=threshold=0.03:ratio=4:attack=20:release=400[md];"
-     "[v][md]amix=inputs=2:duration=first:normalize=0,volume=1.35", '-ar', '48000', f'{S}/audio.wav'])
+     "[v][md]amix=inputs=2:duration=first:normalize=0", '-ar', '48000', f'{S}/audio_mix.wav'])
+run(['-i', f'{S}/audio_mix.wav', '-af', 'loudnorm=I=-15:TP=-1.5:LRA=6', '-ar', '48000', f'{S}/audio.wav'])
 def pilula(d, y, t, f, cor, txt, raio):
     w = d.textlength(t, font=f)
     if w + 2*raio > W - 60: PROB.append(f'"{t}" não cabe')
