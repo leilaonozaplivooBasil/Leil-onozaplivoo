@@ -68,7 +68,7 @@ LA = [('A', 4.66, 6.95, 'poxa, eu não ganhei', 'o último iPhone'), ('A', 7.25,
       ('B', 0.00, 1.10, None, 'e você?'), ('B', 1.10, 2.40, 'tá esperando', 'o quê?'), ('B', 2.40, 3.90, 'escreve IPHONE', 'aqui embaixo'), ('B', 3.90, 5.10, 'que eu te envio', 'o link')]
 LEG = [(saida(x, a), saida(x, b), t, d) for x, a, b, t, d in LA]
 selo()
-ent = ['-i', f'{S}/base.mov', '-loop', '1', '-t', f'{dur}', '-i', f'{S}/selo.png']; vf = '[0:v]vignette=angle=0.5:eval=init,format=yuv420p[vg];[vg][1:v]overlay=0:0[b0]'; k = 2  # vinheta leve nos cantos, só no vídeo (selo e legendas por cima)
+ent = ['-i', f'{S}/base.mov', '-loop', '1', '-t', f'{dur}', '-i', f'{S}/selo.png']; vf = '[0:v]eq=brightness=0.03:saturation=1.08,vignette=angle=0.4:eval=init,format=yuv420p[vg];[vg][1:v]overlay=0:0[b0]'; k = 2  # vinheta leve nos cantos, só no vídeo (selo e legendas por cima)
 for j, (a, b, t, d) in enumerate(LEG):
     legenda(t, d, f'l{j}'); ent += ['-loop', '1', '-t', f'{dur}', '-i', f'{S}/l{j}.png']
     vf += f";[b{j}][{k}:v]overlay=0:0:enable='between(t,{round(a,3)},{round(b-0.04,3)})'[b{j+1}]"; k += 1
