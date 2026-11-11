@@ -19,7 +19,10 @@ def saida(arq, t):
 dur = round(sum(b - a for _, a, b, *_ in SEGS), 3)
 # voz tratada (wav separado, loudnorm sozinho)
 for x in ('A', 'B'):
-    run(['-i', f'{S}/{x}.mov', '-vn', '-ac', '1', '-ar', '48000', '-af', 'highpass=f=80,afftdn=nf=-25,deesser=i=0.4,acompressor=threshold=-20dB:ratio=3:attack=10:release=200:makeup=2', f'{S}/{x}-voz.wav'])
+    # A (microfone caiu): voz abafada/"oca" — tira o embolado dos médios e devolve a presença e o brilho (medido contra o B)
+    eqv = ('highpass=f=95,equalizer=f=320:t=o:w=1.2:g=-3.5,equalizer=f=750:t=o:w=1:g=-2,equalizer=f=1800:t=o:w=0.8:g=1.5,'
+           'equalizer=f=3200:t=o:w=1.4:g=6,equalizer=f=6000:t=o:w=1:g=2.5,highshelf=f=9000:g=2,') if x == 'A' else 'highpass=f=80,'
+    run(['-i', f'{S}/{x}.mov', '-vn', '-ac', '1', '-ar', '48000', '-af', eqv + 'afftdn=nf=-25,deesser=i=0.5,acompressor=threshold=-20dB:ratio=3:attack=10:release=200:makeup=2', f'{S}/{x}-voz.wav'])
     run(['-i', f'{S}/{x}-voz.wav', '-af', 'loudnorm=I=-16:TP=-2:LRA=9', '-ar', '48000', f'{S}/{x}-voz_ok.wav'])
 ent = ['-i', f'{S}/A.mov', '-i', f'{S}/B.mov', '-i', f'{S}/A-voz_ok.wav', '-i', f'{S}/B-voz_ok.wav']; fc = ''; cat = ''
 for i, (x, a, b, z, p) in enumerate(SEGS):
