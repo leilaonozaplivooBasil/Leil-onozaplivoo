@@ -2,7 +2,7 @@
 # Pausas cortadas sem cortar fala, zoom alternado + punch/flash nas viradas, legenda em pílulas, música da playlist (pegada orla).
 import subprocess, sys
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
-S, OUT = sys.argv[1], sys.argv[2]; FORTE = len(sys.argv) > 3 and sys.argv[3] == 'forte'; MK = '/home/user/Leil-onozaplivoo/marketing'
+S, OUT = sys.argv[1], sys.argv[2]; MK = '/home/user/Leil-onozaplivoo/marketing'
 F = lambda p, t: ImageFont.truetype('/usr/share/fonts/opentype/inter/InterDisplay-%s.otf' % p, t)
 W, H = 1080, 1920; VERDE, OURO, NOITE, BR, FOGO = (27,122,72), (245,196,81), (10,20,16), (255,255,255), (243,91,18)
 PROB = []
@@ -19,13 +19,10 @@ def saida(arq, t):
 dur = round(sum(b - a for _, a, b, *_ in SEGS), 3)
 # voz tratada (wav separado, loudnorm sozinho)
 for x in ('A', 'B'):
-    # A (microfone caiu): voz abafada/"oca" — tira o embolado dos médios e devolve a presença e o brilho (medido contra o B)
+    # A (microfone caiu): tira o embolado dos médios; agudos para baixo nas duas falas para não dar pico
     eqv = ('highpass=f=95,equalizer=f=320:t=o:w=1.2:g=-3.5,equalizer=f=750:t=o:w=1:g=-2,equalizer=f=1800:t=o:w=0.8:g=1.5,'
-           'equalizer=f=3200:t=o:w=1.4:g=4,equalizer=f=6000:t=o:w=1:g=1.5,highshelf=f=9000:g=1,') if x == 'A' else 'highpass=f=80,'
-    if FORTE and x == 'A':  # opção 2: mais clara — corta mais o "oco" e realça mais a presença
-        eqv = ('highpass=f=110,equalizer=f=280:t=o:w=1.2:g=-5,equalizer=f=600:t=o:w=1:g=-3,equalizer=f=1800:t=o:w=0.8:g=2,'
-               'equalizer=f=3200:t=o:w=1.4:g=8,equalizer=f=6000:t=o:w=1:g=3.5,highshelf=f=9000:g=3,')
-    run(['-i', f'{S}/{x}.mov', '-vn', '-ac', '1', '-ar', '48000', '-af', eqv + 'afftdn=nf=-25,deesser=i=0.6,acompressor=threshold=-26dB:ratio=4:attack=8:release=180:knee=6:makeup=3,alimiter=limit=0.7:attack=3:release=60:level=false', f'{S}/{x}-voz.wav'])
+           'equalizer=f=2500:t=o:w=1:g=1,equalizer=f=4200:t=o:w=1:g=-3,highshelf=f=8000:g=-4,') if x == 'A' else 'highpass=f=80,equalizer=f=4200:t=o:w=1:g=-3,highshelf=f=8000:g=-4,'
+    run(['-i', f'{S}/{x}.mov', '-vn', '-ac', '1', '-ar', '48000', '-af', eqv + 'afftdn=nf=-25,deesser=i=0.8:m=0.6:f=0.5,acompressor=threshold=-26dB:ratio=4:attack=8:release=180:knee=6:makeup=3,alimiter=limit=0.7:attack=3:release=60:level=false', f'{S}/{x}-voz.wav'])
     run(['-i', f'{S}/{x}-voz.wav', '-af', 'loudnorm=I=-17:TP=-3:LRA=6', '-ar', '48000', f'{S}/{x}-voz_ok.wav'])
 ent = ['-i', f'{S}/A.mov', '-i', f'{S}/B.mov', '-i', f'{S}/A-voz_ok.wav', '-i', f'{S}/B-voz_ok.wav']; fc = ''; cat = ''
 for i, (x, a, b, z, p) in enumerate(SEGS):
@@ -75,6 +72,6 @@ for j, (a, b, t, d) in enumerate(LEG):
 vf += f";[b{len(LEG)}]fade=t=out:st={round(dur-0.35,3)}:d=0.35[vout]"
 run(ent + ['-i', f'{S}/audio.wav', '-filter_complex', vf, '-map', '[vout]', '-map', f'{k}:a', '-t', f'{dur}',
            '-c:v', 'libx264', '-crf', '22', '-preset', 'medium', '-maxrate', '9M', '-bufsize', '18M', '-profile:v', 'high', '-pix_fmt', 'yuv420p', '-r', '30', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart',
-           f'{OUT}/REELS-STORY-natalia-emanuel-iphone18-hoje' + ('-VOZ-MAIS-CLARA' if FORTE else '') + '.mp4'])
+           f'{OUT}/REELS-STORY-natalia-emanuel-iphone18-hoje' + '.mp4'])
 if PROB: print('PROBLEMAS', PROB); sys.exit(1)
 print('ok', dur)
