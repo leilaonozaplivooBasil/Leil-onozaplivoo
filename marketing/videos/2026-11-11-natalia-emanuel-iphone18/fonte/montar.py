@@ -22,6 +22,9 @@ for x in ('A', 'B'):
     # A (microfone caiu): tira o embolado dos médios; agudos para baixo nas duas falas para não dar pico
     eqv = ('highpass=f=95,equalizer=f=320:t=o:w=1.2:g=-3.5,equalizer=f=750:t=o:w=1:g=-2,equalizer=f=1800:t=o:w=0.8:g=1.5,'
            'equalizer=f=2500:t=o:w=1:g=1,equalizer=f=4200:t=o:w=1:g=-3,highshelf=f=8000:g=-4,') if x == 'A' else 'highpass=f=80,equalizer=f=4200:t=o:w=1:g=-3,highshelf=f=8000:g=-4,'
+    if x == 'A':
+        EMA = "between(t,18.2,22.45)+between(t,27.6,32)"
+        eqv = f"adeclip,volume=0.45:enable='{EMA}',highshelf=f=4500:g=-3:enable='{EMA}'," + eqv
     run(['-i', f'{S}/{x}.mov', '-vn', '-ac', '1', '-ar', '48000', '-af', eqv + 'afftdn=nf=-25,deesser=i=0.8:m=0.6:f=0.5,acompressor=threshold=-26dB:ratio=4:attack=8:release=180:knee=6:makeup=3,alimiter=limit=0.7:attack=3:release=60:level=false', f'{S}/{x}-voz.wav'])
     run(['-i', f'{S}/{x}-voz.wav', '-af', 'loudnorm=I=-17:TP=-3:LRA=6', '-ar', '48000', f'{S}/{x}-voz_ok.wav'])
 ent = ['-i', f'{S}/A.mov', '-i', f'{S}/B.mov', '-i', f'{S}/A-voz_ok.wav', '-i', f'{S}/B-voz_ok.wav']; fc = ''; cat = ''
