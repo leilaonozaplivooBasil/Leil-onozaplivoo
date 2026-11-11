@@ -2,7 +2,7 @@
 # Pausas cortadas sem cortar fala, zoom alternado + punch/flash nas viradas, legenda em pílulas, música da playlist (pegada orla).
 import subprocess, sys
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
-S, OUT = sys.argv[1], sys.argv[2]; MK = '/home/user/Leil-onozaplivoo/marketing'
+S, OUT = sys.argv[1], sys.argv[2]; FORTE = len(sys.argv) > 3 and sys.argv[3] == 'forte'; MK = '/home/user/Leil-onozaplivoo/marketing'
 F = lambda p, t: ImageFont.truetype('/usr/share/fonts/opentype/inter/InterDisplay-%s.otf' % p, t)
 W, H = 1080, 1920; VERDE, OURO, NOITE, BR, FOGO = (27,122,72), (245,196,81), (10,20,16), (255,255,255), (243,91,18)
 PROB = []
@@ -22,6 +22,9 @@ for x in ('A', 'B'):
     # A (microfone caiu): voz abafada/"oca" — tira o embolado dos médios e devolve a presença e o brilho (medido contra o B)
     eqv = ('highpass=f=95,equalizer=f=320:t=o:w=1.2:g=-3.5,equalizer=f=750:t=o:w=1:g=-2,equalizer=f=1800:t=o:w=0.8:g=1.5,'
            'equalizer=f=3200:t=o:w=1.4:g=6,equalizer=f=6000:t=o:w=1:g=2.5,highshelf=f=9000:g=2,') if x == 'A' else 'highpass=f=80,'
+    if FORTE and x == 'A':  # opção 2: mais clara — corta mais o "oco" e realça mais a presença
+        eqv = ('highpass=f=110,equalizer=f=280:t=o:w=1.2:g=-5,equalizer=f=600:t=o:w=1:g=-3,equalizer=f=1800:t=o:w=0.8:g=2,'
+               'equalizer=f=3200:t=o:w=1.4:g=8,equalizer=f=6000:t=o:w=1:g=3.5,highshelf=f=9000:g=3,')
     run(['-i', f'{S}/{x}.mov', '-vn', '-ac', '1', '-ar', '48000', '-af', eqv + 'afftdn=nf=-25,deesser=i=0.5,acompressor=threshold=-20dB:ratio=3:attack=10:release=200:makeup=2', f'{S}/{x}-voz.wav'])
     run(['-i', f'{S}/{x}-voz.wav', '-af', 'loudnorm=I=-16:TP=-2:LRA=9', '-ar', '48000', f'{S}/{x}-voz_ok.wav'])
 ent = ['-i', f'{S}/A.mov', '-i', f'{S}/B.mov', '-i', f'{S}/A-voz_ok.wav', '-i', f'{S}/B-voz_ok.wav']; fc = ''; cat = ''
@@ -71,6 +74,6 @@ for j, (a, b, t, d) in enumerate(LEG):
 vf += f";[b{len(LEG)}]fade=t=out:st={round(dur-0.35,3)}:d=0.35[vout]"
 run(ent + ['-i', f'{S}/audio.wav', '-filter_complex', vf, '-map', '[vout]', '-map', f'{k}:a', '-t', f'{dur}',
            '-c:v', 'libx264', '-crf', '22', '-preset', 'medium', '-maxrate', '9M', '-bufsize', '18M', '-profile:v', 'high', '-pix_fmt', 'yuv420p', '-r', '30', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart',
-           f'{OUT}/REELS-STORY-natalia-emanuel-iphone18-hoje.mp4'])
+           f'{OUT}/REELS-STORY-natalia-emanuel-iphone18-hoje' + ('-VOZ-MAIS-CLARA' if FORTE else '') + '.mp4'])
 if PROB: print('PROBLEMAS', PROB); sys.exit(1)
 print('ok', dur)
