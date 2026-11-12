@@ -1,6 +1,7 @@
-# Vídeo completo: parte 1 (funk + ATENÇÃO / VEM QUE VEM) -> transição (zoom + flash) -> vinheta da logo com a assinatura
-# sonora oficial (POC POC POC + "Leilão no Zap!") -> parte 2 (IMG_3293, foco dinâmico, pausas cortadas, legenda na marca,
-# batida de funk baixinha por baixo da voz). Uso: juntar.py <pasta-trabalho> <saida.mp4>
+# Vídeo completo: parte 1 (funk + ATENÇÃO / VEM QUE VEM) -> transição de 0,5 s arrastando para o lado, com a logo do
+# Leilão no Zap entrando em movimento junto e a assinatura sonora oficial (POC POC POC + "Leilão no Zap!") -> parte 2
+# (IMG_3293, foco dinâmico com brilho verde suave, legenda na marca, batida baixinha) -> martelada no fim.
+# Uso: juntar.py <pasta-trabalho> <saida.mp4>
 import sys, subprocess, math, os
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 S, OUT = sys.argv[1:3]; MK = '/home/user/Leil-onozaplivoo/marketing'; F0 = f'{MK}/videos/2026-11-12-funk-tv-roleta'
@@ -10,34 +11,9 @@ F = lambda p, t: ImageFont.truetype(f'/usr/share/fonts/opentype/inter/InterDispl
 ASS = f'{MK}/marca/assinatura-sonora/OFICIAL/assinatura-sonora-leilao-no-zap-OFICIAL.mp3'
 def run(a): subprocess.run(['ffmpeg', '-v', 'error', '-y'] + a, check=True)
 def pop(x): x = max(0, min(1, x)); return 1 + 2.7*(x-1)**3 + 1.7*(x-1)**2 if x > 0 else 0
-# ---------- vinheta da logo (2,0 s): fundo verde-noite com brilho, 3 marteladas sacodem a tela, logo entra no "Leilão no Zap!"
-VD = 2.0; os.makedirs(f'{S}/vin', exist_ok=True)
 logo = Image.open(f'{MK}/marca/logo-horizontal-transparente.png').convert('RGBA'); logo.thumbnail((760, 300))
-POCS, VOZ = (0.19, 0.56, 0.81), 1.02
-import random; random.seed(4)
-PT = [(random.uniform(0, W), random.uniform(0, H), random.uniform(1, 3), random.uniform(0, 6.28)) for _ in range(90)]
-for k in range(round(VD*FPS)):
-    t = k/FPS; b = Image.new('RGBA', (W, H), NOITE + (255,))
-    g = Image.new('RGBA', (W, H)); ImageDraw.Draw(g).ellipse((W/2-620, H/2-620, W/2+620, H/2+620), fill=VERDE + (230,)); b.alpha_composite(g.filter(ImageFilter.GaussianBlur(220)))
-    bat = max([max(0, 1 - (t - p)/0.12) for p in POCS if t >= p] + [0])
-    if bat:  # clarão dourado a cada martelada
-        cl = Image.new('RGBA', (W, H)); ImageDraw.Draw(cl).ellipse((W/2-420, H/2-420, W/2+420, H/2+420), fill=OURO + (int(120*bat),)); b.alpha_composite(cl.filter(ImageFilter.GaussianBlur(120)))
-    d = ImageDraw.Draw(b)
-    for x, y, r, ph in PT:
-        yy = (y - t*120) % H; a = int(120 + 100*math.sin(ph + t*6)); d.ellipse((x-r, yy-r, x+r, yy+r), fill=OURO + (max(0, a),))
-    if t >= VOZ:
-        s_ = pop((t - VOZ)/0.35); lg = logo.resize((max(1, int(logo.width*s_)), max(1, int(logo.height*s_))), Image.LANCZOS)
-        gl = Image.new('RGBA', lg.size, OURO + (0,)); gl.putalpha(lg.split()[3].filter(ImageFilter.GaussianBlur(30)).point(lambda v: int(v*0.5)))
-        b.alpha_composite(gl, ((W-lg.width)//2, (H-lg.height)//2)); b.alpha_composite(lg, ((W-lg.width)//2, (H-lg.height)//2))
-        if t >= VOZ + 0.3:
-            a = min(1, (t - VOZ - 0.3)/0.25); f = F('Bold', 46); tx = 'aqui você ganha ou ganha!'
-            d.text((W/2, H/2 + 230), tx, font=f, fill=OURO + (int(255*a),), anchor='mm')
-    sx = int(18*bat*math.sin(t*90)); sy = int(12*bat*math.cos(t*80))
-    fr = Image.new('RGB', (W, H), NOITE); fr.paste(b.convert('RGB'), (sx, sy)); fr.save(f'{S}/vin/v{k:03d}.jpg', quality=93)
-run(['-framerate', str(FPS), '-i', f'{S}/vin/v%03d.jpg', '-i', ASS, '-filter_complex', f'[1:a]aformat=sample_rates=48000:channel_layouts=stereo,apad,atrim=0:{VD}[a]',
-     '-map', '0:v', '-map', '[a]', '-t', str(VD), '-c:v', 'libx264', '-crf', '16', '-pix_fmt', 'yuv420p', '-r', str(FPS), '-c:a', 'pcm_s16le', f'{S}/vinheta.mov'])
 # ---------- parte 2: cortes de pausa + legenda + logo pequena + batida baixinha
-SEGS = [(0.55, 5.50), (6.10, 17.75), (18.80, 32.00)]
+SEGS = [(0.05, 5.50), (6.10, 32.00)]  # sem corte na pausa do 'R$ 460'
 def saida(t):
     acc = 0
     for a, b in SEGS:
@@ -48,7 +24,7 @@ D2 = round(sum(b - a for a, b in SEGS), 3)
 LA = [(0.74, 2.10, 'não pule', 'ESSE VÍDEO!'), (2.28, 3.58, 'vem aqui que eu vou', 'te contar'), (3.58, 5.50, 'uma fofoca', 'BOMBA!'),
       (6.22, 7.95, 'Leilão no Zap', 'PS5'), (8.24, 9.42, 'lacrado', 'NA CAIXA'), (9.42, 11.30, '1 ano de garantia', 'e nota fiscal'),
       (11.66, 13.35, 'vem aqui, bate o olho', 'NO LANCE'), (13.46, 14.95, 'bate o olho', 'NO LANCE'), (15.02, 16.55, 'bate o olho', 'NO LANCE'),
-      (16.55, 17.75, None, 'R$ 460'), (18.85, 21.15, 'com apenas', 'R$ 460'), (21.15, 22.68, 'você dá', 'o seu lance'),
+      (16.55, 18.80, None, 'R$ 460'), (18.85, 21.15, 'com apenas', 'R$ 460'), (21.15, 22.68, 'você dá', 'o seu lance'),
       (22.68, 24.40, 'e tem a chance', 'de arrematar'), (24.40, 26.28, 'esse produto no', 'Leilão no Zap'), (26.30, 27.72, None, 'vem aqui!'),
       (27.72, 28.95, 'faça o seu', 'CADASTRO'), (28.95, 30.98, 'e não fique', 'fora dessa!'), (30.98, 32.00, None, 'JOGA PRA LUA!')]
 os.makedirs(f'{S}/leg', exist_ok=True); PROB = []
@@ -71,25 +47,58 @@ run(['-i', f'{S}/p2voz.wav', '-i', f'{S}/bat2.wav', '-filter_complex',
 # legendas + logo pequena
 lg = logo.copy(); lg.thumbnail((240, 90)); topo = Image.new('RGBA', (W, H), (0, 0, 0, 0)); dt = ImageDraw.Draw(topo)
 dt.rounded_rectangle((40, 230, 80 + lg.width, 256 + lg.height), 28, fill=NOITE + (160,)); topo.alpha_composite(lg, (60, 243)); topo.save(f'{S}/leg/topo.png')
-ent = ['-i', f'{S}/p2base.mov', '-loop', '1', '-t', str(D2), '-i', f'{S}/leg/topo.png']; vf = '[0:v][1:v]overlay=0:0[b0]'; k = 2
+ent = ['-i', f'{S}/p2base.mov']; vf = '[0:v]null[b0]'; k = 1
 for j, (a, b, t1, t2) in enumerate(LA):
     im = Image.new('RGBA', (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(im); y = 1450
     if t1: pilula(d, y, t1, F('Black', 54), VERDE + (245,), BR, 44); y += 104
     pilula(d, y, t2.upper(), F('Black', 68), OURO, (10, 60, 32), 50)
     sh = im.split()[3].filter(ImageFilter.GaussianBlur(14)).point(lambda v: v*0.45); s_ = Image.new('RGBA', (W, H), (0, 0, 0, 0)); s_.putalpha(sh)
     Image.alpha_composite(s_, im).save(f'{S}/leg/l{j}.png')
-    a_, b_ = saida(a), saida(min(b, [x for x in (5.5, 17.75, 32.0) if x >= a][0]))
+    a_, b_ = saida(a), saida(min(b, [x for x in (5.5, 32.0) if x >= a][0]))
     ent += ['-loop', '1', '-t', str(D2), '-i', f'{S}/leg/l{j}.png']; vf += f";[b{j}][{k}:v]overlay=0:0:enable='between(t,{round(a_,3)},{round(b_-0.04,3)})'[b{j+1}]"; k += 1
 vf += f';[b{len(LA)}]null[vout]'
 run(ent + ['-i', f'{S}/p2audio.wav', '-filter_complex', vf, '-map', '[vout]', '-map', f'{k}:a', '-t', str(D2), '-c:v', 'libx264', '-crf', '16', '-preset', 'fast', '-pix_fmt', 'yuv420p', '-r', str(FPS), '-c:a', 'pcm_s16le', f'{S}/parte2.mov'])
-# ---------- junta: parte1 -[zoom]-> vinheta -[flash branco]-> parte2
+# ---------- junta: parte1 -[arrasta p/ a esquerda, 0,5 s]-> parte2, logo voando junto e indo para o canto, assinatura, martelo
 p1 = f'{F0}/REELS-funk-tv-roleta.mp4'; d1 = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', p1], capture_output=True, text=True).stdout)
-T1, T2 = 0.25, 0.20
-fc = (f"[0:v]fps={FPS},settb=1/{FPS},format=yuv420p[a];[1:v]fps={FPS},settb=1/{FPS},format=yuv420p[b];[2:v]fps={FPS},settb=1/{FPS},format=yuv420p[c];"
-      f"[a][b]xfade=transition=zoomin:duration={T1}:offset={round(d1-T1,3)}[ab];[ab][c]xfade=transition=fadewhite:duration={T2}:offset={round(d1-T1+VD-T2,3)}[v];"
-      f"[0:a]aformat=sample_rates=48000:channel_layouts=stereo[x];[1:a]aformat=sample_rates=48000:channel_layouts=stereo[y];[2:a]aformat=sample_rates=48000:channel_layouts=stereo[z];"
-      f"[x][y]acrossfade=d={T1}[xy];[xy][z]acrossfade=d={T2}[a0]")
-run(['-i', p1, '-i', f'{S}/vinheta.mov', '-i', f'{S}/parte2.mov', '-filter_complex', fc, '-map', '[v]', '-map', '[a0]', '-c:v', 'libx264', '-crf', '17', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-c:a', 'pcm_s16le', f'{S}/tudo.mov'])
+TR = 0.5; OF = round(d1 - TR, 3); MEIO = OF + TR/2; TOT = round(d1 + D2 - TR, 3)
+T_ASS = MEIO - 1.02  # a voz "Leilão no Zap!" da assinatura cai no meio do arrasto
+L0, L1 = OF - 0.05, OF + 1.35  # janela da animação da logo
+os.makedirs(f'{S}/lg', exist_ok=True)
+canto = logo.copy(); canto.thumbnail((240, 90)); CX, CY = 60 + canto.width/2, 243 + canto.height/2
+def eo(x): x = max(0, min(1, x)); return 1 - (1 - x)**3
+def eio(x): x = max(0, min(1, x)); return 3*x*x - 2*x*x*x
+for k in range(round((L1 - L0)*FPS) + 1):
+    t = L0 + k/FPS; fr = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+    if t < MEIO + 0.55:  # entra da direita junto com o arrasto, passa um pouco do centro e volta (mola)
+        x = (t - L0)/(MEIO + 0.2 - L0); px = W*1.15 + (W/2 - W*1.15)*eo(x) + (-30*math.sin(min(1, max(0, (t-MEIO-0.2)/0.35))*math.pi))
+        py, s_, rot = H*0.5, 0.8 + 0.2*eo(x), -10*(1 - eo(x))
+    else:  # encolhe e vai para o canto, onde fica até o fim
+        x = eio((t - MEIO - 0.55)/0.55); px, py = W/2 + (CX - W/2)*x, H*0.5 + (CY - H*0.5)*x
+        s_, rot = 1 + (canto.width/logo.width - 1)*x, 0
+    lg = logo.resize((max(1, int(logo.width*s_)), max(1, int(logo.height*s_))), Image.LANCZOS)
+    if rot: lg = lg.rotate(rot, resample=Image.BICUBIC, expand=True)
+    if t < MEIO + 0.55:  # rastro de movimento enquanto voa
+        for j_, a_ in ((3, 0.18), (2, 0.28), (1, 0.4)):
+            gh = lg.copy(); gh.putalpha(gh.split()[3].point(lambda v: int(v*a_))); fr.alpha_composite(gh, (int(px - lg.width/2 + j_*38*(1 - eo(x))), int(py - lg.height/2)))
+    gl = Image.new('RGBA', lg.size, (46, 160, 96, 0)); gl.putalpha(lg.split()[3].filter(ImageFilter.GaussianBlur(24)).point(lambda v: int(v*0.45)))
+    fr.alpha_composite(gl, (int(px - lg.width/2), int(py - lg.height/2))); fr.alpha_composite(lg, (int(px - lg.width/2), int(py - lg.height/2)))
+    fr.save(f'{S}/lg/g{k:03d}.png')
+topo = Image.new('RGBA', (W, H), (0, 0, 0, 0)); dt = ImageDraw.Draw(topo)
+dt.rounded_rectangle((40, 230, 80 + canto.width, 256 + canto.height), 28, fill=NOITE + (150,)); topo.alpha_composite(canto, (60, 243)); topo.save(f'{S}/topo.png')
+HIT = round(TOT - 0.75, 2)  # martelada final
+MART = f'{MK}/videos/leila-chegou-iphone/sfx/martelo.mp3'
+fc = (f"[0:v]fps={FPS},settb=1/{FPS},format=yuv420p[a];[1:v]fps={FPS},settb=1/{FPS},format=yuv420p[b];"
+      f"[a][b]xfade=transition=slideleft:duration={TR}:offset={OF}[ab];"
+      f"[2:v]setpts=PTS+{L0}/TB[lg];[ab][lg]overlay=0:0:eof_action=pass[ab2];"
+      f"[3:v]format=rgba[tp];[ab2][tp]overlay=0:0:enable='gte(t,{round(L1-0.02,3)})'[ab3];"
+      f"[ab3]eq=brightness=0.35:enable='between(t,{HIT},{HIT+0.08})',crop=iw-28:ih-28:'14+12*sin(t*90)*between(t,{HIT},{HIT+0.25})':'14+8*cos(t*80)*between(t,{HIT},{HIT+0.25})',scale={W}:{H},setsar=1[v];"
+      f"[0:a]aformat=sample_rates=48000:channel_layouts=stereo,volume='if(gte(t,{round(T_ASS,2)}),0.45,1)':eval=frame[x];[1:a]aformat=sample_rates=48000:channel_layouts=stereo[z];"
+      f"[x][z]acrossfade=d={TR}[xz];"
+      f"[4:a]aformat=sample_rates=48000:channel_layouts=stereo,adelay={int(T_ASS*1000)}:all=1,volume=1.15[as];"
+      f"[5:a]aformat=sample_rates=48000:channel_layouts=stereo,adelay={int(HIT*1000)}:all=1,volume=4.0[mt];"
+      f"[xz][as][mt]amix=inputs=3:duration=first:normalize=0,asetpts=N/SR/TB[a0]")
+run(['-i', p1, '-i', f'{S}/parte2.mov', '-framerate', str(FPS), '-i', f'{S}/lg/g%03d.png', '-loop', '1', '-i', f'{S}/topo.png', '-i', ASS, '-i', MART,
+     '-filter_complex', fc, '-map', '[v]', '-map', '[a0]', '-t', str(TOT), '-c:v', 'libx264', '-crf', '17', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-c:a', 'pcm_s16le', f'{S}/tudo.mov'])
 run(['-i', f'{S}/tudo.mov', '-c:v', 'copy', '-af', 'loudnorm=I=-14:TP=-1.5:LRA=9', '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', OUT])
 if PROB: print('NAO CABE', PROB); sys.exit(1)
-print('ok', round(d1 + VD + D2 - T1 - T2, 2))
+print('ok', TOT, 'assinatura em', round(T_ASS, 2), 'martelo em', HIT)
