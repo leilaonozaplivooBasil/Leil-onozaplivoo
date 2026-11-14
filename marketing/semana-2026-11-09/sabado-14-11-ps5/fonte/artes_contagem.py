@@ -5,9 +5,9 @@ import sys, os, math
 F0 = os.path.dirname(os.path.abspath(__file__))
 exec(open(f'{F0}/artes_elite.py').read().split('# ---------- 1) MONOLITO')[0])
 SO = sys.argv[4].split(',') if len(sys.argv) > 4 else None
-def rodape(b, y=1700):
+def rodape(b, y=1700, sub=None):
     ouro_txt(b, (W/2, y), f'lance atual  R$ {real(LANCE)}', F('Regular', 42), glow=0.2)
-    texto(b, (W/2, y + 62), espac(f'{NP} PESSOAS NA DISPUTA', 1), F('Light', 24), (196, 200, 190))
+    texto(b, (W/2, y + 62), espac(sub or f'{NP} PESSOAS NA DISPUTA', 1), F('Light', 24), (196, 200, 190))
     logo(b, y + 105, 160)
 def topo(b, t, y=170):
     texto(b, (W/2, y), espac(t, 1), F('Light', 30), OCLARO); linha_ouro(b, W/2-60, W/2+60, y + 38, 220)
@@ -18,11 +18,11 @@ caixa = tom_quente(foto('ps5-caixa')); caixa = caixa.crop(caixa.getbbox())
 if quer('10h'):
     b = fundo(cy=H*0.62)
     cone = Image.new('RGBA', (W, H)); ImageDraw.Draw(cone).polygon([(W/2-50, -20), (W/2+50, -20), (W/2+300, 1500), (W/2-300, 1500)], fill=OCLARO+(40,)); b.alpha_composite(cone.filter(ImageFilter.GaussianBlur(45)))
-    poeira(b, 45, 21); topo(b, 'SÁBADO · PLAYSTATION 5')
+    poeira(b, 45, 21); topo(b, 'SÁBADO É DIA DE LEILÃO')
     texto(b, (W/2, 470), 'Hoje.', F('Thin', 260), (244, 240, 230))
     ouro_txt(b, (W/2, 650), 'às 20h', F('ExtraLight', 110), glow=0.3)
     c = console.resize((round(console.width*700/console.height), 700), Image.LANCZOS); poe(b, c, W/2, 1500, 0.2); linha_ouro(b, 170, W-170, 1502, 150)
-    rodape(b, 1640); salva(b, 'PS5-HOJE-1-10h-hoje')
+    rodape(b, 1640, f'A DISPUTA JÁ COMEÇOU · {NP} PESSOAS'); salva(b, 'PS5-HOJE-1-10h-hoje')
 # 14h — 6 HORAS (anel de relógio fino, 6 de 12 marcas acesas)
 if quer('14h'):
     b = fundo(cy=H*0.42); poeira(b, 40, 22); topo(b, 'O MARTELO BATE EM')
