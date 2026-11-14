@@ -9,7 +9,7 @@ W, H, FPS = 1080, 1920, 30; VERDE, OURO, NOITE, BR, FOGO = (27,122,72), (245,196
 PROB = []
 def run(a): subprocess.run(['ffmpeg', '-v', 'error', '-y'] + a, check=True)
 SEGS = [(7.72, 13.25),  # começa parada, já em 'menos de 4 horas' (o andar do início saiu)
-        (14.75, 38.80), (38.80, 56.00)]
+        (14.75, 36.34), (38.84, 56.00)]  # sem o 'o que que tu tá... esperando aqui?' (gaguejou)
 def saida(t):
     acc = 0.0
     for a, b in SEGS:
@@ -50,7 +50,7 @@ LA = [(7.74, 9.75, 'menos de', '4 HORAS'), (9.80, 12.30, 'e tu não deu', 'UM LA
       (19.48, 21.90, 'eu tô', 'MUITO ANSIOSO'), (21.94, 23.30, 'eu quero dar', 'UM LANCE'), (23.34, 24.70, 'quero pegar', 'ESSE PS5!'),
       (24.74, 26.20, 'tu tá', 'PERDENDO, CARA'), (26.26, 29.70, 'deixa eu te falar:', 'O DADO REAL'), (29.74, 31.88, 'começou em', 'R$ 197'),
       (31.92, 33.70, 'tá em', 'R$ 720'), (33.76, 35.38, 'menos de', '4 HORAS PRA ACABAR'), (35.42, 36.32, 'mais de', '10 LANCES'),
-      (36.36, 38.80, 'o que você tá', 'ESPERANDO?'), (38.88, 41.62, 'já tô me imaginando', 'NO MEU SOFÁ'), (41.68, 42.85, 'comendo', 'PIPOCA'),
+      (38.88, 41.62, 'já tô me imaginando', 'NO MEU SOFÁ'), (41.68, 42.85, 'comendo', 'PIPOCA'),
       (42.90, 45.24, 'jogando', 'GTA 6'), (45.28, 46.78, None, 'TÁ CHEGANDO!'), (46.82, 48.24, 'eu vou', 'ARREMATAR!'),
       (48.28, 50.60, 'agora, gente', 'NÃO É POSSÍVEL!'), (50.64, 52.30, 'vai continuar aí', 'PARADO?'), (52.34, 54.25, 'eu vou embora?', 'NÃO, VOU EMBORA!'),
       (54.30, 56.00, None, 'TCHAU, GENTE!')]
