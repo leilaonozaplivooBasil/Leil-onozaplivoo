@@ -8,7 +8,8 @@ F = lambda p, t: ImageFont.truetype('/usr/share/fonts/opentype/inter/InterDispla
 W, H, FPS = 1080, 1920, 30; VERDE, OURO, NOITE, BR, FOGO = (27,122,72), (245,196,81), (8,30,20), (255,255,255), (243,91,18)
 PROB = []
 def run(a): subprocess.run(['ffmpeg', '-v', 'error', '-y'] + a, check=True)
-SEGS = [(5.90, 13.25), (14.75, 38.80), (38.80, 56.00)]
+SEGS = [(7.72, 13.25),  # começa parada, já em 'menos de 4 horas' (o andar do início saiu)
+        (14.75, 38.80), (38.80, 56.00)]
 def saida(t):
     acc = 0.0
     for a, b in SEGS:
@@ -44,7 +45,7 @@ run(['-stream_loop', '-1', '-i', f'{MK}/marca/trilhas-base/pegada-orla/05-brazil
      "[1:a]aformat=sample_rates=48000:channel_layouts=stereo,asplit[v][sc];[m][sc]sidechaincompress=threshold=0.03:ratio=5:attack=15:release=350[md];[v][md]amix=inputs=2:duration=first:normalize=0",
      '-ar', '48000', f'{S}/audio1.wav'])
 # legendas
-LA = [(6.06, 7.75, 'eu não', 'ACREDITO!'), (7.80, 9.75, 'menos de', '4 HORAS'), (9.80, 12.30, 'e tu não deu', 'UM LANCE AINDA?'), (12.36, 13.25, None, 'NÃO É POSSÍVEL!'),
+LA = [(7.74, 9.75, 'menos de', '4 HORAS'), (9.80, 12.30, 'e tu não deu', 'UM LANCE AINDA?'), (12.36, 13.25, None, 'NÃO É POSSÍVEL!'),
       (14.88, 17.05, 'Emanuel, o que tá', 'ACONTECENDO?'), (17.10, 18.10, None, 'O QUE É ISSO?'), (18.16, 19.45, None, 'MEU DEUS DO CÉU'),
       (19.48, 21.90, 'eu tô', 'MUITO ANSIOSO'), (21.94, 23.30, 'eu quero dar', 'UM LANCE'), (23.34, 24.70, 'quero pegar', 'ESSE PS5!'),
       (24.74, 26.20, 'tu tá', 'PERDENDO, CARA'), (26.26, 29.70, 'deixa eu te falar:', 'O DADO REAL'), (29.74, 31.88, 'começou em', 'R$ 197'),
