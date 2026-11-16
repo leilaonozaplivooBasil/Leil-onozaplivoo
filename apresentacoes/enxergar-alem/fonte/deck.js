@@ -27,12 +27,47 @@ const circ = (s, x, y, t, o = {}) => { s.addShape(pres.shapes.OVAL, { x, y, w: 0
 const card = (s, x, y, w, h, n) => s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w, h, rectRadius: 0.12, fill: { color: '1B1C3A' }, line: { color: '2B2D57', width: 0.75 }, objectName: n });
 const fotoDir = (s, n) => { foto(s, n, { x: 7.6, y: 0, w: W - 7.6, h: H }); };
 const notas = {};
+const HIST = __dirname + '/hist/';
+// foto inteira, sem cortar: cabe na caixa e fica centralizada
+const inteira = (s, n, x, y, w, h) => { const [iw, ih] = execFileSync('python3', ['-c', `from PIL import Image;print(*Image.open('${HIST}${n}.jpg').size)`]).toString().trim().split(' ').map(Number);
+  const k = Math.min(w / iw, h / ih), fw = iw * k, fh = ih * k; return s.addImage({ path: HIST + n + '.jpg', x: x + (w - fw) / 2, y: y + (h - fh) / 2, w: fw, h: fh, objectName: 'foto ' + n }); };
+// várias fotos lado a lado, cada uma com legenda pequena embaixo
+const fila = (s, itens, y, h) => { const gap = 0.3, w = (W - 1.4 - gap * (itens.length - 1)) / itens.length;
+  itens.forEach(([n, leg], i) => { const x = 0.7 + i * (w + gap); inteira(s, n, x, y, w, h - (leg ? 0.5 : 0));
+    if (leg) T(s, leg, { x, y: y + h - 0.4, w, h: 0.35, align: 'center', fontSize: 14, color: C.accent2 }); }); };
+const rotulo = (s, t) => T(s, t, { x: 0.7, y: 0.45, w: 11.9, h: 0.4, fontSize: 13, bold: true, color: C.accent2, charSpacing: 4 });
+
 // 1 capa
 pres.addSection({ title: 'Abertura' });
 ATUAL = 'Capa'; let s = pres.addSlide({ masterName: 'Capa', sectionTitle: 'Abertura' });
 foto(s, 'olho', { x: 5.2, y: 0, w: W - 5.2, h: H }); s.addShape(pres.shapes.RECTANGLE, { x: 4.6, y: 0, w: 1.6, h: H, fill: { color: '0E1022', transparency: 30 }, line: { type: 'none' }, objectName: 'transição' });
 T(s, 'ENXERGAR ALÉM', { x: 0.8, y: 2.6, w: 7.2, h: 1.5, fontFace: 'Cambria', fontSize: 54, bold: true, color: C.accent1, valign: 'bottom' }); T(s, 'Como a mente constrói a realidade que vivemos — e como escolher a que queremos construir', { x: 0.8, y: 4.25, w: 6.6, h: 1.4, fontSize: 18, italic: true });
 s.addNotes('ABERTURA (1 min). Agradeça a presença. Diga: hoje a gente vai conversar sobre algo que todo mundo faz o dia inteiro e quase ninguém percebe: interpretar a realidade. A proposta é simples: sair daqui enxergando um pouco além do que enxergava quando entrou.');
+
+// MINHA HISTÓRIA (fotos da palestrante, logo depois da capa)
+pres.addSection({ title: 'Minha história' });
+ATUAL = 'Foto inteira'; s = pres.addSlide({ masterName: 'Foto inteira', sectionTitle: 'Minha história' });
+inteira(s, '2015-hospital', 6.9, 0.6, 5.7, 6.3);
+T(s, 'MINHA HISTÓRIA', { x: 0.7, y: 2.2, w: 5.8, h: 0.4, fontSize: 14, bold: true, color: C.accent2, charSpacing: 4 });
+T(s, 'Antes de falar sobre enxergar além, deixa eu contar o que eu precisei enxergar', { x: 0.7, y: 2.7, w: 5.8, h: 2.4, fontFace: 'Cambria', fontSize: 34, bold: true, color: C.accent1 });
+s.addNotes('MINHA HISTÓRIA. Comece contando de onde você veio. Fale com calma, as fotos falam por você.');
+s = pres.addSlide({ masterName: 'Foto inteira', sectionTitle: 'Minha história' }); rotulo(s, 'MINHA HISTÓRIA · 2015');
+fila(s, [['2015-hospital', '2015'], ['2015-tipoia', '2015']], 1.0, 6.0);
+s.addNotes('2015. Conte o que aconteceu.');
+s = pres.addSlide({ masterName: 'Foto inteira', sectionTitle: 'Minha história' }); rotulo(s, 'MINHA HISTÓRIA');
+inteira(s, 'remedios', 0.7, 1.0, 11.9, 6.0);
+s.addNotes('Conte essa fase.');
+s = pres.addSlide({ masterName: 'Foto inteira', sectionTitle: 'Minha história' }); rotulo(s, 'MINHA HISTÓRIA · 2020');
+fila(s, [['2020-cafe', '2020'], ['2020-piscina', '2020'], ['colagem', '']], 1.0, 6.0);
+s.addNotes('2020. Conte como você estava nessa época.');
+s = pres.addSlide({ masterName: 'Foto inteira', sectionTitle: 'Minha história' }); rotulo(s, 'MINHA HISTÓRIA');
+fila(s, [['yoga-antes', ''], ['rosto-antes-depois', '']], 1.0, 6.0);
+s.addNotes('Conte o começo da mudança.');
+s = pres.addSlide({ masterName: 'Foto inteira', sectionTitle: 'Minha história' });
+inteira(s, 'yoga-antes-depois', 0.7, 0.6, 7.4, 6.3);
+T(s, 'A virada', { x: 8.5, y: 2.6, w: 4.2, h: 1.0, fontFace: 'Cambria', fontSize: 44, bold: true, color: C.accent1 });
+T(s, 'Quando eu mudei por dentro, tudo por fora começou a mudar.', { x: 8.5, y: 3.7, w: 4.2, h: 1.5, fontSize: 20, italic: true });
+s.addNotes('A VIRADA. Conte o que mudou e faça a ponte para o tema: a mesma pessoa, enxergando diferente. Daqui você entra na pergunta do próximo slide.');
 // 2 pergunta
 ATUAL = 'Foto inteira'; s = pres.addSlide({ masterName: 'Foto inteira', sectionTitle: 'Abertura' });
 T(s, 'UMA PERGUNTA ANTES DE COMEÇAR', { x: 1.2, y: 1.5, w: 10.9, h: 0.5, align: 'center', fontSize: 14, bold: true, color: C.accent2, charSpacing: 4 });
@@ -146,4 +181,13 @@ T(s, 'Pare de ser guarda de trânsito da sua mente', { x: 1.2, y: 1.2, w: 10.9, 
 T(s, 'Observe sem entrar na briga. Quando perceber que entrou, apenas saia. Aos poucos o barulho vai embora e vem uma calma que ninguém precisa te explicar: você sente. Essa é a presença de Deus em você.', { x: 2.0, y: 2.9, w: 9.3, h: 1.8, align: 'center', fontSize: 19, italic: true });
 T(s, 'Enxergar além é escolher, todos os dias, qual realidade você vai alimentar.', { x: 1.2, y: 5.3, w: 10.9, h: 0.9, align: 'center', valign: 'middle', fontFace: 'Cambria', fontSize: 24, bold: true, color: C.accent1 });
 s.addNotes('(2 min) Fonte: Mooji. Fale devagar. Retome a pergunta do começo: quem ainda tem certeza de que vê o mundo exatamente como ele é? Agradeça. Se quiser, termine com um minuto de silêncio para cada um sentir essa calma.');
+
+// CAMPO ENERGÉTICO (final)
+pres.addSection({ title: 'Campo energético' });
+ATUAL = 'Foto inteira'; s = pres.addSlide({ masterName: 'Foto inteira', sectionTitle: 'Campo energético' }); rotulo(s, 'CAMPO ENERGÉTICO');
+inteira(s, 'emocoes', 0.7, 1.0, 11.9, 6.0);
+s.addNotes('CAMPO ENERGÉTICO. Mostre como cada emoção mexe com o corpo.');
+s = pres.addSlide({ masterName: 'Foto inteira', sectionTitle: 'Campo energético' }); rotulo(s, 'CAMPO ENERGÉTICO');
+fila(s, [['luz', ''], ['toroide', ''], ['aura', '']], 1.0, 6.0);
+s.addNotes('Fale do campo de energia que cada um de nós emite.');
 (async () => { const f = __dirname + '/Enxergar_Alem_NOVO.pptx'; await pres.writeFile({ fileName: f }); await applyTheme(f, THEME); console.log('ok'); })();
