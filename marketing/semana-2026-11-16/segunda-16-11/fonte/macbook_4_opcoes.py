@@ -1,4 +1,5 @@
-# 4 opções de arte do MacBook Neo PRATEADO (qua 18/11, 20h) para a Natália escolher. Fotos reais do anúncio, fundo verde da marca.
+# 4 opções de arte do MacBook Neo PRATEADO (qua 18/11, 20h) para a Natália escolher. Fotos oficiais da Apple do modelo PRATEADO
+# (loja e página do MacBook Neo, 16/11), fundo verde da marca.
 # Referências dela (16/11): propagandas da Apple, ficha técnica do Mercado Livre, vistas lado a lado. Uso: macbook_4_opcoes.py <lance>
 import os, sys
 import numpy as np
@@ -21,6 +22,11 @@ def recorta(caminho, larg, ang=0):
     al = Image.fromarray((alfa * 255).astype('uint8')).filter(ImageFilter.GaussianBlur(0.6))
     p = im.convert('RGBA'); p.putalpha(al); p = p.crop(al.getbbox()); p = p.resize((larg, int(p.height * larg / p.width)), Image.LANCZOS)
     return p.rotate(ang, resample=Image.BICUBIC, expand=True) if ang else p
+
+def png(nome, larg, ang=0):
+    p = Image.open(f'{AQ}/fotos/{nome}').convert('RGBA'); p = p.resize((larg, int(p.height * larg / p.width)), Image.LANCZOS)
+    return p.rotate(ang, resample=Image.BICUBIC, expand=True) if ang else p
+FRENTE, TAMPA_A = 'apple-silver-frente.png', 'apple-silver-tampa.png'
 
 def poe(b, p, x, y, dy=34, blur=36, a=.55):
     s = Image.new('RGBA', (W, H)); s.paste((0, 12, 6, 255), (int(x), int(y + dy)), p.split()[3].point(lambda v: int(v * a))); b.alpha_composite(s.filter(ImageFilter.GaussianBlur(blur)))
@@ -62,7 +68,7 @@ def icone(d, tipo, cx, cy, r=34):
 b = fundo(W * .35, 600); d = ImageDraw.Draw(b); logo(b, 64, 56, 140); d = ImageDraw.Draw(b)
 pilula(d, W - 230, 86, 'QUARTA · 20H', F('Bold', 30), fundo_=OURO, borda=OURO, cor=ESC, pad=30)
 d.text((64, 170), 'MacBook Neo 13"', font=F('Bold', 96), fill=BRANCO); d.text((66, 290), 'Prateado  ·  Leilão de quarta-feira', font=F('Medium', 36), fill=CREME)
-poe(b, recorta(ABERTO, 520, -8), 24, 420); d = ImageDraw.Draw(b)
+p = png(FRENTE, 560); poe(b, p, 10, 520, dy=26, blur=26); d = ImageDraw.Draw(b)
 for i, (ic, t1, t2) in enumerate([('chip', 'Chip A18 Pro', 'CPU 6 núcleos · GPU 5'), ('tela', 'Tela de 13"', 'leve e fino'),
                                   ('ssd', '256GB', 'de armazenamento'), ('cor', 'Prateado', 'cor do produto')]):
     y = 465 + i * 132; icone(d, ic, 640, y); d.text((708, y - 6), t1, font=F('Bold', 40), fill=BRANCO, anchor='ls'); d.text((708, y + 36), t2, font=F('Medium', 30), fill=VERDEC, anchor='ls')
@@ -77,7 +83,7 @@ d.rectangle((0, 760, W, H), fill=ESC); logo(b, None, 50, 140); d = ImageDraw.Dra
 d.text((W / 2, 165), 'MacBook Neo 13" · Prateado', font=F('SemiBold', 44), fill=BRANCO, anchor='mm')
 d.text((W / 2, 245), espac('NAS LOJAS'), font=F('SemiBold', 30), fill=CREME, anchor='mm')
 d.text((W / 2, 330), 'mais de R$ 6 mil', font=F('Bold', 92), fill=BRANCO, anchor='mm')
-p = recorta(ABERTO, 620, 0); poe(b, p, (W - p.width) / 2, 440, dy=40, a=.7); d = ImageDraw.Draw(b)
+p = png(FRENTE, 800); poe(b, p, (W - p.width) / 2, 420, dy=30, blur=30, a=.75); d = ImageDraw.Draw(b)
 d.text((W / 2, 1020), espac('NO LEILÃO, O LANCE ESTÁ EM'), font=F('SemiBold', 30), fill=OURO, anchor='mm'); lance(d, W / 2, 1200, 190, anchor='m')
 pilula(d, W / 2, 1275, DATA, F('SemiBold', 34))
 salvar(b, 'opcao-2-loja-x-leilao.jpg')
@@ -85,9 +91,9 @@ salvar(b, 'opcao-2-loja-x-leilao.jpg')
 # OPÇÃO 3 · MINIMALISTA APPLE (tampa com a maçã como herói) --------------------------------------------------------------
 b = fundo(W / 2, 640, c1=(22, 78, 50), c0=(3, 16, 9), raio=.85); d = ImageDraw.Draw(b)
 d.text((W / 2, 150), 'MacBook Neo', font=F('SemiBold', 120), fill=BRANCO, anchor='mm')
-d.text((W / 2, 245), 'Leve. Prateado. Pode ser seu.', font=F('Regular', 40), fill=OURO2, anchor='mm')
-p = recorta(TAMPA, 700, 0); poe(b, p, (W - p.width) / 2, 340, dy=46, blur=44, a=.75); d = ImageDraw.Draw(b)
-d.text((W / 2, 885), '13 polegadas  ·  chip A18 Pro  ·  256GB', font=F('Regular', 32), fill=VERDEC, anchor='mm')
+d.text((W / 2, 245), 'Prateado. Leve. Pode ser seu.', font=F('Regular', 40), fill=OURO2, anchor='mm')
+p = png(FRENTE, 900); poe(b, p, (W - p.width) / 2, 320, dy=34, blur=34, a=.75); d = ImageDraw.Draw(b)
+d.text((W / 2, 900), '13 polegadas  ·  chip A18 Pro  ·  256GB', font=F('Regular', 32), fill=VERDEC, anchor='mm')
 d.line((W / 2 - 60, 940, W / 2 + 60, 940), fill=OURO, width=2)
 d.text((W / 2, 1000), 'Lance atual', font=F('Medium', 36), fill=CREME, anchor='mm'); lance(d, W / 2, 1160, 150, cor=BRANCO, anchor='m')
 d.text((W / 2, 1230), DATA, font=F('Medium', 36), fill=OURO2, anchor='mm'); logo(b, None, 1268, 120)
@@ -96,8 +102,8 @@ salvar(b, 'opcao-3-minimalista.jpg')
 # OPÇÃO 4 · DUAS VISTAS (referência: fotos lado a lado do Mercado Livre) ------------------------------------------------
 b = fundo(W / 2, 520, c1=(30, 98, 64), c0=(6, 30, 18)); d = ImageDraw.Draw(b); logo(b, 64, 56, 140); d = ImageDraw.Draw(b)
 d.text((64, 175), 'Ele pode ser seu', font=F('Bold', 84), fill=BRANCO); d.text((64, 272), 'na quarta-feira.', font=F('Bold', 84), fill=OURO2)
-t = recorta(TAMPA, 450, 6); k = recorta(ABERTO, 470, -6)
-poe(b, t, 50, 450, dy=40); poe(b, k, 520, 480, dy=40, a=.65); d = ImageDraw.Draw(b)
+t = png(TAMPA_A, 470, 4); k = png(FRENTE, 570)
+poe(b, t, 40, 420, dy=36); poe(b, k, 450, 620, dy=26, blur=28, a=.7); d = ImageDraw.Draw(b)
 d.ellipse((W - 250, 70, W - 50, 270), fill=OURO); d.text((W - 150, 145), 'QUARTA', font=F('Black', 34), fill=ESC, anchor='mm'); d.text((W - 150, 197), '20H', font=F('Black', 58), fill=ESC, anchor='mm')
 d.text((64, 1000), 'MacBook Neo 13" · Prateado · A18 Pro · 256GB', font=F('Medium', 33), fill=CREME)
 d.line((64, 1068, W - 64, 1068), fill=OURO, width=2)
