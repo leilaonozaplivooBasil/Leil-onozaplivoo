@@ -22,7 +22,7 @@ https://leilaonozap.net/l/d0ef262f19d2e0fca869ff2e
 > 👉 https://leilaonozap.net/l/d0ef262f19d2e0fca869ff2e
 
 ### B — Lista de transmissão e grupos (com a arte quadrada)
-> 💻 *O NOTEBOOK QUE VOCÊ QUERIA TÁ NO LEILÃO!* 💻
+> 💻 *O MACBOOK QUE VOCÊ QUERIA TÁ NO LEILÃO!* 💻
 >
 > *MacBook Neo de 13"* — chip A18 Pro, 256GB, prateado
 >

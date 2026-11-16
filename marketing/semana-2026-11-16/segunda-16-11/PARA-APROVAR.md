@@ -17,7 +17,7 @@ Caminho real: bonequinho no topo → "Criar Conta" → nome, e-mail, telefone, C
 `arte-macbook-feed.jpg` (1080x1350) e `arte-macbook-story.jpg` (1080x1920). Lance de R$ 397 conferido no sistema às 15h de hoje: **confirmar de novo antes de postar** (se mudar, eu refaço em 1 minuto).
 
 **Legenda:**
-> O notebook que eu queria… e o lance está em R$ 397. 💻
+> O MacBook que eu queria… e o lance está em R$ 397. 💻
 > MacBook Neo de 13", quarta-feira às 20h. Quem leva?
 
 **Status do WhatsApp (pode ter link):** "MacBook Neo com lance em R$ 397 😳 Quarta às 20h. Dá o seu: leilaonozap.net/leiloes"
