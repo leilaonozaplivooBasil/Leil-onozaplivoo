@@ -17,9 +17,9 @@ def cabe(d, txt, peso, tam, larg, minimo=30):
     raise SystemExit(f'NÃO CABE: {txt!r}')
 
 def linhas(d, xy, txts, peso, tam, larg, cor, entre=1.12, anchor='la'):
-    x, y = xy
+    x, y = xy; f = min((cabe(d, t, peso, tam, larg) for t in txts), key=lambda q: q.size)
     for t in txts:
-        f = cabe(d, t, peso, tam, larg); d.text((x, y), t, font=f, fill=cor, anchor=anchor); y += int(f.size * entre)
+        d.text((x, y), t, font=f, fill=cor, anchor=anchor); y += int(f.size * entre)
     return y
 
 def logo(b, x, y, larg=160):
@@ -36,7 +36,7 @@ def celular(b, print_, x, y, alt, alvo=None, seta_de=None):
     d = ImageDraw.Draw(b); d.rounded_rectangle((x - borda, y - borda, x + w + borda, y + alt + borda), R + 10, fill=(18, 22, 20))
     m = Image.new('L', (w, alt), 0); ImageDraw.Draw(m).rounded_rectangle((0, 0, w, alt), R, fill=255); b.paste(tela, (x, y), m)
     if alvo:
-        ax, ay, aw, ah = [v * k for v in alvo]; p = 16
+        ax, ay, aw, ah = [v * k for v in alvo]; p = 7
         caixa = (x + ax - p, y + ay - p, x + ax + aw + p, y + ay + ah + p)
         g = Image.new('RGBA', b.size); ImageDraw.Draw(g).rounded_rectangle(caixa, 30, outline=OURO + (255,), width=14); b.alpha_composite(g.filter(ImageFilter.GaussianBlur(10)))
         ImageDraw.Draw(b).rounded_rectangle(caixa, 30, outline=OURO, width=7)
@@ -71,15 +71,15 @@ salvar(b, 'carrossel-cadastro-1.jpg')
 
 # 2 · passo 1: ícone de pessoa
 b = Image.new('RGBA', (W, H), AREIA + (255,)); d = ImageDraw.Draw(b); passo(b, 1)
-y = linhas(d, (70, 230), ['Abra o site pelo', 'link da nossa bio e', 'toque no bonequinho', 'lá em cima'], 'Black', 54, 420, VERDE, 1.1)
+y = linhas(d, (70, 230), ['Abra o link', 'da nossa bio', 'e toque no', 'bonequinho', 'lá em cima'], 'Black', 58, 420, VERDE, 1.1)
 d.text((70, y + 30), 'é o botão de entrar', font=F('Medium', 32), fill=VERDE2)
 c = celular(b, 'p1.png', 528, 230, 820, alvo=(834, 18, 132, 132)); rodape(b, 2)
 salvar(b, 'carrossel-cadastro-2.jpg')
 
 # 3 · passo 2: Criar Conta
 b = Image.new('RGBA', (W, H), AREIA + (255,)); d = ImageDraw.Draw(b); passo(b, 2)
-y = linhas(d, (70, 230), ['Na janela que', 'abrir, toque em', '"Criar Conta"'], 'Black', 58, 420, VERDE, 1.1)
-d.text((70, y + 30), 'fica embaixo de', font=F('Medium', 32), fill=VERDE2); d.text((70, y + 76), '"Ainda não tem conta?"', font=F('Medium', 32), fill=VERDE2)
+y = linhas(d, (70, 230), ['Na janela que', 'abrir, toque em', '“Criar Conta”'], 'Black', 58, 420, VERDE, 1.1)
+d.text((70, y + 30), 'fica embaixo de', font=F('Medium', 32), fill=VERDE2); d.text((70, y + 76), '“Ainda não tem conta?”', font=F('Medium', 32), fill=VERDE2)
 c = celular(b, 'p2.png', 528, 230, 820, alvo=(111, 1662, 948, 144)); seta(b, (380, y + 160), (c[0] - 6, (c[1] + c[3]) // 2)); rodape(b, 3)
 salvar(b, 'carrossel-cadastro-3.jpg')
 
@@ -89,13 +89,13 @@ y = linhas(d, (70, 230), ['Preencha', 'os seus dados'], 'Black', 58, 420, VERDE,
 for t in ['Nome completo', 'E-mail', 'Telefone', 'CPF', 'Senha']:
     y += 22; d.ellipse((70, y + 12, 92, y + 34), fill=OURO); d.text((112, y), t, font=F('SemiBold', 40), fill=VERDE); y += 46
 d.rounded_rectangle((70, y + 40, 480, y + 200), 22, fill=MENTA)
-linhas(d, (95, y + 62), ['Tem Gmail? Use', '"Inscrever-se no Google"', 'que é mais rápido'], 'Medium', 30, 370, VERDE)
+linhas(d, (95, y + 62), ['Tem Gmail? Use', '“Inscrever-se no Google”,', 'que é mais rápido.'], 'Medium', 30, 370, VERDE)
 celular(b, 'p3.png', 528, 230, 820, alvo=(123, 1011, 924, 144)); rodape(b, 4)
 salvar(b, 'carrossel-cadastro-4.jpg')
 
 # 5 · passo 4: Criar Conta
 b = Image.new('RGBA', (W, H), AREIA + (255,)); d = ImageDraw.Draw(b); passo(b, 4)
-y = linhas(d, (70, 230), ['Toque em', '"Criar Conta"', 'e pronto!'], 'Black', 58, 420, VERDE, 1.1)
+y = linhas(d, (70, 230), ['Toque em', '“Criar Conta”', 'e pronto!'], 'Black', 58, 420, VERDE, 1.1)
 linhas(d, (70, y + 30), ['O endereço de entrega', 'só é pedido na hora', 'de receber o produto.'], 'Medium', 32, 420, VERDE2)
 c = celular(b, 'p4b.png', 528, 230, 820, alvo=(123, 1614, 924, 144)); seta(b, (380, y + 180), (c[0] - 6, (c[1] + c[3]) // 2)); rodape(b, 5)
 salvar(b, 'carrossel-cadastro-5.jpg')
