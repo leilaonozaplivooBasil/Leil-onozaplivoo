@@ -61,6 +61,9 @@ s = pres.addSlide({ masterName: 'Foto inteira', sectionTitle: 'Minha história' 
 fila(s, [['2020-cafe', '2020'], ['2020-piscina', '2020'], ['colagem', '']], 1.0, 6.0);
 s.addNotes('2020. Conte como você estava nessa época.');
 s = pres.addSlide({ masterName: 'Foto inteira', sectionTitle: 'Minha história' }); rotulo(s, 'MINHA HISTÓRIA');
+fila(s, [['quarto-1', ''], ['quarto-2', '']], 1.0, 6.0);
+s.addNotes('Conte o que essas fotos do quarto mostram da sua vida nessa época.');
+s = pres.addSlide({ masterName: 'Foto inteira', sectionTitle: 'Minha história' }); rotulo(s, 'MINHA HISTÓRIA');
 fila(s, [['yoga-antes', ''], ['rosto-antes-depois', '']], 1.0, 6.0);
 s.addNotes('Conte o começo da mudança.');
 s = pres.addSlide({ masterName: 'Foto inteira', sectionTitle: 'Minha história' });
