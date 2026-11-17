@@ -8,7 +8,13 @@ IN, TRILHA, SAIDA = sys.argv[1], sys.argv[2], sys.argv[3]
 TMP = os.path.join(os.path.dirname(SAIDA), 'tmp-embala'); os.makedirs(TMP, exist_ok=True)
 def run(*a): subprocess.run(a, check=True)
 BASE = 'scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,fps=30,format=yuv420p'
-BORRA = lambda y: f"split[a][b];[b]crop=iw:ih*{1-y:.2f}:0:ih*{y:.2f},boxblur=28:3[bb];[a][bb]overlay=0:H*{y:.2f}"
+FB = '/usr/share/fonts/opentype/inter/InterDisplay-Black.otf'; FM = '/usr/share/fonts/opentype/inter/InterDisplay-SemiBold.otf'
+# tarja verde da marca no lugar dos dados do cliente (opaca: nada do que está embaixo aparece)
+BORRA = lambda y: (f"drawbox=x=0:y=ih*{y:.2f}:w=iw:h=ih*{1-y:.2f}:color=0x0E4D2E@1:t=fill,"
+                   f"drawbox=x=0:y=ih*{y:.2f}:w=iw:h=10:color=0xF5C451@1:t=fill,"
+                   f"drawtext=fontfile={FB}:text='dados do cliente':fontcolor=white:fontsize=78:x=(w-tw)/2:y=h*{y:.2f}+(h*{1-y:.2f})/2-95,"
+                   f"drawtext=fontfile={FB}:text='protegidos':fontcolor=0xF5C451:fontsize=78:x=(w-tw)/2:y=h*{y:.2f}+(h*{1-y:.2f})/2,"
+                   f"drawtext=fontfile={FM}:text='nome e endereço ficam só com a gente':fontcolor=0xCDE3D3:fontsize=38:x=(w-tw)/2:y=h*{y:.2f}+(h*{1-y:.2f})/2+110")
 # (arquivo, início, fim, velocidade, filtro extra, texto na tela)
 PARTES = [
  ('IMG_5763', 4.3, 6.8, 1.0, '', ''),                                   # gancho: o pacote pronto, ele sorrindo
