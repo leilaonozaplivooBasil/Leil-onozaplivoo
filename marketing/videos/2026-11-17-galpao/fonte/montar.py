@@ -8,7 +8,7 @@ def run(*a): subprocess.run(a, check=True)
 BASE = 'scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,fps=30,format=yuv420p'
 PARTES = [('IMG_5754', 1.5, 6.5, 2.0, ''), ('IMG_5755', 0.0, 18.0, 3.0, 'os produtos da loja'),
           ('IMG_3471', 0.0, 9.5, 3.0, 'e os que estão sendo testados'), ('IMG_3472', 0.0, 11.2, 3.0, ''), ('IMG_3470', 0.0, 8.2, 3.0, ''),
-          ('IMG_5756', 0.0, 24.0, 4.0, 'tem de tudo um pouco'), ('IMG_5754', 15.0, 54.6, 5.0, ''), ('IMG_5754', 54.6, 58.2, 1.0, 'FALA')]
+          ('IMG_5756', 0.0, 24.0, 4.0, 'tem de tudo um pouco'), ('IMG_5754', 15.0, 54.6, 5.0, '')]  # 17/11: a Natália pediu para tirar a fala final
 segs = []; t = 0.0; leg = []; fala_ini = 0
 for i, (n, a, b, v, txt) in enumerate(PARTES):
     out = f'{TMP}/p{i:02d}.mp4'
@@ -30,15 +30,9 @@ ass = ['[Script Info]', 'ScriptType: v4.00+', 'PlayResX: 1080', 'PlayResY: 1920'
  'Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text',
  r'Dialogue: 0,0:00:00.00,0:00:02.50,G,,0,0,0,,hoje a gente\N{\c&H51C4F5&}tá no galpão']
 for s, e, txt in leg: ass.append(f'Dialogue: 0,{ts(s)},{ts(e)},P,,0,0,0,,{txt}')
-ass.append(f'Dialogue: 0,{ts(fala_ini + 0.25)},{ts(total)},L,,0,0,0,,tudo que está no site\\N{{\\c&H51C4F5&}}está aqui!')
 open(f'{TMP}/leg.ass', 'w').write('\n'.join(ass) + '\n')
-run('ffmpeg', '-nostdin', '-v', 'error', '-y', '-ss', '54.6', '-to', '58.2', '-i', f'{IN}/IMG_5754.mp4', '-vn', '-af',
-    'highpass=f=90,equalizer=f=3200:t=q:w=1.2:g=2,acompressor=threshold=-20dB:ratio=3:attack=8:release=120:makeup=2,loudnorm=I=-16:TP=-1.5:LRA=9', '-ar', '48000', '-ac', '2', f'{TMP}/fala.wav')
 run('ffmpeg', '-nostdin', '-v', 'error', '-y', '-stream_loop', '-1', '-i', TRILHA, '-t', f'{total:.3f}', '-af', f'loudnorm=I=-24:TP=-3,afade=t=out:st={total - 1.0:.3f}:d=1.0', '-ar', '48000', '-ac', '2', f'{TMP}/trilha.wav')
-fi = fala_ini
-run('ffmpeg', '-nostdin', '-v', 'error', '-y', '-i', f'{TMP}/trilha.wav', '-i', f'{TMP}/fala.wav', '-filter_complex',
-    f"[0:a]volume='if(gte(t,{fi - .3:.2f}),0.32,1)':eval=frame[m];[1:a]adelay={int(fi * 1000)}|{int(fi * 1000)},apad[f];[m][f]amix=inputs=2:duration=first:normalize=0,alimiter=limit=0.84[a]",
-    '-map', '[a]', '-ar', '48000', f'{TMP}/mix.wav')
+import shutil; shutil.copy(f'{TMP}/trilha.wav', f'{TMP}/mix.wav')
 run('ffmpeg', '-nostdin', '-v', 'error', '-y', '-i', f'{TMP}/video.mp4', '-i', f'{TMP}/mix.wav', '-filter_complex', f"[0:v]ass={TMP}/leg.ass:fontsdir=/usr/share/fonts/opentype/inter[v]",
     '-map', '[v]', '-map', '1:a', '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', SAIDA)
 print('ok', SAIDA, round(total, 2), 'fala em', round(fala_ini, 2))
