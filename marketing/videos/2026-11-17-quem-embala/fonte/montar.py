@@ -17,7 +17,8 @@ BORRA = lambda y: (f"drawbox=x=0:y=ih*{y:.2f}:w=iw:h=ih*{1-y:.2f}:color=0x0E4D2E
                    f"drawtext=fontfile={FM}:text='nome e endereço ficam só com a gente':fontcolor=0xCDE3D3:fontsize=38:x=(w-tw)/2:y=h*{y:.2f}+(h*{1-y:.2f})/2+110")
 # (arquivo, início, fim, velocidade, filtro extra, texto na tela)
 PARTES = [
- ('IMG_5763', 4.3, 6.8, 1.0, '', ''),                                   # gancho: o pacote pronto, ele sorrindo
+ ('IMG_5764', 0.2, 4.05, 1.0, '', 'ABERTURA'),                        # 17/11 (Emanuel): começa pelo fim, com a pergunta
+ ('IMG_5763', 4.3, 6.8, 1.0, '', ''),                                   # ele mostrando o pacote pronto
  ('IMG_5291', 0.0, 6.0, 3.0, BORRA(0.36), '1. o seu pedido cai aqui'),
  ('IMG_5297', 0.0, 15.6, 4.0, BORRA(0.56), '2. a etiqueta sai na hora'),
  ('IMG_5757', 0.0, 21.7, 6.0, '', '3. tudo bem protegido'),
@@ -29,12 +30,13 @@ PARTES = [
  ('IMG_5763', 0.0, 4.3, 3.0, '', ''),
  ('IMG_5764', 0.2, 10.85, 1.0, '', 'FALA'),
 ]
-segs = []; t = 0.0; legendas = []; fala_ini = None
+segs = []; t = 0.0; legendas = []; fala_ini = None; ab_fim = 0
 for i, (n, a, b, v, extra, txt) in enumerate(PARTES):
     out = f'{TMP}/p{i:02d}.mp4'; vf = f"trim={a}:{b},setpts=(PTS-STARTPTS)/{v},{BASE}" + (f',{extra}' if extra else '')
     run('ffmpeg', '-nostdin', '-v', 'error', '-y', '-i', f'{IN}/{n}.mp4', '-filter_complex', f'[0:v]{vf}[v]', '-map', '[v]', '-an', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '17', out)
     d = float(subprocess.check_output(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', out]))
     if txt == 'FALA': fala_ini = t
+    elif txt == 'ABERTURA': ab_fim = d
     elif txt: legendas.append((t, t + min(d, 3.2), txt))
     segs.append(out); t += d
 total = t
@@ -47,11 +49,13 @@ FALA = [(0.07, 1.65, 'e o seu produto chega na sua casa'), (2.47, 3.81, 'e o res
         (5.6, 8.15, 'pra precisar, estamos aqui: equipe Leilão no Zap'), (8.37, 10.6, 'é isso, família Leilão no Zap!')]
 ass = ['[Script Info]', 'ScriptType: v4.00+', 'PlayResX: 1080', 'PlayResY: 1920', '', '[V4+ Styles]',
  'Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding',
- 'Style: G,Inter Display Black,96,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,8,3,8,60,60,330,1',
- 'Style: P,Inter Display Black,70,&H0026411B,&H00FFFFFF,&H0051C4F5,&H0051C4F5,0,0,0,0,100,100,0,0,3,18,0,8,60,60,300,1',
+ 'Style: G,Inter Display Black,90,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,8,3,2,60,60,430,1',
+ 'Style: P,Inter Display Black,70,&H0026411B,&H00FFFFFF,&H0051C4F5,&H0051C4F5,0,0,0,0,100,100,0,0,3,18,0,2,60,60,330,1',
  'Style: L,Inter Display Black,76,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,7,3,2,70,70,560,1', '', '[Events]',
  'Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text',
- r'Dialogue: 0,0:00:00.00,0:00:02.50,G,,0,0,0,,quem embala\N{\c&H51C4F5&}o seu pedido?']
+ r'Dialogue: 0,0:00:00.07,0:00:01.75,L,,0,0,0,,e o seu produto chega na sua casa',
+ r'Dialogue: 0,0:00:02.47,0:00:03.85,L,,0,0,0,,e o responsável é o…',
+ f'Dialogue: 0,{ts(ab_fim)},{ts(ab_fim + 2.5)},G,,0,0,0,,quem embala\\N{{\\c&H51C4F5&}}o seu pedido?']
 for s, e, txt in legendas: ass.append(f'Dialogue: 0,{ts(s)},{ts(e)},P,,0,0,0,,{txt}')
 for s, e, txt in FALA:
     txt = txt.replace('Leilão no Zap', r'{\c&H51C4F5&}Leilão no Zap{\c&HFFFFFF&}').replace('Angel!', r'{\c&H51C4F5&}Angel!{\c&HFFFFFF&}')
@@ -64,7 +68,7 @@ run('ffmpeg', '-nostdin', '-v', 'error', '-y', '-ss', '0.2', '-to', '10.85', '-i
 run('ffmpeg', '-nostdin', '-v', 'error', '-y', '-stream_loop', '-1', '-i', TRILHA, '-t', f'{total:.3f}', '-af', f'loudnorm=I=-24:TP=-3,afade=t=out:st={total - 1.2:.3f}:d=1.2', '-ar', '48000', '-ac', '2', f'{TMP}/trilha.wav')
 fi = fala_ini
 run('ffmpeg', '-nostdin', '-v', 'error', '-y', '-i', f'{TMP}/trilha.wav', '-i', f'{TMP}/fala.wav', '-filter_complex',
-    f"[0:a]volume='if(gte(t,{fi - .3:.2f}),0.32,1)':eval=frame[m];[1:a]adelay={int(fi * 1000)}|{int(fi * 1000)},apad[f];[m][f]amix=inputs=2:duration=first:normalize=0,alimiter=limit=0.84[a]",
+    f"[0:a]volume='if(lt(t,{ab_fim:.2f})+gte(t,{fi - .3:.2f}),0.32,1)':eval=frame[m];[1:a]asplit[f1][f2];[f1]atrim=0:{ab_fim:.2f},afade=t=out:st={ab_fim - .08:.2f}:d=0.08,apad[o];[f2]adelay={int(fi * 1000)}|{int(fi * 1000)},apad[f];[m][o][f]amix=inputs=3:duration=first:normalize=0,alimiter=limit=0.84[a]",
     '-map', '[a]', '-ar', '48000', f'{TMP}/mix.wav')
 run('ffmpeg', '-nostdin', '-v', 'error', '-y', '-i', f'{TMP}/video.mp4', '-i', f'{TMP}/mix.wav', '-filter_complex',
     f"[0:v]ass={TMP}/leg.ass:fontsdir=/usr/share/fonts/opentype/inter[v]", '-map', '[v]', '-map', '1:a', '-c:v', 'libx264', '-preset', 'medium', '-crf', '20',
