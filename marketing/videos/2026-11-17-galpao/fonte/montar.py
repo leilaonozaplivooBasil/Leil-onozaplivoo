@@ -24,8 +24,8 @@ run('ffmpeg', '-nostdin', '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i
 def ts(x): return f'0:{int(x // 60):02d}:{x % 60:05.2f}'
 ass = ['[Script Info]', 'ScriptType: v4.00+', 'PlayResX: 1080', 'PlayResY: 1920', '', '[V4+ Styles]',
  'Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding',
- 'Style: G,Inter Display Black,96,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,8,3,8,60,60,330,1',
- 'Style: P,Inter Display Black,66,&H0026411B,&H00FFFFFF,&H0051C4F5,&H0051C4F5,0,0,0,0,100,100,0,0,3,18,0,8,60,60,300,1',
+ 'Style: G,Inter Display Black,96,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,8,3,2,60,60,430,1',
+ 'Style: P,Inter Display Black,66,&H0026411B,&H00FFFFFF,&H0051C4F5,&H0051C4F5,0,0,0,0,100,100,0,0,3,18,0,2,60,60,330,1',
  'Style: L,Inter Display Black,82,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,7,3,2,70,70,560,1', '', '[Events]',
  'Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text',
  r'Dialogue: 0,0:00:00.00,0:00:02.50,G,,0,0,0,,hoje a gente\N{\c&H51C4F5&}tá no galpão']
