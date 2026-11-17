@@ -7,7 +7,7 @@ TMP = os.path.join(os.path.dirname(SAIDA), 'tmp-galpao'); os.makedirs(TMP, exist
 def run(*a): subprocess.run(a, check=True)
 BASE = 'scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,fps=30,format=yuv420p'
 PARTES = [('IMG_5754', 1.5, 6.5, 2.0, ''), ('IMG_5755', 0.0, 18.0, 3.0, 'os produtos da loja'),
-          ('IMG_3471', 0.0, 9.5, 3.0, 'e os que estão sendo testados'), ('IMG_3472', 0.0, 11.2, 3.0, ''), ('IMG_3470', 0.0, 8.2, 3.0, ''),
+          ('IMG_3471', 0.0, 9.5, 3.0, 'e os que estão sendo testados'), ('IMG_3470', 0.0, 8.2, 3.0, ''),
           ('IMG_5756', 0.0, 24.0, 4.0, 'tem de tudo um pouco'), ('IMG_5754', 15.0, 54.6, 5.0, '')]  # 17/11: a Natália pediu para tirar a fala final
 segs = []; t = 0.0; leg = []; fala_ini = 0
 for i, (n, a, b, v, txt) in enumerate(PARTES):
