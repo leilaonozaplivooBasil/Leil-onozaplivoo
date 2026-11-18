@@ -59,9 +59,11 @@ for ti, (a, b) in enumerate(TRE):
     while True:
         buf = p.stdout.read(W * H * 3)
         if len(buf) < W * H * 3: break
-        to = a + n / FPS; im = Image.frombytes('RGB', (W, H), buf); z = z0 + .03 * max(0, 1 - n / 6)
+        to = a + n / FPS; im = Image.frombytes('RGB', (W, H), buf); z = z0 + (.14 * (1 - ease(n / 7)) if ti else 0)
         cw, ch = W / z, H / z; x0 = (W - cw) / 2; y0 = (H - ch) * .35
         fr = im.crop((round(x0), round(y0), round(x0 + cw), round(y0 + ch))).resize((W, H), Image.LANCZOS).convert('RGBA')
+        if ti and n < 3: fr = fr.filter(ImageFilter.BoxBlur(10 - 3 * n))
+        if ti and n < 4: fr.alpha_composite(Image.new('RGBA', (W, H), (255, 255, 255, int(170 * (1 - n / 4)))))
         topo(fr); selo(fr, to); legenda(fr, to); gancho(fr, tl)
         enc.stdin.write(fr.convert('RGB').tobytes()); n += 1; tl += 1 / FPS
     p.wait()
