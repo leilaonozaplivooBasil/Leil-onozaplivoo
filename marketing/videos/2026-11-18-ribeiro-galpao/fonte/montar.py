@@ -40,13 +40,38 @@ def quem(t):
 # alvo de zoom por instante do original: Ribeiro sozinho falando -> 1.5 nele; resto -> 1.0 (os dois)
 def ease(x): x = max(0, min(1, x)); return x * x * (3 - 2 * x)
 # ---- etiquetas de produto (tempo do original)
-PROD = [(84.2, 109.6, 'FILTRO DE ÁGUA', 'novo, zerado'), (118.1, 134.8, 'TORRADEIRA', 'nova, zerada'), (153.0, 182.0, 'CAFETEIRA TRÊS CORAÇÕES', 'nova, zerada')]
+PROD = [(118.1, 134.8, 'TORRADEIRA', 'nova, zerada'), (153.0, 182.0, 'CAFETEIRA TRÊS CORAÇÕES', 'nova, zerada')]
 CHAVE = {'site': 1, 'site,': 1, 'galpão': 1, 'galpão,': 1, 'galpão.': 1, 'zerado': 1, 'zerada': 1, 'zerada,': 1, 'zerada.': 1, 'zerado.': 1, 'nova': 1, 'nova,': 1, 'novo,': 1, 'abaixo': 1, 'preço': 1, 'mercado.': 1, 'link': 1, 'imbatível.': 1, 'perdeu.': 1, 'levou,': 1, 'leilão,': 1, 'três': 1, 'corações.': 1, 'cafeteira.': 1, 'torradeira.': 1, 'filtro': 1, 'unidades.': 1, 'rápido.': 1, 'usado.': 1, 'segunda-feira.': 1, 'escritório.': 1}
 def pedacos(a, b, t):
     ws = t.split(); n = max(1, math.ceil(len(ws) / 3)); k = math.ceil(len(ws) / n); d = (b - a) / n
     return [(a + i * d, a + (i + 1) * d, ws[i * k:(i + 1) * k]) for i in range(n)]
 LEG = [p for a, b, t, q in falas for p in pedacos(a, b, t)]
 LOGO = Image.open(f'{MK}/marca/logo-horizontal-transparente.png').convert('RGBA'); LOGO.thumbnail((230, 90))
+# 18/11 (Natália): provar que o produto ESTÁ NA LOJA — gravação da busca no site (como chega quem vem do Instagram) num celular na tela
+import os
+TELAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tela-da-loja')
+INSERE = [(127.6, 134.7, 'torradeira'), (153.3, 160.2, 'cafeteira')]
+def quadros_da_tela(n):
+    raw = subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-i', f'{TELAS}/{n}.mp4', '-vf', 'crop=iw:ih*0.786:0:0,scale=430:732', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], capture_output=True, check=True).stdout
+    k = 430 * 732 * 3; return [Image.frombytes('RGB', (430, 732), raw[i:i + k]) for i in range(0, len(raw) - k + 1, k)]
+TELA_Q = {n: quadros_da_tela(n) for _, _, n in INSERE}
+MASCARA = Image.new('L', (430, 732), 0); ImageDraw.Draw(MASCARA).rounded_rectangle((0, 0, 429, 731), 46, fill=255)
+def celular(fr, to):
+    for a, b, n in INSERE:
+        if a <= to < b:
+            q = TELA_Q[n]; im = q[min(len(q) - 1, int((to - a) * FPS))]
+            k = ease((to - a) / .35) * ease((b - to) / .3); x = int(-520 + 570 * k); y = 440; hh = 732 + 46
+            sh = Image.new('RGBA', (W, H)); ImageDraw.Draw(sh).rounded_rectangle((x + 10, y + 24, x + 474, y + hh + 22), 60, fill=(0, 0, 0, 150)); fr.alpha_composite(sh.filter(ImageFilter.GaussianBlur(22)))
+            d = ImageDraw.Draw(fr); d.rounded_rectangle((x - 2, y - 2, x + 452, y + hh), 62, fill=(18, 18, 18), outline=(90, 90, 90), width=3)
+            fr.paste(im, (x + 11, y + 23), MASCARA); d.rounded_rectangle((x + 165, y + 30, x + 285, y + 58), 14, fill=(0, 0, 0))
+            if to - a > 1.9:
+                k2 = ease((to - a - 1.9) / .25); f = F('Black', int(48 * (.7 + .3 * k2))); t = 'TÁ NA LOJA'; w = d.textlength(t, font=f)
+                larg = 64 + 18 + w + 40; x1 = x + 225 - larg / 2; y1 = y + hh + 26
+                d.rounded_rectangle((x1, y1, x1 + larg, y1 + 84), 42, fill=(46, 196, 110)); d.ellipse((x1 + 12, y1 + 12, x1 + 72, y1 + 72), fill=BR)
+                d.line([(x1 + 28, y1 + 43), (x1 + 40, y1 + 56), (x1 + 60, y1 + 30)], fill=(46, 196, 110), width=8)
+                d.text((x1 + 72 + 18, y1 + 43), t, font=f, fill=NOITE, anchor='lm')
+            return True
+    return False
 def legenda(fr, to):
     for a, b, ws in LEG:
         if a <= to < b:
@@ -97,7 +122,7 @@ for ti, (a, b) in enumerate(tre):
         x0 = min(max(0, cx_s - cw / 2), W - cw); y0 = min(max(0, cy_s - ch / 2), H - ch)
         fr = im.crop((round(x0), round(y0), round(x0 + cw), round(y0 + ch))).resize((W, H), Image.LANCZOS)
         if z > 1.2: fr = fr.filter(ImageFilter.UnsharpMask(2, 60, 2))
-        fr = fr.convert('RGBA'); topo(fr); etiqueta(fr, to, tl); legenda(fr, to); gancho(fr, tl)
+        fr = fr.convert('RGBA'); topo(fr); etiqueta(fr, to, tl); celular(fr, to); legenda(fr, to); gancho(fr, tl)
         enc.stdin.write(fr.convert('RGB').tobytes()); n += 1; tl += 1 / FPS
     p.wait()
 # cartão final 3,8 s

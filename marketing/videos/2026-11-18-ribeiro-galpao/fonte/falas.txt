@@ -9,16 +9,6 @@
 80.17 81.65 Muita mercadoria vai chegar também.
 81.75 83.05 Vai chegar a mercadoria segunda-feira.
 83.17 83.95 Tem mercadoria também.
-84.41 87.15 A gente, por exemplo, tem esse filtro aqui.
-87.79 91.53 É um filtro que você já sabe como é que funciona a mercadoria.
-91.53 94.23 A mercadoria é devolvida por algum motivo,
-94.39 95.89 por razão, por conta do endereço.
-96.15 97.69 Chegou no endereço e o endereço é errado.
-97.89 100.55 Volta pro estabelecimento e esse estabelecimento
-100.55 101.29 coloca no Galpão.
-101.39 103.77 Nossa empresa vai lá e arremata esse produto
-103.77 106.49 e coloca aqui e vende abaixo do preço de mercado.
-107.03 109.45 Tá aqui um produto novo, zerado pra você.
 118.26 119.46 Olha, isso aqui é um produto
 119.46 121.36 que as pessoas gostam muito.
 121.9 122.74 Tomar um café da manhã.
