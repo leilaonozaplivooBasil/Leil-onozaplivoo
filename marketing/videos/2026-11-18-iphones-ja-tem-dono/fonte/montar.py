@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 PX, SAIDA = sys.argv[1:3]; MK = '/home/user/Leil-onozaplivoo/marketing'; W, H, FPS = 1080, 1920, 30
 F = lambda p, t: ImageFont.truetype(f'/usr/share/fonts/opentype/inter/InterDisplay-{p}.otf', t)
 VERDE, OURO, AMA, NOITE, BR, VERM = (27, 122, 72), (245, 196, 81), (255, 214, 10), (10, 20, 16), (255, 255, 255), (222, 30, 38)
-TRE = [(3.62, 9.15), (9.78, 16.95), (18.02, 27.85), (32.86, 35.62), (36.28, 42.45), (61.62, 65.74), (69.84, 74.35)]
+TRE = [(3.55, 28.62), (32.80, 42.95), (61.55, 65.78), (69.80, 74.75)]  # 18/11: frases inteiras (o "6.370" era cortado no fim); corte só no silêncio longo e no ensaio
 # legenda (tempo original): texto em pedaços curtos, palavras-chave em amarelo
 LEG = [(3.77, 6.17, 'ESSES DOIS IPHONES'), (6.17, 7.4, 'NÃO ESTÃO À VENDA,'), (7.59, 9.05, 'JÁ TEM *DONO.*'),
        (9.89, 11.7, 'ESSE AQUI É O *PRO MAX*'), (11.7, 12.6, '*PRATEADO,*'), (12.65, 14.8, 'ARREMATADO NO LEILÃO NO ZAP'), (14.8, 16.9, 'POR *R$ 6.370*'),
@@ -38,12 +38,13 @@ def destaque(t, w):
         if w in [x.replace('*', '') for x in m.split()]: return True
     return False
 def selo(fr, to):
+    """etiqueta compacta no alto, na parede (acima da cabeça), para não cobrir o rosto"""
     for a, b, t1, t2, t3 in SELO:
         if a <= to < b:
-            k = ease((to - a) / .35) * ease((b - to) / .3); d = ImageDraw.Draw(fr); f1, f2, f3 = F('Black', 52), F('Bold', 34), F('Black', 76)
-            w = max(d.textlength(t1, font=f1), d.textlength(t2, font=f2), d.textlength(t3, font=f3)) + 80; x0 = W - (w + 40) * k
-            d.rounded_rectangle((x0, 250, x0 + w + 40, 500), 30, fill=VERDE); d.rounded_rectangle((x0, 250, x0 + 18, 500), 9, fill=AMA)
-            d.text((x0 + 44, 300), t1, font=f1, fill=BR, anchor='lm'); d.text((x0 + 44, 355), t2, font=f2, fill=(205, 235, 215), anchor='lm'); d.text((x0 + 44, 435), t3, font=f3, fill=AMA, anchor='lm')
+            k = ease((to - a) / .35) * ease((b - to) / .3); d = ImageDraw.Draw(fr); f1, f2, f3 = F('Black', 40), F('Bold', 28), F('Black', 58)
+            w = max(d.textlength(t1, font=f1), d.textlength(t2, font=f2), d.textlength(t3, font=f3)) + 70; x0 = -w + (w + 36) * k; y0 = 228
+            d.rounded_rectangle((x0, y0, x0 + w, y0 + 182), 26, fill=VERDE); d.rounded_rectangle((x0 + w - 14, y0, x0 + w, y0 + 182), 7, fill=AMA)
+            d.text((x0 + 30, y0 + 38), t1, font=f1, fill=BR, anchor='lm'); d.text((x0 + 30, y0 + 80), t2, font=f2, fill=(205, 235, 215), anchor='lm'); d.text((x0 + 30, y0 + 136), t3, font=f3, fill=AMA, anchor='lm')
 def gancho(fr, tl):
     if tl > 2.4: return
     d = ImageDraw.Draw(fr); k = ease(tl / .25); f = F('Black', int(118 * (.8 + .2 * k)))
