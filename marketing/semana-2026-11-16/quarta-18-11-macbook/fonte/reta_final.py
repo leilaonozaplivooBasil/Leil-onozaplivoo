@@ -5,6 +5,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 AQ = os.path.dirname(os.path.abspath(__file__)); OUT = os.path.dirname(AQ) + '/visual'; MK = '/home/user/Leil-onozaplivoo/marketing'
 LANCE = sys.argv[1]; SO = sys.argv[2:] or ['1h', '10min']
+MIN = next((x[:-3] for x in SO if x.endswith('min') and x != '10min'), None); PESSOAS = next((x[1:] for x in SO if x.startswith('p')), None)
 F = lambda p, t: ImageFont.truetype(f'/usr/share/fonts/opentype/inter/InterDisplay-{p}.otf', t)
 AN = lambda t: ImageFont.truetype(f'{MK}/marca/fontes/anton-latin-400-normal.woff', t)
 W, H = 1080, 1920; BR, OURO, OCL, AMA, VERM, NOITE, NEON = (255, 255, 255), (245, 196, 81), (250, 228, 170), (255, 214, 10), (230, 32, 40), (8, 18, 13), (63, 208, 126)
@@ -18,7 +19,8 @@ def fundo(c1, c0, cy=900):
 def glow(b, box, cor, a, blur):
     g = Image.new('RGBA', (W, H)); ImageDraw.Draw(g).ellipse(box, fill=cor + (a,)); b.alpha_composite(g.filter(ImageFilter.GaussianBlur(blur)))
 def logo(b):
-    lg = LOGO.copy(); lg.thumbnail((200, 200)); b.alpha_composite(lg, ((W - lg.width) // 2, 80))
+    lg = LOGO.copy(); lg.thumbnail((200, 200)); x = (W - lg.width) // 2
+    ImageDraw.Draw(b).rounded_rectangle((x - 22, 66, x + lg.width + 22, 94 + lg.height), 26, fill=(10, 20, 16, 235)); b.alpha_composite(lg, (x, 80))
 def mac(b, larg, base):
     m = MAC.resize((larg, int(MAC.height * larg / MAC.width)), Image.LANCZOS)
     s = Image.new('RGBA', (W, H)); ImageDraw.Draw(s).ellipse((W / 2 - larg * .46, base - 14, W / 2 + larg * .46, base + 20), fill=(0, 0, 0, 170)); b.alpha_composite(s.filter(ImageFilter.GaussianBlur(16)))
@@ -47,15 +49,15 @@ if '1h' in SO:   # relógio-anel quase vazio: 1 hora · a entrada fechou
     d.text((W / 2, 1360), 'agora só disputa quem já deu lance', font=F('SemiBold', 40), fill=OCL, anchor='mm')
     caixa_lance(d, 1410); mac(b, 360, 1880)
     b.convert('RGB').save(f'{OUT}/V8-19h-falta-1-hora.jpg', quality=94); print('ok 1h')
-if '10min' in SO:   # placar estourando: 10 MINUTOS, vermelho, raios
+for N in (['10'] if '10min' in SO else []) + ([MIN] if MIN else []):   # placar estourando: N MINUTOS, vermelho, raios
     b = fundo((150, 16, 22), (30, 2, 4), 760); logo(b); cx, cy = W / 2, 700; d = ImageDraw.Draw(b)
     for k in range(28):
         an = k / 28 * 2 * math.pi; r1, r2 = 330, 900
         d.polygon([(cx + r1 * math.cos(an - .045), cy + r1 * math.sin(an - .045)), (cx + r2 * math.cos(an), cy + r2 * math.sin(an)), (cx + r1 * math.cos(an + .045), cy + r1 * math.sin(an + .045))], fill=(255, 80, 60, 70))
-    glow(b, (cx - 380, cy - 380, cx + 380, cy + 380), AMA, 120, 90); d = ImageDraw.Draw(b)
-    d.text((cx + 10, cy - 60 + 12), '10', font=AN(460), fill=(0, 0, 0, 150), anchor='mm'); d.text((cx, cy - 60), '10', font=AN(460), fill=AMA, anchor='mm')
+    glow(b, (cx - 380, cy - 380, cx + 380, cy + 380), AMA, 120, 90); logo(b); d = ImageDraw.Draw(b)
+    d.text((cx + 10, cy - 60 + 12), N, font=AN(460), fill=(0, 0, 0, 150), anchor='mm'); d.text((cx, cy - 60), N, font=AN(460), fill=AMA, anchor='mm')
     cont(d, (cx, cy + 250), 'MINUTOS', AN(150), BR, 7)
     cont(d, (W / 2, 1150), 'O MARTELO VAI BATER!', F('Black', 76), BR)
-    d.text((W / 2, 1250), 'quem já deu lance ainda pode cobrir', font=F('SemiBold', 42), fill=(255, 225, 225), anchor='mm')
+    d.text((W / 2, 1250), (f'{PESSOAS} pessoas na disputa · quem deu lance pode cobrir' if PESSOAS else 'quem já deu lance ainda pode cobrir'), font=F('SemiBold', 40), fill=(255, 225, 225), anchor='mm')
     caixa_lance(d, 1330, AMA); mac(b, 420, 1830)
-    b.convert('RGB').save(f'{OUT}/V9-19h50-faltam-10-minutos.jpg', quality=94); print('ok 10min')
+    nome = 'V9-19h50-faltam-10-minutos' if N == '10' else f'V10-faltam-{N}-minutos'; b.convert('RGB').save(f'{OUT}/{nome}.jpg', quality=94); print('ok', nome)
