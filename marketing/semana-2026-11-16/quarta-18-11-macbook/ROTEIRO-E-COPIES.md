@@ -25,25 +25,62 @@ Dicas: fala rápida, sem "oi gente" no começo · câmera na mão · se der, gra
 >
 > #leilaonozap #macbook #macbookneo #apple #leilao #leilaoonline #riodejaneiro
 
-## Copies das artes (vendedores · WhatsApp) — conferir o lance antes de cada envio
-**14h · 6 horas**
-> ⏳ *Faltam 6 horas* pro martelo bater no *MacBook Neo*! Lance atual: *R$ ___*
-> ⚠️ 1º lance só até as 19h. 👉 https://leilaonozap.net/l/d0ef262f19d2e0fca869ff2e
+## Copies dos VENDEDORES (WhatsApp) — formato novo (marca/REGRAS-COPY-VENDEDORES.md)
+Vendedor só troca `SEU-CODIGO` no link. Conferir o lance antes de cada envio. A linha 💡 é só pro vendedor, não encaminhar.
+
+**15h · tela de bloqueio (lance subiu)**
+> 🚨 *O lance subiu!* Você viu quanto já tá?
+>
+> O *MacBook Neo 13", novo e lacrado*, saiu de R$ 397 e já está com *lance atual de R$ 997,00*! 💻🔥 *3 pessoas* já estão na disputa.
+>
+> O leilão é *HOJE, ÀS 20H*, mas o seu *PRIMEIRO LANCE vai só ATÉ AS 18H59*. Depois disso, quem não deu lance fica de fora!
+>
+> 👉 *Entra agora e garante seu lance:*
+> https://leilaonozap.net/Loja-Virtual?ref=SEU-CODIGO
+>
+> 💡 Pro vendedor: a ideia é mostrar que tá andando (subiu R$ 600) e que a porta fecha às 18h59. Se perguntarem "e se eu entrar depois?": depois das 18h59 só continua quem já deu lance.
 
 **17h · faltam 2h pro 1º lance**
-> 🚨 *Faltam 2 horas pro seu 1º lance!* Depois das 19h, quem não deu lance fica de fora do leilão do MacBook.
-> Lance atual: *R$ ___* 👉 https://leilaonozap.net/l/d0ef262f19d2e0fca869ff2e
+> ⏰ *Acorda!* Faltam *só 2 horas* pro seu primeiro lance.
+>
+> O *MacBook Neo 13", novo e lacrado*, está com *lance atual de R$ ___*! 💻
+>
+> Às *18H59 a entrada fecha*. Quem não deu o primeiro lance até lá *fica de fora* do leilão das 20h.
+>
+> 👉 *Dá seu primeiro lance agora:*
+> https://leilaonozap.net/Loja-Virtual?ref=SEU-CODIGO
+>
+> 💡 Pro vendedor: o foco é o prazo. Quem já deu lance segue até as 20h normalmente.
 
-**18h30 · últimos 30 min pro 1º lance**
-> 🚨 *ÚLTIMA CHAMADA!* Faltam *30 minutos* pra dar o seu 1º lance no MacBook. Às 19h a entrada fecha!
-> 👉 https://leilaonozap.net/l/d0ef262f19d2e0fca869ff2e
+**18h30 · última chamada**
+> 🚨 *ÚLTIMA CHAMADA!* Faltam *30 minutos* pra entrada fechar.
+>
+> *MacBook Neo 13", novo e lacrado* · *lance atual de R$ ___*.
+>
+> Seu *PRIMEIRO LANCE só vale ATÉ AS 18H59*. Depois, só assiste!
+>
+> 👉 *Corre e dá seu lance:*
+> https://leilaonozap.net/Loja-Virtual?ref=SEU-CODIGO
+>
+> 💡 Pro vendedor: mande pra quem perguntou do MacBook hoje e ainda não entrou. É a última chance dessa pessoa.
 
-**19h50 · últimos 10**
-> 🔥 *Reta final!* Faltam *10 minutos* pro martelo bater. Quem já deu lance ainda pode cobrir!
-> Lance agora: *R$ ___* 👉 https://leilaonozap.net/l/d0ef262f19d2e0fca869ff2e
+**19h50 · reta final**
+> 🔥 *Faltam 10 minutos!* O martelo bate *às 20h*.
+>
+> O *MacBook Neo 13"* está com *lance atual de R$ ___*. Quem já deu lance *ainda pode cobrir*!
+>
+> 👉 *Acompanha ao vivo:*
+> https://leilaonozap.net/Loja-Virtual?ref=SEU-CODIGO
+>
+> 💡 Pro vendedor: agora só entra quem já deu o primeiro lance. Fale com quem já está na disputa.
 
 **20h · é agora**
-> 🔨 *É AGORA!* Últimos segundos do leilão do MacBook Neo. Quem dá mais? 👀
-> 👉 https://leilaonozap.net/l/d0ef262f19d2e0fca869ff2e
+> 🔨 *É AGORA!* Últimos segundos do leilão do *MacBook Neo*.
+>
+> *Quem dá mais?* 👀
+>
+> 👉 https://leilaonozap.net/Loja-Virtual?ref=SEU-CODIGO
+>
+> 💡 Pro vendedor: depois das 20h, mande o resultado (por quanto saiu). Isso vira prova pro próximo leilão.
 
-Instagram: mesmas frases, sem link, terminando com "Escreve LEILÃO aqui embaixo que eu te envio o link!".
+Instagram: as mesmas ideias, sem link, terminando com "Escreve LEILÃO aqui embaixo que eu te envio o link!".
