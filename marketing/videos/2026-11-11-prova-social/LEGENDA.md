@@ -10,6 +10,9 @@ Chega! E a galera ainda manda foto: PS5, iPhone, patinete elétrico, TV nova e o
 Tudo real. Tudo entregue. ✅
 
 O próximo dono pode ser você: sábado tem leilão da Honda PCX 160! 🛵
-Escreve LEILÃO aqui embaixo que eu te envio o link! 👇
+
+Se quer participar, escreve LEILÃO aqui embaixo que eu te envio o link! 👇
 
 #leilaonozap #jaencontrouodono #leilao #entregaconfirmada #provasocial #riodejaneiro
+
+Publicado no feed em 18/11 (post dcc499b7), aprovado pela Natália.
