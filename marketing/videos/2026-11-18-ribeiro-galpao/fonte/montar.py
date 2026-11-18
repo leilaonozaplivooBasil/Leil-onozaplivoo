@@ -20,8 +20,8 @@ for l in open(FAL):
 # ---- trechos mantidos: cada fala com folga, juntando o que está perto (respiração curta fica, silêncio longo sai)
 tre = []
 for a, b, t, q in falas:
-    a, b = a - .15, b + .22
-    if tre and a - tre[-1][1] < .45: tre[-1][1] = b
+    a, b = a - .15, b + .3
+    if tre and a - tre[-1][1] < 1.0: tre[-1][1] = b   # 18/11: pausas curtas ficam (corte só em silêncio longo, nunca no meio da fala)
     else: tre.append([a, b])
 # ---- rosto do Ribeiro ao longo do tempo
 ros = json.load(open(ROS)); tr = []
