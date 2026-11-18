@@ -34,6 +34,7 @@ def rosto(t):
     if k.any(): return float(np.median(X[k])), float(np.median(Y[k]))
     return float(np.interp(t, T, X)), float(np.interp(t, T, Y))
 def quem(t):
+    if 72.4 <= t < 84.0: return 'R'   # 18/11 (Natália): no "Certo?" já corta só para o Ribeiro
     for a, b, tx, q in falas:
         if a - .3 <= t <= b + .3: return q
     return 'N'
@@ -50,26 +51,28 @@ LOGO = Image.open(f'{MK}/marca/logo-horizontal-transparente.png').convert('RGBA'
 # 18/11 (Natália): provar que o produto ESTÁ NA LOJA — gravação da busca no site (como chega quem vem do Instagram) num celular na tela
 import os
 TELAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tela-da-loja')
-INSERE = [(127.6, 134.7, 'torradeira'), (153.3, 160.2, 'cafeteira')]
+INSERE = [(126.25, 129.65, 'torradeira'), (175.95, 179.45, 'cafeteira')]  # 18/11: em tela cheia, sem cobrir o Ribeiro
 def quadros_da_tela(n):
-    raw = subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-i', f'{TELAS}/{n}.mp4', '-vf', 'crop=iw:ih*0.786:0:0,scale=430:732', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], capture_output=True, check=True).stdout
-    k = 430 * 732 * 3; return [Image.frombytes('RGB', (430, 732), raw[i:i + k]) for i in range(0, len(raw) - k + 1, k)]
+    raw = subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-i', f'{TELAS}/{n}.mp4', '-vf', 'scale=600:1011', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], capture_output=True, check=True).stdout
+    k = 600 * 1011 * 3; return [Image.frombytes('RGB', (600, 1011), raw[i:i + k]) for i in range(0, len(raw) - k + 1, k)]
 TELA_Q = {n: quadros_da_tela(n) for _, _, n in INSERE}
-MASCARA = Image.new('L', (430, 732), 0); ImageDraw.Draw(MASCARA).rounded_rectangle((0, 0, 429, 731), 46, fill=255)
+MASCARA = Image.new('L', (600, 1011), 0); ImageDraw.Draw(MASCARA).rounded_rectangle((0, 0, 599, 1010), 56, fill=255)
 def celular(fr, to):
+    """tela cheia rápida: fundo = o próprio vídeo borrado e escuro, celular grande no meio, selo TÁ NA LOJA (não cobre o Ribeiro)"""
     for a, b, n in INSERE:
         if a <= to < b:
             q = TELA_Q[n]; im = q[min(len(q) - 1, int((to - a) * FPS))]
-            k = ease((to - a) / .35) * ease((b - to) / .3); x = int(-520 + 570 * k); y = 440; hh = 732 + 46
-            sh = Image.new('RGBA', (W, H)); ImageDraw.Draw(sh).rounded_rectangle((x + 10, y + 24, x + 474, y + hh + 22), 60, fill=(0, 0, 0, 150)); fr.alpha_composite(sh.filter(ImageFilter.GaussianBlur(22)))
-            d = ImageDraw.Draw(fr); d.rounded_rectangle((x - 2, y - 2, x + 452, y + hh), 62, fill=(18, 18, 18), outline=(90, 90, 90), width=3)
-            fr.paste(im, (x + 11, y + 23), MASCARA); d.rounded_rectangle((x + 165, y + 30, x + 285, y + 58), 14, fill=(0, 0, 0))
-            if to - a > 1.9:
-                k2 = ease((to - a - 1.9) / .25); f = F('Black', int(48 * (.7 + .3 * k2))); t = 'TÁ NA LOJA'; w = d.textlength(t, font=f)
-                larg = 64 + 18 + w + 40; x1 = x + 225 - larg / 2; y1 = y + hh + 26
-                d.rounded_rectangle((x1, y1, x1 + larg, y1 + 84), 42, fill=(46, 196, 110)); d.ellipse((x1 + 12, y1 + 12, x1 + 72, y1 + 72), fill=BR)
-                d.line([(x1 + 28, y1 + 43), (x1 + 40, y1 + 56), (x1 + 60, y1 + 30)], fill=(46, 196, 110), width=8)
-                d.text((x1 + 72 + 18, y1 + 43), t, font=f, fill=NOITE, anchor='lm')
+            fundo = fr.filter(ImageFilter.GaussianBlur(28)); fundo.alpha_composite(Image.new('RGBA', (W, H), (8, 20, 14, 170))); fr.paste(fundo)
+            k = ease((to - a) / .2); x = 230; y = int(255 + 120 * (1 - k)); pw, ph = 600 + 26, 1011 + 46
+            sh = Image.new('RGBA', (W, H)); ImageDraw.Draw(sh).rounded_rectangle((x + 10, y + 26, x + pw + 10, y + ph + 26), 70, fill=(0, 0, 0, 170)); fr.alpha_composite(sh.filter(ImageFilter.GaussianBlur(26)))
+            d = ImageDraw.Draw(fr); d.rounded_rectangle((x, y, x + pw, y + ph), 70, fill=(18, 18, 18), outline=(95, 95, 95), width=4)
+            fr.paste(im, (x + 13, y + 23), MASCARA); d.rounded_rectangle((x + 243, y + 32, x + 383, y + 64), 16, fill=(0, 0, 0))
+            if to - a > .9:
+                k2 = ease((to - a - .9) / .22); f = F('Black', int(60 * (.7 + .3 * k2))); t = 'TÁ NA LOJA'; w = d.textlength(t, font=f)
+                larg = 76 + 20 + w + 46; x1 = W / 2 - larg / 2; y1 = y + ph + 30
+                d.rounded_rectangle((x1, y1, x1 + larg, y1 + 100), 50, fill=(46, 196, 110)); d.ellipse((x1 + 14, y1 + 14, x1 + 86, y1 + 86), fill=BR)
+                d.line([(x1 + 32, y1 + 51), (x1 + 46, y1 + 66), (x1 + 70, y1 + 35)], fill=(46, 196, 110), width=10)
+                d.text((x1 + 86 + 20, y1 + 51), t, font=f, fill=NOITE, anchor='lm')
             return True
     return False
 def legenda(fr, to):
@@ -112,17 +115,20 @@ for ti, (a, b) in enumerate(tre):
         buf = p.stdout.read(W * H * 3)
         if len(buf) < W * H * 3: break
         to = a + n / FPS; im = Image.frombytes('RGB', (W, H), buf)
-        alvo = 1.38 if quem(to) == 'R' else 1.0
-        zoom += (alvo - zoom) * (.18 if n else 1.0)          # no corte já entra no enquadramento certo; dentro do trecho, desliza
+        alvo = 1.62 if quem(to) == 'R' else 1.0
+        zoom = alvo                                         # 18/11 (Natália): corte seco para quem fala
         rx, ry = rosto(to)
-        kz = (zoom - 1) / .38; cx_t = (rx - 60) * kz + W / 2 * (1 - kz); cy_t = (ry + 330) * kz + H / 2 * (1 - kz)
-        cx_s = cx_t if (cx_s is None or n == 0) else cx_s + (cx_t - cx_s) * .12; cy_s = cy_t if (cy_s is None or n == 0) else cy_s + (cy_t - cy_s) * .12
-        soco = 1 + .045 * max(0, 1 - n / 5) if ti else 1            # leve "soco" de zoom em cada corte
+        kz = (zoom - 1) / .62; cx_t = (rx + 30) * kz + W / 2 * (1 - kz); cy_t = (ry + 330) * kz + H / 2 * (1 - kz)
+        troca = (n == 0) or (alvo != getattr(sys, '_alvo', None)); sys._alvo = alvo
+        cx_s = cx_t if (cx_s is None or troca) else cx_s + (cx_t - cx_s) * .12; cy_s = cy_t if (cy_s is None or troca) else cy_s + (cy_t - cy_s) * .12
+        soco = 1            # leve "soco" de zoom em cada corte
         z = zoom * soco; cw, ch = W / z, H / z
         x0 = min(max(0, cx_s - cw / 2), W - cw); y0 = min(max(0, cy_s - ch / 2), H - ch)
         fr = im.crop((round(x0), round(y0), round(x0 + cw), round(y0 + ch))).resize((W, H), Image.LANCZOS)
         if z > 1.2: fr = fr.filter(ImageFilter.UnsharpMask(2, 60, 2))
-        fr = fr.convert('RGBA'); topo(fr); etiqueta(fr, to, tl); celular(fr, to); legenda(fr, to); gancho(fr, tl)
+        fr = fr.convert('RGBA'); cel = celular(fr, to); topo(fr)
+        if not cel: etiqueta(fr, to, tl)
+        legenda(fr, to); gancho(fr, tl)
         enc.stdin.write(fr.convert('RGB').tobytes()); n += 1; tl += 1 / FPS
     p.wait()
 # cartão final 3,8 s
