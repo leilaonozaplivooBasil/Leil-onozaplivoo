@@ -24,6 +24,10 @@ Todo texto para vendedor sai neste formato, sem exceção.
    vender"*). Toda copy vem com uma linha **"💡 Pro vendedor"**, que não é para encaminhar ao cliente. Ela explica em uma frase o
    que a mensagem quer provocar e o que responder se o cliente perguntar.
 
+7. **O destaque é NA COPY, com os asteriscos do WhatsApp.** Quando eu mandar a copy para a Natália no chat, ela vai SEMPRE dentro
+   de uma caixa de código (```). Fora da caixa, o chat transforma `*texto*` em itálico e os asteriscos somem na hora de copiar.
+   Na caixa, ela copia e cola no WhatsApp e o negrito aparece certinho (correção de 18/11: "não é na arte, é na copy").
+
 ## Modelo (o do Emanuel, que já funciona)
 
 ```
