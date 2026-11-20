@@ -77,10 +77,11 @@ for n in range(int(FIM * FPS)):
     f = F('Black', 44); tx = 'JÁ ENCONTROU O DONO · EP. 03'; w = d.textlength(tx, font=f); d.rounded_rectangle((W / 2 - w / 2 - 34, 560, W / 2 + w / 2 + 34, 650), 45, fill=VERDE); d.text((W / 2, 606), tx, font=f, fill=BR, anchor='mm')
     d.text((W / 2, 800), 'O PRÓXIMO DONO', font=F('Black', int(100 * (.85 + .15 * k))), fill=BR, anchor='mm'); d.text((W / 2, 920), 'PODE SER VOCÊ', font=F('Black', int(100 * (.85 + .15 * k))), fill=OURO, anchor='mm')
     if t > .6:
-        d.text((W / 2, 1070), 'sábado tem outro', font=F('SemiBold', 50), fill=BR, anchor='mm'); d.text((W / 2, 1150), 'iPHONE 18 PRO MAX', font=F('Black', 76), fill=AMA, anchor='mm')
+        d.text((W / 2, 1060), 'SÁBADO, 20H', font=F('Black', 56), fill=BR, anchor='mm'); d.text((W / 2, 1150), 'HONDA PCX 160', font=F('Black', 84), fill=AMA, anchor='mm')
+        d.text((W / 2, 1215), 'e às 21h, outro iPhone 18 Pro Max', font=F('SemiBold', 38), fill=BR, anchor='mm')
     if t > 1.1:
-        f = F('Black', 54); tx = 'Comenta EU QUERO'; w = d.textlength(tx, font=f); d.rounded_rectangle((W / 2 - w / 2 - 40, 1270, W / 2 + w / 2 + 40, 1376), 53, fill=AMA); d.text((W / 2, 1323), tx, font=f, fill=NOITE, anchor='mm')
-        d.text((W / 2, 1440), 'que eu te envio o link', font=F('SemiBold', 44), fill=BR, anchor='mm')
+        f = F('Black', 54); tx = 'Comenta EU QUERO'; w = d.textlength(tx, font=f); d.rounded_rectangle((W / 2 - w / 2 - 40, 1300, W / 2 + w / 2 + 40, 1406), 53, fill=AMA); d.text((W / 2, 1353), tx, font=f, fill=NOITE, anchor='mm')
+        d.text((W / 2, 1470), 'que eu te envio o link', font=F('SemiBold', 44), fill=BR, anchor='mm')
     enc.stdin.write(fr.convert('RGB').tobytes())
 enc.stdin.close(); enc.wait()
 fc = ''.join(f'[0:a]atrim={a:.3f}:{b:.3f},asetpts=PTS-STARTPTS,afade=t=in:d=0.02,afade=t=out:st={b - a - .03:.3f}:d=0.03[a{i}];' for i, (a, b) in enumerate(TRE))
