@@ -1,5 +1,5 @@
 # Série JÁ ENCONTROU O DONO · EP. 03 (20/11): a Elisama, amiga do Murilo, buscou o iPhone 18 Pro Max (arrematado por R$ 7.750 em 11/11,
-# conferido no sistema). Corta só as pausas e o "hoje tem MacBook" do fim. Chamada: sábado 21/11 21h tem outro iPhone 18 Pro Max.
+# conferido no sistema). Corta só as pausas e o "hoje tem MacBook" do fim. Chamada: sábado 21/11 20h, leilão da Honda PCX 160 (só a moto).
 # Uso: montar.py <proxy.mp4> <saida.mp4>
 import sys, math, subprocess
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
@@ -78,7 +78,7 @@ for n in range(int(FIM * FPS)):
     d.text((W / 2, 800), 'O PRÓXIMO DONO', font=F('Black', int(100 * (.85 + .15 * k))), fill=BR, anchor='mm'); d.text((W / 2, 920), 'PODE SER VOCÊ', font=F('Black', int(100 * (.85 + .15 * k))), fill=OURO, anchor='mm')
     if t > .6:
         d.text((W / 2, 1060), 'SÁBADO, 20H', font=F('Black', 56), fill=BR, anchor='mm'); d.text((W / 2, 1150), 'HONDA PCX 160', font=F('Black', 84), fill=AMA, anchor='mm')
-        d.text((W / 2, 1215), 'e às 21h, outro iPhone 18 Pro Max', font=F('SemiBold', 38), fill=BR, anchor='mm')
+        d.text((W / 2, 1215), 'lance inicial de R$ 497', font=F('SemiBold', 40), fill=BR, anchor='mm')
     if t > 1.1:
         f = F('Black', 54); tx = 'Comenta EU QUERO'; w = d.textlength(tx, font=f); d.rounded_rectangle((W / 2 - w / 2 - 40, 1300, W / 2 + w / 2 + 40, 1406), 53, fill=AMA); d.text((W / 2, 1353), tx, font=f, fill=NOITE, anchor='mm')
         d.text((W / 2, 1470), 'que eu te envio o link', font=F('SemiBold', 44), fill=BR, anchor='mm')

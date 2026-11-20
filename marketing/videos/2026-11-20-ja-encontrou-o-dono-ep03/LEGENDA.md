@@ -10,8 +10,7 @@ E ela mesma confessou: "Eu desconfiei um pouco… mas é super verdade!" 😄
 
 Agora é a sua vez de ser o próximo dono 👇
 
-🛵 SÁBADO, ÀS 20H: Honda PCX 160 branca, com lance inicial de R$ 497
-📱 E ÀS 21H: tem outro iPhone 18 Pro Max no leilão!
+🛵 AMANHÃ, SÁBADO, ÀS 20H: leilão da Honda PCX 160 branca, com lance inicial de só R$ 497!
 
 Quer participar? Comenta EU QUERO que eu te envio o link! 💚
 
@@ -22,6 +21,6 @@ JÁ ENCONTROU O DONO 📦✅
 iPhone 18 Pro Max entregue na mão!
 
 E o próximo pode ser você 👀
-🛵 Sábado 20h: Honda PCX 160
-📱 21h: iPhone 18 Pro Max
+🛵 Sábado 20h: leilão da Honda PCX 160
+Lance inicial: R$ 497
 Comenta EU QUERO 👇
