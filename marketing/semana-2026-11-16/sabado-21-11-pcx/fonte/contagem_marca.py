@@ -166,7 +166,7 @@ if quer('19h'):
 
 # 6 · 19h50 · ACELERA! 10 MINUTOS (inverte: verde-escuro + ouro = alarme da marca)
 if quer('19h50'):
-    b = base(VM); agua(b, ['10'], VE2, 1000, 760); d = ImageDraw.Draw(b)
+    b = verde_placa(); d = ImageDraw.Draw(b)   # cor da arte da placa (Natália, 21/11)
     d.text((W / 2, 200), 'ACELERA!', font=F('Black', 150), fill=OURO, anchor='mm'); d.text((W / 2, 330), 'FALTAM 10 MINUTOS', font=F('Black', 82), fill=BR, anchor='mm')
     d = semaforo(b, 240, 430, 2, corpo=VE, apagada=(20, 90, 55))
     moto(b, 1040, W / 2, 1370, ((22, 104, 61), (17, 88, 51)))
@@ -175,7 +175,7 @@ if quer('19h50'):
 
 # 7 · 20h · É AGORA! (inverte + faixa quadriculada de largada em ouro e verde)
 if quer('20h'):
-    b = base(VM); d = ImageDraw.Draw(b); q = 60
+    b = verde_placa(); d = ImageDraw.Draw(b); q = 60
     for yy in range(2):   # bandeira de largada atravessando, atrás da moto
         for xx in range(0, W, q):
             d.rectangle((xx, 1140 + yy * q, xx + q, 1140 + yy * q + q), fill=OURO if (xx // q + yy) % 2 == 0 else (22, 104, 61))
