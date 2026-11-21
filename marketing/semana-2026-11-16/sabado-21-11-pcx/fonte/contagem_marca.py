@@ -131,6 +131,20 @@ if quer('18h'):
     d = ImageDraw.Draw(b); rotulo(d, 1470, 'Honda PCX 160 · hoje, às 20h', MENTA); lance(d, 1640, BR, MENTA); logo(b)
     salva(b, 'PCX-4b-18h-2-horas')
 
+# 4c · CONTAGEM REGRESSIVA (o formato do relógio digital do MacBook de 18/11) na cor da arte da placa · uso: <lance> cr:HH:MM:SS
+for so in (SO or []):
+    if not so.startswith('cr:'): continue
+    rel = so[3:]; b = verde_placa(); d = ImageDraw.Draw(b)
+    pilula_ = lambda cy, t, f, fu, co: (d.rounded_rectangle((W / 2 - d.textlength(t, font=f) / 2 - 40, cy - f.size * .9, W / 2 + d.textlength(t, font=f) / 2 + 40, cy + f.size * .9), f.size, fill=fu), d.text((W / 2, cy), t, font=f, fill=co, anchor='mm'))
+    pilula_(150, 'CONTAGEM REGRESSIVA', F('Black', 46), NEON, VE)
+    d.rounded_rectangle((60, 240, W - 60, 560), 44, fill=(6, 40, 24), outline=NEON, width=5)
+    g = Image.new('RGBA', (W, H)); ImageDraw.Draw(g).text((W / 2, 400), rel, font=F('Black', 190), fill=NEON + (255,), anchor='mm')
+    b.alpha_composite(g.filter(ImageFilter.GaussianBlur(14))); b.alpha_composite(g); d = ImageDraw.Draw(b)
+    d.text((W / 2, 640), 'PRO MARTELO BATER · HOJE 20H', font=F('Black', 52), fill=BR, anchor='mm')
+    moto(b, 1040, W / 2, 1370, ((40, 128, 80), (24, 96, 58)))
+    d = ImageDraw.Draw(b); rotulo(d, 1470, 'Honda PCX 160 · retirada em mãos', MENTA); lance(d, 1640, BR, MENTA); logo(b)
+    salva(b, 'PCX-contagem-regressiva-' + rel.replace(':', ''))
+
 def semaforo(b, x0, y0, acesa, corpo=VE, apagada=VE2):
     d = ImageDraw.Draw(b); w, h = 600, 210
     d.rounded_rectangle((x0, y0, x0 + w, y0 + h), h / 2, fill=corpo)
