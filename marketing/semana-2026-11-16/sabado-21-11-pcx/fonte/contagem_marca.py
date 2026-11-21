@@ -1,6 +1,7 @@
 # Contagem da PCX (sáb 21/11, 20h), versão 2 — pedido do João Ale (21/11 10h07): "manter a identidade visual, as paletas de cores
 # e deixar a moto maior e em mais destaque". A Natália pediu branding fixo, como o roxo do Nubank e o amarelo do Mercado Livre.
 # Sistema: FUNDO OURO chapado (#F5C451) + texto VERDE-ESCURO (#0A3D26) + selo MENTA + uma família de letra só (Inter Display).
+# (21/11) Natália: nada de fundo quase preto — a reta final usa o VERDE DA MARCA #1B7A48, não o verde-escuro.
 # O ouro é a "nossa cor": as 5 primeiras artes são ouro. Na reta final (19h50 e 20h) a arte INVERTE (verde-escuro com ouro),
 # que é o "alarme" da marca sem sair da paleta. O que muda de uma arte para outra é o elemento de moto (placa, etiqueta,
 # velocímetro, painel, semáforo, bandeira) — a cor fica. Uso: contagem_marca.py <lance> [09h,12h,...]
@@ -124,21 +125,21 @@ if quer('19h'):
 
 # 6 · 19h50 · ACELERA! 10 MINUTOS (inverte: verde-escuro + ouro = alarme da marca)
 if quer('19h50'):
-    b = base(VE); agua(b, ['10'], VE2, 1000, 760); d = ImageDraw.Draw(b)
+    b = base(VM); agua(b, ['10'], VE2, 1000, 760); d = ImageDraw.Draw(b)
     d.text((W / 2, 200), 'ACELERA!', font=F('Black', 150), fill=OURO, anchor='mm'); d.text((W / 2, 330), 'FALTAM 10 MINUTOS', font=F('Black', 82), fill=BR, anchor='mm')
-    d = semaforo(b, 240, 430, 2, corpo=(4, 34, 20), apagada=VE2)
-    moto(b, 1040, W / 2, 1370, (VE2, (8, 48, 30)))
+    d = semaforo(b, 240, 430, 2, corpo=VE, apagada=(20, 90, 55))
+    moto(b, 1040, W / 2, 1370, ((22, 104, 61), (17, 88, 51)))
     d = ImageDraw.Draw(b); rotulo(d, 1470, 'quem já deu lance pode cobrir', MENTA); lance(d, 1640, OURO, MENTA); logo(b)
     salva(b, 'PCX-6-19h50-10-minutos')
 
 # 7 · 20h · É AGORA! (inverte + faixa quadriculada de largada em ouro e verde)
 if quer('20h'):
-    b = base(VE); d = ImageDraw.Draw(b); q = 60
+    b = base(VM); d = ImageDraw.Draw(b); q = 60
     for yy in range(2):   # bandeira de largada atravessando, atrás da moto
         for xx in range(0, W, q):
-            d.rectangle((xx, 1140 + yy * q, xx + q, 1140 + yy * q + q), fill=OURO if (xx // q + yy) % 2 == 0 else VE2)
+            d.rectangle((xx, 1140 + yy * q, xx + q, 1140 + yy * q + q), fill=OURO if (xx // q + yy) % 2 == 0 else (22, 104, 61))
     d.text((W / 2, 220), 'É AGORA!', font=F('Black', 200), fill=OURO, anchor='mm'); d.text((W / 2, 370), 'o martelo vai bater às 20h', font=F('Medium', 58), fill=BR, anchor='mm')
     selo(b, W - 200, 560, 130, ['QUEM', 'DÁ MAIS?'], OURO, VE)
-    moto(b, 1040, W / 2, 1370, (VE2, (8, 48, 30)))
+    moto(b, 1040, W / 2, 1370, ((22, 104, 61), (17, 88, 51)))
     d = ImageDraw.Draw(b); rotulo(d, 1470, 'Honda PCX 160 · leilão ao vivo', MENTA); lance(d, 1640, OURO, MENTA); logo(b)
     salva(b, 'PCX-7-20h-e-agora')
