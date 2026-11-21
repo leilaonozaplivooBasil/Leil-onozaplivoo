@@ -6,7 +6,7 @@ com uma "tretinha"; erro → correção; cenas curtas com "3, 2, 1, vai"; algo m
 Do Santana: enquadramento da cintura pra cima, João sorrindo e com energia, música da playlist dele.
 
 **Título fixo na tela (0 a 3 s):** ELE IA PAGAR R$ 20 MIL NUMA MOTO 😳
-**Lugar:** galpão, perto da PCX (se a moto não estiver lá, o Emanuel mostra a moto no celular, na página do leilão).
+**Lugar:** galpão. A moto NÃO está com a gente (21/11): ela aparece só no celular, na página do leilão, e em imagem na edição.
 **Quem filma:** uma 4ª pessoa, celular em pé, na altura do peito.
 
 | Cena | Tempo | Quem / o que acontece | Fala |
@@ -14,7 +14,7 @@ Do Santana: enquadramento da cintura pra cima, João sorrindo e com energia, mú
 | 1 | 0–3 s | João sentado numa caixa, olhando o celular, empolgado | **João:** "Achei! Vou parcelar uma PCX em 48 vezes!" |
 | 2 | 3–6 s | Emanuel para do lado, braços cruzados | **Emanuel:** "48 vezes?! Tu tá maluco?" |
 | 3 | 6–10 s | João mostra o celular pra ele | **João:** "Na loja tá uns 20 mil, mas parcelando cabe!" |
-| 4 | 10–14 s | Emanuel pega o João pelo ombro e leva até a moto | **Emanuel:** "Vem cá. Ó ela aqui: essa vai a leilão hoje, às 20h." |
+| 4 | 10–14 s | Emanuel puxa o celular do João e abre a página do leilão | **Emanuel:** "Para tudo. Ó ela aqui: essa PCX vai a leilão hoje, às 20h." |
 | 5 | 14–18 s | Emanuel vira o celular com o site pro João · close na cara de choque do João | **João:** "Peraí… o lance tá ISSO?!" |
 | 6 | 18–23 s | Emanuel guarda o celular, sorrindo | **Emanuel:** "Pegadinha nenhuma: quem dá o maior lance leva. E retira em mãos." |
 | 7 | 23–27 s | Natália passa carregando uma caixa, sem parar | **Natália:** "Vocês dois… a moto é às 20h. E o João vai perder de novo." |
@@ -25,6 +25,7 @@ Do Santana: enquadramento da cintura pra cima, João sorrindo e com energia, mú
 ## Edição (CapCut)
 - Cortes secos entre as cenas, sem pausa nem respiração.
 - Título fixo no topo do começo ao fim; legenda de todas as falas embaixo.
+- Cena 4: entra a foto da PCX em tela cheia por 1 s (a moto não está no galpão).
 - Cena 5: zoom rápido no rosto do João + a tela do site em destaque com o **lance atualizado na hora da edição**.
 - Música 04 (funky soul house, playlist do Santana) bem baixinha por baixo das falas (20 dB abaixo); sobe só no card final.
 - Áudio: falas a -16 LUFS; ouvir com fone antes de mandar pra aprovação.
@@ -32,7 +33,7 @@ Do Santana: enquadramento da cintura pra cima, João sorrindo e com energia, mú
 ## Legenda (sem link e sem %)
 Ele ia parcelar uma moto em 48 vezes… 😅
 
-A Honda PCX 160 que tá aqui no galpão vai a leilão HOJE, às 20h.
+A Honda PCX 160 vai a leilão HOJE, às 20h.
 Na loja, uma dessas sai por uns R$ 20 mil. No leilão, quem decide o preço é quem dá o lance.
 
 📍 Retirada em mãos.
