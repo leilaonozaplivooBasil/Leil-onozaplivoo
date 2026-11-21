@@ -91,11 +91,13 @@ if quer('15h'):
     for i in range(0, 41):
         v = i / 40; an = math.radians(a0 - (a0 - a1) * v); r1, r2 = r - 60, r - (120 if i % 5 == 0 else 90)
         d.line((cx + r1 * math.cos(an), cy - r1 * math.sin(an), cx + r2 * math.cos(an), cy - r2 * math.sin(an)), fill=VE if i % 5 == 0 else OURO3, width=9 if i % 5 == 0 else 4)
-        if i % 5 == 0: d.text((cx + (r - 170) * math.cos(an), cy - (r - 170) * math.sin(an)), str(8 - i // 5), font=F('Black', 54), fill=VE, anchor='mm')
     an = math.radians(a0 - (a0 - a1) * 3 / 8); d.line((cx, cy, cx + (r - 80) * math.cos(an), cy - (r - 80) * math.sin(an)), fill=VE, width=18)
     d.ellipse((cx - 34, cy - 34, cx + 34, cy + 34), fill=VE)
-    moto(b, 1040, W / 2, 1400, (OURO2, OURO3))
-    d = ImageDraw.Draw(b); rotulo(d, 1500, 'e o ponteiro só vai pra frente'); lance(d, 1660); logo(b)
+    for i in range(0, 41, 5):   # números por cima do ponteiro, numa bolinha, para o ponteiro não tampar
+        an2 = math.radians(a0 - (a0 - a1) * i / 40); px, py = cx + (r - 175) * math.cos(an2), cy - (r - 175) * math.sin(an2)
+        d.ellipse((px - 36, py - 36, px + 36, py + 36), fill=OURO); d.text((px, py), str(8 - i // 5), font=F('Black', 54), fill=VE, anchor='mm')
+    moto(b, 1040, W / 2, 1370, (OURO2, OURO3))
+    d = ImageDraw.Draw(b); rotulo(d, 1470, 'e o ponteiro só vai pra frente'); lance(d, 1640); logo(b)
     salva(b, 'PCX-3-15h-5-horas')
 
 # 4 · 17h · FALTAM 3 HORAS (painel digital, verde-escuro)
