@@ -12,7 +12,9 @@ os.makedirs(OUT, exist_ok=True)
 LANCE = sys.argv[1] if len(sys.argv) > 1 else '497'; SO = sys.argv[2].split(',') if len(sys.argv) > 2 else None
 F = lambda p, t: ImageFont.truetype(f'/usr/share/fonts/opentype/inter/InterDisplay-{p}.otf', t)
 W, H = 1080, 1920
-OURO, OURO2, OURO3 = (245, 196, 81), (232, 179, 62), (206, 152, 42)
+# (21/11) Natália: "tira esse amarelo, testa verde claro e verde escuro". O nome OURO ficou, mas agora é o VERDE CLARO da marca.
+OURO, OURO2, OURO3 = (214, 236, 221), (190, 222, 200), (150, 200, 168)
+AMBAR = (245, 196, 81)
 VE, VM, MENTA, AREIA, NEON, BR = (10, 61, 38), (27, 122, 72), (214, 236, 221), (246, 239, 226), (63, 208, 126), (255, 255, 255)
 VE2 = (16, 78, 50)
 MOTO = Image.open(f'{AQ}/fotos/pcx-plataforma-lado.webp').convert('RGBA'); MOTO = MOTO.crop(MOTO.getbbox())
@@ -25,7 +27,10 @@ def agua(b, linhas, cor, y0=250, tam=330, passo=330):
     d = ImageDraw.Draw(b)
     for i, t in enumerate(linhas): d.text((W / 2, y0 + i * passo), t, font=F('Black', tam), fill=cor, anchor='mm')
 def logo(b, y=1790):
-    lg = LOGO.copy(); lg.thumbnail((250, 250)); b.alpha_composite(lg, ((W - lg.width) // 2, y))
+    lg = LOGO.copy(); lg.thumbnail((250, 250)); x = (W - lg.width) // 2
+    if sum(b.getpixel((10, H - 10))[:3]) > 500:   # fundo claro: o texto branco do logo some, então vai numa pílula verde-escura
+        ImageDraw.Draw(b).rounded_rectangle((x - 26, y - 14, x + lg.width + 26, y + lg.height + 14), 40, fill=VE)
+    b.alpha_composite(lg, (x, y))
 def moto(b, larg, cx, chao, podio=None):
     m = MOTO.resize((larg, int(MOTO.height * larg / MOTO.width)), Image.LANCZOS)
     if podio:   # bloco liso da mesma cor, um tom mais escuro (regra 4 do estilo vitrine)
@@ -107,7 +112,7 @@ if quer('17h'):
 def semaforo(b, x0, y0, acesa, corpo=VE, apagada=VE2):
     d = ImageDraw.Draw(b); w, h = 600, 210
     d.rounded_rectangle((x0, y0, x0 + w, y0 + h), h / 2, fill=corpo)
-    for i, cor in enumerate([(226, 64, 52), OURO, NEON]):
+    for i, cor in enumerate([(226, 64, 52), AMBAR, NEON]):
         cx = x0 + 110 + i * 190; cy = y0 + h / 2; on = i == acesa
         if on:
             g = Image.new('RGBA', (W, H)); ImageDraw.Draw(g).ellipse((cx - 130, cy - 130, cx + 130, cy + 130), fill=cor + (150,)); b.alpha_composite(g.filter(ImageFilter.GaussianBlur(40))); d = ImageDraw.Draw(b)
@@ -129,7 +134,7 @@ if quer('19h50'):
     d.text((W / 2, 200), 'ACELERA!', font=F('Black', 150), fill=OURO, anchor='mm'); d.text((W / 2, 330), 'FALTAM 10 MINUTOS', font=F('Black', 82), fill=BR, anchor='mm')
     d = semaforo(b, 240, 430, 2, corpo=VE, apagada=(20, 90, 55))
     moto(b, 1040, W / 2, 1370, ((22, 104, 61), (17, 88, 51)))
-    d = ImageDraw.Draw(b); rotulo(d, 1470, 'quem já deu lance pode cobrir', MENTA); lance(d, 1640, OURO, MENTA); logo(b)
+    d = ImageDraw.Draw(b); rotulo(d, 1470, 'quem já deu lance pode cobrir', MENTA); lance(d, 1640, BR, MENTA); logo(b)
     salva(b, 'PCX-6-19h50-10-minutos')
 
 # 7 · 20h · É AGORA! (inverte + faixa quadriculada de largada em ouro e verde)
@@ -141,5 +146,5 @@ if quer('20h'):
     d.text((W / 2, 220), 'É AGORA!', font=F('Black', 200), fill=OURO, anchor='mm'); d.text((W / 2, 370), 'o martelo vai bater às 20h', font=F('Medium', 58), fill=BR, anchor='mm')
     selo(b, W - 200, 560, 130, ['QUEM', 'DÁ MAIS?'], OURO, VE)
     moto(b, 1040, W / 2, 1370, ((22, 104, 61), (17, 88, 51)))
-    d = ImageDraw.Draw(b); rotulo(d, 1470, 'Honda PCX 160 · leilão ao vivo', MENTA); lance(d, 1640, OURO, MENTA); logo(b)
+    d = ImageDraw.Draw(b); rotulo(d, 1470, 'Honda PCX 160 · leilão ao vivo', MENTA); lance(d, 1640, BR, MENTA); logo(b)
     salva(b, 'PCX-7-20h-e-agora')
