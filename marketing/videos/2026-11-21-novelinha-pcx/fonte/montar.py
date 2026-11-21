@@ -13,11 +13,11 @@ W, H, X = 1080, 1920, 0.35
 VE, VM, MENTA, BR = (10, 61, 38), (27, 122, 72), (214, 236, 221), (255, 255, 255)
 def sh(c): subprocess.run(c, shell=True, check=True)
 # cada cena = lista de trechos (início, fim, zoom, foco_x, foco_y) no tempo do take; entre trechos = corte seco; entre cenas = transição
-CENAS = [
- ('IMG_7707', None, [(1.35, 4.60, 1.00, .40, .45), (4.60, 8.55, 1.45, .32, .30)]),                      # ela no telefone (abre, depois fecha no rosto)
- ('IMG_7712', 'smoothleft', [(1.05, 4.35, 1.35, .74, .38), (4.65, 5.65, 1.45, .28, .45), (6.00, 10.80, 1.30, .92, .38)]),  # Emanuel / ela / Emanuel
- ('IMG_7713', 'zoomin', [(0.95, 3.85, 1.15, .50, .45), (7.50, 9.60, 1.30, .45, .40), (9.95, 12.70, 1.10, .50, .45)]),       # mostra o celular / lance / abraço
- ('IMG_7714', 'slideup', [(0.90, 4.60, 1.20, .48, .45)]),                                                 # Natália passa com a caixa
+CENAS = [   # (21/11) Natália: sem fechar na cintura pra cima — enquadramento aberto como gravado; só um leve zoom alternado nos cortes
+ ('IMG_7707', None, [(1.35, 4.60, 1.00, .5, .5), (4.60, 8.55, 1.08, .5, .5)]),
+ ('IMG_7712', 'smoothleft', [(1.05, 4.35, 1.00, .5, .5), (4.65, 5.65, 1.00, .5, .5), (6.00, 10.80, 1.00, .5, .5)]),
+ ('IMG_7713', 'zoomin', [(0.95, 3.85, 1.00, .5, .5), (7.50, 9.60, 1.08, .5, .5), (9.95, 12.70, 1.00, .5, .5)]),
+ ('IMG_7714', 'slideup', [(0.90, 4.60, 1.00, .5, .5)]),
 ]
 LEG = {
  'IMG_7707': [(1.4, 3.9, 'Vou comprar minha Honda PCX 160'), (3.9, 6.2, 'em 48 vezes!'), (6.2, 8.6, 'Mas o Emanuel não sabe, hein?')],
@@ -46,7 +46,7 @@ for ci, (n, _, tre) in enumerate(CENAS):
     parts = []; t_local = 0.0; mapa[n] = []
     for ti, (a, b, z, fx, fy) in enumerate(tre):
         d = b - a
-        vf = (f"scale=w='trunc({W}*{z}*(1+0.025*t)/2)*2':h=-2:eval=frame,"
+        vf = (f"scale=w='trunc({W}*{z}*(1+0.010*t)/2)*2':h=-2:eval=frame,"
               f"crop={W}:{H}:x='min(max(0,iw*{fx}-{W}/2),iw-{W})':y='min(max(0,ih*{fy}-{H}/2),ih-{H})',fps=30,setsar=1,format=yuv420p")
         sh(f'ffmpeg -nostdin -v error -y -ss {a} -to {b} -i {IN}/{n}.mp4 -vf "{vf}" -an -c:v libx264 -preset veryfast -crf 16 {T}/c{ci}_{ti}.mp4')
         sh(f'ffmpeg -nostdin -v error -y -ss {a} -to {b} -i {IN}/{n}.mp4 -vn -af "highpass=f=90,afftdn=nf=-25,acompressor=threshold=-20dB:ratio=3:attack=5:release=80,afade=t=in:d=0.02,afade=t=out:st={d - 0.03:.3f}:d=0.03" -ar 48000 -ac 2 {T}/c{ci}_{ti}.wav')
