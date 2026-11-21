@@ -111,6 +111,26 @@ if quer('17h'):
     d = ImageDraw.Draw(b); rotulo(d, 1470, 'Honda PCX 160 · hoje, às 20h'); lance(d, 1640); logo(b)
     salva(b, 'PCX-4-17h-3-horas')
 
+def verde_placa():   # (21/11) Natália: "aquele verde da arte da placa (09h) ficou excelente" — verde-floresta em degradê com riscos finos
+    import numpy as np
+    y, x = np.mgrid[0:H, 0:W]; dd = np.clip(np.hypot(x - W / 2, (y - 950) * .85) / 1150, 0, 1) ** 1.2
+    c1, c0 = np.array((30, 108, 66)), np.array((12, 62, 38))
+    a = c1[None, None] * (1 - dd[..., None]) + c0[None, None] * dd[..., None]; a += np.random.default_rng(3).normal(0, 1.6, a.shape)
+    b = Image.fromarray(np.clip(a, 0, 255).astype('uint8')).convert('RGBA'); riscos = Image.new('RGBA', (W, H)); d = ImageDraw.Draw(riscos)
+    for i in range(34): yy = 200 + i * 52; d.line((0, yy, W, yy + 40), fill=(255, 255, 255, 12), width=2)
+    b.alpha_composite(riscos); return b
+
+# 4b · 18h · FALTAM 2 HORAS (painel digital no verde da placa)
+if quer('18h'):
+    b = verde_placa(); d = ImageDraw.Draw(b)
+    d.text((W / 2, 200), 'FALTAM 2 HORAS', font=F('Black', 104), fill=BR, anchor='mm'); d.text((W / 2, 310), 'pra essa PCX ter dono', font=F('Medium', 56), fill=MENTA, anchor='mm')
+    d.rounded_rectangle((150, 400, W - 150, 640), 48, fill=(6, 40, 24), outline=(63, 208, 126), width=4)
+    d.text((W / 2, 500), '02:00:00', font=F('Black', 150), fill=BR, anchor='mm')
+    for i in range(10): d.rounded_rectangle((250 + i * 60, 600, 290 + i * 60, 618), 6, fill=NEON if i < 2 else (20, 70, 44))
+    moto(b, 1040, W / 2, 1370, ((40, 128, 80), (24, 96, 58)))
+    d = ImageDraw.Draw(b); rotulo(d, 1470, 'Honda PCX 160 · hoje, às 20h', MENTA); lance(d, 1640, BR, MENTA); logo(b)
+    salva(b, 'PCX-4b-18h-2-horas')
+
 def semaforo(b, x0, y0, acesa, corpo=VE, apagada=VE2):
     d = ImageDraw.Draw(b); w, h = 600, 210
     d.rounded_rectangle((x0, y0, x0 + w, y0 + h), h / 2, fill=corpo)
