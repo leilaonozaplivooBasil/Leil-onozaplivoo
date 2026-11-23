@@ -113,6 +113,7 @@ details li{margin:3px 0}
 
 <h2>Regras que valem em tudo</h2>
 <div class="box"><ul class="regras">
+  <li>Horários (dados de 16 a 22/11): feed às 11h–13h30 ou 16h–18h; story principal às 8h30; contagem só em dia de leilão (18h30, 19h30, 19h50); nada importante depois das 20h30; domingo leve. Revisar em 2 semanas.</li>
   <li>Título grande na tela nos 3 primeiros segundos. Nada de "oi gente". Algo muda a cada 5 segundos. Um pedido só no final.</li>
   <li>Nunca rosto de criança. Nome de arrematante só com autorização dele, e nunca na arte.</li>
   <li>Instagram: sem link e sem % até 29/11. A partir de 30/11, confirmar com o dono antes de liberar.</li>
@@ -150,10 +151,10 @@ const G = [
   '4 produtos do galpão ou do próximo leilão. Para cada um: "Arremataria, porque…" ou "Não arremataria, porque…" em UMA frase.',
   'Grava cada produto na mão, plano curto. Eu monto as plaquinhas dos dois lados na edição.',
   'Final: "E você, arremataria qual?" (um pedido só: comentar).']},
- {id:'g5', t:'Takes acelerados · "Do galpão até a sua mão"', quem:'quem estiver no galpão', quando:'reserva / stories', r:[
+ {id:'g5', t:'Tour no galpão 2 · "Do galpão até a sua mão"', quem:'quem estiver no galpão', quando:'posta qui 26/11, 13h', r:[
   'Sem fala. Gravar com o som real: abrir caixa, conferir produto, lacre, nota, embalar, etiqueta, entregar.',
   '10 takes de 3 a 5 segundos, celular em pé. Eu acelero e corto no ritmo.']},
- {id:'g6', t:'Leilão da Felicidade (vídeo de segunda do Emanuel)', quem:'Natália', quando:'posta seg 30/11', r:[
+ {id:'g6', t:'Leilão da Felicidade (explicado nos stories)', quem:'Natália', quando:'stories seg 30/11 (com ok do dono)', r:[
   '⚠️ O roteiro fala de regra de bônus e saldo: o texto final precisa do ok do dono antes de gravar.',
   'Formato conversa: Emanuel pergunta, Natália responde, imagens da plataforma na tela.',
   'Nada de "rendimento" nem "carteira". Falar de "bônus para usar em lances e na Loja da Felicidade".']},
@@ -173,83 +174,81 @@ const G = [
   'Um story só nesse dia, como ensina o mini lançamento do curso.']},
 ];
 const S = [
- {sem:1, data:'Seg 23/11', tema:'Arremates em alta + abrir caixa de perguntas', feed:[
-   {h:'12h', t:'Carrossel · "Já foram arrematados"', d:'Os 6 cards da vitrine (PCX, iPhone 18, iPhone 17, MacBook, PS5, TV) com o "saiu por".', s:'pronto'},
-   {h:'17h30', t:'Vídeo natural · Já encontrou o dono EP. 04', d:'A entrega do iPhone que vocês gravaram.', s:'claude'}],
-  st:['Bastidor de segunda (escritório)','Caixinha: "Qual sua dúvida sobre o leilão?"','Enquete: "Qual produto você quer no próximo leilão?"','Repost do carrossel'],
+ {sem:1, data:'Seg 23/11', tema:'Arremates em alta (hoje)', feed:[
+   {h:'12h', t:'Carrossel · "Já foram arrematados"', d:'A vitrine com os 6 arrematados e o "saiu por".', s:'pronto'}],
+  st:['8h30 · Vitrine de arrematados (o story mais visto do dia)','12h · Caixinha: "Qual sua dúvida sobre o leilão?"','16h · Enquete: "Qual produto você quer no próximo leilão?"'],
   vd:[{t:'Arte de interesse · leilão de quarta', d:'Produto a definir na reunião.', s:'espera'}]},
- {sem:1, data:'Ter 24/11', tema:'Convite para quarta', feed:[
-   {h:'17h30', t:'Vídeo IA · convite para quarta', d:'O leiloeiro 3D chamando para o leilão de quarta, com a foto real do produto.', s:'espera'}],
-  st:['Respostas da caixa de perguntas (Yara + Natália)','Galpão: separando os produtos de quarta','Contagem "amanhã tem leilão"'],
-  vd:[{t:'Arte de interesse 2 · quarta', d:'Mesmo produto, outra pegada (preço de loja × lance inicial).', s:'espera'}]},
+ {sem:1, data:'Ter 24/11', tema:'Prova de que é real + convite para quarta', feed:[
+   {h:'16h30', t:'Vídeo natural · Já encontrou o dono EP. 04', d:'Cliente buscando o iPhone. Abre no momento da entrega (o melhor primeiro), não na chegada.', s:'claude'}],
+  st:['8h30 · Convite para quarta: produto + lance inicial (vídeo IA do leiloeiro)','12h · Respostas da caixa de perguntas (Yara + Natália)','16h · Galpão separando os produtos de quarta'],
+  vd:[{t:'Arte de interesse 2 · quarta', d:'Preço de loja × lance inicial.', s:'espera'}]},
  {sem:1, data:'Qua 25/11', tema:'Dia de leilão', feed:[
-   {h:'10h', t:'Carrossel · "Quanto você daria nesse…?"', d:'Modelo do carrossel da PCX (2,5x o post típico, 98 compartilhamentos): pergunta + produto gigante → loja × lance → "Comenta [PRODUTO]". Equipe reposta nos stories na 1ª hora.', s:'espera'},
-   {h:'12h', t:'Vídeo natural · A LIGAÇÃO EP. 01', d:'Emanuel ligando para o arrematante do iPhone: "Você arrematou!" Reação ao vivo. Com autorização dele.', s:'claude'}],
-  st:['Contagem de hora em hora até o início','Cobertura ao vivo dos lances (tela do site)','Ligação para o arrematante logo após o martelo','Story de resultado: "saiu por"'],
+   {h:'11h30', t:'Carrossel · "Quanto você daria nesse…?"', d:'Modelo da PCX (741 views, 98 compartilhamentos): pergunta + produto gigante → loja × lance → "Comenta [PRODUTO]". Equipe reposta nos stories na 1ª hora.', s:'espera'},
+   {h:'16h30', t:'Vídeo natural · A LIGAÇÃO EP. 01', d:'Abre na frase "Você arrematou!" e depois volta. Arrematante do iPhone, com autorização.', s:'claude'}],
+  st:['8h30 · "HOJE 20H" + produto + lance inicial','12h · Repost do carrossel','16h · Contagem "faltam 4 horas"','18h30 · Contagem','19h30 · Contagem','19h50 · Últimos 10 minutos','Logo após o martelo: ligação para o arrematante (gravar)'],
   vd:[{t:'Contagem regressiva (7 artes)', d:'Eu atualizo o lance antes de cada horário.', s:'claude'}]},
- {sem:1, data:'Qui 26/11', tema:'D-2 do sábado + Black Friday chegando', feed:[
-   {h:'12h', t:'Carrossel · Como comprar na loja virtual', d:'Pauta da semana 2 do Emanuel. Capturas reais da plataforma, um passo por página.', s:'claude'},
-   {h:'17h30', t:'Vídeo IA · trend com texto', d:'"5 sinais de que a oferta de Black Friday não é tão boa assim" — e o leilão como alternativa. Sem %.', s:'claude'}],
-  st:['UM story só: curiosidade D-2 (gravado antes)','Galpão (gravação da semana)'],
+ {sem:1, data:'Qui 26/11', tema:'D-2 do sábado', feed:[
+   {h:'13h', t:'Vídeo natural · Tour no galpão 2 · "Do galpão até a sua mão"', d:'O tour da semana passada foi o vídeo mais assistido (20s de média). Takes acelerados com som real.', s:'gravar'},
+   {h:'16h30', t:'Carrossel · Como comprar na loja virtual', d:'Ensina, então é salvável. Capturas reais, um passo por página.', s:'claude'}],
+  st:['8h30 · UM story de curiosidade (D-2), gravado antes','12h · Bastidor da equipe','16h · Repost do tour'],
   vd:[{t:'Arte de interesse · leilão de sábado', d:'Produto a definir.', s:'espera'}]},
  {sem:1, data:'Sex 27/11', tema:'Black Friday · D-1 do sábado', feed:[
-   {h:'17h30', t:'Novelinha O GALPÃO EP. 02 · "A Black Friday do Ribeiro"', d:'Roteiro na lista de gravação.', s:'gravar'}],
-  st:['Prova: print de arremate recente','A história do produto de sábado em 3 a 4 stories','Enquete: "Você daria lance?"','Bastidor emocionado'],
+   {h:'16h30', t:'Novelinha O GALPÃO EP. 02 · "A Black Friday do Ribeiro"', d:'Roteiro na lista de gravação.', s:'gravar'}],
+  st:['8h30 · O produto de sábado, inteiro, com o lance inicial','12h · Prova: print de arremate recente','16h · Enquete: "Você daria lance?"'],
   vd:[{t:'Arte de interesse 2 · sábado', d:'Loja × lance inicial.', s:'espera'}]},
  {sem:1, data:'Sáb 28/11', viagem:true, tema:'Dia de leilão · Natália viajando', feed:[
-   {h:'10h', t:'Carrossel · "Quanto você daria nesse…?"', d:'Mesmo modelo, produto de sábado. Equipe reposta nos stories na 1ª hora.', s:'espera'},
-   {h:'12h', t:'Vídeo natural · A LIGAÇÃO EP. 02', d:'A ligação para o arrematante do PlayStation.', s:'claude'}],
-  st:['Manhã: "HOJE 20H · responde EU QUERO"','Contagem de hora em hora','Cobertura ao vivo','Ligação para o arrematante (gravar!)'],
+   {h:'11h', t:'Carrossel · "Quanto você daria nesse…?"', d:'Mesmo modelo, produto de sábado. Equipe reposta na 1ª hora.', s:'espera'},
+   {h:'17h', t:'Vídeo natural · A LIGAÇÃO EP. 02', d:'Arrematante do PlayStation. Abre no "você arrematou!".', s:'claude'}],
+  st:['8h30 · "HOJE 20H · responde EU QUERO"','12h · Repost do carrossel','16h · Contagem','18h30 · Contagem','19h30 · Contagem','19h50 · Últimos 10 minutos','Logo após o martelo: ligação para o arrematante (gravar)'],
   vd:[{t:'Contagem regressiva (7 artes)', d:'Eu atualizo o lance. Quem dispara: a definir com o Emanuel.', s:'claude'}]},
- {sem:1, data:'Dom 29/11', viagem:true, tema:'Resultado do sábado', feed:[
-   {h:'10h', t:'Vídeo · ARREMATADO DE SÁBADO EP. 02', d:'Os lances reais acelerados, contagem 10…1, PUM, valor final.', s:'claude'},
-   {h:'17h', t:'Carrossel · Frete grátis: condições e como verificar', d:'Texto conferido com as regras vigentes antes de postar.', s:'claude'}],
-  st:['Story "loja × leilão" do produto de sábado','Vitrine de arrematados atualizada'], vd:[]},
- {sem:2, data:'Seg 30/11', viagem:true, tema:'Leilão da Felicidade + dúvidas reais', feed:[
-   {h:'12h', t:'Carrossel · Dúvidas da caixa de perguntas', d:'As perguntas reais que chegaram, uma por página.', s:'claude'},
-   {h:'17h30', t:'Vídeo natural · Leilão da Felicidade', d:'Formato conversa. Texto com ok do dono.', s:'gravar'}],
-  st:['Bastidor (banco gravado)','Caixinha de perguntas de novo','Enquete do próximo produto'],
+ {sem:1, data:'Dom 29/11', viagem:true, tema:'Dia leve', feed:[
+   {h:'11h', t:'Post leve · estilo Threads', d:'"Eu achava que leilão não era pra mim, até arrematar o meu primeiro." Domingo é o dia mais fraco: nada pesado.', s:'claude'}],
+  st:['10h · Resultado de sábado: "saiu por" (loja × leilão)'], vd:[]},
+ {sem:2, data:'Seg 30/11', viagem:true, tema:'Resultado do sábado', feed:[
+   {h:'12h', t:'Vídeo · ARREMATADO DE SÁBADO EP. 02', d:'Saiu do domingo (125 views, 5s). Agora abre com o valor final no 1º segundo e depois mostra os lances.', s:'claude'}],
+  st:['8h30 · Vitrine de arrematados atualizada','12h · Caixinha de perguntas','16h · Leilão da Felicidade explicado em stories (texto com ok do dono)'],
   vd:[{t:'Arte de interesse · quarta', d:'Produto a definir.', s:'espera'}]},
- {sem:2, data:'Ter 01/12', viagem:true, tema:'O fundador aparece + convite para quarta', feed:[
-   {h:'17h30', t:'Vídeo natural · Luciano, o fundador', d:'"Por que um leilão pelo WhatsApp?" Roteiro na lista de gravação.', s:'gravar'}],
-  st:['Convite para quarta: leiloeiro 3D + foto real do produto (vídeo IA nos stories)','Galpão (banco gravado)','Contagem "amanhã tem leilão"'],
+ {sem:2, data:'Ter 01/12', viagem:true, tema:'O fundador aparece', feed:[
+   {h:'16h30', t:'Vídeo natural · Luciano, o fundador', d:'"Por que um leilão pelo WhatsApp?" Roteiro na lista de gravação.', s:'gravar'}],
+  st:['8h30 · Convite para quarta (leiloeiro 3D + produto)','12h · Bastidor (banco gravado)','16h · Repost do vídeo do Luciano'],
   vd:[{t:'Arte de interesse 2 · quarta', d:'', s:'espera'}]},
  {sem:2, data:'Qua 02/12', viagem:true, tema:'Dia de leilão', feed:[
-   {h:'10h', t:'Carrossel · "Quanto você daria nesse…?"', d:'Mesmo modelo, produto de quarta.', s:'espera'},
-   {h:'12h', t:'Vídeo natural · A LIGAÇÃO EP. 03', d:'A ligação para o Lucas, da PCX.', s:'claude'}],
-  st:['Contagem de hora em hora','Cobertura ao vivo','Ligação para o arrematante','Resultado: "saiu por"'],
+   {h:'11h30', t:'Carrossel · "Quanto você daria nesse…?"', d:'Mesmo modelo, produto de quarta.', s:'espera'},
+   {h:'16h30', t:'Vídeo natural · A LIGAÇÃO EP. 03', d:'O Lucas, da PCX.', s:'claude'}],
+  st:['8h30 · "HOJE 20H" + produto','12h · Repost do carrossel','16h · Contagem','18h30 · Contagem','19h30 · Contagem','19h50 · Últimos 10 minutos'],
   vd:[{t:'Contagem regressiva (7 artes)', d:'', s:'claude'}]},
  {sem:2, data:'Qui 03/12', viagem:true, tema:'D-2 do sábado', feed:[
-   {h:'12h', t:'Carrossel · Retirada em mãos ou entrega: como funciona', d:'Conferir regras de entrega antes de postar.', s:'claude'},
-   {h:'17h30', t:'Vídeo natural · o vídeo do Ribeiro', d:'O vídeo do Ribeiro que está no Drive.', s:'claude'}],
-  st:['UM story só: curiosidade D-2 (versão 2, gravada antes)'],
+   {h:'13h', t:'Vídeo natural · o vídeo do Ribeiro', d:'O vídeo do Ribeiro que está no Drive.', s:'claude'},
+   {h:'16h30', t:'Carrossel · Dúvidas da caixa de perguntas', d:'As perguntas reais, uma por página. Salvável.', s:'claude'}],
+  st:['8h30 · UM story de curiosidade (D-2, versão 2)','12h · Bastidor','16h · Repost do carrossel'],
   vd:[{t:'Arte de interesse · sábado', d:'Produto a definir.', s:'espera'}]},
  {sem:2, data:'Sex 04/12', viagem:true, tema:'D-1 do sábado', feed:[
-   {h:'17h30', t:'Novelinha O GALPÃO EP. 03 · "É golpe?"', d:'Roteiro na lista de gravação.', s:'gravar'}],
-  st:['Prova: arremates de novembro','História do produto de sábado em 3 a 4 stories','Enquete: "Você daria lance?"'],
+   {h:'16h30', t:'Novelinha O GALPÃO EP. 03 · "É golpe?"', d:'Os 2 vídeos "É golpe?" foram os que mais renderam comentários na semana passada.', s:'gravar'}],
+  st:['8h30 · O produto de sábado, inteiro','12h · Prova: arremates de novembro','16h · Enquete: "Você daria lance?"'],
   vd:[{t:'Arte de interesse 2 · sábado', d:'', s:'espera'}]},
  {sem:2, data:'Sáb 05/12', viagem:true, tema:'Dia de leilão', feed:[
-   {h:'10h', t:'Carrossel · "Quanto você daria nesse…?"', d:'Mesmo modelo, produto de sábado.', s:'espera'},
-   {h:'12h', t:'Vídeo natural · A LIGAÇÃO EP. 04', d:'A ligação para o arrematante do MacBook.', s:'claude'}],
-  st:['Manhã: "HOJE 20H · responde EU QUERO"','Contagem de hora em hora','Cobertura ao vivo','Ligação para o arrematante'],
+   {h:'11h', t:'Carrossel · "Quanto você daria nesse…?"', d:'Mesmo modelo, produto de sábado.', s:'espera'},
+   {h:'17h', t:'Vídeo natural · A LIGAÇÃO EP. 04', d:'Arrematante do MacBook.', s:'claude'}],
+  st:['8h30 · "HOJE 20H · responde EU QUERO"','12h · Repost do carrossel','16h · Contagem','18h30 · Contagem','19h30 · Contagem','19h50 · Últimos 10 minutos'],
   vd:[{t:'Contagem regressiva (7 artes)', d:'', s:'claude'}]},
- {sem:2, data:'Dom 06/12', viagem:true, tema:'Resultado do sábado', feed:[
-   {h:'10h', t:'Vídeo · ARREMATADO DE SÁBADO EP. 03', d:'', s:'claude'},
-   {h:'17h', t:'Carrossel · Top 5 arrematados de novembro', d:'Formato lista do curso: dá comentário de quem discorda da ordem.', s:'claude'}],
-  st:['Story "loja × leilão"','Vitrine de arrematados atualizada'], vd:[]},
+ {sem:2, data:'Dom 06/12', viagem:true, tema:'Dia leve', feed:[
+   {h:'11h', t:'Post leve ou folga', d:'O Arrematado de sábado EP. 03 sai na segunda, 07/12, às 12h.', s:'claude'}],
+  st:['10h · Resultado de sábado: "saiu por"'], vd:[]},
 ];
 const E = [
  ['Martelo bate', 'Emanuel liga na hora para o arrematante, em viva-voz, e grava a tela do celular. Pedir a autorização para postar ainda na ligação.'],
  ['Mesma noite', 'Story de resultado "saiu por" com os dados do sistema (eu monto).'],
  ['Dia seguinte', '"A LIGAÇÃO" no feed: a reação do arrematante, com legenda (eu edito).'],
- ['Domingo', '"ARREMATADO DE SÁBADO": os lances reais acelerados até o martelo (eu monto).'],
+ ['Segunda, 12h', '"ARREMATADO DE SÁBADO": abre com o valor final e depois os lances reais acelerados (eu monto).'],
  ['Na entrega', 'Gravar a retirada ou a entrega → "Já encontrou o dono" (eu edito).'],
 ];
 const N = [
  ['Ritual da 1ª hora', '80% das visualizações do carrossel da PCX vieram dos Stories: quem espalhou foram as pessoas, não o Instagram.', 'Todo post de feed: a equipe inteira reposta nos stories e manda em 3 grupos na primeira hora. Emanuel define a lista de quem faz.'],
  ['"Quanto você daria?" fixo', 'O carrossel da PCX teve 2,5x o post típico e 98 compartilhamentos. A capa com a pergunta levou 10 das 15 curtidas.', 'Todo dia de leilão às 10h, sempre o mesmo modelo: pergunta + produto gigante → loja × lance → "Comenta [PRODUTO]".'],
  ['Comentário que vira conversa', 'O "Comenta MOTO" trouxe 16 comentários. Cada comentário é uma pessoa pedindo o link.', 'Responder todo comentário no direct em até 1 hora com o link de um vendedor. Avaliar com o Emanuel uma resposta automática (Zeca).'],
- ['Séries com dia certo', 'O curso: o Instagram premia quem vira hábito. Série com nome e dia fixo faz a pessoa voltar.', 'Seg: Já encontrou o dono · Qua e Sáb: A LIGAÇÃO · Sex: O GALPÃO · Dom: Arrematado de sábado.'],
+ ['Séries com dia certo', 'O curso: o Instagram premia quem vira hábito. Série com nome e dia fixo faz a pessoa voltar.', 'Seg 12h: Arrematado de sábado · Ter 16h30: Já encontrou o dono · Qua e Sáb: A LIGAÇÃO · Sex 16h30: O GALPÃO.'],
+ ['O story das 8h30 é a vitrine', 'O 1º story do dia foi visto por 250 a 840 pessoas; os da noite, por 20 a 130.', 'Às 8h30 vai sempre a novidade principal: o produto do leilão, o preço ou um cliente recebendo. Depois das 20h30, nada importante.'],
+ ['Prova de que é real toda semana', 'O tour no galpão segurou 20s (o dobro do normal) e os dois "É golpe?" lideraram os comentários.', 'Toda semana: 1 cliente buscando o produto + 1 bastidor da equipe ou do galpão.'],
  ['O melhor momento primeiro', 'O relatório mostrou que metade das pessoas sai no 1º segundo e fica só 7 segundos.', 'Abrir os vídeos pelo clímax (o martelo, o "você arrematou!", a cara de choque) e depois voltar: "mas calma, deixa eu te contar…".'],
  ['Rosto de quem manda', 'A maior dúvida de quem não conhece é "é golpe?". Gente real e com nome responde isso melhor que qualquer arte.', 'Série curta "Quem faz o Leilão no Zap": Luciano (fundador), Emanuel, Ribeiro, Yara. Um por semana.'],
  ['O arrematante grava', 'Depoimento real vende mais que qualquer copy.', 'Na ligação, pedir ao arrematante um vídeo de 10 segundos abrindo a caixa. Sem prometer nada em troca.'],
