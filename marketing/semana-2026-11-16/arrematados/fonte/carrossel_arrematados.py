@@ -19,27 +19,31 @@ def sombra(b, x, y, c):
 def pag(d, n): d.text((W - 50, 52), f'{n}/3', font=F('Bold', 28), fill=MENTA, anchor='rm')
 def pil(d, cy, t, f, fu, co, px=34):
     w = d.textlength(t, font=f); d.rounded_rectangle((W / 2 - w / 2 - px, cy - f.size * .85, W / 2 + w / 2 + px, cy + f.size * .85), f.size, fill=fu); d.text((W / 2, cy), t, font=f, fill=co, anchor='mm')
-# 1 · capa
+# (23/11) Natália: a moto já tem 2 posts no feed → capa com iPhones, MacBook e PS5; a moto na página 2; página 3 chama pra quarta.
+# 1 · capa (útil): os 4 arrematados que não são a moto
 b = fundo(); d = ImageDraw.Draw(b); pag(d, 1)
-d.text((W / 2, 95), 'QUANTO SAIU CADA UM', font=F('Black', 64), fill=BR, anchor='mm'); d.text((W / 2, 170), 'NO LEILÃO? 👀'.replace(' 👀', ''), font=F('Black', 64), fill=NEON, anchor='mm')   # útil: valor real
-sombra(b, 60, 235, card('pcx', 960, 830)); d = ImageDraw.Draw(b)
-pil(d, 1180, 'valores reais · quem decide o preço é você', F('Bold', 32), BR, VE, 36)   # útil + único
-d.text((W / 2, 1268), 'arrasta pro lado  →', font=F('Bold', 32), fill=MENTA, anchor='mm')
+d.text((W / 2, 90), 'QUANTO SAIU CADA UM', font=F('Black', 64), fill=BR, anchor='mm'); d.text((W / 2, 162), 'NO LEILÃO?', font=F('Black', 64), fill=NEON, anchor='mm')
+sombra(b, 60, 220, card('iphone18', 465, 490)); sombra(b, 555, 220, card('iphone17', 465, 490))
+sombra(b, 60, 735, card('macbook', 465, 470)); sombra(b, 555, 735, card('ps5', 465, 470)); d = ImageDraw.Draw(b)
+pil(d, 1268, 'valores reais · arrasta pro lado  →', F('Bold', 32), BR, VE, 36)
 b.convert('RGB').save(f'{OUT}/CARROSSEL-arrematados-1.jpg', quality=94)
-# 2 · iPhones, MacBook, PS5
+# 2 · a moto (único)
 b = fundo(); d = ImageDraw.Draw(b); pag(d, 2)
-d.text((W / 2, 85), 'iPHONE, MACBOOK, PS5…', font=F('Black', 58), fill=BR, anchor='mm'); d.text((W / 2, 150), 'tudo novo, ao vivo, sem preço de etiqueta', font=F('Medium', 30), fill=MENTA, anchor='mm')   # único
-sombra(b, 60, 195, card('iphone18', 465, 555)); sombra(b, 555, 195, card('iphone17', 465, 555))
-sombra(b, 60, 790, card('macbook', 465, 500)); sombra(b, 555, 790, card('ps5', 465, 500))
+d.text((W / 2, 95), 'ATÉ MOTO', font=F('Black', 70), fill=BR, anchor='mm'); d.text((W / 2, 170), 'SAIU NO LEILÃO', font=F('Black', 64), fill=NEON, anchor='mm')
+sombra(b, 60, 235, card('pcx', 960, 830)); d = ImageDraw.Draw(b)
+pil(d, 1180, 'sem preço de etiqueta: quem decide é quem dá o lance', F('Bold', 30), BR, VE, 30)
+d.text((W / 2, 1268), 'tudo ao vivo', font=F('Medium', 30), fill=MENTA, anchor='mm')
 b.convert('RGB').save(f'{OUT}/CARROSSEL-arrematados-2.jpg', quality=94)
-# 3 · TV + pedido único
+# 3 · leilão de quarta (urgente) + pedido único
 b = fundo(); d = ImageDraw.Draw(b); pag(d, 3)
-d.text((W / 2, 85), 'QUARTA, 20H', font=F('Black', 72), fill=NEON, anchor='mm'); d.text((W / 2, 155), 'o próximo pode ser seu', font=F('Black', 44), fill=BR, anchor='mm')   # urgente
-sombra(b, 180, 205, card('tv', 720, 545)); d = ImageDraw.Draw(b)
-d.rounded_rectangle((90, 820, W - 90, 1130), 40, fill=BR)
-d.text((W / 2, 880), 'QUER ENTRAR ANTES DE QUARTA?', font=F('Black', 42), fill=(27, 122, 72), anchor='mm')
-d.text((W / 2, 985), 'Comenta LEILÃO', font=F('Black', 92), fill=VE, anchor='mm')
-d.text((W / 2, 1075), 'que eu te mando o link no direct', font=F('Medium', 36), fill=(27, 122, 72), anchor='mm')
-lg = Image.open('/home/user/Leil-onozaplivoo/marketing/marca/logo-horizontal-transparente.png').convert('RGBA'); lg.thumbnail((200, 200)); b.alpha_composite(lg, ((W - lg.width) // 2, 1190))
+d.text((W / 2, 120), 'QUARTA, 20H', font=F('Black', 110), fill=NEON, anchor='mm'); d.text((W / 2, 230), 'TEM LEILÃO DE NOVO', font=F('Black', 62), fill=BR, anchor='mm')
+mt = Image.open('/home/user/Leil-onozaplivoo/marketing/marca/leiloeiro-martelo-sem-fundo.png').convert('RGBA'); mt.thumbnail((470, 470))
+sh = Image.new('RGBA', (W, H)); ImageDraw.Draw(sh).ellipse((W / 2 - 200, 770, W / 2 + 200, 800), fill=(0, 0, 0, 110)); b.alpha_composite(sh.filter(ImageFilter.GaussianBlur(16)))
+b.alpha_composite(mt, ((W - mt.width) // 2, 785 - mt.height)); d = ImageDraw.Draw(b)
+d.text((W / 2, 845), 'o próximo pode ser seu', font=F('Bold', 44), fill=MENTA, anchor='mm')
+d.rounded_rectangle((90, 905, W - 90, 1160), 40, fill=BR)
+d.text((W / 2, 985), 'Comente LEILÃO', font=F('Black', 92), fill=VE, anchor='mm')
+d.text((W / 2, 1085), 'para participar do leilão de quarta', font=F('Bold', 38), fill=(27, 122, 72), anchor='mm')
+lg = Image.open('/home/user/Leil-onozaplivoo/marketing/marca/logo-horizontal-transparente.png').convert('RGBA'); lg.thumbnail((200, 200)); b.alpha_composite(lg, ((W - lg.width) // 2, 1205))
 b.convert('RGB').save(f'{OUT}/CARROSSEL-arrematados-3.jpg', quality=94)
 print('ok')
