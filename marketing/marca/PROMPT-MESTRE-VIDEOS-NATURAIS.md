@@ -18,3 +18,12 @@ Regra, medida com `ffmpeg -af ebur128` em cada trecho do arquivo FINAL (o mesmo 
 - Se não passar, não entrega e não agenda. Ajusta e mede de novo.
 - Junto com o vídeo, mandar para a Natália os números medidos e pedir que ela ouça COM FONE antes do ok.
 - (07/11) Nunca usar `loudnorm` no mesmo filtro com `amix duration=first`/sidechain: o atraso de ~3 s dele corta o fim do áudio. Tratar a voz num arquivo à parte, misturar depois, e conferir que a duração do áudio = duração do vídeo (ffprobe) antes de entregar.
+
+## Capa de Reels: área que aparece na grade do perfil (OBRIGATÓRIO, lição de 23/11)
+A capa é 1080x1920, mas a grade do perfil mostra só o miolo 3:4: **de y=240 a y=1680**. Em 23/11 as capas do
+"Arrematado de sábado EP. 01" e da "Novelinha EP. 01" subiram com o título em y≈190 e ficaram cortadas no perfil.
+- Todo texto e todo elemento importante da capa fica **entre y=260 e y=1660** (folga de 20 px).
+- Selo da série logo abaixo de y=260; título logo abaixo do selo; **nunca em cima do rosto**.
+- Foto de pessoa: **olho aberto e sorrindo** (escolher o quadro; conferir ampliado).
+- Antes de subir: gerar a prévia do corte (`img.crop((0,240,1080,1680))`) e olhar a capa inteira E o corte.
+- A capa é separada do vídeo: o título dentro do vídeo pode ficar no alto; a capa segue esta regra.
