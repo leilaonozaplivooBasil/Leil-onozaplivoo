@@ -111,8 +111,8 @@ details li{margin:3px 0}
 <p class="lead">O que os números do carrossel da PCX, o relatório do Instagram e o curso mostram — e o que fazer com isso.</p>
 <div class="grid2" id="estrategias"></div>
 
-<h2>Carrosséis no estilo Mercado Livre</h2>
-<p class="lead">O que o Mercado Livre repete porque dá certo — vitrine limpa, ranking, faixa de preço, opinião de quem comprou, guia de compra — adaptado para leilão. Cada um vira um modelo fixo.</p>
+<h2>O que modelar do Mercado Livre</h2>
+<p class="lead">Análise dos 24 Reels e 2 carrosséis da Black Friday deles (11 a 19/11). Sem copiar o que é dinheiro de gigante (views pagas, celebridade, vídeos de 40 a 112 segundos): para nós, de 15 a 25 segundos continua sendo o certo.</p>
 <div class="grid2" id="ideias"></div>
 
 <h2>Regras que valem em tudo</h2>
@@ -195,7 +195,7 @@ const S = [
    {h:'12h', t:'Carrossel · "Já foram arrematados"', d:'A vitrine com os 6 arrematados.', s:'pronto'}],
   st:['8h30 · Vitrine de arrematados','12h · Caixinha de perguntas','16h · Enquete do próximo produto'], vd:[]},
  {sem:1, data:'Ter 24/11', tema:'Atrair: anúncio do leilão de entrada', feed:[
-   {h:'16h30', t:'Vídeo natural · Já encontrou o dono EP. 04', d:'Cliente buscando o iPhone. Abre no momento da entrega.', s:'claude'}],
+   {h:'16h30', t:'Vídeo natural · Já encontrou o dono EP. 04', d:'Cliente buscando o iPhone. Abre no momento da entrega. Publicar em collab com o cliente (se autorizar) + #EncontrouDono.', s:'claude'}],
   st:['8h30 · "Amanhã: leilão de entrada com lance inicial de R$ 1,97" (só se o produto estiver confirmado)','12h · Respostas da caixa de perguntas','16h · Passo a passo do bônus de R$ 10 (cadastro → seguir → print)'],
   vd:[{t:'Arte do leilão de entrada (GTA 6 proposto)', d:'Disparo nos grupos + WhatsApp da campanha. Só depois de confirmar produto e entrega.', s:'espera'}]},
  {sem:1, data:'Qua 25/11', tema:'Ativar: leilão de entrada', feed:[
@@ -219,7 +219,7 @@ const S = [
   vd:[{t:'Contagem regressiva (7 artes)', d:'Quem dispara: a definir com o Emanuel.', s:'claude'}]},
  {sem:1, data:'Dom 29/11', viagem:true, tema:'Dia leve', feed:[
    {h:'11h', t:'Post estilo Threads', d:'"Eu achava que leilão não era pra mim, até arrematar o meu primeiro."', s:'claude'}],
-  st:['10h · Resultado da PCX: "saiu por"'], vd:[]},
+  st:['10h · Resultado da PCX: "saiu por"','Criar o destaque "É golpe?" na bio (escritório, galpão, entregas)'], vd:[]},
  {sem:2, data:'Seg 30/11', viagem:true, tema:'Quem faz: o fundador', feed:[
    {h:'12h', t:'Vídeo · Luciano, o fundador', d:'"Por que um leilão pelo WhatsApp?"', s:'gravar'}],
   st:['8h30 · Arrematado de sábado (a PCX), abrindo no valor final','12h · Bea responde: "Como eu pago?"','16h · Caixinha: "O que você quer perguntar pra equipe?"'],
@@ -286,6 +286,11 @@ const I = [
  ['Opiniões de quem arrematou', 'Estrelas + 1 frase real de cliente (com autorização) + o produto. A prova social que o Mercado Livre usa.'],
  ['Guia: antes de dar lance', 'Checklist salvável (o post que as pessoas guardam). Ensina e tira o medo do primeiro lance.'],
  ['Compare: loja × leilão', 'Duas colunas, sem %: preço de loja de um lado, arremate real do outro.'],
+ ['Collab com quem arrematou', 'O Mercado Livre publica 20 de 24 Reels em collab com criadores. Nós: o "Já encontrou o dono" e "A LIGAÇÃO" saem como collab no perfil do cliente e no nosso. De graça. Autorização de imagem e nome por escrito.'],
+ ['Um quadro com nome e uma palavra nossa', 'Eles têm a "Riscadinha" e as "comprittas". Nós: o quadro "Quanto você daria?" + a palavra "encontrou dono" com a hashtag fixa #EncontrouDono em todo post de entrega.'],
+ ['História antes do preço', 'O que menos se espalhou no Mercado Livre foi vitrine pura. Abrir com a vida da pessoa: "a moto que ia ser parcelada em 48x", "o iPhone que virou presente da mãe".'],
+ ['O leilão é a nossa live', 'Eles fazem live de 24h como evento. O nosso evento já existe: recortar os últimos 10 segundos de cada leilão + a reação de quem ganhou.'],
+ ['Destaque "É golpe?" na bio', 'Até o Mercado Livre tem um destaque "Segurança". O nosso junta escritório, galpão, entregas e as entrevistas da equipe.'],
 ];
 const chip = s => ({pronto:'<span class="chip c-pronto">✓ pronto</span>', gravar:'<span class="chip c-gravar">● gravar</span>', claude:'<span class="chip c-claude">✎ Claude</span>', espera:'<span class="chip c-espera">… Emanuel</span>'})[s]||'';
 const ls = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
@@ -303,7 +308,7 @@ function render(sem){
 }
 render(1); render(2);
 document.getElementById('estrategias').innerHTML = N.map(x=>`<div class="box"><b>${x[0]}</b><div style="color:var(--muted);font-size:14px;margin-top:4px">${esc(x[1])}</div><div style="font-size:14px;margin-top:6px"><b>Fazer:</b> ${esc(x[2])}</div></div>`).join('');
-document.getElementById('campanha').innerHTML = C.map(x=>`<div class="box"><b>${x[0]}</b><div style="font-size:14px;margin-top:4px">${esc(x[1])}</div><div style="font-size:13px;margin-top:6px" class="${x[3]?'chip c-espera':'chip c-claude'}">${esc(x[2])}</div></div>`).join('');
+document.getElementById('campanha').innerHTML = C.map(x=>`<div class="box"><b>${x[0]}</b><div style="font-size:14px;margin-top:4px">${esc(x[1])}</div><div class="${x[3]?'chip c-espera':'chip c-claude'}" style="white-space:normal;border-radius:10px;display:block;font-size:13px;margin-top:6px">${esc(x[2])}</div></div>`).join('');
 document.getElementById('esteira').innerHTML = E.map((e,i)=>`<div class="passo"><b class="n">${i+1}</b><div><b>${e[0]}</b><div style="color:var(--muted)">${esc(e[1])}</div></div></div>`).join('');
 document.getElementById('ideias').innerHTML = I.map(x=>`<div class="box"><b>${x[0]}</b><div style="color:var(--muted);font-size:14px;margin-top:4px">${esc(x[1])}</div></div>`).join('');
 function conta(){const t=G.length,a=G.filter(g=>ls.get('ok-'+g.id)==='1').length;document.getElementById('gv-count').textContent=`· ${a} de ${t} aprovados`;}
