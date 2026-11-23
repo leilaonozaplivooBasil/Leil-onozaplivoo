@@ -1,0 +1,263 @@
+<title>Planner Leilão no Zap 23/11–06/12</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Space+Grotesk:wght@600;700&display=swap">
+<style>
+/* Layout: cabeçalho → faixa "gravar antes de sábado" → duas semanas em trilhas (feed / stories / vendedores) → esteira → ideias → regras */
+:root{
+  --bg:#EEF5F0; --panel:#FFFFFF; --ink:#0A3D26; --muted:#4E6B5C; --line:#CFE3D6;
+  --brand:#1B7A48; --brand-deep:#0F4D2E; --mint:#D6ECDD; --neon:#2FBF6E;
+  --gravar:#B4541A; --gravar-bg:#FBE9DC; --pronto:#1B7A48; --pronto-bg:#DDF1E4;
+  --claude:#3A5BA0; --claude-bg:#E3EAF8; --espera:#7A6A1E; --espera-bg:#F6EFCF;
+  --f-display:"Space Grotesk", "Inter", system-ui, sans-serif; --f-body:"Inter", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C1F16; --panel:#12291E; --ink:#E4F2E9; --muted:#9DBCAA; --line:#24473A;
+  --brand:#3FD07E; --brand-deep:#0A3D26; --mint:#1B3A2B; --neon:#3FD07E;
+  --gravar:#F3A06B; --gravar-bg:#3A2416; --pronto:#6FE0A0; --pronto-bg:#143A26;
+  --claude:#9DB6F0; --claude-bg:#1C2A47; --espera:#E3CF72; --espera-bg:#3A3417; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C1F16; --panel:#12291E; --ink:#E4F2E9; --muted:#9DBCAA; --line:#24473A;
+  --brand:#3FD07E; --brand-deep:#0A3D26; --mint:#1B3A2B; --neon:#3FD07E;
+  --gravar:#F3A06B; --gravar-bg:#3A2416; --pronto:#6FE0A0; --pronto-bg:#143A26;
+  --claude:#9DB6F0; --claude-bg:#1C2A47; --espera:#E3CF72; --espera-bg:#3A3417; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding-block:20px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{background:linear-gradient(160deg,#1E6C42,#0C3E26);color:#fff;border-radius:22px;padding:28px 26px;display:grid;gap:14px}
+header.top h1{font-family:var(--f-display);font-size:clamp(26px,4.2vw,42px);line-height:1.05;margin:0;text-wrap:balance}
+header.top p{margin:0;max-width:70ch;color:#D6ECDD}
+.meta{display:flex;flex-wrap:wrap;gap:8px}
+.meta span{background:rgba(255,255,255,.13);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600}
+h2{font-family:var(--f-display);font-size:24px;margin:34px 0 6px;text-wrap:balance}
+.lead{color:var(--muted);margin:0 0 14px;max-width:75ch}
+.legenda{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:.02em;border-radius:999px;padding:3px 10px;white-space:nowrap}
+.c-gravar{background:var(--gravar-bg);color:var(--gravar)} .c-pronto{background:var(--pronto-bg);color:var(--pronto)}
+.c-claude{background:var(--claude-bg);color:var(--claude)} .c-espera{background:var(--espera-bg);color:var(--espera)}
+.tabs{display:flex;gap:8px;margin:26px 0 10px;flex-wrap:wrap}
+.tabs button{font:700 14px var(--f-body);border:2px solid var(--brand);background:transparent;color:var(--brand);border-radius:999px;padding:8px 16px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--brand);color:var(--panel)}
+.tabs button:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--neon);outline-offset:2px}
+.dias{display:grid;gap:12px}
+.dia{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.dia-h{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.dia-h .data{font-family:var(--f-display);font-weight:700;font-size:20px;min-width:118px}
+.dia-h .tema{color:var(--muted);font-size:14px;flex:1;min-width:200px}
+.trilhas{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:0}
+.trilha{padding:12px 16px;border-right:1px solid var(--line);min-width:0}
+.trilha:last-child{border-right:0}
+.trilha h4{margin:0 0 8px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.item{display:grid;gap:6px;padding:10px 0;border-top:1px dashed var(--line)}
+.item:first-of-type{border-top:0;padding-top:0}
+.item .t{font-weight:700}
+.item .d{color:var(--muted);font-size:14px}
+.item .linha{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.hora{font-variant-numeric:tabular-nums;font-size:12px;font-weight:700;color:var(--brand)}
+details{background:var(--mint);border-radius:12px;padding:8px 12px}
+details summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--ink)}
+details ol,details ul{margin:8px 0 4px;padding-left:20px;font-size:14px}
+details li{margin:3px 0}
+.ok{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer}
+.ok input{width:18px;height:18px;accent-color:var(--brand)}
+.viagem{background:var(--espera-bg);color:var(--espera);font-weight:700;font-size:13px;border-radius:999px;padding:3px 10px}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.passos{display:grid;gap:10px;counter-reset:p}
+.passo{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:start}
+.passo b.n{width:38px;height:38px;border-radius:50%;background:var(--brand);color:var(--panel);display:grid;place-items:center;font-family:var(--f-display)}
+.gravar-lista{display:grid;gap:10px}
+.gv{background:var(--panel);border:1px solid var(--line);border-left:6px solid var(--gravar);border-radius:14px;padding:14px 16px;display:grid;gap:6px}
+.gv .linha{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.gv h3{margin:0;font-size:16px}
+.regras li{margin:4px 0}
+.count{font-variant-numeric:tabular-nums}
+@media (max-width:860px){.trilhas{grid-template-columns:1fr}.trilha{border-right:0;border-top:1px solid var(--line)}.trilha:first-child{border-top:0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="meta"><span>Instagram @leilaonozapoficial</span><span>23/11 → 06/12</span><span>Natália viaja sáb 28/11</span></div>
+  <h1>Planner das próximas 2 semanas</h1>
+  <p>Base: o plano do Emanuel (7 vídeos, 3 carrosséis e 5 a 10 stories por semana; contagem regressiva nos dias de leilão) + o que aprendemos no curso Criadores Estratégicos. Os produtos de quarta ainda não foram definidos (reunião segunda, 10h) e aparecem como "a definir".</p>
+  <div class="legenda">
+    <span class="chip c-pronto">✓ material pronto</span>
+    <span class="chip c-gravar">● gravar antes de sábado</span>
+    <span class="chip c-claude">✎ Claude monta/edita</span>
+    <span class="chip c-espera">… depende do Emanuel</span>
+  </div>
+</header>
+
+<h2>Gravar antes de sábado <span class="count" id="gv-count"></span></h2>
+<p class="lead">Tudo o que precisa sair da câmera antes da viagem. Subiu no Drive, eu edito. Cada roteiro abre com o título que vai na tela nos 3 primeiros segundos.</p>
+<div class="gravar-lista" id="gravar"></div>
+
+<div class="tabs" role="group" aria-label="Escolher semana">
+  <button type="button" id="b1" aria-pressed="true">Semana 1 · 23 a 29/11</button>
+  <button type="button" id="b2" aria-pressed="false">Semana 2 · 30/11 a 06/12</button>
+</div>
+<div class="dias" id="dias"></div>
+
+<h2>Esteira pós-leilão</h2>
+<p class="lead">Todo leilão vira 4 conteúdos. Vale para quarta e sábado.</p>
+<div class="box passos" id="esteira"></div>
+
+<h2>Banco de ideias com alto potencial</h2>
+<p class="lead">Para trocar qualquer post da semana ou usar nos 3 dias de teste (rotina 4 + 3 do curso).</p>
+<div class="grid2" id="ideias"></div>
+
+<h2>Regras que valem em tudo</h2>
+<div class="box"><ul class="regras">
+  <li>Título grande na tela nos 3 primeiros segundos. Nada de "oi gente". Algo muda a cada 5 segundos. Um pedido só no final.</li>
+  <li>Nunca rosto de criança. Nome de arrematante só com autorização dele, e nunca na arte.</li>
+  <li>Instagram: sem link e sem % até 29/11. A partir de 30/11, confirmar com o dono antes de liberar.</li>
+  <li>Nada de "sorteio", "aposta", "chance", "rendimento" ou "carteira". Leilão da Felicidade e frete grátis: texto conferido com as regras da plataforma antes de postar.</li>
+  <li>Cores: verde da marca (o verde da arte da placa). Sem fundo preto, sem amarelo de fundo.</li>
+  <li>Copy de vendedor: espaçada, negrito nas palavras-chave, horário exato, linha "💡 Pro vendedor", link <code>?ref=SEU-CODIGO</code> na última linha.</li>
+</ul></div>
+</div>
+
+<script>
+const G = [
+ {id:'g1', t:'Novelinha O GALPÃO EP. 02 · "A Black Friday do Ribeiro"', quem:'Ribeiro, Emanuel, Natália', quando:'posta sex 27/11', r:[
+  'TÍTULO: ELE QUASE CAIU NA BLACK FRIDAY 😅',
+  'Ribeiro no celular, empolgado: "Achei! Black Friday, iPhone baratinho!"',
+  'Emanuel olha por cima do ombro: "Deixa eu ver… esse preço aí é o mesmo de semana passada."',
+  'Ribeiro: "E agora, onde eu compro?"',
+  'Emanuel vira o celular: "Aqui no leilão quem decide o preço é você. O iPhone 18 Pro Max saiu por R$ 7.750."',
+  'Ribeiro: "Peraí, SÉRIO?!" (close na cara)',
+  'Natália passa com uma caixa: "Sábado tem mais. E o Ribeiro vai deixar pra última hora de novo."',
+  'Ninguém olha pra câmera. Cenas curtas, "3, 2, 1, vai".']},
+ {id:'g2', t:'Novelinha O GALPÃO EP. 03 · "É golpe?"', quem:'Ribeiro, Emanuel, Natália', quando:'posta sex 04/12', r:[
+  'TÍTULO: A TIA DELE ACHOU QUE ERA GOLPE',
+  'Ribeiro no telefone (viva-voz, voz de tia feita por alguém fora da câmera): "Leilão pelo zap? Isso é golpe, menino!"',
+  'Ribeiro: "Tia, não é golpe!" — Emanuel: "Fala pra ela vir aqui ver."',
+  'Ribeiro anda pelo galpão mostrando caixas, produtos lacrados, etiquetas de entrega (sem nome de cliente).',
+  'Emanuel: "Só em novembro foram PCX, iPhone, MacBook, PlayStation…" (entra a vitrine de arrematados na tela)',
+  'Natália fecha: "Fala pra tia que sábado tem leilão." Ribeiro: "Ela vai querer dar lance!"']},
+ {id:'g3', t:'Caixa de perguntas respondida', quem:'Natália (+ Yara já gravou)', quando:'stories ter 24/11 e carrossel seg 30/11', r:[
+  'Abrir a caixinha na segunda de manhã ("Qual sua dúvida sobre o leilão?") e pedir para a equipe mandar perguntas também.',
+  'Gravar 3 a 5 respostas de 10 a 15 segundos cada, em lugares diferentes (escritório, galpão, carro).',
+  'Cada resposta: lê a pergunta em voz alta → responde em 2 frases → mostra na tela (site, produto ou caixa).',
+  'As melhores perguntas viram o carrossel "Dúvidas da caixa de perguntas" (seg 30/11).']},
+ {id:'g4', t:'Comparativo · "Eu arremataria / Não arremataria"', quem:'Natália', quando:'reserva (troca qualquer vídeo)', r:[
+  'TÍTULO: EU ARREMATARIA? 🤔',
+  '4 produtos do galpão ou do próximo leilão. Para cada um: "Arremataria, porque…" ou "Não arremataria, porque…" em UMA frase.',
+  'Grava cada produto na mão, plano curto. Eu monto as plaquinhas dos dois lados na edição.',
+  'Final: "E você, arremataria qual?" (um pedido só: comentar).']},
+ {id:'g5', t:'Takes acelerados · "Do galpão até a sua mão"', quem:'quem estiver no galpão', quando:'reserva / stories', r:[
+  'Sem fala. Gravar com o som real: abrir caixa, conferir produto, lacre, nota, embalar, etiqueta, entregar.',
+  '10 takes de 3 a 5 segundos, celular em pé. Eu acelero e corto no ritmo.']},
+ {id:'g6', t:'Leilão da Felicidade (vídeo de segunda do Emanuel)', quem:'Natália', quando:'posta seg 30/11', r:[
+  '⚠️ O roteiro fala de regra de bônus e saldo: o texto final precisa do ok do dono antes de gravar.',
+  'Formato conversa: Emanuel pergunta, Natália responde, imagens da plataforma na tela.',
+  'Nada de "rendimento" nem "carteira". Falar de "bônus para usar em lances e na Loja da Felicidade".']},
+ {id:'g7', t:'Banco de stories de bastidor (para os dias fora)', quem:'Natália + equipe', quando:'28/11 a 06/12', r:[
+  '10 clipes de 5 segundos: equipe atendendo, separando produto, galpão, reunião, café da manhã, entrega.',
+  'Eu deixo cada um com texto curto e o selo da marca, prontos para postar.']},
+ {id:'g8', t:'Story D-2 de curiosidade (2 versões)', quem:'Natália', quando:'qui 26/11 e qui 03/12', r:[
+  'Fundo escuro do galpão, Natália de costas segurando uma caixa: "Chegou uma coisa aqui que eu ainda não posso mostrar… fica nos meus stories."',
+  'Um story só nesse dia, como ensina o mini lançamento do curso.']},
+];
+const S = [
+ {sem:1, data:'Seg 23/11', tema:'Arremates em alta + abrir caixa de perguntas', feed:[
+   {h:'12h', t:'Carrossel · "Já foram arrematados"', d:'Os 6 cards da vitrine (PCX, iPhone 18, iPhone 17, MacBook, PS5, TV) com o "saiu por".', s:'pronto'},
+   {h:'17h30', t:'Vídeo natural · Já encontrou o dono EP. 04', d:'A entrega do iPhone que vocês gravaram.', s:'claude'}],
+  st:['Bastidor de segunda (escritório)','Caixinha: "Qual sua dúvida sobre o leilão?"','Enquete: "Qual produto você quer no próximo leilão?"','Repost do carrossel'],
+  vd:[{t:'Arte de interesse · leilão de quarta', d:'Produto a definir na reunião.', s:'espera'}]},
+ {sem:1, data:'Ter 24/11', tema:'Convite para quarta', feed:[
+   {h:'17h30', t:'Vídeo IA · convite para quarta', d:'O leiloeiro 3D chamando para o leilão de quarta, com a foto real do produto.', s:'espera'}],
+  st:['Respostas da caixa de perguntas (Yara + Natália)','Galpão: separando os produtos de quarta','Contagem "amanhã tem leilão"'],
+  vd:[{t:'Arte de interesse 2 · quarta', d:'Mesmo produto, outra pegada (preço de loja × lance inicial).', s:'espera'}]},
+ {sem:1, data:'Qua 25/11', tema:'Dia de leilão', feed:[
+   {h:'12h', t:'Vídeo natural · A LIGAÇÃO EP. 01', d:'Emanuel ligando para o arrematante do iPhone: "Você arrematou!" Reação ao vivo. Com autorização dele.', s:'claude'}],
+  st:['Contagem de hora em hora até o início','Cobertura ao vivo dos lances (tela do site)','Ligação para o arrematante logo após o martelo','Story de resultado: "saiu por"'],
+  vd:[{t:'Contagem regressiva (7 artes)', d:'Eu atualizo o lance antes de cada horário.', s:'claude'}]},
+ {sem:1, data:'Qui 26/11', tema:'D-2 do sábado + Black Friday chegando', feed:[
+   {h:'12h', t:'Carrossel · Como comprar na loja virtual', d:'Pauta da semana 2 do Emanuel. Capturas reais da plataforma, um passo por página.', s:'claude'},
+   {h:'17h30', t:'Vídeo IA · trend com texto', d:'"5 sinais de que a oferta de Black Friday não é tão boa assim" — e o leilão como alternativa. Sem %.', s:'claude'}],
+  st:['UM story só: curiosidade D-2 (gravado antes)','Galpão (gravação da semana)'],
+  vd:[{t:'Arte de interesse · leilão de sábado', d:'Produto a definir.', s:'espera'}]},
+ {sem:1, data:'Sex 27/11', tema:'Black Friday · D-1 do sábado', feed:[
+   {h:'17h30', t:'Novelinha O GALPÃO EP. 02 · "A Black Friday do Ribeiro"', d:'Roteiro na lista de gravação.', s:'gravar'}],
+  st:['Prova: print de arremate recente','A história do produto de sábado em 3 a 4 stories','Enquete: "Você daria lance?"','Bastidor emocionado'],
+  vd:[{t:'Arte de interesse 2 · sábado', d:'Loja × lance inicial.', s:'espera'}]},
+ {sem:1, data:'Sáb 28/11', viagem:true, tema:'Dia de leilão · Natália viajando', feed:[
+   {h:'12h', t:'Vídeo natural · A LIGAÇÃO EP. 02', d:'A ligação para o arrematante do PlayStation.', s:'claude'}],
+  st:['Manhã: "HOJE 20H · responde EU QUERO"','Contagem de hora em hora','Cobertura ao vivo','Ligação para o arrematante (gravar!)'],
+  vd:[{t:'Contagem regressiva (7 artes)', d:'Eu atualizo o lance. Quem dispara: a definir com o Emanuel.', s:'claude'}]},
+ {sem:1, data:'Dom 29/11', viagem:true, tema:'Resultado do sábado', feed:[
+   {h:'10h', t:'Vídeo · ARREMATADO DE SÁBADO EP. 02', d:'Os lances reais acelerados, contagem 10…1, PUM, valor final.', s:'claude'},
+   {h:'17h', t:'Carrossel · Frete grátis: condições e como verificar', d:'Texto conferido com as regras vigentes antes de postar.', s:'claude'}],
+  st:['Story "loja × leilão" do produto de sábado','Vitrine de arrematados atualizada'], vd:[]},
+ {sem:2, data:'Seg 30/11', viagem:true, tema:'Leilão da Felicidade + dúvidas reais', feed:[
+   {h:'12h', t:'Carrossel · Dúvidas da caixa de perguntas', d:'As perguntas reais que chegaram, uma por página.', s:'claude'},
+   {h:'17h30', t:'Vídeo natural · Leilão da Felicidade', d:'Formato conversa. Texto com ok do dono.', s:'gravar'}],
+  st:['Bastidor (banco gravado)','Caixinha de perguntas de novo','Enquete do próximo produto'],
+  vd:[{t:'Arte de interesse · quarta', d:'Produto a definir.', s:'espera'}]},
+ {sem:2, data:'Ter 01/12', viagem:true, tema:'Convite para quarta', feed:[
+   {h:'17h30', t:'Vídeo IA · convite para quarta', d:'Leiloeiro 3D + foto real do produto.', s:'espera'}],
+  st:['Galpão (banco gravado)','Contagem "amanhã tem leilão"'],
+  vd:[{t:'Arte de interesse 2 · quarta', d:'', s:'espera'}]},
+ {sem:2, data:'Qua 02/12', viagem:true, tema:'Dia de leilão', feed:[
+   {h:'12h', t:'Vídeo natural · A LIGAÇÃO EP. 03', d:'A ligação para o Lucas, da PCX.', s:'claude'}],
+  st:['Contagem de hora em hora','Cobertura ao vivo','Ligação para o arrematante','Resultado: "saiu por"'],
+  vd:[{t:'Contagem regressiva (7 artes)', d:'', s:'claude'}]},
+ {sem:2, data:'Qui 03/12', viagem:true, tema:'D-2 do sábado', feed:[
+   {h:'12h', t:'Carrossel · Retirada em mãos ou entrega: como funciona', d:'Conferir regras de entrega antes de postar.', s:'claude'},
+   {h:'17h30', t:'Vídeo natural · o vídeo do Ribeiro', d:'O vídeo do Ribeiro que está no Drive.', s:'claude'}],
+  st:['UM story só: curiosidade D-2 (versão 2, gravada antes)'],
+  vd:[{t:'Arte de interesse · sábado', d:'Produto a definir.', s:'espera'}]},
+ {sem:2, data:'Sex 04/12', viagem:true, tema:'D-1 do sábado', feed:[
+   {h:'17h30', t:'Novelinha O GALPÃO EP. 03 · "É golpe?"', d:'Roteiro na lista de gravação.', s:'gravar'}],
+  st:['Prova: arremates de novembro','História do produto de sábado em 3 a 4 stories','Enquete: "Você daria lance?"'],
+  vd:[{t:'Arte de interesse 2 · sábado', d:'', s:'espera'}]},
+ {sem:2, data:'Sáb 05/12', viagem:true, tema:'Dia de leilão', feed:[
+   {h:'12h', t:'Vídeo natural · A LIGAÇÃO EP. 04', d:'A ligação para o arrematante do MacBook.', s:'claude'}],
+  st:['Manhã: "HOJE 20H · responde EU QUERO"','Contagem de hora em hora','Cobertura ao vivo','Ligação para o arrematante'],
+  vd:[{t:'Contagem regressiva (7 artes)', d:'', s:'claude'}]},
+ {sem:2, data:'Dom 06/12', viagem:true, tema:'Resultado do sábado', feed:[
+   {h:'10h', t:'Vídeo · ARREMATADO DE SÁBADO EP. 03', d:'', s:'claude'},
+   {h:'17h', t:'Carrossel · Top 5 arrematados de novembro', d:'Formato lista do curso: dá comentário de quem discorda da ordem.', s:'claude'}],
+  st:['Story "loja × leilão"','Vitrine de arrematados atualizada'], vd:[]},
+];
+const E = [
+ ['Martelo bate', 'Emanuel liga na hora para o arrematante, em viva-voz, e grava a tela do celular. Pedir a autorização para postar ainda na ligação.'],
+ ['Mesma noite', 'Story de resultado "saiu por" com os dados do sistema (eu monto).'],
+ ['Dia seguinte', '"A LIGAÇÃO" no feed: a reação do arrematante, com legenda (eu edito).'],
+ ['Domingo', '"ARREMATADO DE SÁBADO": os lances reais acelerados até o martelo (eu monto).'],
+ ['Na entrega', 'Gravar a retirada ou a entrega → "Já encontrou o dono" (eu edito).'],
+];
+const I = [
+ ['Chuta o preço', 'Stories com enquete "quanto saiu?" e depois o reels revelando. Gera resposta e compartilhamento.'],
+ ['React / tela dividida', 'Viral de iPhone falso em cima, Natália embaixo: "Original ou réplica? Aqui vem lacrado e com nota."'],
+ ['Conversa · "É seguro?"', 'Emanuel pergunta para a Natália, no galpão, se é seguro comprar iPhone em leilão. Imagens reais na tela.'],
+ ['Post estilo Threads', '"Eu achava que leilão não era pra mim, até arrematar o meu primeiro." Para quem já segue.'],
+ ['5h da manhã no galpão', 'Takes acelerados da equipe chegando e preparando o dia. Mostra trabalho real.'],
+ ['Quanto custa montar a casa?', 'Narrado: um home office ou uma cozinha só com coisas que saíram no leilão, em reais.'],
+];
+const chip = s => ({pronto:'<span class="chip c-pronto">✓ pronto</span>', gravar:'<span class="chip c-gravar">● gravar</span>', claude:'<span class="chip c-claude">✎ Claude</span>', espera:'<span class="chip c-espera">… Emanuel</span>'})[s]||'';
+const ls = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const ok = id => `<label class="ok"><input type="checkbox" id="ok-${id}" data-k="${id}" ${ls.get('ok-'+id)==='1'?'checked':''}> aprovado</label>`;
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+document.getElementById('gravar').innerHTML = G.map(g => `<div class="gv"><div class="linha"><span class="chip c-gravar">● gravar</span><span class="hora">${g.quando}</span></div><h3>${esc(g.t)}</h3><div class="d" style="color:var(--muted);font-size:14px">Quem: ${g.quem}</div><details><summary>Roteiro</summary><ol>${g.r.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></details>${ok(g.id)}</div>`).join('');
+function render(sem){
+  document.getElementById('dias').innerHTML = S.filter(d=>d.sem===sem).map((d,i)=>{
+    const k = d.data.replace(/\W/g,'');
+    const feed = d.feed.map((f,j)=>`<div class="item"><div class="linha"><span class="hora">${f.h}</span>${chip(f.s)}</div><div class="t">${esc(f.t)}</div>${f.d?`<div class="d">${esc(f.d)}</div>`:''}${ok(k+'f'+j)}</div>`).join('');
+    const st = d.st.length ? `<div class="item"><ul style="margin:0;padding-left:18px">${d.st.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
+    const vd = d.vd.length ? d.vd.map((v,j)=>`<div class="item"><div class="linha">${chip(v.s)}</div><div class="t">${esc(v.t)}</div>${v.d?`<div class="d">${esc(v.d)}</div>`:''}</div>`).join('') : '<div class="item d">Sem disparo.</div>';
+    return `<article class="dia"><div class="dia-h"><span class="data">${d.data}</span><span class="tema">${esc(d.tema)}</span>${d.viagem?'<span class="viagem">Natália fora · material pronto</span>':''}</div><div class="trilhas"><div class="trilha"><h4>Feed</h4>${feed}</div><div class="trilha"><h4>Stories (5 a 10)</h4>${st}</div><div class="trilha"><h4>Vendedores</h4>${vd}</div></div></article>`;
+  }).join('');
+  ['b1','b2'].forEach((b,n)=>document.getElementById(b).setAttribute('aria-pressed', String(n+1===sem)));
+  ls.set('semana', String(sem));
+}
+document.getElementById('b1').onclick=()=>render(1); document.getElementById('b2').onclick=()=>render(2);
+render(ls.get('semana')==='2'?2:1);
+document.getElementById('esteira').innerHTML = E.map((e,i)=>`<div class="passo"><b class="n">${i+1}</b><div><b>${e[0]}</b><div style="color:var(--muted)">${esc(e[1])}</div></div></div>`).join('');
+document.getElementById('ideias').innerHTML = I.map(x=>`<div class="box"><b>${x[0]}</b><div style="color:var(--muted);font-size:14px;margin-top:4px">${esc(x[1])}</div></div>`).join('');
+function conta(){const t=G.length,a=G.filter(g=>ls.get('ok-'+g.id)==='1').length;document.getElementById('gv-count').textContent=`· ${a} de ${t} aprovados`;}
+document.addEventListener('change',e=>{const k=e.target.dataset&&e.target.dataset.k;if(k){ls.set('ok-'+k,e.target.checked?'1':'0');conta();}});
+conta();
+</script>
